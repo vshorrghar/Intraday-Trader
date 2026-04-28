@@ -1,0 +1,89 @@
+{
+  "updated_at": "2026-04-21T15:30:00+05:30",
+  "mode": "DRY_RUN",
+  "broker": "demo",
+  "session_active": false,
+  "today": {
+    "trades": [
+      {
+        "tradingsymbol": "BAJFINANCE",
+        "entry_price": 920.0,
+        "current_price": 938.75,
+        "target_price": 951.0,
+        "stop_loss_price": 906.2,
+        "quantity": 21,
+        "pnl": 393.75,
+        "status": "FORCE_EXITED",
+        "strategy_type": "MOMENTUM",
+        "confidence_score": 9
+      },
+      {
+        "tradingsymbol": "ITC",
+        "entry_price": 305.0,
+        "current_price": 310.15,
+        "target_price": 316.0,
+        "stop_loss_price": 300.43,
+        "quantity": 65,
+        "pnl": 334.75,
+        "status": "FORCE_EXITED",
+        "strategy_type": "MOMENTUM",
+        "confidence_score": 8
+      },
+      {
+        "tradingsymbol": "DLF",
+        "entry_price": 596.0,
+        "current_price": 608.15,
+        "target_price": 617.0,
+        "stop_loss_price": 587.06,
+        "quantity": 33,
+        "pnl": 400.95,
+        "status": "FORCE_EXITED",
+        "strategy_type": "MOMENTUM",
+        "confidence_score": 8
+      },
+      {
+        "tradingsymbol": "CGPOWER",
+        "entry_price": 800.0,
+        "current_price": 808,
+        "target_price": 828.0,
+        "stop_loss_price": 788.0,
+        "quantity": 25,
+        "pnl": 200.0,
+        "status": "FORCE_EXITED",
+        "strategy_type": "MOMENTUM",
+        "confidence_score": 8
+      },
+      {
+        "tradingsymbol": "GAIL",
+        "entry_price": 157.7,
+        "current_price": 160.63,
+        "target_price": 163.5,
+        "stop_loss_price": 155.34,
+        "quantity": 126,
+        "pnl": 369.18,
+        "status": "FORCE_EXITED",
+        "strategy_type": "MOMENTUM",
+        "confidence_score": 8
+      }
+    ],
+    "total_pnl": 1698.63,
+    "realized_loss": 0,
+    "daily_loss_cap": 100000,
+    "loss_cap_pct": 0
+  },
+  "history": {
+    "daily_pnl": [
+      {
+        "date": "2026-04-17",
+        "pnl": -802
+      },
+      {
+        "date": "2026-04-21",
+        "pnl": 1698.63
+      }
+    ],
+    "cumulative_pnl": 896.63,
+    "win_rate": 100.0,
+    "total_days": 2
+  }
+}

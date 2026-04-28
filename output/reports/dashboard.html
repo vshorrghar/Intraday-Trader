@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wealth Builder Pro</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;background:#f8fafc;color:#1e293b}
+.hd{background:#fff;padding:14px 24px;border-bottom:2px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.hd h1{font-size:18px;color:#0f172a}.hd .su{color:#64748b;font-size:11px;margin-top:2px}
+.w{max-width:1300px;margin:0 auto;padding:16px}
+.tabs{display:flex;gap:2px;background:#fff;border-radius:8px;padding:3px;border:1px solid #e2e8f0;margin-bottom:14px;box-shadow:0 1px 2px rgba(0,0,0,.04);flex-wrap:wrap}
+.tb{flex:1;padding:8px 4px;text-align:center;cursor:pointer;color:#64748b;font-size:11px;font-weight:600;border-radius:6px;min-width:100px}
+.tb:hover{color:#334155;background:#f1f5f9}.tb.a{color:#fff;background:#2563eb}
+.pn{display:none}.pn.a{display:block}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.cd{border-radius:10px;padding:14px;cursor:pointer;transition:.15s;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cd:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.cd .lb{font-size:9px;text-transform:uppercase;letter-spacing:1px;opacity:.7}
+.cd .vl{font-size:22px;font-weight:800;margin-top:3px}.cd .dt{font-size:10px;opacity:.5;margin-top:2px}
+.c1{background:linear-gradient(135deg,#ede9fe,#ddd6fe);color:#5b21b6}
+.c2{background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#166534}
+.c3{background:linear-gradient(135deg,#fee2e2,#fecaca);color:#991b1b}
+.c4{background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e}
+.c5{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af}
+.se{margin-bottom:18px}
+.se-t{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#475569;padding-bottom:6px;margin-bottom:8px;border-bottom:2px solid #e2e8f0}
+table{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+th{background:#f8fafc;color:#475569;font-size:10px;text-transform:uppercase;padding:8px 10px;text-align:left;border-bottom:2px solid #e2e8f0;cursor:pointer;user-select:none;white-space:nowrap}
+th:hover{background:#eef2ff;color:#2563eb}
+th .si{font-size:8px;margin-left:3px;opacity:.5}
+th.sd .si,th.sa .si{opacity:1;color:#2563eb}
+td{padding:7px 10px;border-bottom:1px solid #f1f5f9}tr:hover td{background:#f8fafc}
+.nm{font-weight:600;color:#0f172a;font-size:12px}
+.ac{font-size:10px;color:#475569;margin-top:1px}.re{font-size:10px;color:#94a3b8;font-style:italic}
+.p{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700}
+.pb{background:#dcfce7;color:#166534}.ph{background:#fef9c3;color:#854d0e}
+.ps{background:#fee2e2;color:#991b1b}.pe{background:#fecaca;color:#7f1d1d}
+.fl{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.fb{padding:4px 10px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;color:#475569;cursor:pointer;font-size:10px;font-weight:600}
+.fb:hover{border-color:#2563eb;color:#2563eb}.fb.a{background:#2563eb;border-color:#2563eb;color:#fff}
+.ug{background:#fffbeb;border-left:3px solid #f59e0b;border-radius:6px;padding:8px 12px;margin-bottom:5px;font-size:11px;line-height:1.4;color:#78350f}
+.rk{background:#fff7ed;border-left:3px solid #f97316;border-radius:6px;padding:6px 10px;margin-bottom:4px;font-size:11px;color:#9a3412}
+.lt{background:#fff;border-radius:8px;padding:12px;margin-bottom:8px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.lt-n{font-size:13px;font-weight:700;color:#0f172a}
+.lt-g{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px;text-align:center}
+.lt-l{font-size:8px;text-transform:uppercase;color:#64748b}.lt-v{font-size:13px;font-weight:700;margin-top:1px}
+.lt-th{font-size:11px;color:#475569;margin-top:5px}.lt-rk{font-size:10px;color:#dc2626;margin-top:2px}
+.id{background:#fff;border-radius:8px;padding:12px;margin-bottom:8px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.id-n{font-size:13px;font-weight:700;color:#0f172a}
+.id-g{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:6px;text-align:center}
+.id-l{font-size:8px;text-transform:uppercase;color:#64748b}.id-v{font-size:13px;font-weight:700;margin-top:1px}
+.id-r{font-size:10px;color:#475569;margin-top:5px}
+.mk{background:#fff;border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:#334155;line-height:1.4;border:1px solid #e2e8f0}
+.sc{display:inline-flex;gap:6px;background:#f8fafc;border-radius:6px;padding:5px 10px;margin:0 4px 4px 0;font-size:10px;border:1px solid #e2e8f0}
+.sc-b{border-left:3px solid #16a34a}.sc-r{border-left:3px solid #dc2626}
+.pr{background:#f0f9ff;border-left:3px solid #6366f1;border-radius:6px;padding:6px 10px;margin-bottom:4px;font-size:11px;color:#1e3a5f}
+.agg{background:#fef2f2;border-left:3px solid #dc2626;border-radius:6px;padding:8px 12px;margin-bottom:5px;font-size:11px;line-height:1.4}
+#ld{text-align:center;padding:50px;color:#64748b}#er{display:none;text-align:center;padding:30px;color:#dc2626}
+.stale-banner{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:12px;color:#991b1b}
+.stale-banner.ok{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
+.stale-banner .icon{font-size:18px}.stale-banner .dates{flex:1}.stale-banner .age{font-weight:700}
+@media(max-width:768px){.g4{grid-template-columns:repeat(2,1fr)}.id-g,.lt-g{grid-template-columns:repeat(2,1fr)}.tabs{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="hd"><h1>💼 Wealth Builder Pro</h1><div class="su" id="dt"></div></div>
+<div class="w">
+<div id="xlsx-banner"></div>
+<div id="ld">⏳</div><div id="er">❌ No data</div>
+<div id="app" style="display:none">
+<div class="tabs">
+<div class="tb a" onclick="sw(0)">📊 Portfolio</div>
+<div class="tb" onclick="sw(1)">🏦 MFs & SIPs</div>
+<div class="tb" onclick="sw(2)">🎯 My Decisions</div>
+<div class="tb" onclick="sw(3)">📈 Buy Now</div>
+<div class="tb" onclick="sw(4)">⚡ Intraday</div>
+<div class="tb" onclick="sw(5)">🌐 Market Intel</div>
+<div class="tb" onclick="sw(6)">🔥 Opportunities</div>
+</div>
+<div class="pn a" id="p0"></div>
+<div class="pn" id="p1"></div>
+<div class="pn" id="p2"></div>
+<div class="pn" id="p3"></div>
+<div class="pn" id="p4"></div>
+<div class="pn" id="p5"></div>
+<div class="pn" id="p6"></div>
+</div></div>
+<script>
+let D,af='ALL',mf='ALL';
+function sw(i){document.querySelectorAll('.tb').forEach((t,j)=>t.classList.toggle('a',j===i));document.querySelectorAll('.pn').forEach((p,j)=>p.classList.toggle('a',j===i))}
+function pc(v){v=(v||'').toUpperCase();return v.includes('BUY')?'pb':v==='HOLD'?'ph':v==='SELL'?'ps':'pe'}
+function mc(v){v=(v||'').toUpperCase();return v.includes('CONTINUE')?'pb':v==='HOLD'?'ph':v.includes('STOP')?'ps':v.includes('START')?'pb':'pe'}
+function sf(f){af=f;delete SS['t0'];rP0()}
+function mff(f){mf=f;delete SS['t1mf'];rP1()}
+function df(f){df2=f;delete SS['t2'];rP2()}
+// Sort state per table: {tableId: {col: index, dir: 0=none,1=desc,2=asc}}
+let SS={};
+function sortTbl(tid,ci){
+let t=document.getElementById(tid);if(!t)return;
+let s=SS[tid]||(SS[tid]={col:-1,dir:0,orig:[]});
+let tb=t.querySelector('tbody');if(!tb)return;
+let rows=[...tb.querySelectorAll('tr')];
+// Save original order on first sort
+if(!s.orig.length)s.orig=rows.map(r=>r.cloneNode(true));
+// Cycle: if same col, advance dir; else start desc
+if(s.col===ci){s.dir=(s.dir+1)%3}else{s.col=ci;s.dir=1}
+// Update header indicators
+t.querySelectorAll('th').forEach((th,i)=>{th.classList.remove('sd','sa');
+let si=th.querySelector('.si');if(si)si.textContent='⇅';
+if(i===ci&&s.dir===1){th.classList.add('sd');if(si)si.textContent='↓'}
+if(i===ci&&s.dir===2){th.classList.add('sa');if(si)si.textContent='↑'}});
+if(s.dir===0){// Restore original
+tb.innerHTML='';s.orig.forEach(r=>tb.appendChild(r.cloneNode(true)));return}
+let parseVal=txt=>{txt=(txt||'').replace(/[₹,%+\s]/g,'').replace(/,/g,'');let n=parseFloat(txt);return isNaN(n)?txt.toLowerCase():n};
+rows.sort((a,b)=>{
+let av=parseVal(a.cells[ci]?.textContent);let bv=parseVal(b.cells[ci]?.textContent);
+if(typeof av==='number'&&typeof bv==='number')return s.dir===1?bv-av:av-bv;
+let sa=String(av),sb=String(bv);return s.dir===1?sb.localeCompare(sa):sa.localeCompare(sb)});
+tb.innerHTML='';rows.forEach(r=>tb.appendChild(r))}
+// Box filter for decisions tab
+let df2='ALL';
+function fk(o,k){if(!o||typeof o!=='object')return null;if(k in o)return o[k];for(let v of Object.values(o)){let r=fk(v,k);if(r!==null)return r}return null}
+async function load(){
+try{let r=await fetch('./data.json');if(!r.ok)r=await fetch('./latest.json');if(!r.ok)throw 0;
+let raw=await r.json();D={};
+['individual_stock_verdicts','mf_verdicts','top_5_urgent_actions','portfolio_health_score','key_risks',
+'long_term_picks','future_multibaggers','dip_buying_opportunities','etf_mf_recommendations','aggressive_calls',
+'intraday_setups','sectors_to_watch','promoter_signals','market_summary','fii_dii_interpretation','fii_dii',
+'portfolio_summary','recent_stock_buys','active_sips','new_stock_recommendations','goal_tracker','opportunities'
+].forEach(k=>{let v=fk(raw,k);if(v!==null)D[k]=v});
+D.generated_at=raw.generated_at||'';
+D.xlsx_dates=raw.xlsx_dates||{};
+document.getElementById('ld').style.display='none';document.getElementById('app').style.display='block';
+// XLSX date banner
+let xd=D.xlsx_dates||{};
+let bannerEl=document.getElementById('xlsx-banner');
+if(xd.stocks||xd.mf){
+let parts=[];
+if(xd.stocks)parts.push('Stocks: '+xd.stocks);
+if(xd.mf)parts.push('MF: '+xd.mf);
+if(xd.pnl)parts.push('P&L: '+xd.pnl);
+// Check staleness — parse date and compare to today
+let newest=null;
+Object.values(xd).forEach(ds=>{try{let p=new Date(ds);if(!newest||p>newest)newest=p}catch(e){}});
+let ageDays=newest?Math.floor((new Date()-newest)/(1000*60*60*24)):99;
+let stale=ageDays>3;
+let ageText=ageDays===0?'today':ageDays===1?'yesterday':ageDays+' days ago';
+bannerEl.innerHTML=`<div class="stale-banner ${stale?'':'ok'}"><span class="icon">${stale?'⚠️':'✅'}</span><div class="dates">Portfolio data from: ${parts.join(' | ')} — <span class="age">${stale?'⚠️ '+ageText+' — download fresh XLSX from Groww!':ageText}</span></div></div>`;
+}
+let ps=D.portfolio_summary||{};
+document.getElementById('dt').textContent=`₹${(ps.total_current||0).toLocaleString('en-IN')} | P&L: ₹${(ps.total_pnl||0).toLocaleString('en-IN')} (${ps.pnl_pct||0}%) | ${ps.stock_count||0} stocks, ${ps.mf_count||0} MFs`;
+rP0();rP1();rP2();rP3();rP4();rP5();rP6();
+}catch(e){console.error(e);document.getElementById('ld').style.display='none';document.getElementById('er').style.display='block'}}
+</script>
+<script>
+// TAB 0: My Portfolio
+function rP0(){
+let s=D.individual_stock_verdicts||[];let u=D.top_5_urgent_actions||[];let rk=D.key_risks||[];let sc=D.portfolio_health_score||0;
+let C={BUY:0,HOLD:0,SELL:0,EXIT:0};s.forEach(x=>{let v=(x.verdict||'').toUpperCase();if(v in C)C[v]++;else if(v.includes('BUY'))C.BUY++;else if(v.includes('SELL'))C.SELL++});
+let cl=sc>=60?'#16a34a':sc>=40?'#ca8a04':'#dc2626';
+let h=`<div class="g4"><div class="cd c1" onclick="sf('ALL')" style="cursor:pointer"><div class="lb">Health</div><div class="vl" style="color:${cl}">${sc||'—'}/100</div><div class="dt">${s.length} stocks</div></div>
+<div class="cd c2" onclick="sf('BUY')" style="cursor:pointer"><div class="lb">Buy/Hold</div><div class="vl">${C.BUY}/${C.HOLD}</div></div>
+<div class="cd c3" onclick="sf('SELL')" style="cursor:pointer"><div class="lb">Sell/Exit</div><div class="vl">${C.SELL}/${C.EXIT}</div></div>
+<div class="cd c4" onclick="sf('EXIT')" style="cursor:pointer"><div class="lb">Exit Only</div><div class="vl">${C.EXIT}</div></div></div>`;
+if(u.length){h+=`<div class="se"><div class="se-t">🚨 Urgent</div>`;u.forEach(x=>h+=`<div class="ug">${typeof x==='string'?x.replace(/^\d+\.\s*/,''):x}</div>`);h+=`</div>`}
+let ty=['ALL','BUY','HOLD','SELL','EXIT'];h+=`<div class="se"><div class="se-t">Verdicts</div><div class="fl">`;
+ty.forEach(v=>h+=`<button class="fb ${v===af?'a':''}" onclick="sf('${v}')">${v}(${v==='ALL'?s.length:(C[v]||0)})</button>`);
+h+=`</div><table id="t0"><thead><tr><th onclick="sortTbl('t0',0)">Stock <span class="si">⇅</span></th><th onclick="sortTbl('t0',1)">Qty <span class="si">⇅</span></th><th onclick="sortTbl('t0',2)">Avg ₹ <span class="si">⇅</span></th><th onclick="sortTbl('t0',3)">Now ₹ <span class="si">⇅</span></th><th onclick="sortTbl('t0',4)">Value <span class="si">⇅</span></th><th onclick="sortTbl('t0',5)">P&L <span class="si">⇅</span></th><th onclick="sortTbl('t0',6)">Trend <span class="si">⇅</span></th><th onclick="sortTbl('t0',7)">Verdict <span class="si">⇅</span></th><th>Action</th></tr></thead><tbody>`;
+let fl=af==='ALL'?s:s.filter(x=>(x.verdict||'').toUpperCase()===af);
+fl.forEach(x=>{
+let pnl=x.pnl_pct||0;let pnlAbs=x.pnl_abs||0;
+let pnlColor=pnl>=0?'#16a34a':'#dc2626';
+let trend=pnl>10?'🟢 Bullish':pnl>0?'🟡 Neutral':pnl>-10?'🟠 Weak':'🔴 Bearish';
+h+=`<tr>
+<td class="nm">${x.name||''}<div style="font-size:9px;color:#94a3b8">${x.holding_type||''}</div></td>
+<td style="text-align:right;font-weight:600">${x.qty||'—'}</td>
+<td style="text-align:right">₹${x.avg_price||'—'}</td>
+<td style="text-align:right;font-weight:600">₹${x.current_price||'—'}</td>
+<td style="text-align:right">₹${(x.current_value||0).toLocaleString('en-IN')}</td>
+<td style="text-align:right"><div style="font-weight:700;font-size:13px;color:${pnlColor}">${pnl>=0?'+':''}${pnl}%</div><div style="font-size:10px;color:${pnlColor}">${pnlAbs>=0?'+':''}₹${Math.abs(pnlAbs).toLocaleString('en-IN')}</div></td>
+<td style="font-size:11px">${trend}</td>
+<td><span class="p ${pc(x.verdict)}">${(x.verdict||'').toUpperCase()}</span></td>
+<td><div style="font-size:11px;color:#1e293b;font-weight:500">${x.action||''}</div><div style="font-size:10px;color:#64748b">${x.reason||''}</div></td>
+</tr>`});
+h+=`</tbody></table></div>`;
+if(rk.length){h+=`<div class="se"><div class="se-t">⚠️ Risks</div>`;rk.forEach(x=>h+=`<div class="rk">${x}</div>`);h+=`</div>`}
+document.getElementById('p0').innerHTML=h}
+</script>
+<script>
+// TAB 1: MFs & SIPs
+function rP1(){
+let m=D.mf_verdicts||[];let sips=D.active_sips||[];
+let C={CONTINUE_SIP:0,HOLD:0,STOP_SIP:0,START_SIP:0};
+m.forEach(x=>{let v=(x.verdict||'').toUpperCase();if(v in C)C[v]++;else if(v.includes('CONTINUE'))C.CONTINUE_SIP++;else if(v.includes('STOP'))C.STOP_SIP++;else if(v.includes('START'))C.START_SIP++});
+let activeSips=sips.filter(s=>s.frequency==='Monthly SIP').length;
+// GOAL TRACKER — first thing you see
+let gt2=D.goal_tracker||{};
+let h='';
+if(gt2.target){
+h+=`<div style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border-radius:12px;padding:16px;margin-bottom:14px;border:2px solid #16a34a">`;
+h+=`<div style="font-size:14px;font-weight:800;color:#166534;margin-bottom:8px">🎯 GOAL: ₹10 CRORE</div>`;
+h+=`<div class="g4">`;
+h+=`<div style="text-align:center"><div style="font-size:10px;color:#166534;text-transform:uppercase">Current</div><div style="font-size:22px;font-weight:800;color:#166534">₹${(gt2.current/10000000).toFixed(1)} Cr</div></div>`;
+h+=`<div style="text-align:center"><div style="font-size:10px;color:#991b1b;text-transform:uppercase">Gap</div><div style="font-size:22px;font-weight:800;color:#991b1b">₹${(gt2.gap/10000000).toFixed(1)} Cr</div></div>`;
+h+=`<div style="text-align:center"><div style="font-size:10px;color:#1e40af;text-transform:uppercase">Monthly SIP</div><div style="font-size:22px;font-weight:800;color:#1e40af">₹${(gt2.monthly_sip||0).toLocaleString('en-IN')}</div></div>`;
+h+=`<div style="text-align:center"><div style="font-size:10px;color:#5b21b6;text-transform:uppercase">ETA @15%</div><div style="font-size:22px;font-weight:800;color:#5b21b6">${gt2.years_with_sip_15pct||'?'} yrs</div></div>`;
+h+=`</div>`;
+let pct2=Math.min(gt2.progress_pct||0,100);
+h+=`<div style="background:#fff;border-radius:8px;height:28px;margin-top:10px;overflow:hidden;border:1px solid #16a34a"><div style="background:linear-gradient(90deg,#16a34a,#22c55e);height:100%;width:${pct2}%;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700">${gt2.progress_pct||0}% done</div></div>`;
+h+=`</div>`;}
+
+// ACCELERATION SCENARIOS
+let sc2=gt2.scenarios||[];
+if(sc2.length){
+h+=`<div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:14px;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.06)">`;
+h+=`<div style="font-size:13px;font-weight:800;color:#1e40af;margin-bottom:10px">🚀 HOW TO REACH ₹10 CR FASTER</div>`;
+h+=`<table id="t1sc" style="font-size:12px"><thead><tr><th onclick="sortTbl('t1sc',0)">Scenario <span class="si">⇅</span></th><th onclick="sortTbl('t1sc',1)">Monthly SIP <span class="si">⇅</span></th><th onclick="sortTbl('t1sc',2)">CAGR <span class="si">⇅</span></th><th onclick="sortTbl('t1sc',3)">Years to ₹10Cr <span class="si">⇅</span></th><th>What to Do</th></tr></thead><tbody>`;
+sc2.forEach((s,i)=>{
+let bg=i===0?'#f8fafc':i===sc2.length-1?'#fef2f2':'#fff';
+let yClr=s.years<=8?'#16a34a':s.years<=10?'#ca8a04':'#64748b';
+let bold=i===0||i===sc2.length-1?'font-weight:700':'';
+h+=`<tr style="background:${bg};${bold}">
+<td style="font-weight:600">${s.label}</td>
+<td style="text-align:right">₹${(s.sip||0).toLocaleString('en-IN')}</td>
+<td style="text-align:center">${s.cagr}%</td>
+<td style="text-align:center;font-weight:800;font-size:14px;color:${yClr}">${s.years} yrs</td>
+<td style="font-size:11px;color:#475569">${s.tip}</td>
+</tr>`});
+h+=`</tbody></table></div>`}
+
+// ACTION TIPS
+let tips=gt2.action_tips||[];
+if(tips.length){
+h+=`<div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:12px;padding:16px;margin-bottom:14px;border:1px solid #93c5fd">`;
+h+=`<div style="font-size:13px;font-weight:800;color:#1e40af;margin-bottom:10px">💡 ACTION PLAN — Do This Now</div>`;
+tips.forEach(t=>{
+h+=`<div style="background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:6px;border-left:3px solid #2563eb;box-shadow:0 1px 2px rgba(0,0,0,.04)">`;
+h+=`<div style="font-size:12px;font-weight:700;color:#1e293b">${t.icon} ${t.title}</div>`;
+h+=`<div style="font-size:11px;color:#475569;margin-top:2px">${t.detail}</div>`;
+h+=`</div>`});
+h+=`</div>`}
+
+h+=`<div class="g4"><div class="cd c2" onclick="mff('CONTINUE_SIP')" style="cursor:pointer"><div class="lb">Continue SIP</div><div class="vl">${C.CONTINUE_SIP}</div></div>
+<div class="cd c1" onclick="mff('HOLD')" style="cursor:pointer"><div class="lb">Hold</div><div class="vl">${C.HOLD}</div></div>
+<div class="cd c3" onclick="mff('STOP_SIP')" style="cursor:pointer"><div class="lb">Stop SIP</div><div class="vl">${C.STOP_SIP}</div><div class="dt">Active SIPs only</div></div>
+<div class="cd c4" onclick="mff('START_SIP')" style="cursor:pointer"><div class="lb">Start SIP</div><div class="vl">${C.START_SIP}</div><div class="dt">Restart opportunity</div></div></div>`;
+if(sips.length){h+=`<div class="se"><div class="se-t">📅 Active SIPs (from Order History)</div>`;
+// Group by SIP day for calendar view
+let byDay={};let sipTotal=0;
+sips.filter(s=>s.frequency==='Monthly SIP').forEach(s=>{
+    let d=s.sip_day||0;
+    if(!byDay[d])byDay[d]=[];
+    byDay[d].push(s);
+    sipTotal+=s.last_amount||0;
+});
+h+=`<div class="g4"><div class="cd c2"><div class="lb">Monthly SIP Total</div><div class="vl">₹${sipTotal.toLocaleString('en-IN')}</div><div class="dt">₹${(sipTotal*12).toLocaleString('en-IN')}/year</div></div>
+<div class="cd c5"><div class="lb">Active SIPs</div><div class="vl">${sips.filter(s=>s.frequency==='Monthly SIP').length}</div><div class="dt">Monthly recurring</div></div>
+<div class="cd c4"><div class="lb">Next SIP Window</div><div class="vl">7th-28th</div><div class="dt">Keep balance ready</div></div>
+<div class="cd c1"><div class="lb">Yearly Investment</div><div class="vl">₹${(sipTotal*12/100000).toFixed(1)}L</div><div class="dt">Via SIPs alone</div></div></div>`;
+h+=`<table id="t1sip"><thead><tr><th onclick="sortTbl('t1sip',0)">SIP Day <span class="si">⇅</span></th><th onclick="sortTbl('t1sip',1)">Scheme <span class="si">⇅</span></th><th onclick="sortTbl('t1sip',2)">Amount <span class="si">⇅</span></th><th onclick="sortTbl('t1sip',3)">Purchases <span class="si">⇅</span></th><th>Status</th></tr></thead><tbody>`;
+// Sort by day
+let sortedSips=[...sips].filter(s=>s.frequency==='Monthly SIP').sort((a,b)=>(a.sip_day||99)-(b.sip_day||99));
+sortedSips.forEach(s=>{h+=`<tr>
+<td style="font-weight:700;font-size:14px;color:#2563eb">${s.sip_day?s.sip_day+'th':'?'}</td>
+<td class="nm">${s.scheme}</td>
+<td style="font-weight:600;text-align:right">₹${(s.last_amount||0).toLocaleString('en-IN')}</td>
+<td style="text-align:center">${s.count}x</td>
+<td><span class="p pb">ACTIVE</span></td>
+</tr>`});
+h+=`<tr style="background:#f0fdf4;font-weight:700"><td></td><td>TOTAL</td><td style="text-align:right;font-size:14px;color:#16a34a">₹${sipTotal.toLocaleString('en-IN')}/mo</td><td></td><td></td></tr>`;
+h+=`</tbody></table></div>`}
+
+// (Goal tracker rendered at top of rP1 via gt2)
+
+let ty=['ALL','CONTINUE_SIP','HOLD','STOP_SIP','START_SIP'];h+=`<div class="se"><div class="se-t">MF Verdicts</div><div class="fl">`;
+ty.forEach(v=>h+=`<button class="fb ${v===mf?'a':''}" onclick="mff('${v}')">${v.replace(/_/g,' ')}(${v==='ALL'?m.length:(C[v]||0)})</button>`);
+h+=`</div><table id="t1mf"><thead><tr><th onclick="sortTbl('t1mf',0)">Scheme <span class="si">⇅</span></th><th onclick="sortTbl('t1mf',1)">SIP <span class="si">⇅</span></th><th onclick="sortTbl('t1mf',2)">Units <span class="si">⇅</span></th><th onclick="sortTbl('t1mf',3)">Invested <span class="si">⇅</span></th><th onclick="sortTbl('t1mf',4)">Current <span class="si">⇅</span></th><th onclick="sortTbl('t1mf',5)">Returns <span class="si">⇅</span></th><th onclick="sortTbl('t1mf',6)">XIRR <span class="si">⇅</span></th><th onclick="sortTbl('t1mf',7)">Verdict <span class="si">⇅</span></th></tr></thead><tbody>`;
+let fl=mf==='ALL'?m:m.filter(x=>(x.verdict||'').toUpperCase()===mf);
+fl.forEach(x=>{
+let rpct=x.returns_pct||0;let rclr=rpct>=0?'#16a34a':'#dc2626';
+let sipSt=x.sip_status||'?';let sipClr=sipSt==='ACTIVE'?'pb':sipSt==='INACTIVE'?'ph':'ps';
+h+=`<tr>
+<td><div class="nm">${x.scheme||''}</div><div style="font-size:9px;color:#94a3b8">${x.amc||''} | ${x.category||''} / ${x.sub_category||''}</div></td>
+<td><span class="p ${sipClr}">${sipSt}</span></td>
+<td style="text-align:right">${x.units||'—'}</td>
+<td style="text-align:right">₹${(x.invested||0).toLocaleString('en-IN')}</td>
+<td style="text-align:right;font-weight:600">₹${(x.current||0).toLocaleString('en-IN')}</td>
+<td style="text-align:right;color:${rclr};font-weight:700">${rpct>=0?'+':''}${rpct.toFixed(1)}%<br><span style="font-size:10px;font-weight:400">${(x.returns||0)>=0?'+':''}₹${Math.abs(x.returns||0).toLocaleString('en-IN')}</span></td>
+<td style="text-align:right;font-weight:700;color:${(x.xirr||0)>=12?'#16a34a':(x.xirr||0)>=8?'#ca8a04':'#dc2626'}">${x.xirr||0}%</td>
+<td><span class="p ${mc(x.verdict)}">${(x.verdict||'').replace(/_/g,' ')}</span>${x.action&&x.action.includes('🔥')?`<div style="font-size:10px;color:#dc2626;margin-top:2px">${x.action}</div>`:''}</td>
+</tr>`});
+h+=`</tbody></table></div>`;
+document.getElementById('p1').innerHTML=h}
+</script>
+<script>
+// TAB 2: My Decisions Scorecard
+function rP2(){
+let buys=D.recent_stock_buys||[];let sips=D.active_sips||[];let h='';
+if(buys.length){
+let great=buys.filter(b=>b.pnl_pct>20).length;
+let good=buys.filter(b=>b.pnl_pct>5&&b.pnl_pct<=20).length;
+let ok=buys.filter(b=>b.pnl_pct>=-5&&b.pnl_pct<=5).length;
+let bad=buys.filter(b=>b.pnl_pct<-5&&b.pnl_pct>=-20).length;
+let terrible=buys.filter(b=>b.pnl_pct<-20).length;
+let hitRate=Math.round((great+good)/buys.length*100);
+h+=`<div class="g4"><div class="cd c2" onclick="df('GOOD')" style="cursor:pointer"><div class="lb">Great/Good</div><div class="vl">${great+good}</div><div class="dt">&gt;5% gain</div></div>
+<div class="cd c4" onclick="df('OK')" style="cursor:pointer"><div class="lb">Neutral</div><div class="vl">${ok}</div><div class="dt">±5%</div></div>
+<div class="cd c3" onclick="df('BAD')" style="cursor:pointer"><div class="lb">Bad/Terrible</div><div class="vl">${bad+terrible}</div><div class="dt">&gt;5% loss</div></div>
+<div class="cd c1" onclick="df('ALL')" style="cursor:pointer"><div class="lb">Hit Rate</div><div class="vl">${hitRate}%</div><div class="dt">${buys.length} buys</div></div></div>`;
+h+=`<div class="se"><div class="se-t">🎯 Recent Stock Buy Scorecard</div><table id="t2"><thead><tr><th onclick="sortTbl('t2',0)">Date <span class="si">⇅</span></th><th onclick="sortTbl('t2',1)">Stock <span class="si">⇅</span></th><th onclick="sortTbl('t2',2)">Buy ₹ <span class="si">⇅</span></th><th onclick="sortTbl('t2',3)">Now ₹ <span class="si">⇅</span></th><th onclick="sortTbl('t2',4)">P&L <span class="si">⇅</span></th><th onclick="sortTbl('t2',5)">Grade <span class="si">⇅</span></th></tr></thead><tbody>`;
+let fb=df2==='ALL'?buys:df2==='GOOD'?buys.filter(b=>b.pnl_pct>5):df2==='OK'?buys.filter(b=>b.pnl_pct>=-5&&b.pnl_pct<=5):buys.filter(b=>b.pnl_pct<-5);
+fb.forEach(b=>{
+let gc=b.grade==='GREAT'?'pb':b.grade==='GOOD'?'pb':b.grade==='OK'?'ph':b.grade==='BAD'?'ps':'pe';
+h+=`<tr><td style="font-size:10px">${b.date||''}</td><td class="nm">${b.name||''}</td><td>₹${b.buy_price||0}</td><td>₹${b.current_price||0}</td><td style="color:${b.pnl_pct>=0?'#16a34a':'#dc2626'};font-weight:700">${b.pnl_pct>=0?'+':''}${b.pnl_pct||0}%</td><td><span class="p ${gc}">${b.grade||''}</span></td></tr>`});
+h+=`</tbody></table></div>`}
+else h='<div style="text-align:center;color:#64748b;padding:30px">Download Stock Order History from Groww → put in input/ → re-run</div>';
+document.getElementById('p2').innerHTML=h}
+</script>
+<script>
+// TAB 3: Buy Now (long-term picks + dip buys + ETF/MF recs + aggressive calls)
+function rP3(){
+let picks=D.long_term_picks||D.new_stock_recommendations||[];
+let dips=D.dip_buying_opportunities||[];
+let etfs=D.etf_mf_recommendations||[];
+let agg=D.aggressive_calls||[];
+let multi=D.future_multibaggers||[];
+let h='';
+if(picks.length){h+=`<div class="se"><div class="se-t">📈 Long-Term Stock Picks</div>`;
+picks.forEach(p=>{h+=`<div class="lt"><div style="display:flex;justify-content:space-between"><div><div class="lt-n">${p.stock||p.name||''} <span style="color:#64748b;font-size:10px">${p.nse_symbol||''}</span></div><div style="font-size:10px;color:#64748b">${p.sector||''}</div></div><span class="p ${(p.confidence||'')==='HIGH'?'pb':'ph'}">${p.confidence||''}</span></div>
+<div class="lt-g"><div><div class="lt-l">CMP</div><div class="lt-v" style="color:#1e293b">₹${p.cmp_approx||'?'}</div></div><div><div class="lt-l">Target</div><div class="lt-v" style="color:#16a34a">₹${p.target_1yr||p.target||'?'}</div></div><div><div class="lt-l">Stop Loss</div><div class="lt-v" style="color:#dc2626">₹${p.stop_loss||'?'}</div></div></div>
+<div class="lt-th">💡 ${p.thesis||p.why||''}</div>${p.risk?`<div class="lt-rk">⚠️ ${p.risk}</div>`:''}</div>`});h+=`</div>`}
+if(dips.length){h+=`<div class="se"><div class="se-t">🛒 Dip Buying Opportunities</div>`;
+dips.forEach(d=>{h+=`<div class="lt"><div style="display:flex;justify-content:space-between"><div><div class="lt-n">${d.stock||d.name||''} <span style="color:#64748b;font-size:10px">${d.nse_symbol||''}</span></div><div style="font-size:10px;color:#64748b">${d.sector||''}</div></div><span class="p ${(d.confidence||'')==='HIGH'?'pb':'ph'}">${d.confidence||''}</span></div>
+<div class="lt-g"><div><div class="lt-l">Entry Zone</div><div class="lt-v" style="color:#16a34a">${d.entry_zone||'?'}</div></div><div><div class="lt-l">Target</div><div class="lt-v" style="color:#16a34a">₹${d.target||'?'}</div></div><div><div class="lt-l">Stop Loss</div><div class="lt-v" style="color:#dc2626">₹${d.stop_loss||'?'}</div></div></div>
+<div class="lt-th">📉 ${d.why_dip||''}</div><div class="lt-th">💡 ${d.thesis||''}</div></div>`});h+=`</div>`}
+if(etfs.length){h+=`<div class="se"><div class="se-t">🏦 New ETF/MF to Start SIP</div>`;
+etfs.forEach(e=>{h+=`<div class="lt"><div style="display:flex;justify-content:space-between"><div><div class="lt-n">${e.name||''}</div><div style="font-size:10px;color:#64748b">${e.type||''} | ${e.category||''}</div></div><span class="p ph">${e.risk_level||''}</span></div>
+<div class="lt-g"><div><div class="lt-l">SIP Amount</div><div class="lt-v" style="color:#1e293b">${e.monthly_sip||'?'}</div></div><div><div class="lt-l">Expected</div><div class="lt-v" style="color:#16a34a">${e.expected_returns||'?'}</div></div><div><div class="lt-l">Risk</div><div class="lt-v">${e.risk_level||'?'}</div></div></div>
+<div class="lt-th">💡 ${e.why||''}</div></div>`});h+=`</div>`}
+if(multi.length){h+=`<div class="se"><div class="se-t">🚀 Future Multibaggers (3-5x potential)</div>`;
+multi.forEach(m=>{h+=`<div class="lt"><div class="lt-n">${m.name||m.stock||''} <span style="color:#64748b;font-size:10px">${m.nse_symbol||''} | ${m.sector||''}</span></div>
+<div class="lt-th">💡 ${m.thesis||''}</div><div class="lt-th" style="color:#64748b">${m.key_metrics||''}</div>
+${m.entry_range?`<div style="font-size:11px;margin-top:3px">Entry: ${m.entry_range} | Timeframe: ${m.timeframe||'?'}</div>`:''}
+${m.risk?`<div class="lt-rk">⚠️ ${m.risk}</div>`:''}</div>`});h+=`</div>`}
+if(agg.length){h+=`<div class="se"><div class="se-t">🔥 Aggressive / Contrarian Calls</div>`;
+agg.forEach(a=>{h+=`<div class="agg"><b>[${a.type||''}]</b> ${a.call||''}<br><span style="color:#475569">${a.reasoning||''}</span><br><span style="color:#dc2626">⚠️ ${a.risk||''}</span> | ⏰ ${a.timeframe||''}</div>`});h+=`</div>`}
+if(!h)h='<div style="text-align:center;color:#64748b;padding:30px">Run <b>./go.sh</b> to get buy recommendations</div>';
+document.getElementById('p3').innerHTML=h}
+</script>
+<script>
+// TAB 4: Intraday Setups
+function rP4(){
+let st=D.intraday_setups||[];
+if(!st.length){document.getElementById('p4').innerHTML='<div style="text-align:center;color:#64748b;padding:30px">Run <b>./go.sh</b> for intraday setups</div>';return}
+let h=`<div class="se"><div class="se-t">⚡ Intraday Setups for Tomorrow</div>`;
+st.forEach((s,i)=>{let dr=(s.direction||'LONG').toUpperCase();
+h+=`<div class="id"><div style="display:flex;justify-content:space-between"><div class="id-n">${i+1}. ${s.stock||''} <span style="color:#64748b;font-size:10px">${s.nse_symbol||''}</span></div><div><span class="p ${dr==='LONG'?'pb':'ps'}">${dr}</span> <span class="p ${(s.confidence||'')==='HIGH'?'pb':'ph'}">${s.confidence||''}</span></div></div>
+<div style="font-size:10px;color:#64748b;margin:3px 0">${s.setup_type||''}</div>
+<div class="id-g"><div><div class="id-l">Entry</div><div class="id-v" style="color:#16a34a">${s.entry_range||'?'}</div></div><div><div class="id-l">T1</div><div class="id-v" style="color:#2563eb">₹${s.target_1||'?'}</div></div><div><div class="id-l">T2</div><div class="id-v" style="color:#2563eb">₹${s.target_2||'?'}</div></div><div><div class="id-l">SL</div><div class="id-v" style="color:#dc2626">₹${s.stop_loss||'?'}</div></div><div><div class="id-l">R:R</div><div class="id-v" style="color:#ca8a04">${s.risk_reward||'?'}</div></div></div>
+<div class="id-r">📝 ${s.rationale||''}</div></div>`});
+h+=`</div>`;document.getElementById('p4').innerHTML=h}
+
+// TAB 5: Market Intel
+function rP5(){
+let fii=D.fii_dii||{};let sec=D.sectors_to_watch||[];let pro=D.promoter_signals||[];let h='';
+if(D.market_summary)h+=`<div class="mk">📰 ${D.market_summary}</div>`;
+if(fii.fii_net!==undefined){let fn=fii.fii_net||0,dn=fii.dii_net||0;
+h+=`<div class="se"><div class="se-t">🏦 FII/DII</div>`;
+if(D.fii_dii_interpretation)h+=`<div style="font-size:12px;color:#475569;margin-bottom:8px">${D.fii_dii_interpretation}</div>`;
+h+=`<div style="margin-bottom:3px"><span style="color:#64748b;display:inline-block;width:35px">FII</span><b style="color:${fn>=0?'#16a34a':'#dc2626'}">${fn>=0?'+':''}₹${Math.abs(fn).toLocaleString('en-IN')} Cr</b></div>`;
+h+=`<div><span style="color:#64748b;display:inline-block;width:35px">DII</span><b style="color:${dn>=0?'#16a34a':'#dc2626'}">${dn>=0?'+':''}₹${Math.abs(dn).toLocaleString('en-IN')} Cr</b></div></div>`}
+if(sec.length){h+=`<div class="se"><div class="se-t">🔄 Sectors to Watch</div>`;
+sec.forEach(s=>{let b=(s.direction||'').toUpperCase()==='BULLISH';h+=`<div class="sc ${b?'sc-b':'sc-r'}"><b style="color:${b?'#16a34a':'#dc2626'}">${b?'▲':'▼'} ${s.sector||''}</b> <span style="color:#475569">${s.reason||''}</span>${s.top_stock?` <b style="color:#2563eb">→ ${s.top_stock}</b>`:''}</div>`});h+=`</div>`}
+if(pro.length){h+=`<div class="se"><div class="se-t">👥 Promoter Signals</div>`;
+pro.forEach(p=>h+=`<div class="pr"><b>${p.stock||''}</b> — ${p.signal||''}<br><span style="color:#4f46e5">${p.significance||''}</span></div>`);h+=`</div>`}
+if(!h)h='<div style="text-align:center;color:#64748b;padding:30px">Run <b>./go.sh</b> for market intel</div>';
+document.getElementById('p5').innerHTML=h}
+
+// TAB 6: Opportunities (AI Crash Picks)
+function rP6(){
+let o=D.opportunities||D.opportunity_picks||{};let h='';
+let sp=o.stock_picks||[];let ep=o.etf_picks||[];
+console.log('rP6: opportunities=',o,'stocks=',sp.length,'etfs=',ep.length);
+if(!sp.length&&!ep.length){h='<div style="text-align:center;color:#64748b;padding:30px">Run <code>python3 run_opportunities.py</code> then <code>python3 build_dashboard.py</code></div>';document.getElementById('p6').innerHTML=h;return}
+// Build portfolio lookup with values for overlap detection
+let myStocks=new Set();let myValues={};
+(D.individual_stock_verdicts||[]).forEach(s=>{
+let n=(s.name||'').toUpperCase();let sym=(s.symbol||'').toUpperCase();
+myStocks.add(n);myStocks.add(sym);
+let val=parseFloat(s.current_value||s.closing_value||0);
+let pnl=parseFloat(s.pnl_pct||s.pnl_percent||0);
+if(n)myValues[n]={value:val,pnl:pnl,qty:parseInt(s.qty||s.quantity||0),avg:parseFloat(s.avg_price||s.avg_buy_price||0),cmp:parseFloat(s.current_price||s.closing_price||0)};
+if(sym)myValues[sym]={value:val,pnl:pnl,qty:parseInt(s.qty||s.quantity||0),avg:parseFloat(s.avg_price||s.avg_buy_price||0),cmp:parseFloat(s.current_price||s.closing_price||0)};
+});
+let regime=o.market_regime||'';let vix=o.vix_assessment||'';let rot=o.sector_rotation||'';
+let av=o.avoid_list||[];let alloc=o.allocation_advice||'';let gen=o.generated_at||'';
+// Header
+h+=`<div class="se"><div class="se-t">🔥 AI Crash Opportunity Scanner</div>`;
+if(gen)h+=`<div style="font-size:10px;color:#94a3b8;margin-bottom:8px">Generated: ${gen}</div>`;
+if(regime)h+=`<div style="background:#fef3c7;border-left:3px solid #f59e0b;padding:8px 12px;border-radius:6px;margin-bottom:8px;font-size:12px"><b>Market Regime:</b> ${regime.toUpperCase()} ${vix?'| <b>VIX:</b> '+vix:''}</div>`;
+if(rot)h+=`<div style="background:#ede9fe;border-left:3px solid #7c3aed;padding:8px 12px;border-radius:6px;margin-bottom:8px;font-size:11px"><b>Sector Rotation:</b> ${rot}</div>`;
+h+=`</div>`;
+// Stock picks
+if(sp.length){
+h+=`<div class="se"><div class="se-t">📈 Stock Picks (${sp.length})</div>`;
+h+=`<table><tr><th>#</th><th>Stock</th><th>Sector</th><th>Action</th><th>CMP</th><th>Target</th><th>SL</th><th>Score</th><th>Conviction</th><th>Horizon</th></tr>`;
+sp.forEach((p,i)=>{
+let ac=p.action||'';let acl=ac.includes('strong')?'pb':ac==='buy'?'pb':ac==='accumulate'?'ph':'';
+let conv=p.conviction||'';let ce=conv==='high'?'⭐⭐⭐':conv==='medium'?'⭐⭐':'⭐';
+let sym=(p.symbol||'').toUpperCase();let nm=(p.name||'').toUpperCase();
+let inPortfolio=myStocks.has(sym)||[...myStocks].some(s=>nm.includes(s)||s.includes(nm.substring(0,10)));
+let myInfo=myValues[sym]||myValues[nm]||[...Object.entries(myValues)].find(([k])=>nm.includes(k)||k.includes(nm.substring(0,10)))?.[1]||null;
+let badge='',rowBg='',avgTip='';
+if(inPortfolio&&myInfo){
+let cmp=p.current_price||0;let avg=myInfo.avg||0;let qty=myInfo.qty||0;let val=myInfo.value||0;
+let pnlPct=avg>0?((cmp-avg)/avg*100):0;
+// Calculate: if you buy same qty at CMP, new avg = (old_total + new_total) / (2 * qty)
+let newAvg=avg>0&&cmp>0?((avg*qty+cmp*qty)/(2*qty)):0;
+let addAmt=cmp*qty; // same qty again
+let suggestQty=Math.max(1,Math.round(qty*0.5)); // suggest 50% of current qty
+let suggestAmt=suggestQty*cmp;
+let newAvgPartial=avg>0&&cmp>0?((avg*qty+cmp*suggestQty)/(qty+suggestQty)):0;
+badge=`<span style="background:#dbeafe;color:#1e40af;padding:2px 8px;border-radius:8px;font-size:9px;font-weight:700;margin-left:4px">📌 IN PORTFOLIO</span>`;
+avgTip=`<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:6px 10px;margin-top:4px;font-size:10px;line-height:1.5">`;
+avgTip+=`<b>Your position:</b> ${qty} shares @ ₹${avg.toLocaleString('en-IN',{maximumFractionDigits:0})} avg | Value: ₹${val.toLocaleString('en-IN',{maximumFractionDigits:0})} | P&L: <span style="color:${pnlPct>=0?'#16a34a':'#dc2626'}">${pnlPct.toFixed(1)}%</span><br>`;
+if(pnlPct<-5&&cmp<avg){
+avgTip+=`<b style="color:#2563eb">💡 Average down:</b> Buy ${suggestQty} more @ ₹${cmp.toLocaleString('en-IN')} (₹${suggestAmt.toLocaleString('en-IN',{maximumFractionDigits:0})}) → New avg: ₹${newAvgPartial.toFixed(0)}`;
+}else if(pnlPct>=0){
+avgTip+=`<b style="color:#16a34a">✅ In profit.</b> Add ₹${suggestAmt.toLocaleString('en-IN',{maximumFractionDigits:0})} to strengthen position if conviction is high.`;
+}else{
+avgTip+=`<b style="color:#ca8a04">⏳ Slight dip.</b> Wait for deeper correction or add small (₹${Math.round(suggestAmt/2).toLocaleString('en-IN')}).`;
+}
+avgTip+=`</div>`;
+rowBg='background:#f0f9ff;';
+}else if(inPortfolio){
+badge=`<span style="background:#dbeafe;color:#1e40af;padding:2px 8px;border-radius:8px;font-size:9px;font-weight:700;margin-left:4px">📌 IN PORTFOLIO</span>`;
+rowBg='background:#f0f9ff;';
+}
+h+=`<tr style="${rowBg}"><td>${i+1}</td><td><div class="nm"><a href="https://www.screener.in/company/${p.symbol||''}" target="_blank" style="color:#2563eb;text-decoration:none">${p.name||p.symbol||''}</a>${badge}</div><div style="color:#334155;font-size:11px;line-height:1.4;margin-top:3px">${(p.rationale||'').substring(0,200)}${(p.rationale||'').length>200?'...':''}</div>${avgTip}${p.risk_factors?'<div style="color:#b91c1c;font-size:10px;margin-top:3px;font-weight:500">⚠️ '+p.risk_factors.substring(0,120)+'</div>':''}</td>`;
+h+=`<td>${p.sector||''}</td><td><span class="p ${acl}">${ac.toUpperCase()}</span></td>`;
+h+=`<td>₹${(p.current_price||0).toLocaleString('en-IN')}</td><td style="color:#16a34a">₹${(p.target_price||0).toLocaleString('en-IN')}</td>`;
+h+=`<td style="color:#dc2626">₹${(p.stop_loss||0).toLocaleString('en-IN')}</td>`;
+h+=`<td><b>${p.score||0}</b>/100</td><td>${ce}</td><td>${p.time_horizon||''}</td></tr>`;
+});
+h+=`</table></div>`;
+}
+// ETF picks
+if(ep.length){
+h+=`<div class="se"><div class="se-t">📊 ETF Picks (${ep.length})</div>`;
+h+=`<table><tr><th>#</th><th>ETF</th><th>Action</th><th>CMP</th><th>Target</th><th>Score</th><th>Rationale</th></tr>`;
+ep.forEach((e,i)=>{
+let ac=e.action||'';let acl=ac.includes('strong')?'pb':ac==='buy'?'pb':'ph';
+h+=`<tr><td>${i+1}</td><td><div class="nm"><a href="https://www.screener.in/company/${e.symbol||''}" target="_blank" style="color:#2563eb;text-decoration:none">${e.name||e.symbol||''}</a></div></td>`;
+h+=`<td><span class="p ${acl}">${ac.toUpperCase()}</span></td>`;
+h+=`<td>₹${(e.current_price||0).toLocaleString('en-IN')}</td><td style="color:#16a34a">₹${(e.target_price||0).toLocaleString('en-IN')}</td>`;
+h+=`<td><b>${e.score||0}</b>/100</td><td style="font-size:10px">${(e.rationale||'').substring(0,150)}</td></tr>`;
+});
+h+=`</table></div>`;
+}
+// Avoid list
+if(av.length){
+h+=`<div class="se"><div class="se-t">🚫 Avoid List</div>`;
+av.forEach(a=>h+=`<div class="rk">❌ ${a}</div>`);
+h+=`</div>`;
+}
+// Allocation advice
+if(alloc){
+h+=`<div class="se"><div class="se-t">💰 Allocation Advice</div>`;
+h+=`<div class="ug">${alloc}</div></div>`;
+}
+document.getElementById('p6').innerHTML=h}
+load();
+</script></body></html>

@@ -1,0 +1,18 @@
+Script started on Mon Apr 27 00:10:45 2026
+ev-sandbox/run_daily.sh') | sort -u | crontab -
+
+echo '--- Cron set ---'
+crontab -l
+echo ''
+echo '--- Scripts ---'
+ls -la \${APP_DIR}/run_daily.sh \${APP_DIR}/run_fno_daily.sh
+" 2>&1
+]633;P;ContinuationPrompt=%_> ]633;P;HasRichCommandDetection=True[1m[7m%[27m[1m[0m                                                                                         ]633;D]633;P;Cwd=/Users/vshorgha/kiro/websites/intraday-trader]633;EnvSingleStart;0;;]633;EnvSingleEnd;;[0m[27m[24m[J]633;A(base) vshorgha@c889f3b49f3d intraday-trader % ]633;B[K[?2004heev-sandbox/run_daily.sh') | sort -u | cron [Kttab -[?2004l
+[0m[27m[24m[J]633;Fquote> ]633;G[K[?2004h[?2004l
+[0m[27m[24m[J]633;Fquote> ]633;G[K[?2004heecho '--- Cron set ---'[?2004l
+[0m[27m[24m[J]633;Fquote> ]633;G[K[?2004hccrontab -l[?2004l
+[0m[27m[24m[J]633;Fquote> ]633;G[K[?2004heecho ''[?2004l
+[0m[27m[24m[J]633;Fquote> ]633;G[K[?2004heecho '--- Scripts ---'[?2004l
+[0m[27m[24m[J]633;Fquote> ]633;G[K[?2004hlls -la \${APP_DIR}/run_daily.sh \${APP_DIR}/run_fno_daily.sh[?2004l
+[0m[27m[24m[J]633;Fquote> ]633;G[K[?2004h"" 2>&1[?2004l
+[0m[27m[24m[J]633;Fquote> ]633;G[K[?2004h

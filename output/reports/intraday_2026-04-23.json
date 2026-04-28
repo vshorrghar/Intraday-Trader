@@ -1,0 +1,45 @@
+{
+  "updated_at": "2026-04-23T15:30:00+05:30",
+  "mode": "DRY_RUN",
+  "broker": "demo",
+  "session_active": false,
+  "today": {
+    "trades": [
+      {
+        "tradingsymbol": "HUDCO",
+        "entry_price": 199.5,
+        "current_price": 205.5,
+        "target_price": 205.5,
+        "stop_loss_price": 195.5,
+        "quantity": 501,
+        "pnl": 3006.0,
+        "status": "CLOSED",
+        "strategy_type": "REVERSAL",
+        "confidence_score": 7
+      }
+    ],
+    "total_pnl": 3006.0,
+    "realized_loss": 0,
+    "daily_loss_cap": 100000,
+    "loss_cap_pct": 0
+  },
+  "history": {
+    "daily_pnl": [
+      {
+        "date": "2026-04-17",
+        "pnl": -802
+      },
+      {
+        "date": "2026-04-21",
+        "pnl": 1699
+      },
+      {
+        "date": "2026-04-23",
+        "pnl": 3006.0
+      }
+    ],
+    "cumulative_pnl": 3903.0,
+    "win_rate": 100.0,
+    "total_days": 3
+  }
+}

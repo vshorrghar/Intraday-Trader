@@ -1,0 +1,104 @@
+{
+  "trade_date": "2026-04-28",
+  "mode": "DRY_RUN",
+  "broker_name": "dhan",
+  "generated_at": "2026-04-28T13:14:38.893044+05:30",
+  "trades": [
+    {
+      "tradingsymbol": "ADANIPOWER",
+      "symbol": "Adani Power Limited",
+      "entry_price": 219.5,
+      "exit_price": 220.6,
+      "target_price": 227.5,
+      "stop_loss_price": 221.3,
+      "quantity": 65,
+      "pnl": 71.5,
+      "status": "STOPPED_OUT",
+      "confidence_score": 8,
+      "strategy_type": "GAP",
+      "rationale": "Energy sector leading (+0.70%), stock gapped up 0.66% with 7.87M volume. Entry at open price \u20b9219.50, currently trading near HOD at \u20b9221.50. Strong momentum in CPSE/Energy sectors. Gap continuation setup with volume confirmation."
+    },
+    {
+      "tradingsymbol": "SUZLON",
+      "symbol": "Suzlon Energy Limited",
+      "entry_price": 57.15,
+      "exit_price": 57.35,
+      "target_price": 59.15,
+      "stop_loss_price": 57.35,
+      "quantity": 218,
+      "pnl": 43.6,
+      "status": "STOPPED_OUT",
+      "confidence_score": 7,
+      "strategy_type": "MOMENTUM",
+      "rationale": "Massive volume 19.87M shares, highest among candidates. Small gap up 0.39% in Energy sector. Entry at open \u20b957.15, showing sustained buying above open. Clean setup with exceptional liquidity for quick exits."
+    },
+    {
+      "tradingsymbol": "HFCL",
+      "symbol": "HFCL Limited",
+      "entry_price": 107.2,
+      "exit_price": 107.52,
+      "target_price": 111.0,
+      "stop_loss_price": 107.77,
+      "quantity": 116,
+      "pnl": 37.12,
+      "status": "STOPPED_OUT",
+      "confidence_score": 7,
+      "strategy_type": "MOMENTUM",
+      "rationale": "Telecom/Infrastructure play with 5.44M volume. Small gap up 0.48%, trading at \u20b9107.33 near entry. Infrastructure sector positive (+0.10%). Good volume confirmation with tight range from open, showing controlled momentum."
+    },
+    {
+      "tradingsymbol": "COHANCE",
+      "symbol": "Cohance Lifesciences Limited",
+      "entry_price": 444.45,
+      "exit_price": 492.2,
+      "target_price": 462.0,
+      "stop_loss_price": 435.0,
+      "quantity": 24,
+      "pnl": 1146.0,
+      "status": "CLOSED",
+      "confidence_score": 6,
+      "strategy_type": "GAP",
+      "rationale": "Strong gap up +2.86% with 8.01M volume after pullback. Pharma sector slightly negative but stock showing relative strength. Currently at \u20b9494.10, well above open - indicating strong buying. Entry at open for gap continuation play."
+    }
+  ],
+  "metrics": {
+    "total_pnl": 1298.22,
+    "total_trades": 4,
+    "winning_trades": 4,
+    "losing_trades": 0,
+    "win_rate": 100.0,
+    "avg_profit": 324.56,
+    "avg_loss": 0,
+    "expectancy": 324.56,
+    "profit_factor": "inf"
+  },
+  "strategy_breakdown": {
+    "GAP": {
+      "total_pnl": 1217.5,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 608.75,
+      "avg_loss": 0,
+      "expectancy": 608.75,
+      "profit_factor": "inf"
+    },
+    "MOMENTUM": {
+      "total_pnl": 80.72,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 40.36,
+      "avg_loss": 0,
+      "expectancy": 40.36,
+      "profit_factor": "inf"
+    }
+  },
+  "cumulative": {
+    "total_pnl": 2319.64,
+    "overall_win_rate": 100.0,
+    "max_drawdown": 0.0
+  }
+}

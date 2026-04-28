@@ -1,0 +1,19 @@
+{
+  "trade_date": "2026-04-24",
+  "mode": "PAPER",
+  "broker": "dhan",
+  "total_strategies": 0,
+  "winning_strategies": 0,
+  "losing_strategies": 0,
+  "win_rate": 0,
+  "total_pnl": 0,
+  "cumulative_pnl": 4725.7,
+  "max_drawdown": 0.0,
+  "expectancy": 0.0,
+  "avg_profit": 0,
+  "avg_loss": 0,
+  "theta_decay_pnl": 0.0,
+  "strategy_metrics": {},
+  "strategies": [],
+  "trades": []
+}

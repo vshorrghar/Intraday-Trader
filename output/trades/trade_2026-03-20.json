@@ -1,0 +1,48 @@
+[
+  {
+    "date": "2026-03-20 03:13 IST",
+    "mode": "DRY_RUN",
+    "setup": {
+      "action": "SKIP",
+      "stock": "",
+      "nse_symbol": "",
+      "entry": 0,
+      "target": 0,
+      "stop_loss": 0,
+      "quantity": 0,
+      "rationale": "",
+      "reason": "Claude returned empty response"
+    },
+    "validation": {
+      "valid": true,
+      "skip": true,
+      "reason": "Claude returned empty response"
+    },
+    "executed": false,
+    "order_id": "",
+    "error": ""
+  },
+  {
+    "date": "2026-03-20 12:59 IST",
+    "mode": "DRY_RUN",
+    "setup": {
+      "action": "SKIP",
+      "stock": "",
+      "nse_symbol": "",
+      "entry": 0,
+      "target": 0,
+      "stop_loss": 0,
+      "quantity": 0,
+      "rationale": "",
+      "reason": "Claude returned empty response"
+    },
+    "validation": {
+      "valid": true,
+      "skip": true,
+      "reason": "Claude returned empty response"
+    },
+    "executed": false,
+    "order_id": "",
+    "error": ""
+  }
+]

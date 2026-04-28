@@ -1,0 +1,61 @@
+{
+  "updated_at": "2026-04-17T15:30:00+05:30",
+  "mode": "DRY_RUN",
+  "broker": "demo",
+  "session_active": false,
+  "today": {
+    "trades": [
+      {
+        "tradingsymbol": "RECLTD",
+        "entry_price": 383.0,
+        "current_price": 379.5,
+        "target_price": 390.0,
+        "stop_loss_price": 379.5,
+        "quantity": 87,
+        "pnl": -304.5,
+        "status": "STOPPED_OUT",
+        "strategy_type": "ORB",
+        "confidence_score": 7
+      },
+      {
+        "tradingsymbol": "CGPOWER",
+        "entry_price": 793.0,
+        "current_price": 787.0,
+        "target_price": 806.0,
+        "stop_loss_price": 787.0,
+        "quantity": 42,
+        "pnl": -252.0,
+        "status": "STOPPED_OUT",
+        "strategy_type": "GAP",
+        "confidence_score": 7
+      },
+      {
+        "tradingsymbol": "PFC",
+        "entry_price": 473.0,
+        "current_price": 469.5,
+        "target_price": 480.0,
+        "stop_loss_price": 469.5,
+        "quantity": 70,
+        "pnl": -245.0,
+        "status": "STOPPED_OUT",
+        "strategy_type": "VWAP",
+        "confidence_score": 7
+      }
+    ],
+    "total_pnl": -801.5,
+    "realized_loss": 801.5,
+    "daily_loss_cap": 100000,
+    "loss_cap_pct": 0
+  },
+  "history": {
+    "daily_pnl": [
+      {
+        "date": "2026-04-17",
+        "pnl": -801.5
+      }
+    ],
+    "cumulative_pnl": -801.5,
+    "win_rate": 0.0,
+    "total_days": 1
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "trade_date": "2026-04-15",
+  "mode": "DRY_RUN",
+  "broker_name": "dhan",
+  "generated_at": "2026-04-15T12:41:20.756176+05:30",
+  "trades": [
+    {
+      "tradingsymbol": "RELIANCE",
+      "symbol": "Reliance Industries",
+      "entry_price": 500,
+      "exit_price": 504.94,
+      "target_price": 520,
+      "stop_loss_price": 505.03,
+      "quantity": 50,
+      "pnl": 247.0,
+      "status": "STOPPED_OUT",
+      "confidence_score": 8,
+      "strategy_type": "MOMENTUM",
+      "rationale": "Strong momentum with sector support"
+    },
+    {
+      "tradingsymbol": "TATAMOTORS",
+      "symbol": "Tata Motors",
+      "entry_price": 800,
+      "exit_price": 784.75,
+      "target_price": 830,
+      "stop_loss_price": 785,
+      "quantity": 54,
+      "pnl": -823.5,
+      "status": "STOPPED_OUT",
+      "confidence_score": 7,
+      "strategy_type": "GAP",
+      "rationale": "Gap-up with volume confirmation"
+    },
+    {
+      "tradingsymbol": "HDFCBANK",
+      "symbol": "HDFC Bank",
+      "entry_price": 600,
+      "exit_price": 601.55,
+      "target_price": 624,
+      "stop_loss_price": 601.79,
+      "quantity": 83,
+      "pnl": 128.65,
+      "status": "STOPPED_OUT",
+      "confidence_score": 9,
+      "strategy_type": "ORB",
+      "rationale": "ORB candidate in banking sector"
+    }
+  ],
+  "metrics": {
+    "total_pnl": -447.85,
+    "total_trades": 3,
+    "winning_trades": 2,
+    "losing_trades": 1,
+    "win_rate": 66.67,
+    "avg_profit": 187.82,
+    "avg_loss": -823.5,
+    "expectancy": -149.28,
+    "profit_factor": 0.46
+  },
+  "strategy_breakdown": {
+    "MOMENTUM": {
+      "total_pnl": 247.0,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 247.0,
+      "avg_loss": 0,
+      "expectancy": 247.0,
+      "profit_factor": "inf"
+    },
+    "GAP": {
+      "total_pnl": -823.5,
+      "total_trades": 1,
+      "winning_trades": 0,
+      "losing_trades": 1,
+      "win_rate": 0.0,
+      "avg_profit": 0,
+      "avg_loss": -823.5,
+      "expectancy": -823.5,
+      "profit_factor": 0.0
+    },
+    "ORB": {
+      "total_pnl": 128.65,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 128.65,
+      "avg_loss": 0,
+      "expectancy": 128.65,
+      "profit_factor": "inf"
+    }
+  },
+  "cumulative": {
+    "total_pnl": -895.7,
+    "overall_win_rate": 66.67,
+    "max_drawdown": 0.0
+  }
+}

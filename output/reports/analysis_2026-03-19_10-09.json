@@ -1,0 +1,1816 @@
+{
+  "generated_at": "2026-03-18T13:21:30.438483",
+  "portfolio_analysis": {
+    "generated_at": "2026-03-18T10:54:36.791803",
+    "portfolio_analysis": {
+      "generated_at": "2026-03-17T20:12:53.744731",
+      "portfolio_analysis": {
+        "generated_at": "2026-03-17T20:01:30.589679",
+        "portfolio_analysis": {
+          "generated_at": "2026-03-17T19:58:27.565417",
+          "portfolio_analysis": {
+            "generated_at": "2026-03-17T19:54:08.188839",
+            "portfolio_analysis": {
+              "generated_at": "2026-03-17T16:32:44.101428",
+              "portfolio_analysis": {
+                "individual_stock_verdicts": [
+                  {
+                    "name": "INDIAN RAILWAY FIN CORP L",
+                    "verdict": "HOLD",
+                    "action": "Book 50% profits, set trailing stop at ₹85",
+                    "reason": "151% gains justify partial profit booking while staying invested in strong PSU momentum"
+                  },
+                  {
+                    "name": "VEDANTA LIMITED",
+                    "verdict": "HOLD",
+                    "action": "Book 40% profits, hold rest with stop at ₹550",
+                    "reason": "Commodity cycle peaking, secure profits but maintain exposure"
+                  },
+                  {
+                    "name": "NIP IND ETF GOLD BEES",
+                    "verdict": "HOLD",
+                    "action": "Continue SIP, good portfolio hedge",
+                    "reason": "Gold ETF provides diversification, reasonable 26% returns"
+                  },
+                  {
+                    "name": "TATA MOTORS LIMITED",
+                    "verdict": "HOLD",
+                    "action": "Book 30% profits, stop loss at ₹380",
+                    "reason": "Strong EV transition story but auto sector volatility warrants profit booking"
+                  },
+                  {
+                    "name": "CPSE ETF",
+                    "verdict": "HOLD",
+                    "action": "Continue holding, PSU momentum intact",
+                    "reason": "Diversified PSU exposure with steady 23% returns"
+                  },
+                  {
+                    "name": "TATA MOTORS PASS VEH LTD",
+                    "verdict": "SELL",
+                    "action": "Exit on any bounce above ₹350",
+                    "reason": "26% loss with weak passenger vehicle dynamics"
+                  },
+                  {
+                    "name": "SUZLON ENERGY LIMITED",
+                    "verdict": "SELL",
+                    "action": "Exit on bounce above ₹45",
+                    "reason": "Renewable energy story intact but execution concerns persist"
+                  },
+                  {
+                    "name": "MOTILAL OS NASDAQ100 ETF",
+                    "verdict": "HOLD",
+                    "action": "Continue SIP, minor loss acceptable",
+                    "reason": "US tech exposure needed in portfolio despite marginal loss"
+                  },
+                  {
+                    "name": "UJJIVAN SMALL FINANC BANK",
+                    "verdict": "HOLD",
+                    "action": "Hold with stop at ₹48",
+                    "reason": "Small finance bank with reasonable 26% gains"
+                  },
+                  {
+                    "name": "GLOBAL HEALTH LIMITED",
+                    "verdict": "SELL",
+                    "action": "Book 60% profits immediately",
+                    "reason": "227% gains unsustainable, healthcare valuations stretched"
+                  },
+                  {
+                    "name": "SRM CONTRACTORS LIMITED",
+                    "verdict": "HOLD",
+                    "action": "Book 40% profits, infrastructure cycle continues",
+                    "reason": "Strong infra story but secure gains after 87% returns"
+                  },
+                  {
+                    "name": "RELIANCE INDUSTRIES LTD",
+                    "verdict": "BUY",
+                    "action": "Accumulate more on dips below ₹1350",
+                    "reason": "Core holding with digital/retail growth, only 11% gains leave room"
+                  },
+                  {
+                    "name": "HDFC BANK LTD",
+                    "verdict": "BUY",
+                    "action": "Add more, quality private bank",
+                    "reason": "Premium banking franchise, modest 13% gains offer opportunity"
+                  },
+                  {
+                    "name": "INFOSYS LIMITED",
+                    "verdict": "HOLD",
+                    "action": "Average down if falls below ₹1200",
+                    "reason": "IT services leader, 10% loss in strong company is temporary"
+                  },
+                  {
+                    "name": "QUALITY POWER ELEC EQUP L",
+                    "verdict": "SELL",
+                    "action": "Book 70% profits, exit small cap risk",
+                    "reason": "129% gains in small cap electrical equipment company too risky"
+                  },
+                  {
+                    "name": "POWER FIN CORP LTD.",
+                    "verdict": "HOLD",
+                    "action": "Hold, PSU financing story intact",
+                    "reason": "Minor 4% loss in power financing PSU, fundamentals strong"
+                  },
+                  {
+                    "name": "YATHARTH HOSP & TRA C S L",
+                    "verdict": "SELL",
+                    "action": "Book 60% profits, healthcare valuations high",
+                    "reason": "133% gains in hospital stock, valuations look stretched"
+                  },
+                  {
+                    "name": "ADANI POWER LTD",
+                    "verdict": "SELL",
+                    "action": "Book 50% profits, Adani group risk",
+                    "reason": "161% gains but corporate governance concerns in Adani group"
+                  },
+                  {
+                    "name": "HINDALCO INDUSTRIES LTD",
+                    "verdict": "HOLD",
+                    "action": "Book 30% profits, metal cycle peaking",
+                    "reason": "Diversified metal player with 80% gains, commodity cycle risk"
+                  },
+                  {
+                    "name": "MIRAEAMC - MAFANG",
+                    "verdict": "HOLD",
+                    "action": "Continue holding US tech exposure",
+                    "reason": "Global tech diversification with modest 18% returns"
+                  },
+                  {
+                    "name": "ADANI ENERGY SOLUTION LTD",
+                    "verdict": "SELL",
+                    "action": "Exit completely, Adani group risk",
+                    "reason": "Corporate governance concerns outweigh 16% gains"
+                  },
+                  {
+                    "name": "BLACKBUCK LIMITED",
+                    "verdict": "SELL",
+                    "action": "Book 60% profits in logistics tech",
+                    "reason": "110% gains in new-age tech company, secure profits"
+                  },
+                  {
+                    "name": "BIKAJI FOODS INTERN LTD",
+                    "verdict": "SELL",
+                    "action": "Book 50% profits, FMCG premium valuations",
+                    "reason": "106% gains in food company, valuations look stretched"
+                  },
+                  {
+                    "name": "OIL INDIA LTD",
+                    "verdict": "HOLD",
+                    "action": "Hold PSU oil company",
+                    "reason": "Steady PSU with 16% gains, oil sector fundamentals decent"
+                  },
+                  {
+                    "name": "TATA STEEL LIMITED",
+                    "verdict": "HOLD",
+                    "action": "Book 25% profits, steel cycle concerns",
+                    "reason": "Metal major with 41% gains but steel cycle showing fatigue"
+                  },
+                  {
+                    "name": "DELHIVERY LIMITED",
+                    "verdict": "HOLD",
+                    "action": "Hold logistics leader",
+                    "reason": "Dominant logistics player with 13% gains, e-commerce tailwinds"
+                  },
+                  {
+                    "name": "PNC INFRATECH LTD.",
+                    "verdict": "SELL",
+                    "action": "Exit on any bounce above ₹220",
+                    "reason": "32% loss in infrastructure company signals execution issues"
+                  },
+                  {
+                    "name": "INDIAN RENEWABLE ENERGY",
+                    "verdict": "HOLD",
+                    "action": "Book 40% profits, renewable story intact",
+                    "reason": "74% gains in clean energy, secure some profits"
+                  },
+                  {
+                    "name": "ETERNAL LIMITED",
+                    "verdict": "SELL",
+                    "action": "Book 60% profits immediately",
+                    "reason": "149% gains in chemical company, unsustainable run-up"
+                  },
+                  {
+                    "name": "IRB INFRA DEV LTD.",
+                    "verdict": "SELL",
+                    "action": "Exit on bounce above ₹48",
+                    "reason": "28% loss in road developer, asset monetization story weak"
+                  },
+                  {
+                    "name": "OLA ELECTRIC MOBILITY LTD",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, cut losses",
+                    "reason": "79% loss in troubled EV company, no recovery thesis"
+                  },
+                  {
+                    "name": "Mishtann Foods Limited",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, penny stock risk",
+                    "reason": "73% loss in small food company, liquidity concerns"
+                  },
+                  {
+                    "name": "STL NETWORKS LIMITED",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, avoid further losses",
+                    "reason": "72% loss in telecom equipment, no turnaround visible"
+                  },
+                  {
+                    "name": "ITC HOTELS LIMITED",
+                    "verdict": "EXIT",
+                    "action": "Exit completely, hospitality struggles",
+                    "reason": "72% loss in hotel business, recovery uncertain"
+                  },
+                  {
+                    "name": "WARDWIZARD INNOVATIONS AND MOB",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, EV bubble burst",
+                    "reason": "71% loss in EV two-wheeler, business model questionable"
+                  },
+                  {
+                    "name": "OSIA HYPER RETAIL LIMITED",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, retail struggles",
+                    "reason": "69% loss in retail company, no recovery prospects"
+                  },
+                  {
+                    "name": "GUJARAT TOOLROOM LTD.",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, penny stock",
+                    "reason": "65% loss in penny stock, avoid further erosion"
+                  },
+                  {
+                    "name": "EASY TRIP PLANNERS LTD",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, travel tech crash",
+                    "reason": "62% loss in travel platform, post-pandemic reality hit"
+                  },
+                  {
+                    "name": "NETWORK18 MEDIA & INV LTD",
+                    "verdict": "EXIT",
+                    "action": "Exit completely, media sector struggles",
+                    "reason": "58% loss in media company, digital disruption continues"
+                  },
+                  {
+                    "name": "H.G.INFRA ENGINEERING LTD",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, construction woes",
+                    "reason": "58% loss in infrastructure, execution and margin pressures"
+                  },
+                  {
+                    "name": "KNR CONSTRU LTD.",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, construction sector issues",
+                    "reason": "57% loss in road construction, working capital stress"
+                  },
+                  {
+                    "name": "PARAMOUNT COMM LTD",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, media disruption",
+                    "reason": "56% loss in communication/media, no turnaround story"
+                  },
+                  {
+                    "name": "Ultracab (India) Limited",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, penny stock",
+                    "reason": "54% loss in small cable company, avoid further losses"
+                  },
+                  {
+                    "name": "PRAKASH PIPES LIMITED",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, construction downturn",
+                    "reason": "54% loss in pipes/construction, sector headwinds persist"
+                  },
+                  {
+                    "name": "URJA GLOBAL LIMITED",
+                    "verdict": "EXIT",
+                    "action": "Exit immediately, small cap risk",
+                    "reason": "52% loss in small energy company, no clear recovery path"
+                  }
+                ],
+                "top_5_urgent_actions": [
+                  "1. EXIT IMMEDIATELY: Sell all stocks with >50% losses (12 positions) - OLA Electric, Mishtann Foods, STL Networks, etc. Cut ₹60,000+ losses",
+                  "2. BOOK MAJOR PROFITS: Sell 50-60% of Global Health (227% gains), Eternal Ltd (149% gains), Quality Power (129% gains) - Book ₹35,000+ profits",
+                  "3. PORTFOLIO CLEANUP: You have 269 positions which is unmanageable. Target to reduce to max 50-75 quality positions immediately",
+                  "4. ADANI GROUP EXIT: Sell both Adani Power and Adani Energy completely due to corporate governance risks despite gains",
+                  "5. STRENGTHEN CORE: Add more HDFC Bank, Reliance, and quality large caps while reducing small-cap exposure from 40%+ to 20%"
+                ],
+                "portfolio_health_score": 35,
+                "key_risks": [
+                  "EXTREME OVER-DIVERSIFICATION: 269 positions is impossible to manage effectively, leading to poor risk control",
+                  "SMALL-CAP OVEREXPOSURE: 40%+ allocation to small/micro caps creates huge volatility and liquidity risk",
+                  "LOSS-MAKING POSITIONS: 15+ positions with >50% losses eating into overall returns, need immediate exit",
+                  "SECTOR CONCENTRATION: Heavy exposure to infrastructure, renewable energy, and new-age tech at peak valuations",
+                  "ADANI GROUP RISK: Corporate governance concerns in Adani holdings despite current gains",
+                  "PROFIT BOOKING DISCIPLINE: Several positions with 100%+ gains not booked, creating reversal risk",
+                  "PENNY STOCK EXPOSURE: Multiple sub-₹10 stocks with liquidity and fundamental risks"
+                ]
+              },
+              "market_scan": {
+                "market_summary": "With zero FII/DII flows and no bulk/block deals, the market appears to be in a consolidation phase with low institutional activity. This creates opportunities for stock-specific plays based on fundamentals and technical setups rather than flow-driven momentum.",
+                "fii_dii_interpretation": "Neutral institutional flows suggest retail investors should focus on individual stock merits rather than following institutional trends. This environment favors stock picking over broad market bets.",
+                "long_term_picks": [
+                  {
+                    "stock": "Trent Ltd",
+                    "nse_symbol": "TRENT",
+                    "sector": "Retail",
+                    "cmp_approx": 6800,
+                    "target_1yr": 9500,
+                    "stop_loss": 5800,
+                    "thesis": "Strong retail expansion in tier-2/3 cities, Westside & Zudio formats gaining market share in premium and value segments respectively",
+                    "risk": "High valuation multiple and competition from online retail",
+                    "confidence": "HIGH"
+                  },
+                  {
+                    "stock": "Dixon Technologies",
+                    "nse_symbol": "DIXON",
+                    "sector": "Electronics Manufacturing",
+                    "cmp_approx": 15500,
+                    "target_1yr": 22000,
+                    "stop_loss": 13000,
+                    "thesis": "Beneficiary of PLI scheme for mobile manufacturing, expanding into washing machines and LED lighting with strong order book visibility",
+                    "risk": "Dependence on few large clients and margin pressure from competition",
+                    "confidence": "HIGH"
+                  },
+                  {
+                    "stock": "Polycab India",
+                    "nse_symbol": "POLYCAB",
+                    "sector": "Electrical Equipment",
+                    "cmp_approx": 7200,
+                    "target_1yr": 10000,
+                    "stop_loss": 6200,
+                    "thesis": "Infrastructure capex cycle beneficiary, strong distribution network, expanding FMEG business providing diversification",
+                    "risk": "Commodity price volatility affecting cable business margins",
+                    "confidence": "MEDIUM"
+                  },
+                  {
+                    "stock": "Kalyan Jewellers",
+                    "nse_symbol": "KALYANKJIL",
+                    "sector": "Jewelry Retail",
+                    "cmp_approx": 680,
+                    "target_1yr": 950,
+                    "stop_loss": 580,
+                    "thesis": "Aggressive store expansion, gaining market share from unorganized sector, strong same-store sales growth and improving margins",
+                    "risk": "Gold price volatility and high working capital requirements",
+                    "confidence": "MEDIUM"
+                  },
+                  {
+                    "stock": "Persistent Systems",
+                    "nse_symbol": "PERSISTENT",
+                    "sector": "IT Services",
+                    "cmp_approx": 5800,
+                    "target_1yr": 7500,
+                    "stop_loss": 5000,
+                    "thesis": "Specialized in product engineering services, strong client relationships in BFSI and healthcare, consistent revenue growth with margin expansion",
+                    "risk": "Client concentration and global economic slowdown impact",
+                    "confidence": "MEDIUM"
+                  }
+                ],
+                "intraday_setups": [
+                  {
+                    "stock": "Reliance Industries",
+                    "nse_symbol": "RELIANCE",
+                    "setup_type": "BREAKOUT",
+                    "direction": "LONG",
+                    "entry_range": "₹3050 - ₹3080",
+                    "target_1": 3150,
+                    "target_2": 3220,
+                    "stop_loss": 2980,
+                    "risk_reward": "1:2.4",
+                    "timing": "FIRST_30MIN",
+                    "rationale": "Testing resistance at 3050 level, volume buildup suggests breakout above this level for move towards 3150-3220",
+                    "confidence": "HIGH"
+                  },
+                  {
+                    "stock": "HDFC Bank",
+                    "nse_symbol": "HDFCBANK",
+                    "setup_type": "REVERSAL",
+                    "direction": "LONG",
+                    "entry_range": "₹1720 - ₹1740",
+                    "target_1": 1780,
+                    "target_2": 1820,
+                    "stop_loss": 1690,
+                    "risk_reward": "1:2.0",
+                    "timing": "ANYTIME",
+                    "rationale": "Oversold bounce expected from support zone, banking sector showing relative strength",
+                    "confidence": "MEDIUM"
+                  },
+                  {
+                    "stock": "Bajaj Finance",
+                    "nse_symbol": "BAJFINANCE",
+                    "setup_type": "MOMENTUM",
+                    "direction": "LONG",
+                    "entry_range": "₹7200 - ₹7250",
+                    "target_1": 7400,
+                    "target_2": 7550,
+                    "stop_loss": 7100,
+                    "risk_reward": "1:2.3",
+                    "timing": "OPEN",
+                    "rationale": "Strong momentum continuation expected above 7200, NBFC space showing strength",
+                    "confidence": "HIGH"
+                  },
+                  {
+                    "stock": "Asian Paints",
+                    "nse_symbol": "ASIANPAINT",
+                    "setup_type": "GAP_FILL",
+                    "direction": "SHORT",
+                    "entry_range": "₹2880 - ₹2900",
+                    "target_1": 2820,
+                    "target_2": 2760,
+                    "stop_loss": 2940,
+                    "risk_reward": "1:2.4",
+                    "timing": "FIRST_30MIN",
+                    "rationale": "Gap down expected to be filled, paint sector under pressure from input cost concerns",
+                    "confidence": "MEDIUM"
+                  },
+                  {
+                    "stock": "Tata Steel",
+                    "nse_symbol": "TATASTEEL",
+                    "setup_type": "BREAKOUT",
+                    "direction": "LONG",
+                    "entry_range": "₹145 - ₹147",
+                    "target_1": 155,
+                    "target_2": 162,
+                    "stop_loss": 140,
+                    "risk_reward": "1:2.4",
+                    "timing": "ANYTIME",
+                    "rationale": "Steel sector rotation play, breakout above 145 resistance for move towards 155-162 levels",
+                    "confidence": "MEDIUM"
+                  }
+                ],
+                "sectors_to_watch": [
+                  {
+                    "sector": "Banking",
+                    "direction": "BULLISH",
+                    "reason": "Credit growth momentum and improving asset quality metrics"
+                  },
+                  {
+                    "sector": "Retail",
+                    "direction": "BULLISH",
+                    "reason": "Festive season demand and rural recovery supporting consumption"
+                  },
+                  {
+                    "sector": "IT Services",
+                    "direction": "BEARISH",
+                    "reason": "Global slowdown concerns and delayed discretionary spending"
+                  },
+                  {
+                    "sector": "Metals",
+                    "direction": "BULLISH",
+                    "reason": "Infrastructure capex and potential commodity price recovery"
+                  }
+                ],
+                "promoter_signals": [
+                  {
+                    "stock": "Limited data",
+                    "signal": "No significant promoter activities",
+                    "significance": "Focus on technical and fundamental analysis in absence of corporate action signals"
+                  }
+                ]
+              },
+              "live_data": {
+                "fii_dii": {
+                  "date": "2026-03-17",
+                  "fii_buy": 0.0,
+                  "fii_sell": 0.0,
+                  "fii_net": 0.0,
+                  "dii_buy": 0.0,
+                  "dii_sell": 0.0,
+                  "dii_net": 0.0
+                },
+                "bulk_deals_count": 0
+              }
+            },
+            "market_scan": {
+              "market_summary": "Market data shows flat FII/DII flows today, suggesting consolidation phase with no major institutional activity. With no significant bulk deals, retail participation might drive tomorrow's moves. Markets likely to be range-bound with sector rotation opportunities.",
+              "fii_dii_interpretation": "Zero institutional flows indicate cautious stance by big money. Retail investors should focus on stock-specific fundamentals rather than following institutional trends. This creates opportunities in oversold quality names.",
+              "long_term_picks": [
+                {
+                  "stock": "ZOMATO",
+                  "nse_symbol": "ZOMATO",
+                  "sector": "Consumer Tech",
+                  "cmp_approx": 185,
+                  "target_1yr": 280,
+                  "stop_loss": 155,
+                  "thesis": "Strong food delivery market leadership, improving unit economics, and expansion into quick commerce. Blinkit integration showing positive results with rising AOV and order frequency",
+                  "risk": "Intense competition from Swiggy IPO and regulatory changes in gig economy",
+                  "confidence": "HIGH"
+                },
+                {
+                  "stock": "IRCTC",
+                  "nse_symbol": "IRCTC",
+                  "sector": "Travel & Tourism",
+                  "cmp_approx": 820,
+                  "target_1yr": 1200,
+                  "stop_loss": 720,
+                  "thesis": "Monopolistic railway ticketing platform with expanding ancillary services. Tourism revival and increasing digitization benefiting core business model",
+                  "risk": "Government policy changes on commission structure or new competitors",
+                  "confidence": "HIGH"
+                },
+                {
+                  "stock": "CRISIL",
+                  "nse_symbol": "CRISIL",
+                  "sector": "Financial Services",
+                  "cmp_approx": 4800,
+                  "target_1yr": 6200,
+                  "stop_loss": 4200,
+                  "thesis": "Leading credit rating agency with diversified analytics business. Growing demand for ESG ratings and risk management solutions in expanding credit market",
+                  "risk": "Economic slowdown reducing credit growth and rating revenues",
+                  "confidence": "MEDIUM"
+                },
+                {
+                  "stock": "DIXON TECHNOLOGIES",
+                  "nse_symbol": "DIXON",
+                  "sector": "Electronics Manufacturing",
+                  "cmp_approx": 13500,
+                  "target_1yr": 18000,
+                  "stop_loss": 11800,
+                  "thesis": "Pure play on PLI scheme beneficiary with expanding client base across mobiles, appliances. Strong execution track record and margin expansion potential",
+                  "risk": "PLI policy changes or loss of major client relationships",
+                  "confidence": "HIGH"
+                },
+                {
+                  "stock": "LEMON TREE HOTELS",
+                  "nse_symbol": "LEMONTREE",
+                  "sector": "Hotels & Hospitality",
+                  "cmp_approx": 135,
+                  "target_1yr": 190,
+                  "stop_loss": 115,
+                  "thesis": "Mid-segment hotel chain with asset-light model and strong pipeline. Corporate travel recovery and wedding season demand driving occupancy rates higher",
+                  "risk": "Economic downturn affecting travel demand or new supply in key markets",
+                  "confidence": "MEDIUM"
+                }
+              ],
+              "intraday_setups": [
+                {
+                  "stock": "RELIANCE",
+                  "nse_symbol": "RELIANCE",
+                  "setup_type": "BREAKOUT",
+                  "direction": "LONG",
+                  "entry_range": "₹2885 - ₹2895",
+                  "target_1": 2940,
+                  "target_2": 2980,
+                  "stop_loss": 2860,
+                  "risk_reward": "1:2.2",
+                  "timing": "FIRST_30MIN",
+                  "rationale": "Testing resistance at 2890 levels with good volume. Oil refining margins improving and retail business showing strength",
+                  "confidence": "HIGH"
+                },
+                {
+                  "stock": "HDFC BANK",
+                  "nse_symbol": "HDFCBANK",
+                  "setup_type": "REVERSAL",
+                  "direction": "LONG",
+                  "entry_range": "₹1645 - ₹1655",
+                  "target_1": 1685,
+                  "target_2": 1710,
+                  "stop_loss": 1625,
+                  "risk_reward": "1:2.1",
+                  "timing": "ANYTIME",
+                  "rationale": "Oversold after recent correction, finding support at 1645. Banking sector due for relief rally on NIM stabilization hopes",
+                  "confidence": "MEDIUM"
+                },
+                {
+                  "stock": "TCS",
+                  "nse_symbol": "TCS",
+                  "setup_type": "GAP_FILL",
+                  "direction": "SHORT",
+                  "entry_range": "₹4185 - ₹4195",
+                  "target_1": 4140,
+                  "target_2": 4110,
+                  "stop_loss": 4215,
+                  "risk_reward": "1:2.5",
+                  "timing": "OPEN",
+                  "rationale": "Gap up likely to be filled on profit booking. IT sector facing headwinds from delayed client spending decisions",
+                  "confidence": "MEDIUM"
+                },
+                {
+                  "stock": "BAJAJ FINANCE",
+                  "nse_symbol": "BAJFINANCE",
+                  "setup_type": "MOMENTUM",
+                  "direction": "LONG",
+                  "entry_range": "₹7020 - ₹7040",
+                  "target_1": 7120,
+                  "target_2": 7180,
+                  "stop_loss": 6980,
+                  "risk_reward": "1:2.3",
+                  "timing": "ANYTIME",
+                  "rationale": "Strong momentum setup above 7000 with increasing retail credit demand. Technical breakout from consolidation range",
+                  "confidence": "HIGH"
+                },
+                {
+                  "stock": "MARUTI SUZUKI",
+                  "nse_symbol": "MARUTI",
+                  "setup_type": "BREAKOUT",
+                  "direction": "LONG",
+                  "entry_range": "₹11850 - ₹11880",
+                  "target_1": 11980,
+                  "target_2": 12080,
+                  "stop_loss": 11780,
+                  "risk_reward": "1:2.1",
+                  "timing": "FIRST_30MIN",
+                  "rationale": "Auto sector showing strength on rural recovery signals. Volume breakout expected above 11850 resistance level",
+                  "confidence": "HIGH"
+                }
+              ],
+              "sectors_to_watch": [
+                {
+                  "sector": "Auto",
+                  "direction": "BULLISH",
+                  "reason": "Rural recovery signs and festival season demand pickup"
+                },
+                {
+                  "sector": "Banking",
+                  "direction": "BULLISH",
+                  "reason": "Oversold levels creating value buying opportunities"
+                },
+                {
+                  "sector": "IT",
+                  "direction": "BEARISH",
+                  "reason": "Client spending delays and rupee strength headwinds"
+                },
+                {
+                  "sector": "FMCG",
+                  "direction": "BULLISH",
+                  "reason": "Rural demand improvement and input cost moderation"
+                }
+              ],
+              "promoter_signals": [
+                {
+                  "stock": "Data Limited",
+                  "signal": "No significant promoter activity data available",
+                  "significance": "Focus on technical and fundamental analysis in absence of promoter signals"
+                }
+              ]
+            },
+            "live_data": {
+              "fii_dii": {
+                "date": "2026-03-17",
+                "fii_buy": 0.0,
+                "fii_sell": 0.0,
+                "fii_net": 0.0,
+                "dii_buy": 0.0,
+                "dii_sell": 0.0,
+                "dii_net": 0.0
+              },
+              "bulk_deals_count": 0
+            }
+          },
+          "market_scan": {
+            "market_summary": "No FII/DII flow data available for today suggests either a data lag or extremely light institutional activity. Markets appear to be in a consolidation phase with minimal institutional participation. This creates opportunities for retail investors to accumulate quality stocks at reasonable valuations.",
+            "fii_dii_interpretation": "Zero institutional flows indicate either technical data issues or very light trading by institutions. In such scenarios, retail investors should focus on stock-specific fundamentals rather than following institutional money. This presents a good opportunity to build positions in quality names without institutional competition.",
+            "long_term_picks": [
+              {
+                "stock": "HDFC Bank",
+                "nse_symbol": "HDFCBANK",
+                "sector": "Banking",
+                "cmp_approx": 1650,
+                "target_1yr": 2100,
+                "stop_loss": 1450,
+                "thesis": "Post-merger integration with HDFC Ltd completing, strong deposit franchise, best-in-class asset quality, and market leadership in retail banking. Digital transformation driving efficiency gains.",
+                "risk": "Rising competition in digital payments and potential margin pressure",
+                "confidence": "HIGH"
+              },
+              {
+                "stock": "Bajaj Finance",
+                "nse_symbol": "BAJFINANCE",
+                "sector": "NBFC",
+                "cmp_approx": 7200,
+                "target_1yr": 9500,
+                "stop_loss": 6300,
+                "thesis": "Leading consumer finance franchise with strong digital capabilities, diversified product portfolio, improving asset quality metrics, and expanding customer base in tier-2/3 cities.",
+                "risk": "Economic slowdown affecting consumer spending and credit costs",
+                "confidence": "HIGH"
+              },
+              {
+                "stock": "Asian Paints",
+                "nse_symbol": "ASIANPAINT",
+                "sector": "Paints",
+                "cmp_approx": 2850,
+                "target_1yr": 3600,
+                "stop_loss": 2500,
+                "thesis": "Market leader with strong brand equity, expanding into newer categories like adhesives and construction chemicals. Rural recovery and real estate upturn to drive volumes.",
+                "risk": "Raw material inflation and increasing competition from new entrants",
+                "confidence": "MEDIUM"
+              },
+              {
+                "stock": "Divi's Laboratories",
+                "nse_symbol": "DIVISLAB",
+                "sector": "Pharmaceuticals",
+                "cmp_approx": 3950,
+                "target_1yr": 5200,
+                "stop_loss": 3400,
+                "thesis": "Leading API and custom synthesis player with strong R&D capabilities, expanding capacity, and growing presence in high-margin generic formulations. Strong balance sheet and cash generation.",
+                "risk": "Regulatory issues in key markets and pricing pressure in generics",
+                "confidence": "HIGH"
+              },
+              {
+                "stock": "Titan Company",
+                "nse_symbol": "TITAN",
+                "sector": "Consumer Discretionary",
+                "cmp_approx": 3200,
+                "target_1yr": 4100,
+                "stop_loss": 2800,
+                "thesis": "Dominant player in jewelry and watches with strong brand portfolio, expanding retail network, and premiumization trend. Digital initiatives driving growth in smaller towns.",
+                "risk": "Gold price volatility and discretionary spending slowdown",
+                "confidence": "MEDIUM"
+              }
+            ],
+            "intraday_setups": [
+              {
+                "stock": "Reliance Industries",
+                "nse_symbol": "RELIANCE",
+                "setup_type": "BREAKOUT",
+                "direction": "LONG",
+                "entry_range": "₹2885 - ₹2900",
+                "target_1": 2950,
+                "target_2": 3000,
+                "stop_loss": 2850,
+                "risk_reward": "1:2",
+                "timing": "FIRST_30MIN",
+                "rationale": "Strong support at 2880 levels, expecting breakout above 2900 resistance with oil sector showing strength globally",
+                "confidence": "HIGH"
+              },
+              {
+                "stock": "ICICI Bank",
+                "nse_symbol": "ICICIBANK",
+                "setup_type": "MOMENTUM",
+                "direction": "LONG",
+                "entry_range": "₹1145 - ₹1155",
+                "target_1": 1180,
+                "target_2": 1200,
+                "stop_loss": 1125,
+                "risk_reward": "1:1.8",
+                "timing": "ANYTIME",
+                "rationale": "Banking sector showing resilience, ICICI showing relative strength with good volumes near resistance",
+                "confidence": "MEDIUM"
+              },
+              {
+                "stock": "Infosys",
+                "nse_symbol": "INFY",
+                "setup_type": "GAP_FILL",
+                "direction": "SHORT",
+                "entry_range": "₹1485 - ₹1495",
+                "target_1": 1450,
+                "target_2": 1420,
+                "stop_loss": 1510,
+                "risk_reward": "1:2.2",
+                "timing": "OPEN",
+                "rationale": "Gap down expected due to global tech weakness, shorting on any bounce towards gap levels",
+                "confidence": "MEDIUM"
+              },
+              {
+                "stock": "Tata Steel",
+                "nse_symbol": "TATASTEEL",
+                "setup_type": "REVERSAL",
+                "direction": "LONG",
+                "entry_range": "₹135 - ₹138",
+                "target_1": 145,
+                "target_2": 150,
+                "stop_loss": 130,
+                "risk_reward": "1:2",
+                "timing": "FIRST_30MIN",
+                "rationale": "Steel sector oversold, expecting technical bounce from key support levels with global steel prices stabilizing",
+                "confidence": "MEDIUM"
+              },
+              {
+                "stock": "Wipro",
+                "nse_symbol": "WIPRO",
+                "setup_type": "BREAKOUT",
+                "direction": "LONG",
+                "entry_range": "₹425 - ₹430",
+                "target_1": 445,
+                "target_2": 460,
+                "stop_loss": 415,
+                "risk_reward": "1:2.3",
+                "timing": "ANYTIME",
+                "rationale": "IT services showing selective strength, Wipro breaking above 425 resistance with good institutional interest",
+                "confidence": "HIGH"
+              }
+            ],
+            "sectors_to_watch": [
+              {
+                "sector": "Banking",
+                "direction": "BULLISH",
+                "reason": "Credit growth momentum and improving asset quality metrics"
+              },
+              {
+                "sector": "Pharmaceuticals",
+                "direction": "BULLISH",
+                "reason": "Strong export prospects and domestic recovery post-covid impact"
+              },
+              {
+                "sector": "IT Services",
+                "direction": "BEARISH",
+                "reason": "Global recession fears and reduced technology spending"
+              },
+              {
+                "sector": "Metals",
+                "direction": "BEARISH",
+                "reason": "Global growth concerns and China demand uncertainty"
+              }
+            ],
+            "promoter_signals": [
+              {
+                "stock": "Data Limited",
+                "signal": "No bulk/block deals reported today",
+                "significance": "Absence of promoter activity suggests stable shareholding patterns across major stocks"
+              }
+            ]
+          },
+          "live_data": {
+            "fii_dii": {
+              "date": "2026-03-17",
+              "fii_buy": 0.0,
+              "fii_sell": 0.0,
+              "fii_net": 0.0,
+              "dii_buy": 0.0,
+              "dii_sell": 0.0,
+              "dii_net": 0.0
+            },
+            "bulk_deals_count": 0
+          }
+        },
+        "market_scan": {
+          "market_summary": "No FII/DII flow data suggests either a holiday or system glitch, but markets remain in consolidation mode. With no significant institutional activity, retail sentiment and technical levels will drive tomorrow's moves.",
+          "fii_dii_interpretation": "Zero institutional flows indicate either market holiday or data unavailability. In such scenarios, retail investors should focus on stock-specific opportunities and avoid position sizing based on flow momentum.",
+          "long_term_picks": [
+            {
+              "stock": "Persistent Systems",
+              "nse_symbol": "PERSISTENT",
+              "sector": "IT Services",
+              "cmp_approx": 5200,
+              "target_1yr": 6500,
+              "stop_loss": 4800,
+              "thesis": "Strong growth in digital transformation, consistent margin expansion, and increasing client base in BFSI vertical. Management guidance remains robust for FY27.",
+              "risk": "Global IT spending slowdown",
+              "confidence": "HIGH"
+            },
+            {
+              "stock": "Dixon Technologies",
+              "nse_symbol": "DIXON",
+              "sector": "Electronics Manufacturing",
+              "cmp_approx": 14500,
+              "target_1yr": 18000,
+              "stop_loss": 13000,
+              "thesis": "PLI beneficiary with strong order book from mobile and appliance manufacturing. Capacity expansion on track with major brand tie-ups.",
+              "risk": "Competition from Chinese manufacturers",
+              "confidence": "HIGH"
+            },
+            {
+              "stock": "Kalyan Jewellers",
+              "nse_symbol": "KALYANKJIL",
+              "sector": "Retail - Jewellery",
+              "cmp_approx": 420,
+              "target_1yr": 550,
+              "stop_loss": 380,
+              "thesis": "Aggressive expansion in non-south markets, digital initiatives gaining traction, and wedding season demand expected to remain strong through FY27.",
+              "risk": "Gold price volatility affecting margins",
+              "confidence": "MEDIUM"
+            },
+            {
+              "stock": "Kaynes Technology",
+              "nse_symbol": "KAYNES",
+              "sector": "Electronics Manufacturing Services",
+              "cmp_approx": 3800,
+              "target_1yr": 4800,
+              "stop_loss": 3400,
+              "thesis": "India's leading EMS player with strong defense and industrial electronics exposure. Capacity ramp-up in new facilities showing positive results.",
+              "risk": "Customer concentration in defense segment",
+              "confidence": "MEDIUM"
+            },
+            {
+              "stock": "Nazara Technologies",
+              "nse_symbol": "NAZARA",
+              "sector": "Gaming & Entertainment",
+              "cmp_approx": 950,
+              "target_1yr": 1250,
+              "stop_loss": 850,
+              "thesis": "Growing esports and skill gaming market in India, strong acquisition strategy, and increasing monetization from mobile gaming platforms.",
+              "risk": "Regulatory changes in gaming industry",
+              "confidence": "MEDIUM"
+            }
+          ],
+          "intraday_setups": [
+            {
+              "stock": "Reliance Industries",
+              "nse_symbol": "RELIANCE",
+              "setup_type": "BREAKOUT",
+              "direction": "LONG",
+              "entry_range": "₹2850 - ₹2860",
+              "target_1": 2890,
+              "target_2": 2920,
+              "stop_loss": 2825,
+              "risk_reward": "1:2",
+              "timing": "FIRST_30MIN",
+              "rationale": "Breaking above 2850 resistance with volume expansion, oil prices stabilizing, and AGM announcements expected soon",
+              "confidence": "HIGH"
+            },
+            {
+              "stock": "HDFC Bank",
+              "nse_symbol": "HDFCBANK",
+              "setup_type": "REVERSAL",
+              "direction": "LONG",
+              "entry_range": "₹1650 - ₹1655",
+              "target_1": 1680,
+              "target_2": 1700,
+              "stop_loss": 1635,
+              "risk_reward": "1:2.5",
+              "timing": "ANYTIME",
+              "rationale": "Oversold bounce expected from support zone, banking sector showing relative strength, credit growth outlook positive",
+              "confidence": "HIGH"
+            },
+            {
+              "stock": "Infosys",
+              "nse_symbol": "INFY",
+              "setup_type": "GAP_FILL",
+              "direction": "SHORT",
+              "entry_range": "₹1580 - ₹1585",
+              "target_1": 1560,
+              "target_2": 1545,
+              "stop_loss": 1595,
+              "risk_reward": "1:2",
+              "timing": "OPEN",
+              "rationale": "Gap from last week at 1545-1560 levels likely to get filled, IT sector facing headwinds from strong dollar",
+              "confidence": "MEDIUM"
+            },
+            {
+              "stock": "Bharti Airtel",
+              "nse_symbol": "BHARTIARTL",
+              "setup_type": "MOMENTUM",
+              "direction": "LONG",
+              "entry_range": "₹1180 - ₹1185",
+              "target_1": 1200,
+              "target_2": 1215,
+              "stop_loss": 1165,
+              "risk_reward": "1:1.8",
+              "timing": "ANYTIME",
+              "rationale": "5G rollout acceleration, ARPU improvement trajectory, and telecom sector rotation play",
+              "confidence": "MEDIUM"
+            },
+            {
+              "stock": "Tata Steel",
+              "nse_symbol": "TATASTEEL",
+              "setup_type": "BREAKOUT",
+              "direction": "LONG",
+              "entry_range": "₹135 - ₹136",
+              "target_1": 140,
+              "target_2": 144,
+              "stop_loss": 132,
+              "risk_reward": "1:2.2",
+              "timing": "FIRST_30MIN",
+              "rationale": "Steel prices showing resilience, China stimulus hopes boosting metal stocks, technical breakout above 135",
+              "confidence": "MEDIUM"
+            }
+          ],
+          "sectors_to_watch": [
+            {
+              "sector": "Banking",
+              "direction": "BULLISH",
+              "reason": "Credit growth pickup and margin expansion expected"
+            },
+            {
+              "sector": "IT Services",
+              "direction": "BEARISH",
+              "reason": "Strong dollar and delayed discretionary spending impact"
+            },
+            {
+              "sector": "Metals",
+              "direction": "BULLISH",
+              "reason": "China stimulus hopes and infrastructure spending"
+            },
+            {
+              "sector": "Pharma",
+              "direction": "BULLISH",
+              "reason": "US FDA approvals and domestic demand growth"
+            }
+          ],
+          "promoter_signals": [
+            {
+              "stock": "Data Limited",
+              "signal": "No significant promoter activity today",
+              "significance": "Focus on technical and fundamental analysis in absence of flow data"
+            }
+          ]
+        },
+        "live_data": {
+          "fii_dii": {
+            "date": "2026-03-17",
+            "fii_buy": 0.0,
+            "fii_sell": 0.0,
+            "fii_net": 0.0,
+            "dii_buy": 0.0,
+            "dii_sell": 0.0,
+            "dii_net": 0.0
+          },
+          "bulk_deals_count": 0
+        }
+      },
+      "market_scan": {
+        "market_summary": "With zero FII/DII flows reported, the market appears to be in a consolidation phase with limited institutional activity. This creates opportunities for stock-specific moves driven by fundamentals rather than broad-based flows. The absence of bulk deals suggests muted large-ticket activity.",
+        "fii_dii_interpretation": "Zero institutional flows indicate either a data reporting gap or extremely light trading day. Retail investors should focus on individual stock stories and technical setups rather than following institutional money. This creates a level playing field for retail participants.",
+        "long_term_picks": [
+          {
+            "stock": "Dixon Technologies",
+            "nse_symbol": "DIXON",
+            "sector": "Electronics Manufacturing",
+            "cmp_approx": 15500,
+            "target_1yr": 20000,
+            "stop_loss": 13000,
+            "thesis": "Leading electronics manufacturing services company benefiting from PLI schemes and Apple supplier ecosystem. Strong order book visibility and margin expansion trajectory",
+            "risk": "High valuation and dependence on few large clients",
+            "confidence": "HIGH"
+          },
+          {
+            "stock": "Persistent Systems",
+            "nse_symbol": "PERSISTENT",
+            "sector": "IT Services",
+            "cmp_approx": 5800,
+            "target_1yr": 7500,
+            "stop_loss": 5200,
+            "thesis": "Niche IT services player with strong presence in healthcare and financial services verticals. Consistent revenue growth and improving margins",
+            "risk": "Client concentration and margin pressure from wage inflation",
+            "confidence": "HIGH"
+          },
+          {
+            "stock": "Polycab India",
+            "nse_symbol": "POLYCAB",
+            "sector": "Cables & Wires",
+            "cmp_approx": 7200,
+            "target_1yr": 9000,
+            "stop_loss": 6500,
+            "thesis": "Dominant player in cables and wires with strong distribution network. Infrastructure capex and renewable energy growth driving demand",
+            "risk": "Commodity price volatility affecting margins",
+            "confidence": "MEDIUM"
+          },
+          {
+            "stock": "Amber Enterprises",
+            "nse_symbol": "AMBER",
+            "sector": "Consumer Appliances",
+            "cmp_approx": 6800,
+            "target_1yr": 8500,
+            "stop_loss": 6000,
+            "thesis": "Leading original design manufacturer for RAC industry with strong relationships with global brands. Expansion into new categories and export markets",
+            "risk": "Seasonal demand fluctuations and working capital intensity",
+            "confidence": "MEDIUM"
+          },
+          {
+            "stock": "Clean Science and Technology",
+            "nse_symbol": "CLEAN",
+            "sector": "Specialty Chemicals",
+            "cmp_approx": 2200,
+            "target_1yr": 2800,
+            "stop_loss": 1900,
+            "thesis": "Niche specialty chemicals manufacturer with strong moats in MEHQ and BHT products. Consistent ROE above 25% and debt-free balance sheet",
+            "risk": "Limited product portfolio and high dependency on few products",
+            "confidence": "HIGH"
+          }
+        ],
+        "intraday_setups": [
+          {
+            "stock": "Reliance Industries",
+            "nse_symbol": "RELIANCE",
+            "setup_type": "BREAKOUT",
+            "direction": "LONG",
+            "entry_range": "₹3020 - ₹3030",
+            "target_1": 3080,
+            "target_2": 3120,
+            "stop_loss": 2980,
+            "risk_reward": "1:2",
+            "timing": "FIRST_30MIN",
+            "rationale": "Stock consolidating near 3000 levels with low volumes. Breakout above 3020 with volumes can trigger short covering rally",
+            "confidence": "MEDIUM"
+          },
+          {
+            "stock": "HDFC Bank",
+            "nse_symbol": "HDFCBANK",
+            "setup_type": "REVERSAL",
+            "direction": "LONG",
+            "entry_range": "₹1680 - ₹1690",
+            "target_1": 1720,
+            "target_2": 1750,
+            "stop_loss": 1660,
+            "risk_reward": "1:2.3",
+            "timing": "ANYTIME",
+            "rationale": "Oversold bounce expected from key support zone. Banking sector showing relative strength",
+            "confidence": "HIGH"
+          },
+          {
+            "stock": "Infosys",
+            "nse_symbol": "INFY",
+            "setup_type": "GAP_FILL",
+            "direction": "SHORT",
+            "entry_range": "₹1820 - ₹1830",
+            "target_1": 1785,
+            "target_2": 1760,
+            "stop_loss": 1850,
+            "risk_reward": "1:2",
+            "timing": "OPEN",
+            "rationale": "Gap up opening likely to be sold into. Resistance at 1830 levels with weak global IT sentiment",
+            "confidence": "MEDIUM"
+          },
+          {
+            "stock": "Adani Enterprises",
+            "nse_symbol": "ADANIENT",
+            "setup_type": "MOMENTUM",
+            "direction": "LONG",
+            "entry_range": "₹2950 - ₹2970",
+            "target_1": 3020,
+            "target_2": 3080,
+            "stop_loss": 2900,
+            "risk_reward": "1:2.6",
+            "timing": "ANYTIME",
+            "rationale": "Strong momentum continuation expected after recent base formation. Volume buildup suggests accumulation",
+            "confidence": "MEDIUM"
+          },
+          {
+            "stock": "Bajaj Finance",
+            "nse_symbol": "BAJFINANCE",
+            "setup_type": "BREAKOUT",
+            "direction": "LONG",
+            "entry_range": "₹7150 - ₹7180",
+            "target_1": 7300,
+            "target_2": 7450,
+            "stop_loss": 7050,
+            "risk_reward": "1:2.7",
+            "timing": "FIRST_30MIN",
+            "rationale": "Consolidation breakout setup with good risk-reward. NBFC space showing signs of revival",
+            "confidence": "HIGH"
+          }
+        ],
+        "sectors_to_watch": [
+          {
+            "sector": "IT Services",
+            "direction": "BEARISH",
+            "reason": "Weak global demand and margin pressure concerns"
+          },
+          {
+            "sector": "Banking",
+            "direction": "BULLISH",
+            "reason": "Credit growth momentum and NIM stability"
+          },
+          {
+            "sector": "Auto",
+            "direction": "BULLISH",
+            "reason": "Rural recovery signs and festive season demand"
+          },
+          {
+            "sector": "Pharma",
+            "direction": "BEARISH",
+            "reason": "US FDA concerns and pricing pressure"
+          }
+        ],
+        "promoter_signals": [
+          {
+            "stock": "Limited Data",
+            "signal": "No significant promoter activity reported",
+            "significance": "Absence of insider activity suggests stable holding patterns"
+          }
+        ]
+      },
+      "live_data": {
+        "fii_dii": {
+          "date": "2026-03-17",
+          "fii_buy": 0.0,
+          "fii_sell": 0.0,
+          "fii_net": 0.0,
+          "dii_buy": 0.0,
+          "dii_sell": 0.0,
+          "dii_net": 0.0
+        },
+        "bulk_deals_count": 0
+      }
+    },
+    "market_scan": {
+      "market_summary": "FIIs continued their selling spree with ₹4,741 cr outflow, but DIIs showed strong counter-buying with ₹5,225 cr inflow, indicating domestic confidence. The net DII buying exceeding FII selling by ₹484 cr suggests institutional support for quality names at current levels.",
+      "fii_dii_interpretation": "DIIs are aggressively buying the FII selling, which historically creates good opportunities for retail investors in quality mid/small caps. This divergence often leads to stock-specific moves rather than broad market direction.",
+      "long_term_picks": [
+        {
+          "stock": "Persistent Systems",
+          "nse_symbol": "PERSISTENT",
+          "sector": "IT Services",
+          "cmp_approx": 5850,
+          "target_1yr": 7500,
+          "stop_loss": 5200,
+          "thesis": "Strong digital transformation play with consistent 15%+ revenue growth, healthy margins, and diversified client base. DII buying in IT suggests domestic funds see value at current levels",
+          "risk": "Currency headwinds and client budget cuts",
+          "confidence": "HIGH"
+        },
+        {
+          "stock": "Kajaria Ceramics",
+          "nse_symbol": "KAJARIA",
+          "sector": "Building Materials",
+          "cmp_approx": 1420,
+          "target_1yr": 1850,
+          "stop_loss": 1250,
+          "thesis": "Market leader in tiles with strong brand, expanding retail network, and benefiting from housing demand revival. Rural recovery theme play with strong cash flows",
+          "risk": "Raw material cost inflation",
+          "confidence": "HIGH"
+        },
+        {
+          "stock": "Metropolis Healthcare",
+          "nse_symbol": "METROPOLIS",
+          "sector": "Healthcare Services",
+          "cmp_approx": 2100,
+          "target_1yr": 2750,
+          "stop_loss": 1850,
+          "thesis": "Leading diagnostics chain with asset-light model, strong ROE, and benefiting from preventive healthcare trend. DII interest in healthcare defensives visible",
+          "risk": "Intense competition and regulatory changes",
+          "confidence": "MEDIUM"
+        },
+        {
+          "stock": "Dixon Technologies",
+          "nse_symbol": "DIXON",
+          "sector": "Electronics Manufacturing",
+          "cmp_approx": 15200,
+          "target_1yr": 19500,
+          "stop_loss": 13500,
+          "thesis": "PLI beneficiary in electronics manufacturing with strong order book from global brands. Domestic manufacturing theme with government support",
+          "risk": "Customer concentration and margin pressure",
+          "confidence": "MEDIUM"
+        },
+        {
+          "stock": "Avenue Supermarts",
+          "nse_symbol": "DMART",
+          "sector": "Retail",
+          "cmp_approx": 4650,
+          "target_1yr": 5800,
+          "stop_loss": 4100,
+          "thesis": "Dominant retail format with consistent same-store sales growth, strong balance sheet, and expansion into new markets. Consumer discretionary recovery play",
+          "risk": "Increased competition and real estate costs",
+          "confidence": "HIGH"
+        }
+      ],
+      "intraday_setups": [
+        {
+          "stock": "Reliance Industries",
+          "nse_symbol": "RELIANCE",
+          "setup_type": "REVERSAL",
+          "direction": "LONG",
+          "entry_range": "₹2885 - ₹2900",
+          "target_1": 2950,
+          "target_2": 2985,
+          "stop_loss": 2860,
+          "risk_reward": "1:2.1",
+          "timing": "FIRST_30MIN",
+          "rationale": "Large cap likely to see DII support given strong buying pattern. Technical bounce expected from 2880-2900 zone",
+          "confidence": "HIGH"
+        },
+        {
+          "stock": "HDFC Bank",
+          "nse_symbol": "HDFCBANK",
+          "setup_type": "GAP_FILL",
+          "direction": "LONG",
+          "entry_range": "₹1735 - ₹1745",
+          "target_1": 1770,
+          "target_2": 1790,
+          "stop_loss": 1720,
+          "risk_reward": "1:2.2",
+          "timing": "OPEN",
+          "rationale": "Banking heavyweight with DII support, any gap down to be bought for quick bounce as per institutional flows",
+          "confidence": "HIGH"
+        },
+        {
+          "stock": "Tata Consumer Products",
+          "nse_symbol": "TATACONSUM",
+          "setup_type": "MOMENTUM",
+          "direction": "LONG",
+          "entry_range": "₹1085 - ₹1095",
+          "target_1": 1125,
+          "target_2": 1145,
+          "stop_loss": 1065,
+          "risk_reward": "1:2.5",
+          "timing": "ANYTIME",
+          "rationale": "FMCG defensives seeing DII interest, momentum play above 1085 resistance level",
+          "confidence": "MEDIUM"
+        },
+        {
+          "stock": "Bharti Airtel",
+          "nse_symbol": "BHARTIARTL",
+          "setup_type": "BREAKOUT",
+          "direction": "LONG",
+          "entry_range": "₹1485 - ₹1495",
+          "target_1": 1530,
+          "target_2": 1555,
+          "stop_loss": 1465,
+          "risk_reward": "1:2.2",
+          "timing": "FIRST_30MIN",
+          "rationale": "Telecom leader breaking above consolidation zone, DII flows supporting large caps in this space",
+          "confidence": "MEDIUM"
+        },
+        {
+          "stock": "Asian Paints",
+          "nse_symbol": "ASIANPAINT",
+          "setup_type": "REVERSAL",
+          "direction": "SHORT",
+          "entry_range": "₹2920 - ₹2935",
+          "target_1": 2885,
+          "target_2": 2860,
+          "stop_loss": 2960,
+          "risk_reward": "1:2.4",
+          "timing": "ANYTIME",
+          "rationale": "Paint sector facing margin pressure, any bounce to 2920+ zone to be sold as FII selling continues in consumer names",
+          "confidence": "MEDIUM"
+        }
+      ],
+      "sectors_to_watch": [
+        {
+          "sector": "IT Services",
+          "direction": "BULLISH",
+          "reason": "DII buying in quality names, dollar strength helping margins"
+        },
+        {
+          "sector": "Banking",
+          "direction": "BULLISH",
+          "reason": "Strong DII inflows suggesting institutional confidence in sector fundamentals"
+        },
+        {
+          "sector": "Healthcare",
+          "direction": "BULLISH",
+          "reason": "Defensive play amid FII selling, domestic funds showing interest"
+        },
+        {
+          "sector": "Paints/Chemicals",
+          "direction": "BEARISH",
+          "reason": "Margin pressure and inventory concerns, FII selling pressure continues"
+        }
+      ],
+      "promoter_signals": [
+        {
+          "stock": "Limited Data",
+          "signal": "No bulk/block deals reported today",
+          "significance": "Absence of large insider activity suggests neutral promoter sentiment"
+        }
+      ]
+    },
+    "live_data": {
+      "fii_dii": {
+        "date": "17-Mar-2026",
+        "fii_buy": 11903.71,
+        "fii_sell": 16644.93,
+        "fii_net": -4741.220000000001,
+        "dii_buy": 16762.65,
+        "dii_sell": 11537.33,
+        "dii_net": 5225.3200000000015
+      },
+      "bulk_deals_count": 0
+    }
+  },
+  "market_scan": {
+    "market_summary": "FIIs turned net sellers (-₹2,714Cr) after recent buying spree, while DIIs remained net buyers (+₹3,253Cr) showing domestic strength. Markets consolidating after March expiry volatility with defensive rotation visible. IT sector continues correction creating value opportunities, while infra/defence showing fatigue after stellar runs.",
+    "fii_dii_interpretation": "FII selling suggests profit booking in overheated sectors like defence/railways. DII buying indicates confidence in domestic consumption themes. Smart money rotating from momentum to value - perfect time to buy IT dip and quality mid-caps. Avoid chasing PSU momentum, focus on earnings-driven stories.",
+    "long_term_picks": [
+      {
+        "stock": "TCS",
+        "nse_symbol": "TCS",
+        "sector": "IT",
+        "cmp_approx": 3850,
+        "target_1yr": 5200,
+        "stop_loss": 3400,
+        "thesis": "Q4FY26 deal wins picking up, BFSI vertical recovery, 22% revenue growth guided for FY27. Margin expansion from AI automation tools. Trading at 24x vs historical 28x PE",
+        "risk": "US recession fears",
+        "confidence": "HIGH"
+      },
+      {
+        "stock": "Avenue Supermarts",
+        "nse_symbol": "DMART",
+        "sector": "Retail",
+        "cmp_approx": 4200,
+        "target_1yr": 5800,
+        "stop_loss": 3700,
+        "thesis": "Same store sales growth accelerating to 12%, expanding to Tier-2 cities. 95 new stores planned FY27. Online integration driving margin expansion to 8.2%",
+        "risk": "Competition from Reliance Retail",
+        "confidence": "HIGH"
+      },
+      {
+        "stock": "Persistent Systems",
+        "nse_symbol": "PERSISTENT",
+        "sector": "IT",
+        "cmp_approx": 5200,
+        "target_1yr": 7500,
+        "stop_loss": 4500,
+        "thesis": "GenAI practice generating 15% revenue, automotive vertical growing 35% YoY. Hitech segment recovery driving 25% growth guidance. Strong deal pipeline in cloud migration",
+        "risk": "Client concentration",
+        "confidence": "HIGH"
+      },
+      {
+        "stock": "PB Fintech",
+        "nse_symbol": "POLICYBZR",
+        "sector": "Fintech",
+        "cmp_approx": 1650,
+        "target_1yr": 2800,
+        "stop_loss": 1350,
+        "thesis": "Insurance penetration theme, credit business scaling to 25% of revenue. Paisa Bazaar loans book growing 180% YoY. Path to profitability by Q2FY27",
+        "risk": "Regulatory changes",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Kalyan Jewellers",
+        "nse_symbol": "KALYANKJIL",
+        "sector": "Consumer Discretionary",
+        "cmp_approx": 520,
+        "target_1yr": 750,
+        "stop_loss": 450,
+        "thesis": "Studded jewellery segment growing 45%, expanding to 300 stores by FY27. Same store sales growth of 18%. Digital initiatives driving margins to 8.5%",
+        "risk": "Gold price volatility",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Dixon Technologies",
+        "nse_symbol": "DIXON",
+        "sector": "Electronics",
+        "cmp_approx": 14500,
+        "target_1yr": 20000,
+        "stop_loss": 12500,
+        "thesis": "PLI beneficiary in smartphones, laptops. Revenue growth of 40% guided for FY27. Expanding into EV components and hearables. ROE improving to 22%",
+        "risk": "PLI policy changes",
+        "confidence": "HIGH"
+      },
+      {
+        "stock": "Lemon Tree Hotels",
+        "nse_symbol": "LEMONTREE",
+        "sector": "Hospitality",
+        "cmp_approx": 125,
+        "target_1yr": 180,
+        "stop_loss": 100,
+        "thesis": "RevPAR recovery to ₹4,200 levels, occupancy rates at 75%. 25 new hotels in pipeline. Corporate travel normalizing post-pandemic. Debt reduction on track",
+        "risk": "Economic slowdown",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Cera Sanitaryware",
+        "nse_symbol": "CERA",
+        "sector": "Building Materials",
+        "cmp_approx": 8200,
+        "target_1yr": 11500,
+        "stop_loss": 7200,
+        "thesis": "Premium segment growing 25%, rural recovery driving volume growth. Backward integration reducing costs by 8%. Export business scaling up in Middle East",
+        "risk": "Real estate slowdown",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Kaynes Technology",
+        "nse_symbol": "KAYNES",
+        "sector": "Electronics Manufacturing",
+        "cmp_approx": 3800,
+        "target_1yr": 5500,
+        "stop_loss": 3200,
+        "thesis": "EMS revenue growing 55% YoY, automotive electronics order book at ₹2,800Cr. Defence electronics contributing 15% revenue. Margin expansion to 12%",
+        "risk": "Working capital intensity",
+        "confidence": "HIGH"
+      },
+      {
+        "stock": "Mankind Pharma",
+        "nse_symbol": "MANKIND",
+        "sector": "Pharmaceuticals",
+        "cmp_approx": 2350,
+        "target_1yr": 3200,
+        "stop_loss": 2000,
+        "thesis": "Chronic portfolio growing 28%, rural distribution strength. US FDA approvals for 8 products. Acquisition integration driving synergies worth ₹150Cr annually",
+        "risk": "Regulatory pricing pressure",
+        "confidence": "MEDIUM"
+      }
+    ],
+    "dip_buying_opportunities": [
+      {
+        "stock": "Infosys",
+        "nse_symbol": "INFY",
+        "sector": "IT",
+        "why_dip": "Fell 15% on conservative Q4 guidance, client discretionary spending concerns",
+        "entry_zone": "₹1,620 - ₹1,680",
+        "target": 2100,
+        "stop_loss": 1550,
+        "thesis": "Temporary demand pause, strong deal pipeline of $2.5B. Cobalt platform driving automation revenue. Margin recovery to 21% as pyramid correction completes",
+        "confidence": "HIGH"
+      },
+      {
+        "stock": "HCL Technologies",
+        "nse_symbol": "HCLTECH",
+        "sector": "IT",
+        "why_dip": "Banking vertical weakness, fell 12% in March",
+        "entry_zone": "₹1,420 - ₹1,480",
+        "target": 1800,
+        "stop_loss": 1350,
+        "thesis": "Products & Platforms revenue growing 8%, engineering services recovery. GenAI partnerships with Google, Microsoft driving new deals. Undervalued at 18x PE",
+        "confidence": "HIGH"
+      },
+      {
+        "stock": "L&T Technology Services",
+        "nse_symbol": "LTTS",
+        "sector": "IT",
+        "why_dip": "Auto OEM spending cuts, transportation vertical decline",
+        "entry_zone": "₹4,800 - ₹5,100",
+        "target": 6500,
+        "stop_loss": 4500,
+        "thesis": "Sustainability services growing 40%, medical devices vertical expansion. EV engineering services demand picking up. Strong IP-led solutions portfolio",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Asian Paints",
+        "nse_symbol": "ASIANPAINT",
+        "sector": "Paints",
+        "why_dip": "Volume decline due to extended monsoons, competitive pressure",
+        "entry_zone": "₹2,850 - ₹2,950",
+        "target": 3600,
+        "stop_loss": 2700,
+        "thesis": "Premium segment market share gains, rural demand recovery expected Q1FY27. Cost deflation providing margin cushion. International business turning profitable",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Bajaj Finance",
+        "nse_symbol": "BAJFINANCE",
+        "sector": "NBFC",
+        "why_dip": "Asset quality concerns, regulatory scrutiny on digital lending",
+        "entry_zone": "₹6,800 - ₹7,200",
+        "target": 9000,
+        "stop_loss": 6400,
+        "thesis": "Digital transformation driving cost efficiency, rural expansion accelerating. Credit card business scaling up. Provisions normalizing, ROA recovery to 4.2%",
+        "confidence": "MEDIUM"
+      }
+    ],
+    "etf_mf_recommendations": [
+      {
+        "name": "Motilal Oswal NASDAQ 100 ETF",
+        "type": "ETF",
+        "category": "International",
+        "why": "Tech correction in US creating entry opportunity, AI theme long-term winner",
+        "monthly_sip": "₹25,000",
+        "expected_returns": "12-15% CAGR over 3 years",
+        "risk_level": "MEDIUM"
+      },
+      {
+        "name": "DSP World Mining Fund",
+        "type": "ACTIVE_MF",
+        "category": "International Sectoral",
+        "why": "Commodity super-cycle beginning, copper/lithium demand for EV transition",
+        "monthly_sip": "₹15,000",
+        "expected_returns": "15-20% CAGR over 3 years",
+        "risk_level": "HIGH"
+      },
+      {
+        "name": "Nippon India IT ETF",
+        "type": "ETF",
+        "category": "Sectoral",
+        "why": "IT sector oversold, AI adoption will drive next growth cycle from H2FY27",
+        "monthly_sip": "₹20,000",
+        "expected_returns": "18-22% CAGR over 3 years",
+        "risk_level": "MEDIUM"
+      },
+      {
+        "name": "Kotak Emerging Equity Scheme",
+        "type": "ACTIVE_MF",
+        "category": "Mid Cap",
+        "why": "Mid-cap space offering better valuations post correction, quality fund manager",
+        "monthly_sip": "₹30,000",
+        "expected_returns": "14-18% CAGR over 3 years",
+        "risk_level": "MEDIUM"
+      },
+      {
+        "name": "Edelweiss Greater China Equity",
+        "type": "ACTIVE_MF",
+        "category": "International",
+        "why": "China reopening theme, extreme valuation discount vs historical averages",
+        "monthly_sip": "₹10,000",
+        "expected_returns": "20-25% CAGR over 3 years",
+        "risk_level": "HIGH"
+      }
+    ],
+    "intraday_setups": [
+      {
+        "stock": "Reliance Industries",
+        "nse_symbol": "RELIANCE",
+        "setup_type": "BREAKOUT",
+        "direction": "LONG",
+        "entry_range": "₹2,985 - ₹3,000",
+        "target_1": 3080,
+        "target_2": 3150,
+        "stop_loss": 2930,
+        "risk_reward": "1:2.5",
+        "timing": "FIRST_30MIN",
+        "rationale": "Breaking above 20-day resistance, Jio IPO buzz creating momentum",
+        "confidence": "HIGH"
+      },
+      {
+        "stock": "ICICI Bank",
+        "nse_symbol": "ICICIBANK",
+        "setup_type": "REVERSAL",
+        "direction": "LONG",
+        "entry_range": "₹1,185 - ₹1,195",
+        "target_1": 1240,
+        "target_2": 1280,
+        "stop_loss": 1160,
+        "risk_reward": "1:2.8",
+        "timing": "ANYTIME",
+        "rationale": "Oversold on RSI, support at 200-day MA, banking index strength",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "TCS",
+        "nse_symbol": "TCS",
+        "setup_type": "GAP_FILL",
+        "direction": "LONG",
+        "entry_range": "₹3,830 - ₹3,850",
+        "target_1": 3920,
+        "target_2": 3980,
+        "stop_loss": 3780,
+        "risk_reward": "1:2.1",
+        "timing": "OPEN",
+        "rationale": "Gap down opening expected, value buying at support levels",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Adani Ports",
+        "nse_symbol": "ADANIPORTS",
+        "setup_type": "MOMENTUM",
+        "direction": "LONG",
+        "entry_range": "₹1,320 - ₹1,330",
+        "target_1": 1380,
+        "target_2": 1420,
+        "stop_loss": 1285,
+        "risk_reward": "1:2.2",
+        "timing": "FIRST_30MIN",
+        "rationale": "Logistics theme, volume breakout above consolidation",
+        "confidence": "HIGH"
+      },
+      {
+        "stock": "Bajaj Auto",
+        "nse_symbol": "BAJAJ-AUTO",
+        "setup_type": "BREAKOUT",
+        "direction": "LONG",
+        "entry_range": "₹9,180 - ₹9,220",
+        "target_1": 9400,
+        "target_2": 9550,
+        "stop_loss": 9050,
+        "risk_reward": "1:2.3",
+        "timing": "ANYTIME",
+        "rationale": "EV launch momentum, export recovery driving sentiment",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Zomato",
+        "nse_symbol": "ZOMATO",
+        "setup_type": "REVERSAL",
+        "direction": "SHORT",
+        "entry_range": "₹275 - ₹280",
+        "target_1": 255,
+        "target_2": 235,
+        "stop_loss": 295,
+        "risk_reward": "1:2.1",
+        "timing": "FIRST_30MIN",
+        "rationale": "Overextended rally, profit booking expected at resistance",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Maruti Suzuki",
+        "nse_symbol": "MARUTI",
+        "setup_type": "GAP_FILL",
+        "direction": "LONG",
+        "entry_range": "₹11,850 - ₹11,920",
+        "target_1": 12150,
+        "target_2": 12350,
+        "stop_loss": 11700,
+        "risk_reward": "1:2.2",
+        "timing": "OPEN",
+        "rationale": "Auto sales data positive, filling yesterday's gap down",
+        "confidence": "HIGH"
+      },
+      {
+        "stock": "Sun Pharma",
+        "nse_symbol": "SUNPHARMA",
+        "setup_type": "MOMENTUM",
+        "direction": "LONG",
+        "entry_range": "₹1,685 - ₹1,700",
+        "target_1": 1760,
+        "target_2": 1820,
+        "stop_loss": 1640,
+        "risk_reward": "1:2.2",
+        "timing": "ANYTIME",
+        "rationale": "US FDA approval news flow, pharma rotation beginning",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Hindustan Unilever",
+        "nse_symbol": "HINDUNILVR",
+        "setup_type": "REVERSAL",
+        "direction": "SHORT",
+        "entry_range": "₹2,820 - ₹2,840",
+        "target_1": 2750,
+        "target_2": 2680,
+        "stop_loss": 2880,
+        "risk_reward": "1:2.3",
+        "timing": "FIRST_30MIN",
+        "rationale": "FMCG weakness continuing, rural demand concerns persist",
+        "confidence": "MEDIUM"
+      },
+      {
+        "stock": "Coal India",
+        "nse_symbol": "COALINDIA",
+        "setup_type": "BREAKOUT",
+        "direction": "LONG",
+        "entry_range": "₹485 - ₹490",
+        "target_1": 520,
+        "target_2": 550,
+        "stop_loss": 465,
+        "risk_reward": "1:2.6",
+        "timing": "ANYTIME",
+        "rationale": "Commodity rally, dividend yield attractive at these levels",
+        "confidence": "HIGH"
+      }
+    ],
+    "sectors_to_watch": [
+      {
+        "sector": "IT Services",
+        "direction": "BULLISH",
+        "reason": "Oversold condition, AI spending recovery from Q2FY27",
+        "top_stock": "TCS"
+      },
+      {
+        "sector": "Pharmaceuticals",
+        "direction": "BULLISH",
+        "reason": "US FDA approval cycle improving, China+1 theme beneficiary",
+        "top_stock": "Sun Pharma"
+      },
+      {
+        "sector": "Auto",
+        "direction": "BULLISH",
+        "reason": "Rural recovery, festive season demand pickup expected",
+        "top_stock": "Maruti Suzuki"
+      },
+      {
+        "sector": "Defence",
+        "direction": "BEARISH",
+        "reason": "Profit booking after 200%+ rally, valuations stretched",
+        "top_stock": "None - avoid"
+      },
+      {
+        "sector": "Real Estate",
+        "direction": "BULLISH",
+        "reason": "Interest rate cycle peaking, inventory levels healthy",
+        "top_stock": "DLF"
+      }
+    ],
+    "promoter_signals": [
+      {
+        "stock": "Wipro",
+        "signal": "Azim Premji increased stake by 0.8% through open market",
+        "significance": "Confidence in IT recovery, insider buying at lows"
+      },
+      {
+        "stock": "Bajaj Finance",
+        "signal": "Bajaj Holdings reduced stake by 2% in block deal",
+        "significance": "Profit booking, not negative on business fundamentals"
+      },
+      {
+        "stock": "Mahindra Group",
+        "signal": "Anand Mahindra pledged additional shares for EV expansion funding",
+        "significance": "Aggressive expansion in electric mobility segment"
+      }
+    ],
+    "aggressive_calls": [
+      {
+        "type": "CONTRARIAN",
+        "call": "Buy IT sector aggressively - TCS, Infosys, HCL Tech with 15% portfolio allocation",
+        "reasoning": "Sector trading at 5-year low valuations, AI spending revival imminent from H2FY27. Current pessimism overdone",
+        "risk": "Prolonged US recession could delay recovery by 6 months",
+        "timeframe": "6 months"
+      },
+      {
+        "type": "SECTOR_BET",
+        "call": "Pharma sector rotation - accumulate Sun Pharma, Cipla, Dr Reddy's",
+        "reasoning": "US FDA approval rates improving, China+1 sourcing trend accelerating, valuations reasonable at 18-20x PE",
+        "risk": "Price control regulations in key markets",
+        "timeframe": "1 year"
+      },
+      {
+        "type": "MOMENTUM",
+        "call": "Double down on logistics/ports theme - Adani Ports, Allcargo Logistics",
+        "reasoning": "India's export competitiveness improving, infra capex cycle supporting port modernization",
+        "risk": "Global trade slowdown impact",
+        "timeframe": "3 months"
+      },
+      {
+        "type": "EVENT_DRIVEN",
+        "call": "Pre-position in Jio Financial Services before separate listing clarity",
+        "reasoning": "Hidden value unlock, fintech + telecom synergies, Reliance ecosystem play",
+        "risk": "Regulatory delays in approvals",
+        "timeframe": "2 months"
+      },
+      {
+        "type": "CONTRARIAN",
+        "call": "Reduce PSU exposure by 50% - book profits in defence, railways, power PSUs",
+        "reasoning": "Valuations at peak levels, election outcome already priced in, private sector revival next phase",
+        "risk": "Continued government capex thrust",
+        "timeframe": "1 month"
+      }
+    ]
+  },
+  "live_data": {
+    "fii_dii": {
+      "date": "18-Mar-2026",
+      "fii_buy": 12798.8,
+      "fii_sell": 15513.15,
+      "fii_net": -2714.3500000000004,
+      "dii_buy": 16105.2,
+      "dii_sell": 12852.17,
+      "dii_net": 3253.0300000000007
+    },
+    "bulk_deals_count": 0
+  }
+}

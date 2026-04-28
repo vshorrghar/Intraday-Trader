@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Stale Input File Warning",
+  "description": "Checks if input XLSX files are more than 3 days old and warns the user before running analysis",
+  "version": "1",
+  "when": {
+    "type": "promptSubmit"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "python3 -c \"\nimport os, time\nstale = []\nfor f in os.listdir('input'):\n    if f.endswith('.xlsx'):\n        path = os.path.join('input', f)\n        age_days = (time.time() - os.path.getmtime(path)) / 86400\n        if age_days > 3:\n            stale.append(f'  ⚠️  {f}: {age_days:.0f} days old')\nif stale:\n    print('WARNING: Stale input files detected (>3 days old):')\n    print('\\n'.join(stale))\n    print('Re-export from Groww for accurate analysis.')\n\""
+  }
+}

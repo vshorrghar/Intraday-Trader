@@ -1,0 +1,140 @@
+{
+  "trade_date": "2026-04-20",
+  "mode": "DEMO",
+  "broker_name": "demo",
+  "generated_at": "2026-04-20T14:34:02.540263+05:30",
+  "trades": [
+    {
+      "tradingsymbol": "BHEL",
+      "symbol": "Bharat Heavy Electricals Limited",
+      "entry_price": 331.0,
+      "exit_price": 327.44,
+      "target_price": 338.0,
+      "stop_loss_price": 332.48,
+      "quantity": 69,
+      "pnl": -245.64,
+      "status": "STOPPED_OUT",
+      "confidence_score": 9,
+      "strategy_type": "MOMENTUM",
+      "rationale": "Top gainer +4.39% with massive volume (34.7M), sector-aligned with NIFTY ENERGY (#1, +1.13%). Gap-up +0.55% confirmed by strong momentum, currently near day high. R:R = 2:1."
+    },
+    {
+      "tradingsymbol": "CGPOWER",
+      "symbol": "CG Power and Industrial Solutions",
+      "entry_price": 794.0,
+      "exit_price": 780.73,
+      "target_price": 809.0,
+      "stop_loss_price": 786.5,
+      "quantity": 25,
+      "pnl": -331.75,
+      "status": "STOPPED_OUT",
+      "confidence_score": 8,
+      "strategy_type": "MOMENTUM",
+      "rationale": "Strong +2.48% gainer, gap-up +0.15% with follow-through. NIFTY INFRASTRUCTURE (#7, +0.32%) aligned. Trading above previous close suggests above VWAP. R:R = 2:1."
+    },
+    {
+      "tradingsymbol": "CANBK",
+      "symbol": "Canara Bank",
+      "entry_price": 144.2,
+      "exit_price": 142.69,
+      "target_price": 147.0,
+      "stop_loss_price": 142.8,
+      "quantity": 142,
+      "pnl": -214.42,
+      "status": "STOPPED_OUT",
+      "confidence_score": 8,
+      "strategy_type": "GAP",
+      "rationale": "Gap-up +0.30%, sector-aligned with NIFTY PSU BANK (#3, +0.90%). High volume (12.8M) confirms conviction. Trading near day high with clear support at gap level. R:R = 2:1."
+    },
+    {
+      "tradingsymbol": "NTPC",
+      "symbol": "NTPC Limited",
+      "entry_price": 399.0,
+      "exit_price": 396.09,
+      "target_price": 405.0,
+      "stop_loss_price": 400.13,
+      "quantity": 44,
+      "pnl": -128.04,
+      "status": "STOPPED_OUT",
+      "confidence_score": 7,
+      "strategy_type": "VWAP",
+      "rationale": "Strong sector alignment with NIFTY ENERGY (#1, +1.13%). Gap-down -0.15% but recovered strongly to +1.41% intraday. Volume 4.1M confirms reversal. Round number support at 400. R:R = 2:1."
+    },
+    {
+      "tradingsymbol": "BANKBARODA",
+      "symbol": "Bank of Baroda",
+      "entry_price": 286.0,
+      "exit_price": 282.48,
+      "target_price": 291.0,
+      "stop_loss_price": 283.5,
+      "quantity": 62,
+      "pnl": -218.24,
+      "status": "STOPPED_OUT",
+      "confidence_score": 7,
+      "strategy_type": "ORB",
+      "rationale": "Flat gap +0.02% but strong +1.98% intraday momentum. NIFTY PSU BANK (#3, +0.90%) aligned. High volume 6.6M. Trading at day high with previous close as support. R:R = 2:1."
+    }
+  ],
+  "metrics": {
+    "total_pnl": -1138.09,
+    "total_trades": 5,
+    "winning_trades": 0,
+    "losing_trades": 5,
+    "win_rate": 0.0,
+    "avg_profit": 0,
+    "avg_loss": -227.62,
+    "expectancy": -227.62,
+    "profit_factor": 0.0
+  },
+  "strategy_breakdown": {
+    "MOMENTUM": {
+      "total_pnl": -577.39,
+      "total_trades": 2,
+      "winning_trades": 0,
+      "losing_trades": 2,
+      "win_rate": 0.0,
+      "avg_profit": 0,
+      "avg_loss": -288.69,
+      "expectancy": -288.69,
+      "profit_factor": 0.0
+    },
+    "GAP": {
+      "total_pnl": -214.42,
+      "total_trades": 1,
+      "winning_trades": 0,
+      "losing_trades": 1,
+      "win_rate": 0.0,
+      "avg_profit": 0,
+      "avg_loss": -214.42,
+      "expectancy": -214.42,
+      "profit_factor": 0.0
+    },
+    "VWAP": {
+      "total_pnl": -128.04,
+      "total_trades": 1,
+      "winning_trades": 0,
+      "losing_trades": 1,
+      "win_rate": 0.0,
+      "avg_profit": 0,
+      "avg_loss": -128.04,
+      "expectancy": -128.04,
+      "profit_factor": 0.0
+    },
+    "ORB": {
+      "total_pnl": -218.24,
+      "total_trades": 1,
+      "winning_trades": 0,
+      "losing_trades": 1,
+      "win_rate": 0.0,
+      "avg_profit": 0,
+      "avg_loss": -218.24,
+      "expectancy": -218.24,
+      "profit_factor": 0.0
+    }
+  },
+  "cumulative": {
+    "total_pnl": -2276.18,
+    "overall_win_rate": 0.0,
+    "max_drawdown": 0.0
+  }
+}
