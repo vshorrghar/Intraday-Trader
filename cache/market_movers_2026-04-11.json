@@ -1,0 +1,471 @@
+{
+  "gainers": [],
+  "losers": [],
+  "most_active": [
+    {
+      "symbol": "OLAELEC",
+      "name": "OLAELEC",
+      "ltp": 0.0,
+      "change": 4.08,
+      "change_pct": 11.23,
+      "volume": 1034293039,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "IDEA",
+      "name": "IDEA",
+      "ltp": 0.0,
+      "change": 0.14,
+      "change_pct": 1.54,
+      "volume": 468683513,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "FILATFASH",
+      "name": "FILATFASH",
+      "ltp": 0.0,
+      "change": 0.01,
+      "change_pct": 5.0,
+      "volume": 148575615,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "JPPOWER",
+      "name": "JPPOWER",
+      "ltp": 0.0,
+      "change": 0.4,
+      "change_pct": 2.38,
+      "volume": 93980770,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "TATAGOLD",
+      "name": "TATAGOLD",
+      "ltp": 0.0,
+      "change": 0.06,
+      "change_pct": 0.41,
+      "volume": 88659140,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "YESBANK",
+      "name": "YESBANK",
+      "ltp": 0.0,
+      "change": 0.18,
+      "change_pct": 0.95,
+      "volume": 82318770,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "TATSILV",
+      "name": "TATSILV",
+      "ltp": 0.0,
+      "change": 0.34,
+      "change_pct": 1.5,
+      "volume": 78295305,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "NIACL",
+      "name": "NIACL",
+      "ltp": 0.0,
+      "change": 25.98,
+      "change_pct": 19.99,
+      "volume": 76076824,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "GROWW",
+      "name": "GROWW",
+      "ltp": 0.0,
+      "change": 6.99,
+      "change_pct": 3.74,
+      "volume": 72629253,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "PCJEWELLER",
+      "name": "PCJEWELLER",
+      "ltp": 0.0,
+      "change": -0.05,
+      "change_pct": -0.54,
+      "volume": 69671676,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "SUZLON",
+      "name": "SUZLON",
+      "ltp": 0.0,
+      "change": 1.36,
+      "change_pct": 3.07,
+      "volume": 67332752,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "GTLINFRA",
+      "name": "GTLINFRA",
+      "ltp": 0.0,
+      "change": 0.01,
+      "change_pct": 0.83,
+      "volume": 65848498,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "HFCL",
+      "name": "HFCL",
+      "ltp": 0.0,
+      "change": 4.39,
+      "change_pct": 5.51,
+      "volume": 65713388,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "AURIGROW",
+      "name": "AURIGROW",
+      "ltp": 0.0,
+      "change": 0.01,
+      "change_pct": 3.23,
+      "volume": 65437848,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "HCC",
+      "name": "HCC",
+      "ltp": 0.0,
+      "change": 1.1,
+      "change_pct": 6.66,
+      "volume": 64660475,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "RPOWER",
+      "name": "RPOWER",
+      "ltp": 0.0,
+      "change": 0.67,
+      "change_pct": 2.72,
+      "volume": 59127901,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "ADANIPOWER",
+      "name": "ADANIPOWER",
+      "ltp": 0.0,
+      "change": 2.87,
+      "change_pct": 1.67,
+      "volume": 51959590,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "WIPRO",
+      "name": "WIPRO",
+      "ltp": 0.0,
+      "change": 1.73,
+      "change_pct": 0.85,
+      "volume": 51219565,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "IRB",
+      "name": "IRB",
+      "ltp": 0.0,
+      "change": 0.7,
+      "change_pct": 3.35,
+      "volume": 48448354,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    },
+    {
+      "symbol": "COHANCE",
+      "name": "COHANCE",
+      "ltp": 0.0,
+      "change": 56.45,
+      "change_pct": 17.82,
+      "volume": 47632246,
+      "prev_close": 0,
+      "open_price": 0,
+      "high": 0,
+      "low": 0,
+      "high_52w": 0,
+      "low_52w": 0,
+      "category": "active"
+    }
+  ],
+  "sectors": [
+    {
+      "name": "INDIA VIX",
+      "last_price": 18.85,
+      "change": -1.58,
+      "change_pct": -7.72
+    },
+    {
+      "name": "NIFTY IT",
+      "last_price": 31030.6,
+      "change": -605.6,
+      "change_pct": -1.91
+    },
+    {
+      "name": "NIFTY CPSE",
+      "last_price": 7124.0,
+      "change": -11.85,
+      "change_pct": -0.17
+    },
+    {
+      "name": "NIFTY HEALTHCARE INDEX",
+      "last_price": 14194.9,
+      "change": 16.65,
+      "change_pct": 0.12
+    },
+    {
+      "name": "NIFTY PHARMA",
+      "last_price": 22164.85,
+      "change": 29.45,
+      "change_pct": 0.13
+    },
+    {
+      "name": "NIFTY PSE",
+      "last_price": 10173.1,
+      "change": 41.8,
+      "change_pct": 0.41
+    },
+    {
+      "name": "NIFTY COMMODITIES",
+      "last_price": 9754.6,
+      "change": 74.9,
+      "change_pct": 0.77
+    },
+    {
+      "name": "NIFTY METAL",
+      "last_price": 12356.4,
+      "change": 126.7,
+      "change_pct": 1.04
+    },
+    {
+      "name": "NIFTY MIDCAP LIQUID 15",
+      "last_price": 15446.35,
+      "change": 167.45,
+      "change_pct": 1.1
+    },
+    {
+      "name": "NIFTY ENERGY",
+      "last_price": 37174.6,
+      "change": 406.35,
+      "change_pct": 1.11
+    },
+    {
+      "name": "NIFTY 50",
+      "last_price": 24050.6,
+      "change": 275.5,
+      "change_pct": 1.16
+    },
+    {
+      "name": "NIFTY FMCG",
+      "last_price": 48194.05,
+      "change": 553.35,
+      "change_pct": 1.16
+    },
+    {
+      "name": "NIFTY MIDCAP 50",
+      "last_price": 16452.4,
+      "change": 206.05,
+      "change_pct": 1.27
+    },
+    {
+      "name": "NIFTY INFRASTRUCTURE",
+      "last_price": 9116.75,
+      "change": 117.65,
+      "change_pct": 1.31
+    },
+    {
+      "name": "NIFTY 500",
+      "last_price": 22346.75,
+      "change": 309.25,
+      "change_pct": 1.4
+    },
+    {
+      "name": "NIFTY MIDCAP SELECT",
+      "last_price": 13406.35,
+      "change": 199.05,
+      "change_pct": 1.51
+    },
+    {
+      "name": "NIFTY MIDCAP 100",
+      "last_price": 57843.95,
+      "change": 865.2,
+      "change_pct": 1.52
+    },
+    {
+      "name": "NIFTY MIDCAP 150",
+      "last_price": 21300.3,
+      "change": 334.8,
+      "change_pct": 1.6
+    },
+    {
+      "name": "NIFTY MIDCAP150 QUALITY 50",
+      "last_price": 22693.7,
+      "change": 412.85,
+      "change_pct": 1.85
+    },
+    {
+      "name": "NIFTY MEDIA",
+      "last_price": 1365.2,
+      "change": 26.25,
+      "change_pct": 1.96
+    },
+    {
+      "name": "NIFTY PRIVATE BANK",
+      "last_price": 26779.95,
+      "change": 520.2,
+      "change_pct": 1.98
+    },
+    {
+      "name": "NIFTY BANK",
+      "last_price": 55912.75,
+      "change": 1091.05,
+      "change_pct": 1.99
+    },
+    {
+      "name": "NIFTY PSU BANK",
+      "last_price": 8778.25,
+      "change": 172.55,
+      "change_pct": 2.01
+    },
+    {
+      "name": "NIFTY NEXT 50",
+      "last_price": 67641.25,
+      "change": 1372.6,
+      "change_pct": 2.07
+    },
+    {
+      "name": "NIFTY REALTY",
+      "last_price": 759.25,
+      "change": 15.5,
+      "change_pct": 2.08
+    },
+    {
+      "name": "NIFTY MIDCAP150 MOMENTUM 50",
+      "last_price": 60812.75,
+      "change": 1264.25,
+      "change_pct": 2.12
+    },
+    {
+      "name": "NIFTY AUTO",
+      "last_price": 26640.9,
+      "change": 739.0,
+      "change_pct": 2.85
+    }
+  ],
+  "fetched_at": "2026-04-11T23:40:47.018609+05:30"
+}

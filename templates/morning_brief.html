@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morning Brief - Wealth Builder Pro</title>
+<style>
+  body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f6f9; color: #333; }
+  .header { background: #1a1a2e; color: #fff; padding: 20px; text-align: center; }
+  .header h1 { margin: 0; font-size: 22px; }
+  .header .date { font-size: 13px; color: #a0a0c0; margin-top: 4px; }
+  .container { max-width: 640px; margin: 0 auto; padding: 16px; }
+  .card { background: #fff; border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .card h2 { margin: 0 0 12px 0; font-size: 16px; color: #1a1a2e; border-bottom: 2px solid #e8e8f0; padding-bottom: 8px; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .summary-item { flex: 1; min-width: 120px; text-align: center; padding: 12px; background: #f8f9fc; border-radius: 6px; }
+  .summary-item .label { font-size: 11px; color: #666; text-transform: uppercase; }
+  .summary-item .value { font-size: 20px; font-weight: 700; margin-top: 4px; }
+  .positive { color: #16a34a; }
+  .negative { color: #dc2626; }
+  .neutral { color: #6b7280; }
+  .verdict-pill { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; color: #fff; }
+  .verdict-buy { background: #16a34a; }
+  .verdict-hold { background: #f59e0b; }
+  .verdict-sell { background: #dc2626; }
+  .verdict-exit { background: #7c3aed; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px; background: #f1f5f9; color: #475569; font-size: 11px; text-transform: uppercase; }
+  td { padding: 8px; border-bottom: 1px solid #e8e8f0; }
+  .fii-dii-bar { height: 20px; border-radius: 4px; margin: 4px 0; }
+  .fii-bar { background: #3b82f6; }
+  .dii-bar { background: #f59e0b; }
+  .news-item { padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+  .news-item:last-child { border-bottom: none; }
+  .news-item .headline { font-weight: 600; font-size: 14px; }
+  .news-item .meta { font-size: 11px; color: #888; margin-top: 2px; }
+  .footer { text-align: center; padding: 16px; font-size: 11px; color: #999; }
+  @media (max-width: 480px) {
+    .summary-item { min-width: 100px; }
+    .summary-item .value { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🌅 Morning Brief</h1>
+  <div class="date">{{ report_date }}</div>
+</div>
+<div class="container">
+  <!-- Portfolio Summary -->
+  <div class="card">
+    <h2>Portfolio Summary</h2>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="label">Invested</div>
+        <div class="value">₹{{ "%.0f"|format(portfolio_summary.total_invested|default(0)) }}</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">Current Value</div>
+        <div class="value">₹{{ "%.0f"|format(portfolio_summary.current_value|default(0)) }}</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">P&amp;L</div>
+        <div class="value {{ 'positive' if portfolio_summary.total_pnl|default(0) >= 0 else 'negative' }}">
+          ₹{{ "%.0f"|format(portfolio_summary.total_pnl|default(0)) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overnight Changes -->
+  <div class="card">
+    <h2>Overnight Changes</h2>
+    {% if indices %}
+    <table>
+      <tr><th>Index</th><th>Last</th><th>Change</th><th>%</th></tr>
+      {% for idx in indices %}
+      <tr>
+        <td>{{ idx.name }}</td>
+        <td>{{ "%.2f"|format(idx.last_price) }}</td>
+        <td class="{{ 'positive' if idx.change >= 0 else 'negative' }}">{{ "%+.2f"|format(idx.change) }}</td>
+        <td class="{{ 'positive' if idx.change_percent >= 0 else 'negative' }}">{{ "%+.2f"|format(idx.change_percent) }}%</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p class="neutral">Index data unavailable</p>
+    {% endif %}
+  </div>
+  <!-- FII/DII Flows -->
+  <div class="card">
+    <h2>FII / DII Flows</h2>
+    {% if fii_dii %}
+    <table>
+      <tr><th></th><th>Buy (₹Cr)</th><th>Sell (₹Cr)</th><th>Net (₹Cr)</th></tr>
+      <tr>
+        <td><strong>FII</strong></td>
+        <td>{{ "%.0f"|format(fii_dii.fii_buy) }}</td>
+        <td>{{ "%.0f"|format(fii_dii.fii_sell) }}</td>
+        <td class="{{ 'positive' if fii_dii.fii_net >= 0 else 'negative' }}">{{ "%+.0f"|format(fii_dii.fii_net) }}</td>
+      </tr>
+      <tr>
+        <td><strong>DII</strong></td>
+        <td>{{ "%.0f"|format(fii_dii.dii_buy) }}</td>
+        <td>{{ "%.0f"|format(fii_dii.dii_sell) }}</td>
+        <td class="{{ 'positive' if fii_dii.dii_net >= 0 else 'negative' }}">{{ "%+.0f"|format(fii_dii.dii_net) }}</td>
+      </tr>
+    </table>
+    {% else %}
+    <p class="neutral">FII/DII data unavailable</p>
+    {% endif %}
+  </div>
+
+  <!-- News -->
+  <div class="card">
+    <h2>Market News</h2>
+    {% if news %}
+    {% for item in news[:10] %}
+    <div class="news-item">
+      <div class="headline">{{ item.headline }}</div>
+      <div class="meta">{{ item.source }} · {{ item.pub_date }}</div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="neutral">No recent news</p>
+    {% endif %}
+  </div>
+</div>
+<div class="footer">Wealth Builder Pro · Generated {{ report_date }}</div>
+</body>
+</html>

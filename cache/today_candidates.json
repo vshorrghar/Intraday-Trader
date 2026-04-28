@@ -1,0 +1,487 @@
+{
+  "candidates": [
+    {
+      "symbol": "UNIONBANK",
+      "ltp": 179.5,
+      "open": 194.89,
+      "prev_close": 194.05,
+      "change_pct": -7.5,
+      "volume": 65651090,
+      "high": 194.89,
+      "low": 177.3,
+      "gap_pct": 0.43
+    },
+    {
+      "symbol": "ASHOKLEY",
+      "ltp": 170.62,
+      "open": 177,
+      "prev_close": 178.97,
+      "change_pct": -4.67,
+      "volume": 33563795,
+      "high": 177.79,
+      "low": 169.25,
+      "gap_pct": -1.1
+    },
+    {
+      "symbol": "JIOFIN",
+      "ltp": 248.5,
+      "open": 240,
+      "prev_close": 238.51,
+      "change_pct": 4.19,
+      "volume": 74432271,
+      "high": 251.7,
+      "low": 238.54,
+      "gap_pct": 0.62
+    },
+    {
+      "symbol": "TMCV",
+      "ltp": 432,
+      "open": 447.75,
+      "prev_close": 447.8,
+      "change_pct": -3.53,
+      "volume": 8676219,
+      "high": 448.5,
+      "low": 430.2,
+      "gap_pct": -0.01
+    },
+    {
+      "symbol": "MOTHERSON",
+      "ltp": 127.14,
+      "open": 131.76,
+      "prev_close": 131.76,
+      "change_pct": -3.51,
+      "volume": 23191134,
+      "high": 131.76,
+      "low": 126.11,
+      "gap_pct": 0.0
+    },
+    {
+      "symbol": "INDHOTEL",
+      "ltp": 637.3,
+      "open": 657,
+      "prev_close": 659.7,
+      "change_pct": -3.4,
+      "volume": 4493765,
+      "high": 657,
+      "low": 636,
+      "gap_pct": -0.41
+    },
+    {
+      "symbol": "LODHA",
+      "ltp": 856.5,
+      "open": 878.05,
+      "prev_close": 884.8,
+      "change_pct": -3.2,
+      "volume": 1641168,
+      "high": 880,
+      "low": 854.6,
+      "gap_pct": -0.76
+    },
+    {
+      "symbol": "DLF",
+      "ltp": 591.9,
+      "open": 604,
+      "prev_close": 610.65,
+      "change_pct": -3.07,
+      "volume": 3196418,
+      "high": 605.25,
+      "low": 591,
+      "gap_pct": -1.09
+    },
+    {
+      "symbol": "TMPV",
+      "ltp": 351.45,
+      "open": 359.95,
+      "prev_close": 361.85,
+      "change_pct": -2.87,
+      "volume": 11374109,
+      "high": 361.2,
+      "low": 350,
+      "gap_pct": -0.53
+    },
+    {
+      "symbol": "CANBK",
+      "ltp": 141.1,
+      "open": 144.5,
+      "prev_close": 145.23,
+      "change_pct": -2.84,
+      "volume": 22459475,
+      "high": 144.58,
+      "low": 140.21,
+      "gap_pct": -0.5
+    },
+    {
+      "symbol": "VEDL",
+      "ltp": 736.35,
+      "open": 758.8,
+      "prev_close": 757,
+      "change_pct": -2.73,
+      "volume": 17456241,
+      "high": 758.8,
+      "low": 733.05,
+      "gap_pct": 0.24
+    },
+    {
+      "symbol": "CONCOR",
+      "ltp": 502.75,
+      "open": 516,
+      "prev_close": 515.7,
+      "change_pct": -2.51,
+      "volume": 1041939,
+      "high": 516.9,
+      "low": 502.3,
+      "gap_pct": 0.06
+    },
+    {
+      "symbol": "BANKBARODA",
+      "ltp": 276,
+      "open": 281,
+      "prev_close": 282.77,
+      "change_pct": -2.39,
+      "volume": 8177124,
+      "high": 281.49,
+      "low": 274.05,
+      "gap_pct": -0.63
+    },
+    {
+      "symbol": "AMBUJACEM",
+      "ltp": 449.95,
+      "open": 457.95,
+      "prev_close": 460.9,
+      "change_pct": -2.38,
+      "volume": 2393788,
+      "high": 457.95,
+      "low": 449,
+      "gap_pct": -0.64
+    },
+    {
+      "symbol": "LICHSGFIN",
+      "ltp": 545.85,
+      "open": 555,
+      "prev_close": 559.05,
+      "change_pct": -2.36,
+      "volume": 1322221,
+      "high": 563.95,
+      "low": 544.95,
+      "gap_pct": -0.72
+    },
+    {
+      "symbol": "IREDA",
+      "ltp": 137.29,
+      "open": 140.4,
+      "prev_close": 140.45,
+      "change_pct": -2.25,
+      "volume": 21390031,
+      "high": 141.94,
+      "low": 137,
+      "gap_pct": -0.04
+    },
+    {
+      "symbol": "VBL",
+      "ltp": 484.25,
+      "open": 490,
+      "prev_close": 494.95,
+      "change_pct": -2.16,
+      "volume": 10692659,
+      "high": 490.85,
+      "low": 476.4,
+      "gap_pct": -1.0
+    },
+    {
+      "symbol": "HUDCO",
+      "ltp": 204.14,
+      "open": 199,
+      "prev_close": 199.88,
+      "change_pct": 2.13,
+      "volume": 7148636,
+      "high": 206.3,
+      "low": 198.13,
+      "gap_pct": -0.44
+    },
+    {
+      "symbol": "HINDZINC",
+      "ltp": 592.5,
+      "open": 605,
+      "prev_close": 604.75,
+      "change_pct": -2.03,
+      "volume": 4804398,
+      "high": 605,
+      "low": 590.7,
+      "gap_pct": 0.04
+    },
+    {
+      "symbol": "HDFCBANK",
+      "ltp": 783.9,
+      "open": 792,
+      "prev_close": 799.9,
+      "change_pct": -2,
+      "volume": 37677616,
+      "high": 796.65,
+      "low": 782.5,
+      "gap_pct": -0.99
+    },
+    {
+      "symbol": "EXIDEIND",
+      "ltp": 347.45,
+      "open": 353.8,
+      "prev_close": 354.55,
+      "change_pct": -2,
+      "volume": 6747931,
+      "high": 359.85,
+      "low": 345.05,
+      "gap_pct": -0.21
+    },
+    {
+      "symbol": "MOTILALOFS",
+      "ltp": 795,
+      "open": 806.95,
+      "prev_close": 811.2,
+      "change_pct": -2,
+      "volume": 1132645,
+      "high": 809.4,
+      "low": 785.75,
+      "gap_pct": -0.52
+    },
+    {
+      "symbol": "BAJFINANCE",
+      "ltp": 916.5,
+      "open": 926.1,
+      "prev_close": 934.75,
+      "change_pct": -1.95,
+      "volume": 9143598,
+      "high": 929.85,
+      "low": 909.35,
+      "gap_pct": -0.93
+    },
+    {
+      "symbol": "PNB",
+      "ltp": 112.54,
+      "open": 114.2,
+      "prev_close": 114.67,
+      "change_pct": -1.86,
+      "volume": 17507928,
+      "high": 114.39,
+      "low": 111.57,
+      "gap_pct": -0.41
+    },
+    {
+      "symbol": "TATAINVEST",
+      "ltp": 718,
+      "open": 733.4,
+      "prev_close": 731.4,
+      "change_pct": -1.83,
+      "volume": 670766,
+      "high": 737.25,
+      "low": 714,
+      "gap_pct": 0.27
+    },
+    {
+      "symbol": "ZYDUSLIFE",
+      "ltp": 946.7,
+      "open": 927,
+      "prev_close": 929.9,
+      "change_pct": 1.81,
+      "volume": 1693451,
+      "high": 962.9,
+      "low": 921.7,
+      "gap_pct": -0.31
+    },
+    {
+      "symbol": "UPL",
+      "ltp": 642,
+      "open": 653.5,
+      "prev_close": 653.85,
+      "change_pct": -1.81,
+      "volume": 2471569,
+      "high": 656.55,
+      "low": 638.45,
+      "gap_pct": -0.05
+    },
+    {
+      "symbol": "RECLTD",
+      "ltp": 376.5,
+      "open": 381.85,
+      "prev_close": 383.35,
+      "change_pct": -1.79,
+      "volume": 6915475,
+      "high": 386.1,
+      "low": 375.85,
+      "gap_pct": -0.39
+    },
+    {
+      "symbol": "CGPOWER",
+      "ltp": 838.6,
+      "open": 825.7,
+      "prev_close": 824.35,
+      "change_pct": 1.73,
+      "volume": 3763003,
+      "high": 842,
+      "low": 821.4,
+      "gap_pct": 0.16
+    },
+    {
+      "symbol": "NHPC",
+      "ltp": 81.33,
+      "open": 82.51,
+      "prev_close": 82.63,
+      "change_pct": -1.57,
+      "volume": 9025789,
+      "high": 83.08,
+      "low": 81.21,
+      "gap_pct": -0.15
+    }
+  ],
+  "sectors": [
+    {
+      "name": "NIFTY 50",
+      "change_pct": -0.84,
+      "last_price": 24173.05
+    },
+    {
+      "name": "NIFTY NEXT 50",
+      "change_pct": -1.31,
+      "last_price": 70410.35
+    },
+    {
+      "name": "NIFTY BANK",
+      "change_pct": -1.43,
+      "last_price": 56305
+    },
+    {
+      "name": "NIFTY FINANCIAL SERVICES",
+      "change_pct": -1.42,
+      "last_price": 26247.2
+    },
+    {
+      "name": "NIFTY MIDCAP SELECT",
+      "change_pct": -0.65,
+      "last_price": 13848.55
+    },
+    {
+      "name": "NIFTY 100",
+      "change_pct": -0.93,
+      "last_price": 25094.95
+    },
+    {
+      "name": "NIFTY 200",
+      "change_pct": -0.83,
+      "last_price": 13801.35
+    },
+    {
+      "name": "NIFTY 500",
+      "change_pct": -0.79,
+      "last_price": 22810.85
+    },
+    {
+      "name": "NIFTY MIDCAP 50",
+      "change_pct": -0.71,
+      "last_price": 16936.05
+    },
+    {
+      "name": "NIFTY MIDCAP 100",
+      "change_pct": -0.41,
+      "last_price": 59952.8
+    },
+    {
+      "name": "NIFTY SMALLCAP 100",
+      "change_pct": -0.67,
+      "last_price": 17720.75
+    },
+    {
+      "name": "INDIA VIX",
+      "change_pct": 1.58,
+      "last_price": 18.59
+    },
+    {
+      "name": "NIFTY MIDCAP 150",
+      "change_pct": -0.41,
+      "last_price": 22099.3
+    },
+    {
+      "name": "NIFTY SMALLCAP 50",
+      "change_pct": -0.67,
+      "last_price": 8633.15
+    },
+    {
+      "name": "NIFTY SMALLCAP 250",
+      "change_pct": -0.55,
+      "last_price": 16592.45
+    },
+    {
+      "name": "NIFTY MIDSMALLCAP 400",
+      "change_pct": -0.46,
+      "last_price": 20068.95
+    },
+    {
+      "name": "NIFTY500 MULTICAP 50:25:25",
+      "change_pct": -0.7,
+      "last_price": 15937.85
+    },
+    {
+      "name": "NIFTY LARGEMIDCAP 250",
+      "change_pct": -0.67,
+      "last_price": 16282.45
+    },
+    {
+      "name": "NIFTY TOTAL MARKET",
+      "change_pct": -0.76,
+      "last_price": 12828
+    },
+    {
+      "name": "NIFTY MICROCAP 250",
+      "change_pct": -0.22,
+      "last_price": 22859.95
+    },
+    {
+      "name": "NIFTY500 LARGEMIDSMALL EQUAL-CAP WEIGHTED",
+      "change_pct": -0.63,
+      "last_price": 17646.85
+    },
+    {
+      "name": "NIFTY INDIA FPI 150",
+      "change_pct": -0.77,
+      "last_price": 1538.75
+    },
+    {
+      "name": "NIFTY AUTO",
+      "change_pct": -2.35,
+      "last_price": 25828.1
+    },
+    {
+      "name": "NIFTY FINANCIAL SERVICES 25/50",
+      "change_pct": -1.38,
+      "last_price": 28666.2
+    },
+    {
+      "name": "NIFTY FMCG",
+      "change_pct": -0.11,
+      "last_price": 51140.5
+    },
+    {
+      "name": "NIFTY IT",
+      "change_pct": -1.22,
+      "last_price": 30124.3
+    },
+    {
+      "name": "NIFTY MEDIA",
+      "change_pct": 0.9,
+      "last_price": 1466.1
+    },
+    {
+      "name": "NIFTY METAL",
+      "change_pct": -0.82,
+      "last_price": 12786.25
+    },
+    {
+      "name": "NIFTY PHARMA",
+      "change_pct": 2.36,
+      "last_price": 22986.35
+    },
+    {
+      "name": "NIFTY PSU BANK",
+      "change_pct": -2.19,
+      "last_price": 8824.25
+    }
+  ],
+  "vix": 18.59
+}

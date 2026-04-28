@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Intraday Auto-Trader</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#f4f6f9; color:#333; }
+.header { background:#1a1a2e; color:#fff; padding:20px; text-align:center; }
+.header h1 { margin:0; font-size:24px; }
+.header .date { font-size:13px; color:#a0a0c0; margin-top:4px; }
+.container { max-width:900px; margin:0 auto; padding:16px; }
+.card { background:#fff; border-radius:8px; padding:16px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.card h2 { margin:0 0 12px; font-size:16px; color:#1a1a2e; border-bottom:2px solid #e8e8f0; padding-bottom:8px; }
+.summary-grid { display:flex; flex-wrap:wrap; gap:12px; }
+.summary-item { flex:1; min-width:140px; text-align:center; padding:14px; background:#f8f9fc; border-radius:6px; }
+.summary-item .label { font-size:11px; color:#666; text-transform:uppercase; }
+.summary-item .value { font-size:22px; font-weight:700; margin-top:4px; }
+.positive { color:#16a34a; } .negative { color:#dc2626; } .neutral { color:#6b7280; }
+.verdict-pill { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:600; color:#fff; }
+.verdict-buy { background:#16a34a; } .verdict-hold { background:#f59e0b; }
+.verdict-sell { background:#dc2626; } .verdict-exit { background:#7c3aed; }
+.rec-continue { color:#16a34a; font-weight:600; } .rec-stop { color:#dc2626; font-weight:600; }
+.rec-switch { color:#f59e0b; font-weight:600; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th { text-align:left; padding:8px; background:#f1f5f9; color:#475569; font-size:11px; text-transform:uppercase; }
+td { padding:8px; border-bottom:1px solid #e8e8f0; }
+.tax-flag { background:#fef3c7; color:#92400e; padding:2px 6px; border-radius:4px; font-size:11px; }
+.bar-row { display:flex; align-items:center; gap:8px; margin:6px 0; }
+.bar-label { width:40px; font-size:12px; font-weight:600; }
+.bar { height:18px; border-radius:4px; min-width:2px; }
+.bar-fii { background:#3b82f6; } .bar-dii { background:#f59e0b; }
+.footer { text-align:center; padding:16px; font-size:11px; color:#999; }
+@media (max-width:600px) {
+  .summary-item { min-width:100px; } .summary-item .value { font-size:16px; }
+  table { font-size:11px; } th,td { padding:6px 4px; }
+}
+.tab-btn { background:transparent; border:none; color:#a0a0c0; font-size:14px; padding:8px 16px; cursor:pointer; border-bottom:2px solid transparent; }
+.tab-btn.active { color:#fff; border-bottom-color:#fff; }
+.tab-btn:hover { color:#fff; }
+</style>
+</head>
+<body>
+<div class="header"><h1>⚡ Intraday Auto-Trader</h1><div class="date" id="header-date">Loading...</div>
+<div class="tabs" style="margin-top:10px;">
+<button class="tab-btn" onclick="showTab('portfolio')">Portfolio</button>
+<button class="tab-btn active" onclick="showTab('intraday')">⚡ Intraday Live</button>
+<button class="tab-btn" onclick="showTab('fno')">🎯 F&O Live</button>
+</div>
+</div>
+<div class="container" id="tab-portfolio" style="display:none;">
+<div class="card"><h2>Portfolio Summary</h2>
+<div class="summary-grid">
+<div class="summary-item"><div class="label">Invested</div><div class="value">₹3,363,522</div></div>
+<div class="summary-item"><div class="label">Current Value</div><div class="value">₹3,504,864</div></div>
+<div class="summary-item"><div class="label">P&amp;L</div><div class="value positive">₹141,342</div></div>
+</div></div>
+<div class="card"><h2>Stock Verdicts</h2>
+<table><tr><th>Stock</th><th>Verdict</th><th>Target</th><th>SL</th><th>Tax</th></tr>
+<tr><td colspan="5" class="neutral">No verdicts</td></tr></table></div>
+<div class="card"><h2>MF Recommendations</h2>
+<table><tr><th>Scheme</th><th>Action</th><th>Alternative</th></tr>
+<tr><td>Sundaram Aggressive Hybrid Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Bandhan Small Cap Fund Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>Mirae Asset Large & Midcap Fund Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Franklin India Small Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Axis ELSS Tax Saver Fund Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>ICICI Prudential Commodities Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Axis Small Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>ICICI Prudential Technology Direct Plan Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>Franklin India Small Cap Fund Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Bandhan Focused Fund Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>UTI Nifty 50 Index Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>ICICI Prudential US Bluechip Equity Direct Plan Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>Aditya Birla Sun Life Large Cap Direct Fund Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Canara Robeco Small Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Parag Parikh Flexi Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Axis ELSS Tax Saver Direct Plan Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>HDFC Mid Cap Fund Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Aditya Birla Sun Life Gold Fund Direct Growth</td><td class="rec-switch">SWITCH</td><td>Axis Gold Direct Plan Growth</td></tr>
+<tr><td>PGIM India Midcap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>HDFC Mid Cap Fund Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>ICICI Prudential Technology Direct Plan Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Aditya Birla Sun Life Nifty India Defence Index Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Invesco India Infrastructure Fund Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>Bandhan ELSS Tax Saver Fund Direct Plan Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Aditya Birla Sun Life Manufacturing Equity Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>PGIM India Midcap Fund Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>Axis Gold Direct Plan Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Motilal Oswal BSE Enhanced Value Index Fund Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>HDFC Mid Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>ICICI Prudential Commodities Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Tata Nifty Midcap 150 Index Fund Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>Motilal Oswal Nifty India Defence Index Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Groww Nifty India Railways PSU Index Fund Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>JioBlackRock Flexi Cap Fund Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>Bandhan Focused Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Aditya Birla Sun Life MNC Fund Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>SBI Large Cap Direct Plan Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Tata India Consumer Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Parag Parikh Flexi Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>SBI Gold Direct Plan Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Aditya Birla Sun Life Value Fund Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>DSP India T.I.G.E.R. (The Infrastructure Growth and Economic Reforms Fund) Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Quant Small Cap Fund Direct Plan Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>HDFC Small Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Quant Infrastructure Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>HSBC Aggressive Hybrid Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>360 ONE Focused Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Canara Robeco Small Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Tata Gold ETF FoF Direct Growth</td><td class="rec-switch">SWITCH</td><td>SBI Gold Direct Plan Growth</td></tr>
+<tr><td>Edelweiss US Technology Equity FoF Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>HSBC Small Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Tata Digital India Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>LIC MF Gold ETF FoF Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Nippon India Multi Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Nippon India Pharma Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>HDFC Defence Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>JM Flexicap Fund Direct Plan Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>SBI PSU Direct Plan Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>Axis Large Cap Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+<tr><td>Motilal Oswal Midcap Fund Direct Growth</td><td class="rec-stop">STOP</td><td>-</td></tr>
+<tr><td>Nippon India Pharma Fund Direct Growth</td><td class="rec-continue">CONTINUE</td><td>-</td></tr>
+</table></div>
+<div class="card"><h2>FII / DII Flows</h2>
+            <div class="bar-row"><span class="bar-label">FII</span>
+            <div class="bar bar-fii" style="width:99.31130000000002px"></div>
+            <span class="negative">-9931 Cr</span></div>
+            <div class="bar-row"><span class="bar-label">DII</span>
+            <div class="bar bar-dii" style="width:72.08409999999999px"></div>
+            <span class="positive">+7208 Cr</span></div></div>
+</div>
+<div class="footer" id="portfolio-footer">Wealth Builder Pro · Updated 2026-04-06 17:50 IST</div>
+
+<!-- ===== INTRADAY LIVE TAB ===== -->
+<div class="container" id="tab-intraday">
+<div class="card"><h2>⚡ Intraday Live</h2>
+<div class="summary-grid" id="intra-summary">
+<div class="summary-item"><div class="label">Mode</div><div class="value" id="intra-mode">—</div></div>
+<div class="summary-item"><div class="label">Today P&L</div><div class="value" id="intra-pnl">—</div></div>
+<div class="summary-item"><div class="label">Trades</div><div class="value" id="intra-count">—</div></div>
+<div class="summary-item"><div class="label">Loss Cap</div><div class="value" id="intra-cap">—</div></div>
+</div>
+</div>
+
+<div class="card"><h2>Daily Loss Tracker</h2>
+<div style="background:#e5e7eb;border-radius:8px;height:28px;overflow:hidden;position:relative;">
+<div id="loss-bar" style="height:100%;border-radius:8px;transition:width 0.5s;width:0%;background:#16a34a;"></div>
+<span id="loss-label" style="position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:600;">0%</span>
+</div>
+</div>
+
+<div class="card"><h2>Today's Trades</h2>
+<table id="intra-trades-table">
+<tr><th>Symbol</th><th>Entry</th><th>Current</th><th>Target</th><th>SL</th><th>Qty</th><th>P&L</th><th>Status</th></tr>
+<tr><td colspan="8" class="neutral">No trades yet</td></tr>
+</table>
+</div>
+
+<div class="card"><h2>Cumulative P&L</h2>
+<canvas id="cumPnlChart" height="200"></canvas>
+</div>
+
+<div class="card"><h2>Daily P&L</h2>
+<canvas id="dailyPnlChart" height="200"></canvas>
+</div>
+</div>
+
+<!-- ===== F&O LIVE TAB ===== -->
+<div class="container" id="tab-fno" style="display:none;">
+<div class="card"><h2>🎯 F&O Live</h2>
+<div class="summary-grid" id="fno-summary">
+<div class="summary-item"><div class="label">Mode</div><div class="value" id="fno-mode">—</div></div>
+<div class="summary-item"><div class="label">Today P&L</div><div class="value" id="fno-pnl">—</div></div>
+<div class="summary-item"><div class="label">Active Strategies</div><div class="value" id="fno-active">—</div></div>
+<div class="summary-item"><div class="label">Paper Capital</div><div class="value" id="fno-capital">—</div></div>
+</div>
+<div class="summary-grid" style="margin-top:10px;">
+<div class="summary-item"><div class="label">Net Delta</div><div class="value" id="fno-delta">—</div></div>
+<div class="summary-item"><div class="label">Net Gamma</div><div class="value" id="fno-gamma">—</div></div>
+<div class="summary-item"><div class="label">Net Theta</div><div class="value" id="fno-theta">—</div></div>
+<div class="summary-item"><div class="label">Net Vega</div><div class="value" id="fno-vega">—</div></div>
+</div>
+</div>
+
+<!-- Overall Performance Stats -->
+<div class="card"><h2>📊 Overall Performance</h2>
+<div class="summary-grid">
+<div class="summary-item"><div class="label">Total P&L</div><div class="value" id="fno-total-pnl">—</div></div>
+<div class="summary-item"><div class="label">Win Rate</div><div class="value" id="fno-win-rate">—</div></div>
+<div class="summary-item"><div class="label">Trading Days</div><div class="value" id="fno-total-days">—</div></div>
+<div class="summary-item"><div class="label">W / L</div><div class="value" id="fno-wl">—</div></div>
+</div>
+</div>
+
+<div class="card"><h2>Daily Loss Tracker</h2>
+<div style="background:#e5e7eb;border-radius:8px;height:28px;overflow:hidden;position:relative;">
+<div id="fno-loss-bar" style="height:100%;border-radius:8px;transition:width 0.5s;width:0%;background:#16a34a;"></div>
+<span id="fno-loss-label" style="position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:600;">0%</span>
+</div>
+</div>
+
+<div class="card"><h2>Active Strategies</h2>
+<table id="fno-strategies-table">
+<tr><th>Type</th><th>Index</th><th>Legs</th><th>Entry ₹</th><th>Current ₹</th><th>P&L</th><th>Status</th><th>Score</th><th>Greeks</th></tr>
+<tr><td colspan="9" class="neutral">No strategies yet</td></tr>
+</table>
+</div>
+
+<!-- Strategy Breakdown -->
+<div class="card"><h2>🎯 Strategy Breakdown</h2>
+<table id="fno-breakdown-table">
+<tr><th>Strategy</th><th>Trades</th><th>Win Rate</th><th>Total P&L</th></tr>
+<tr><td colspan="4" class="neutral">No data yet</td></tr>
+</table>
+</div>
+
+<div class="card"><h2>Daily P&L (per day)</h2>
+<canvas id="fnoDailyPnlChart" height="200"></canvas>
+</div>
+
+<div class="card"><h2>Cumulative P&L</h2>
+<canvas id="fnoCumPnlChart" height="200"></canvas>
+</div>
+</div>
+
+<div class="footer">Wealth Builder Pro · Auto-refreshes during market hours</div>
+<script>
+// Tab switching
+function showTab(tab) {
+  document.getElementById('tab-portfolio').style.display = tab === 'portfolio' ? 'block' : 'none';
+  document.getElementById('tab-intraday').style.display = tab === 'intraday' ? 'block' : 'none';
+  document.getElementById('tab-fno').style.display = tab === 'fno' ? 'block' : 'none';
+  document.getElementById('portfolio-footer').style.display = tab === 'portfolio' ? 'block' : 'none';
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  if (tab === 'intraday') loadIntradayData();
+  if (tab === 'fno') loadFnoData();
+}
+
+// Intraday data loader
+let cumChart = null, dailyChart = null;
+function loadIntradayData() {
+  fetch('api/intraday_latest.json').then(r => r.json()).then(d => {
+    // Update header date from JSON
+    if (d.updated_at) {
+      const dt = new Date(d.updated_at);
+      const opts = {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Kolkata'};
+      document.getElementById('header-date').textContent = dt.toLocaleString('en-IN', opts) + ' IST';
+    }
+    const today = d.today || {};
+    const trades = today.trades || [];
+    const pnl = today.total_pnl || 0;
+
+    document.getElementById('intra-mode').textContent = d.mode === 'LIVE' ? '🔴 LIVE' : '🧪 DRY-RUN';
+    document.getElementById('intra-pnl').textContent = '₹' + pnl.toLocaleString('en-IN', {minimumFractionDigits:0});
+    document.getElementById('intra-pnl').className = 'value ' + (pnl >= 0 ? 'positive' : 'negative');
+    document.getElementById('intra-count').textContent = trades.length;
+    document.getElementById('intra-cap').textContent = (today.loss_cap_pct || 0).toFixed(0) + '%';
+
+    // Loss bar
+    const pct = Math.min(today.loss_cap_pct || 0, 100);
+    const bar = document.getElementById('loss-bar');
+    bar.style.width = pct + '%';
+    bar.style.background = pct > 80 ? '#dc2626' : pct > 50 ? '#f59e0b' : '#16a34a';
+    document.getElementById('loss-label').textContent = '₹' + (today.realized_loss||0).toFixed(0) + ' / ₹' + (today.daily_loss_cap||0);
+
+    // Trades table
+    const table = document.getElementById('intra-trades-table');
+    let html = '<tr><th>Symbol</th><th>Entry</th><th>Current</th><th>Target</th><th>SL</th><th>Qty</th><th>P&L</th><th>Status</th></tr>';
+    if (trades.length === 0) {
+      html += '<tr><td colspan="8" class="neutral">No trades yet</td></tr>';
+    } else {
+      trades.forEach(t => {
+        const tpnl = t.pnl || 0;
+        const cls = tpnl >= 0 ? 'positive' : 'negative';
+        const statusMap = {CLOSED:'🎯',STOPPED_OUT:'🛑',FORCE_EXITED:'⏰',PARTIAL_BOOKED:'📊',OPEN:'🟢',PENDING:'⏳'};
+        html += '<tr><td><b>' + t.tradingsymbol + '</b></td><td>₹' + (t.entry_price||0).toFixed(2) + '</td>'
+          + '<td>₹' + (t.current_price||0).toFixed(2) + '</td><td>₹' + (t.target_price||0).toFixed(2) + '</td>'
+          + '<td>₹' + (t.stop_loss_price||0).toFixed(2) + '</td><td>' + (t.quantity||0) + '</td>'
+          + '<td class="' + cls + '">₹' + tpnl.toFixed(0) + '</td>'
+          + '<td>' + (statusMap[t.status]||t.status) + '</td></tr>';
+      });
+    }
+    table.innerHTML = html;
+  }).catch(e => console.log('No intraday data yet'));
+}
+
+// Auto-refresh during market hours
+setInterval(() => {
+  const now = new Date();
+  const ist = new Date(now.toLocaleString('en-US', {timeZone:'Asia/Kolkata'}));
+  const h = ist.getHours(), m = ist.getMinutes();
+  if ((h > 9 || (h === 9 && m >= 15)) && (h < 15 || (h === 15 && m <= 30))) {
+    if (document.getElementById('tab-intraday').style.display !== 'none') loadIntradayData();
+  }
+}, 60000);
+
+fetch('api/latest.json').then(r=>r.json()).then(d=>console.log('Dashboard data loaded',d)).catch(()=>{});
+// Auto-load intraday data on page load
+loadIntradayData();
+
+// ===== F&O DATA LOADER =====
+let fnoCumChart = null, fnoDailyChart = null;
+function loadFnoData() {
+  fetch('api/fno_latest.json').then(r => r.json()).then(d => {
+    const today = d.today || {};
+    const strategies = today.strategies || [];
+    const pnl = today.total_pnl || 0;
+    const ng = today.net_greeks || {};
+
+    // Summary card
+    document.getElementById('fno-mode').textContent = d.mode === 'LIVE' ? '🔴 LIVE' : '📄 PAPER';
+    const pnlEl = document.getElementById('fno-pnl');
+    pnlEl.textContent = '₹' + pnl.toLocaleString('en-IN', {minimumFractionDigits:0});
+    pnlEl.className = 'value ' + (pnl >= 0 ? 'positive' : 'negative');
+    document.getElementById('fno-active').textContent = strategies.filter(s => s.status === 'OPEN').length;
+    document.getElementById('fno-capital').textContent = '₹' + (d.paper_capital_remaining || 0).toLocaleString('en-IN', {minimumFractionDigits:0});
+
+    // Net Greeks
+    document.getElementById('fno-delta').textContent = (ng.delta || 0).toFixed(1);
+    document.getElementById('fno-gamma').textContent = (ng.gamma || 0).toFixed(1);
+    document.getElementById('fno-theta').textContent = (ng.theta || 0).toFixed(1);
+    document.getElementById('fno-vega').textContent = (ng.vega || 0).toFixed(1);
+
+    // Color Greeks
+    ['fno-delta','fno-gamma','fno-theta','fno-vega'].forEach(id => {
+      const el = document.getElementById(id);
+      const v = parseFloat(el.textContent);
+      el.className = 'value ' + (v > 0 ? 'positive' : v < 0 ? 'negative' : 'neutral');
+    });
+
+    // Loss tracker bar
+    const pct = Math.min(today.loss_cap_pct || 0, 100);
+    const bar = document.getElementById('fno-loss-bar');
+    bar.style.width = pct + '%';
+    bar.style.background = pct > 80 ? '#dc2626' : pct > 50 ? '#f59e0b' : '#16a34a';
+    document.getElementById('fno-loss-label').textContent = '₹' + (today.realized_loss||0).toFixed(0) + ' / ₹' + (today.daily_loss_cap||0);
+
+    // Strategies table
+    const table = document.getElementById('fno-strategies-table');
+    let html = '<tr><th>Type</th><th>Index</th><th>Legs</th><th>Entry ₹</th><th>Current ₹</th><th>P&L</th><th>Status</th><th>Score</th><th>Greeks</th></tr>';
+    if (strategies.length === 0) {
+      html += '<tr><td colspan="9" class="neutral">No strategies yet</td></tr>';
+    } else {
+      strategies.forEach(s => {
+        const spnl = s.unrealized_pnl || 0;
+        const cls = spnl >= 0 ? 'positive' : 'negative';
+        const statusMap = {CLOSED:'🎯',STOPPED_OUT:'🛑',FORCE_EXITED:'⏰',PARTIAL_BOOKED:'📊',OPEN:'🟢',PENDING:'⏳',EXPIRED:'💀'};
+        const sg = s.net_greeks || {};
+        const greeksStr = 'Δ' + (sg.delta||0).toFixed(1) + ' Θ' + (sg.theta||0).toFixed(1);
+        html += '<tr><td><b>' + s.strategy_type + '</b></td><td>' + s.index + '</td>'
+          + '<td style="font-size:11px;">' + (s.legs_summary||'') + '</td>'
+          + '<td>₹' + (s.entry_premium||0).toFixed(1) + '</td>'
+          + '<td>₹' + (s.current_premium||0).toFixed(1) + '</td>'
+          + '<td class="' + cls + '">₹' + spnl.toFixed(0) + '</td>'
+          + '<td>' + (statusMap[s.status]||s.status) + '</td>'
+          + '<td>' + (s.confluence_score||0) + '</td>'
+          + '<td style="font-size:11px;">' + greeksStr + '</td></tr>';
+      });
+    }
+    table.innerHTML = html;
+
+    // Overall performance stats
+    const hist = d.history || {};
+    const totalPnlEl = document.getElementById('fno-total-pnl');
+    const totalPnl = hist.cumulative_pnl || 0;
+    totalPnlEl.textContent = '₹' + totalPnl.toLocaleString('en-IN', {minimumFractionDigits:0});
+    totalPnlEl.className = 'value ' + (totalPnl >= 0 ? 'positive' : 'negative');
+    document.getElementById('fno-win-rate').textContent = (hist.win_rate || 0).toFixed(1) + '%';
+    document.getElementById('fno-total-days').textContent = hist.total_days || 0;
+    document.getElementById('fno-wl').textContent = (hist.total_winners || 0) + ' / ' + (hist.total_losers || 0);
+
+    // Strategy breakdown table
+    const breakdown = hist.strategy_breakdown || {};
+    const bTable = document.getElementById('fno-breakdown-table');
+    let bHtml = '<tr><th>Strategy</th><th>Trades</th><th>Win Rate</th><th>Total P&L</th></tr>';
+    const bKeys = Object.keys(breakdown);
+    if (bKeys.length === 0) {
+      bHtml += '<tr><td colspan="4" class="neutral">No data yet</td></tr>';
+    } else {
+      bKeys.forEach(k => {
+        const b = breakdown[k];
+        const bpnl = b.total_pnl || 0;
+        const cls = bpnl >= 0 ? 'positive' : 'negative';
+        bHtml += '<tr><td><b>' + k + '</b></td><td>' + b.count + '</td>'
+          + '<td>' + (b.win_rate || 0).toFixed(1) + '%</td>'
+          + '<td class="' + cls + '">₹' + bpnl.toLocaleString('en-IN') + '</td></tr>';
+      });
+    }
+    bTable.innerHTML = bHtml;
+
+    // Charts
+    const dailyPnl = hist.daily_pnl || [];
+
+    // Cumulative P&L chart
+    if (fnoCumChart) fnoCumChart.destroy();
+    const cumLabels = dailyPnl.map(p => p.date);
+    let cumSum = (hist.cumulative_pnl || 0) - dailyPnl.reduce((a,b) => a + b.pnl, 0);
+    const cumData = dailyPnl.map(p => { cumSum += p.pnl; return cumSum; });
+    const cumCtx = document.getElementById('fnoCumPnlChart');
+    if (cumCtx) {
+      fnoCumChart = new Chart(cumCtx, {
+        type: 'line',
+        data: { labels: cumLabels, datasets: [{ label: 'Cumulative P&L', data: cumData, borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.1)', fill: true, tension: 0.3 }] },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: v => '₹' + v.toLocaleString('en-IN') } } } }
+      });
+    }
+
+    // Daily P&L chart
+    if (fnoDailyChart) fnoDailyChart.destroy();
+    const dailyCtx = document.getElementById('fnoDailyPnlChart');
+    if (dailyCtx && dailyPnl.length > 0) {
+      fnoDailyChart = new Chart(dailyCtx, {
+        type: 'bar',
+        data: {
+          labels: dailyPnl.map(p => p.date),
+          datasets: [{
+            label: 'Daily P&L',
+            data: dailyPnl.map(p => p.pnl),
+            backgroundColor: dailyPnl.map(p => p.pnl >= 0 ? '#16a34a' : '#dc2626'),
+            borderRadius: 4,
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                afterLabel: function(ctx) {
+                  const d = dailyPnl[ctx.dataIndex];
+                  return d ? 'Strategies: ' + (d.strategies||0) + ' | W:' + (d.winners||0) + ' L:' + (d.losers||0) : '';
+                }
+              }
+            }
+          },
+          scales: { y: { ticks: { callback: v => '₹' + v.toLocaleString('en-IN') } } }
+        }
+      });
+    }
+  }).catch(e => console.log('No F&O data yet', e));
+}
+
+// Auto-refresh F&O during market hours
+setInterval(() => {
+  const now = new Date();
+  const ist = new Date(now.toLocaleString('en-US', {timeZone:'Asia/Kolkata'}));
+  const h = ist.getHours(), m = ist.getMinutes();
+  if ((h > 9 || (h === 9 && m >= 15)) && (h < 15 || (h === 15 && m <= 30))) {
+    if (document.getElementById('tab-fno').style.display !== 'none') loadFnoData();
+  }
+}, 60000);
+</script>
+</body></html>

@@ -1,0 +1,140 @@
+{
+  "trade_date": "2026-04-27",
+  "mode": "DRY_RUN",
+  "broker_name": "dhan",
+  "generated_at": "2026-04-27T15:16:50.475813+05:30",
+  "trades": [
+    {
+      "tradingsymbol": "HFCL",
+      "symbol": "Hindustan Fluorocarbons Limited",
+      "entry_price": 102.0,
+      "exit_price": 106.57,
+      "target_price": 106.08,
+      "stop_loss_price": 103.9,
+      "quantity": 63,
+      "pnl": 287.91,
+      "status": "CLOSED",
+      "confidence_score": 8,
+      "strategy_type": "GAP",
+      "rationale": "Telecom sector aligned with NIFTY IT +1.97%. Small 1.53% gap with 28.2M volume. Entry near open (101.75) catching early momentum. Currently at 105.82, still within range for entry on minor pullback. Strong volume confirmation."
+    },
+    {
+      "tradingsymbol": "NMDC",
+      "symbol": "NMDC Limited",
+      "entry_price": 90.25,
+      "exit_price": 90.59,
+      "target_price": 93.66,
+      "stop_loss_price": 90.7,
+      "quantity": 119,
+      "pnl": 40.46,
+      "status": "STOPPED_OUT",
+      "confidence_score": 8,
+      "strategy_type": "MOMENTUM",
+      "rationale": "Metal sector leader aligned with NIFTY METAL +2.01%. Minimal 1.08% gap, opened at 90.25, currently 90.86 - perfect entry near open. Volume 13.6M. Tight range suggests consolidation before breakout. High probability continuation play."
+    },
+    {
+      "tradingsymbol": "SAIL",
+      "symbol": "Steel Authority of India",
+      "entry_price": 180.0,
+      "exit_price": 184.17,
+      "target_price": 186.6,
+      "stop_loss_price": 182.62,
+      "quantity": 32,
+      "pnl": 221.44,
+      "status": "FORCE_EXITED",
+      "confidence_score": 7,
+      "strategy_type": "VWAP",
+      "rationale": "Metal sector play with NIFTY METAL +2.01%. Small 0.84% gap, opened 179.96, now 184.40. Entry on pullback to 180. Volume 16.9M confirms participation. Price target aligns with sector momentum."
+    },
+    {
+      "tradingsymbol": "ADANIPOWER",
+      "symbol": "Adani Power Limited",
+      "entry_price": 215.0,
+      "exit_price": 218.34,
+      "target_price": 223.25,
+      "stop_loss_price": 218.43,
+      "quantity": 26,
+      "pnl": 86.84,
+      "status": "STOPPED_OUT",
+      "confidence_score": 7,
+      "strategy_type": "GAP",
+      "rationale": "Energy sector aligned with NIFTY ENERGY +1.25%. Small 0.80% gap with 22.7M volume. Opened 214.60, currently 219.29. Entry near open captures early strength without chasing. Clean price action with room to target."
+    },
+    {
+      "tradingsymbol": "SUZLON",
+      "symbol": "Suzlon Energy Limited",
+      "entry_price": 54.5,
+      "exit_price": 56.66,
+      "target_price": 56.59,
+      "stop_loss_price": 55.44,
+      "quantity": 104,
+      "pnl": 224.64,
+      "status": "CLOSED",
+      "confidence_score": 7,
+      "strategy_type": "ORB",
+      "rationale": "Energy/Renewable play with massive 65M volume - highest liquidity in candidates. Small 0.65% gap, opened 54.26, currently 55.85. Entry near open with exceptional volume confirmation. NIFTY ENERGY +1.25% tailwind."
+    }
+  ],
+  "metrics": {
+    "total_pnl": 861.29,
+    "total_trades": 5,
+    "winning_trades": 5,
+    "losing_trades": 0,
+    "win_rate": 100.0,
+    "avg_profit": 172.26,
+    "avg_loss": 0,
+    "expectancy": 172.26,
+    "profit_factor": "inf"
+  },
+  "strategy_breakdown": {
+    "GAP": {
+      "total_pnl": 374.75,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 187.38,
+      "avg_loss": 0,
+      "expectancy": 187.38,
+      "profit_factor": "inf"
+    },
+    "MOMENTUM": {
+      "total_pnl": 40.46,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 40.46,
+      "avg_loss": 0,
+      "expectancy": 40.46,
+      "profit_factor": "inf"
+    },
+    "VWAP": {
+      "total_pnl": 221.44,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 221.44,
+      "avg_loss": 0,
+      "expectancy": 221.44,
+      "profit_factor": "inf"
+    },
+    "ORB": {
+      "total_pnl": 224.64,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 224.64,
+      "avg_loss": 0,
+      "expectancy": 224.64,
+      "profit_factor": "inf"
+    }
+  },
+  "cumulative": {
+    "total_pnl": 584.49,
+    "overall_win_rate": 100.0,
+    "max_drawdown": 0.0
+  }
+}

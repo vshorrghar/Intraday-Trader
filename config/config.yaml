@@ -1,0 +1,113 @@
+# Wealth Builder Pro — Example Configuration
+# Copy this file to config.yaml and fill in your values.
+
+aws:
+  region: ap-south-1
+  s3_bucket: wealth-builder-pro-reports
+  ses_sender: "vshorrghar@gmail.com"
+  ses_recipient: "vshorrghar@gmail.com"
+  bedrock_model_id: "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
+  bedrock_region: us-east-1
+
+portfolio:
+  stocks_xlsx: input/Stocks_Holdings_Statement.xlsx
+  mf_xlsx: input/Mutual_Funds.xlsx
+  pnl_xlsx: input/Stocks_PnL_Report.xlsx
+  invit_isins:
+    - INE183W23014
+    - INE0Z8Z23013
+
+investor:
+  name: "Vishal"
+
+schedule:
+  morning_brief: "03:15"     # UTC for 8:45 AM IST
+  midday_snapshot: "07:00"   # UTC for 12:30 PM IST
+  eod_report: "10:45"        # UTC for 4:15 PM IST
+  midday_threshold_pct: 2.0
+
+database:
+  path: database/portfolio.db
+
+cache:
+  dir: cache
+
+dashboard:
+  output_dir: dashboard
+
+  
+zerodha:
+  api_key: "hug4c7hd13f7kqia"
+  api_secret: "51oafled1vtasqube4fpzc7xby7w5xfk"
+  user_id: "XW4196"
+
+dhan:
+  client_id: "1110941563"
+  api_key: "72817899"
+  api_secret: "ae43eec5-2733-4bbf-b38a-9f2f82dd1858"
+  totp_secret: "4A62ID3S5MIAY7B45H7QNRRAVK2T556T"
+  pin: "121212"  # Add your Dhan 6-digit PIN here for headless TOTP auth
+
+intraday:
+  broker: "dhan"
+  daily_capital_limit: 50000          # ₹50K — 5x more capital deployed
+  per_trade_max_capital: 20000        # ₹20K per trade — bigger positions
+  max_trades_per_day: 5               # 5 trades — more shots on goal
+  price_range_min: 50
+  price_range_max: 3000               # Allow higher-priced stocks (HDFC, Reliance etc)
+  monitor_interval_seconds: 120       # Check every 2 min — faster reaction
+  force_exit_time: "15:15"
+  entry_delay_minutes: 5              # Enter faster after open
+  min_confidence_score: 5             # Lower bar — take more trades
+  vix_threshold: 30                   # Trade even in high VIX days
+  target_profit_per_day: 5000
+  trailing_sl_trigger_pct: 0.5
+  partial_book_pct: 40                # Book 40% early, let 60% ride
+  daily_loss_limit: 5000              # ₹5K loss cap — room to breathe
+
+
+fno:
+  broker: "dhan"
+  mode: "paper"                     # "paper" or "live"
+  paper_capital: 1000000             # ₹10L virtual capital
+  daily_capital_limit: 1000000
+  per_trade_max_capital: 500000      # ₹5L per trade — go big
+  max_positions: 8                   # 8 positions — diversified aggression
+  allowed_indices:
+    - "NIFTY"
+    - "BANKNIFTY"
+    - "FINNIFTY"
+  allowed_strategies:
+    - "STRADDLE"
+    - "STRANGLE"
+    - "IRON_CONDOR"
+    - "BULL_CALL_SPREAD"
+    - "BEAR_PUT_SPREAD"
+    - "NAKED_CE"
+    - "NAKED_PE"
+  max_lots_per_trade: 5              # 5 lots — max aggression
+  force_exit_time: "15:15"
+  entry_delay_minutes: 5             # Enter faster
+  monitor_interval_seconds: 30       # Check every 30s — rapid response
+  daily_loss_limit: 25000            # ₹25K loss cap — room for big swings
+  max_delta_exposure: 200            # Higher delta = more directional bets
+  max_vega_exposure: 2000            # More vega exposure allowed
+  min_days_to_expiry: 0              # Allow expiry-day trades (max theta decay)
+  target_profit_per_day: 10000       # ₹10K target — aim high
+  trailing_sl_trigger_pct: 40        # Trail at 40% — let winners run longer
+  partial_book_pct: 30               # Book only 30% early, let 70% ride
+  min_confidence_score: 4            # Low bar — take more setups
+  vix_threshold: 35                  # Trade even in panic VIX
+  paper_trading_weeks: 0             # No waiting period
+
+
+# Optional — defaults are used when omitted
+alerts:
+  pnl_drop_pct: 5.0
+  pnl_spike_pct: 10.0
+  volume_spike_multiplier: 3.0
+
+analysis:
+  max_intraday_setups: 5
+  tax_harvest_short_term_months_stocks: 12
+  tax_harvest_short_term_months_debt_mf: 36

@@ -1,0 +1,78 @@
+=== F&O Auto-Trader — 2026-04-24 ===
+Started at: Fri Apr 24 03:50:01 CEST 2026
+Python: /Users/vshorgha/kiro/websites/intraday-trader/.venv/bin/python
+2026-04-24 03:50:02 [INFO] fno: --force: skipping time-of-day check
+2026-04-24 03:50:02 [INFO] fno: 🟢 [07:20:02] Phase: Configuration — START
+2026-04-24 03:50:02 [INFO] fno: ✅ [07:20:02] Phase: Configuration — DONE
+2026-04-24 03:50:02 [INFO] fno: Config: broker=dhan, mode=paper, capital=₹500000, max_positions=3
+2026-04-24 03:50:02 [INFO] fno: 🟢 [07:20:02] Phase: Database — START
+2026-04-24 03:50:02 [INFO] fno: ✅ [07:20:02] Phase: Database — DONE
+2026-04-24 03:50:02 [INFO] fno: 🟢 [07:20:02] Phase: Broker Authentication — START
+2026-04-24 03:50:03 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-04-24 03:50:03 [INFO] fno: ✅ [07:20:03] Phase: Broker Authentication — DONE
+2026-04-24 03:50:03 [INFO] fno: Broker: dhan, mode=paper, auth=DryRun
+2026-04-24 03:50:03 [INFO] fno: 🟢 [07:20:03] Phase: Option Chain Fetch — START
+2026-04-24 03:50:04 [INFO] fno: NIFTY: spot=24632.09, ATM=24650.0, PCR=0.55, MaxPain=24500.0
+2026-04-24 03:50:04 [INFO] fno: BANKNIFTY: spot=51039.90, ATM=51000.0, PCR=0.54, MaxPain=50800.0
+2026-04-24 03:50:04 [INFO] fno: FINNIFTY: spot=23368.64, ATM=23350.0, PCR=0.63, MaxPain=23350.0
+2026-04-24 03:50:04 [INFO] fno: ✅ [07:20:04] Phase: Option Chain Fetch — DONE
+2026-04-24 03:50:04 [INFO] fno: 🟢 [07:20:04] Phase: Greeks Computation — START
+2026-04-24 03:50:08 [INFO] fno: ✅ [07:20:08] Phase: Greeks Computation — DONE
+2026-04-24 03:50:08 [INFO] fno: 🟢 [07:20:08] Phase: Quant Edge Engine — START
+2026-04-24 03:50:08 [INFO] fno: NIFTY quant: IVP=100.0%, VRP=6.34, GEX=PINNED, Confluence=58
+2026-04-24 03:50:08 [INFO] fno: BANKNIFTY quant: IVP=95.5%, VRP=3.44, GEX=PINNED, Confluence=55
+2026-04-24 03:50:08 [INFO] fno: FINNIFTY quant: IVP=100.0%, VRP=10.34, GEX=PINNED, Confluence=61
+2026-04-24 03:50:08 [INFO] fno: ✅ [07:20:08] Phase: Quant Edge Engine — DONE
+2026-04-24 03:50:08 [INFO] fno: 🟢 [07:20:08] Phase: Strategy Selection — START
+2026-04-24 03:50:08 [INFO] fno.strategy_engine: Market regime: SIDEWAYS (VIX=15.0)
+2026-04-24 03:50:09 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-04-24 03:51:05 [INFO] fno: Selected 3 strategies
+2026-04-24 03:51:05 [INFO] fno:   IRON_CONDOR NIFTY: 4 legs, max_loss=₹6852, confidence=7, confluence=58
+2026-04-24 03:51:05 [INFO] fno:   IRON_CONDOR BANKNIFTY: 4 legs, max_loss=₹-6190, confidence=7, confluence=55
+2026-04-24 03:51:05 [INFO] fno:   IRON_CONDOR FINNIFTY: 4 legs, max_loss=₹4580, confidence=8, confluence=61
+2026-04-24 03:51:05 [INFO] fno: ✅ [07:21:05] Phase: Strategy Selection — DONE
+2026-04-24 03:51:05 [INFO] fno: 🟢 [07:21:05] Phase: Risk Validation — START
+2026-04-24 03:51:05 [INFO] fno: ✅ Approved: IRON_CONDOR NIFTY
+2026-04-24 03:51:05 [INFO] fno: ✅ Approved: IRON_CONDOR BANKNIFTY
+2026-04-24 03:51:05 [INFO] fno: ✅ Approved: IRON_CONDOR FINNIFTY
+2026-04-24 03:51:05 [INFO] fno: ✅ [07:21:05] Phase: Risk Validation — DONE
+2026-04-24 03:51:05 [INFO] fno: 🟢 [07:21:05] Phase: Order Execution — START
+2026-04-24 03:51:05 [INFO] fno.paper_engine: Paper fill: IRON_CONDOR NIFTY — margin ₹8222, remaining ₹491778
+2026-04-24 03:51:05 [INFO] fno: Placed strategy 17: IRON_CONDOR NIFTY
+2026-04-24 03:51:05 [INFO] fno.paper_engine: Paper fill: IRON_CONDOR BANKNIFTY — margin ₹7428, remaining ₹484350
+2026-04-24 03:51:05 [INFO] fno: Placed strategy 18: IRON_CONDOR BANKNIFTY
+2026-04-24 03:51:05 [INFO] fno.paper_engine: Paper fill: IRON_CONDOR FINNIFTY — margin ₹5497, remaining ₹478854
+2026-04-24 03:51:05 [INFO] fno: Placed strategy 19: IRON_CONDOR FINNIFTY
+2026-04-24 03:51:05 [INFO] fno: ✅ [07:21:05] Phase: Order Execution — DONE
+2026-04-24 03:51:05 [INFO] fno: 🟢 [07:21:05] Phase: Position Monitoring — START
+2026-04-24 03:51:05 [INFO] fno.monitor: Strategy 17 → EXPIRED
+2026-04-24 03:51:05 [INFO] fno.monitor: Strategy 18 → EXPIRED
+2026-04-24 03:51:05 [INFO] fno.monitor: Strategy 19 → EXPIRED
+2026-04-24 03:51:05 [WARNING] fno.monitor: Vega exposure -43760.3 exceeds limit 1000
+2026-04-24 03:51:05 [INFO] fno: Monitor: checked=3, exits=3, warnings=1
+2026-04-24 03:51:05 [INFO] fno: ✅ [07:21:05] Phase: Position Monitoring — DONE
+2026-04-24 03:51:05 [INFO] fno: 🟢 [07:21:05] Phase: Force Exit — START
+2026-04-24 03:51:05 [INFO] fno.monitor: Force exited 0 strategies
+2026-04-24 03:51:05 [INFO] fno: Force exited 0 strategies
+2026-04-24 03:51:05 [INFO] fno: ✅ [07:21:05] Phase: Force Exit — DONE
+2026-04-24 03:51:05 [INFO] fno: 🟢 [07:21:05] Phase: EOD Report — START
+2026-04-24 03:51:05 [INFO] fno.reporter: Report written: output/reports/fno_2026-04-24.json
+2026-04-24 03:51:05 [INFO] fno.dashboard: F&O Dashboard JSON updated: dashboard/api/fno_latest.json
+2026-04-24 03:51:05 [INFO] fno.reporter: EOD report generated: 2026-04-24 — P&L ₹0.00, Win rate 0.0%
+2026-04-24 03:51:05 [INFO] fno: EOD: P&L=₹0.00, Win rate=0.0%, Strategies=3
+2026-04-24 03:51:05 [INFO] fno: ✅ [07:21:05] Phase: EOD Report — DONE
+2026-04-24 03:51:05 [INFO] fno: 🟢 [07:21:05] Phase: Dashboard Update — START
+2026-04-24 03:51:05 [INFO] fno: ✅ [07:21:05] Phase: Dashboard Update — DONE
+
+╔══════════════════════════════════════════════════════════════╗
+║           🎯 F&O AUTO-TRADER — Wealth Builder Pro            ║
+║           Mode: 🧪 PAPER MODE                               ║
+║           Time: 2026-04-24 07:20 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+🏁 F&O session complete!
+
+Finished at: Fri Apr 24 03:51:06 CEST 2026
+Exit code: 0
+=== END ===

@@ -1,0 +1,80 @@
+{
+  "updated_at": "2026-04-27T15:16:50.482353+05:30",
+  "mode": "DRY_RUN",
+  "broker": "dhan",
+  "session_active": false,
+  "today": {
+    "trades": [
+      {
+        "tradingsymbol": "HFCL",
+        "entry_price": 102.0,
+        "current_price": 106.57,
+        "target_price": 106.08,
+        "stop_loss_price": 103.9,
+        "quantity": 63,
+        "pnl": 287.91,
+        "status": "CLOSED",
+        "strategy_type": "GAP",
+        "confidence_score": 8
+      },
+      {
+        "tradingsymbol": "NMDC",
+        "entry_price": 90.25,
+        "current_price": 90.59,
+        "target_price": 93.66,
+        "stop_loss_price": 90.7,
+        "quantity": 119,
+        "pnl": 40.46,
+        "status": "STOPPED_OUT",
+        "strategy_type": "MOMENTUM",
+        "confidence_score": 8
+      },
+      {
+        "tradingsymbol": "SAIL",
+        "entry_price": 180.0,
+        "current_price": 184.17,
+        "target_price": 186.6,
+        "stop_loss_price": 182.62,
+        "quantity": 32,
+        "pnl": 221.44,
+        "status": "FORCE_EXITED",
+        "strategy_type": "VWAP",
+        "confidence_score": 7
+      },
+      {
+        "tradingsymbol": "ADANIPOWER",
+        "entry_price": 215.0,
+        "current_price": 218.34,
+        "target_price": 223.25,
+        "stop_loss_price": 218.43,
+        "quantity": 26,
+        "pnl": 86.84,
+        "status": "STOPPED_OUT",
+        "strategy_type": "GAP",
+        "confidence_score": 7
+      },
+      {
+        "tradingsymbol": "SUZLON",
+        "entry_price": 54.5,
+        "current_price": 56.66,
+        "target_price": 56.59,
+        "stop_loss_price": 55.44,
+        "quantity": 104,
+        "pnl": 224.64,
+        "status": "CLOSED",
+        "strategy_type": "ORB",
+        "confidence_score": 7
+      }
+    ],
+    "total_pnl": 861.29,
+    "realized_loss": 0,
+    "daily_loss_cap": 5000,
+    "loss_cap_pct": 0.0
+  },
+  "history": {
+    "daily_pnl": [],
+    "cumulative_pnl": -276.8,
+    "win_rate": 0,
+    "total_days": 0
+  }
+}

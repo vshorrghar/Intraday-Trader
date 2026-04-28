@@ -1,0 +1,252 @@
+[
+  {
+    "symbol": "BHEL",
+    "ltp": 330.69,
+    "open": 318.53,
+    "prev_close": 316.79,
+    "change_pct": 4.39,
+    "volume": 34679494,
+    "high": 333.79,
+    "low": 317.6
+  },
+  {
+    "symbol": "LENSKART",
+    "ltp": 514.6,
+    "open": 533.5,
+    "prev_close": 534.55,
+    "change_pct": -3.73,
+    "volume": 1568182,
+    "high": 533.5,
+    "low": 514.1
+  },
+  {
+    "symbol": "ADANIPOWER",
+    "ltp": 204.2,
+    "open": 198.5,
+    "prev_close": 198.5,
+    "change_pct": 2.87,
+    "volume": 42065489,
+    "high": 205.45,
+    "low": 197.41
+  },
+  {
+    "symbol": "RECLTD",
+    "ltp": 383.25,
+    "open": 373.35,
+    "prev_close": 373.3,
+    "change_pct": 2.67,
+    "volume": 6942045,
+    "high": 384.55,
+    "low": 366.45
+  },
+  {
+    "symbol": "NATIONALUM",
+    "ltp": 427.25,
+    "open": 433,
+    "prev_close": 438.75,
+    "change_pct": -2.62,
+    "volume": 4327240,
+    "high": 433,
+    "low": 423.8
+  },
+  {
+    "symbol": "CGPOWER",
+    "ltp": 794,
+    "open": 775.95,
+    "prev_close": 774.8,
+    "change_pct": 2.48,
+    "volume": 1921956,
+    "high": 794.5,
+    "low": 764.2
+  },
+  {
+    "symbol": "SWIGGY",
+    "ltp": 284.2,
+    "open": 278.85,
+    "prev_close": 277.45,
+    "change_pct": 2.43,
+    "volume": 3438404,
+    "high": 284.2,
+    "low": 272.8
+  },
+  {
+    "symbol": "BANKBARODA",
+    "ltp": 286,
+    "open": 280.5,
+    "prev_close": 280.44,
+    "change_pct": 1.98,
+    "volume": 6605585,
+    "high": 286.02,
+    "low": 277.63
+  },
+  {
+    "symbol": "BANKINDIA",
+    "ltp": 150.79,
+    "open": 148,
+    "prev_close": 148.1,
+    "change_pct": 1.82,
+    "volume": 4853933,
+    "high": 150.85,
+    "low": 146.01
+  },
+  {
+    "symbol": "LTF",
+    "ltp": 292.36,
+    "open": 287.14,
+    "prev_close": 287.14,
+    "change_pct": 1.82,
+    "volume": 2347830,
+    "high": 293.97,
+    "low": 283.71
+  },
+  {
+    "symbol": "PFC",
+    "ltp": 473.25,
+    "open": 464.85,
+    "prev_close": 464.85,
+    "change_pct": 1.81,
+    "volume": 6578741,
+    "high": 474,
+    "low": 456.6
+  },
+  {
+    "symbol": "TATAPOWER",
+    "ltp": 435.3,
+    "open": 427.5,
+    "prev_close": 427.6,
+    "change_pct": 1.8,
+    "volume": 5534024,
+    "high": 435.95,
+    "low": 424.45
+  },
+  {
+    "symbol": "JIOFIN",
+    "ltp": 239.66,
+    "open": 242,
+    "prev_close": 243.86,
+    "change_pct": -1.72,
+    "volume": 25986284,
+    "high": 242.01,
+    "low": 234.5
+  },
+  {
+    "symbol": "HUDCO",
+    "ltp": 200.22,
+    "open": 197,
+    "prev_close": 196.91,
+    "change_pct": 1.68,
+    "volume": 3592276,
+    "high": 201.79,
+    "low": 192.07
+  },
+  {
+    "symbol": "ETERNAL",
+    "ltp": 256.6,
+    "open": 251.85,
+    "prev_close": 252.61,
+    "change_pct": 1.58,
+    "volume": 20062499,
+    "high": 256.99,
+    "low": 248.11
+  },
+  {
+    "symbol": "PATANJALI",
+    "ltp": 461.2,
+    "open": 468.95,
+    "prev_close": 468.3,
+    "change_pct": -1.52,
+    "volume": 1758063,
+    "high": 468.95,
+    "low": 458.15
+  },
+  {
+    "symbol": "NTPC",
+    "ltp": 399.15,
+    "open": 393,
+    "prev_close": 393.6,
+    "change_pct": 1.41,
+    "volume": 4110478,
+    "high": 400.85,
+    "low": 390.65
+  },
+  {
+    "symbol": "SAIL",
+    "ltp": 170.91,
+    "open": 173.4,
+    "prev_close": 173.33,
+    "change_pct": -1.4,
+    "volume": 7577905,
+    "high": 174.05,
+    "low": 170.3
+  },
+  {
+    "symbol": "CANBK",
+    "ltp": 144.2,
+    "open": 142.8,
+    "prev_close": 142.37,
+    "change_pct": 1.29,
+    "volume": 12812836,
+    "high": 144.49,
+    "low": 141.31
+  },
+  {
+    "symbol": "M&MFIN",
+    "ltp": 303.2,
+    "open": 300.95,
+    "prev_close": 299.35,
+    "change_pct": 1.29,
+    "volume": 1227407,
+    "high": 304.55,
+    "low": 296.25
+  },
+  {
+    "symbol": "HINDPETRO",
+    "ltp": 375.6,
+    "open": 369,
+    "prev_close": 370.85,
+    "change_pct": 1.28,
+    "volume": 2827507,
+    "high": 377,
+    "low": 368.15
+  },
+  {
+    "symbol": "MOTILALOFS",
+    "ltp": 825.8,
+    "open": 816,
+    "prev_close": 815.45,
+    "change_pct": 1.27,
+    "volume": 1477417,
+    "high": 829,
+    "low": 804.2
+  },
+  {
+    "symbol": "KALYANKJIL",
+    "ltp": 421.65,
+    "open": 426.85,
+    "prev_close": 426.85,
+    "change_pct": -1.22,
+    "volume": 2496733,
+    "high": 427,
+    "low": 416.2
+  },
+  {
+    "symbol": "HDFCLIFE",
+    "ltp": 609.15,
+    "open": 617,
+    "prev_close": 616.45,
+    "change_pct": -1.18,
+    "volume": 2234108,
+    "high": 617,
+    "low": 605.35
+  },
+  {
+    "symbol": "ATGL",
+    "ltp": 625.55,
+    "open": 634.35,
+    "prev_close": 632.9,
+    "change_pct": -1.16,
+    "volume": 1941261,
+    "high": 640.5,
+    "low": 620.9
+  }
+]

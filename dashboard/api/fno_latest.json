@@ -1,0 +1,250 @@
+{
+  "updated_at": "2026-04-27T15:15:01.106291+05:30",
+  "mode": "PAPER",
+  "broker": "dhan",
+  "session_active": false,
+  "paper_capital_remaining": 1000000,
+  "today": {
+    "strategies": [
+      {
+        "strategy_type": "IRON_CONDOR",
+        "index": "FINNIFTY",
+        "legs_summary": "SELL 24100.0CE + BUY 24300.0CE + SELL 23650.0PE + BUY 23450.0PE",
+        "entry_premium": 603.0,
+        "current_premium": 603.0,
+        "unrealized_pnl": 0.0,
+        "status": "EXPIRED",
+        "confluence_score": 61.0,
+        "net_greeks": {
+          "delta": 0.2954,
+          "gamma": -0.0169,
+          "theta": 293.1234,
+          "vega": -27576.2847
+        }
+      },
+      {
+        "strategy_type": "IRON_CONDOR",
+        "index": "FINNIFTY",
+        "legs_summary": "SELL 23550.0CE + BUY 23750.0CE + SELL 23750.0PE + BUY 23550.0PE",
+        "entry_premium": 15435.75,
+        "current_premium": 15435.75,
+        "unrealized_pnl": 0.0,
+        "status": "EXPIRED",
+        "confluence_score": 55.32,
+        "net_greeks": {
+          "delta": 0.0,
+          "gamma": 0.0,
+          "theta": -2.8729,
+          "vega": 0.0
+        }
+      },
+      {
+        "strategy_type": "IRON_CONDOR",
+        "index": "NIFTY",
+        "legs_summary": "SELL 24150.0CE + BUY 24300.0CE + SELL 23600.0PE + BUY 23450.0PE",
+        "entry_premium": 652.5,
+        "current_premium": 652.5,
+        "unrealized_pnl": 0.0,
+        "status": "EXPIRED",
+        "confluence_score": 60.77,
+        "net_greeks": {
+          "delta": -0.0975,
+          "gamma": -0.0199,
+          "theta": 348.2226,
+          "vega": -32556.1029
+        }
+      },
+      {
+        "strategy_type": "BEAR_CALL_SPREAD",
+        "index": "NIFTY",
+        "legs_summary": "SELL 23950.0CE + BUY 24100.0CE",
+        "entry_premium": 422.0,
+        "current_premium": 422.0,
+        "unrealized_pnl": 0.0,
+        "status": "EXPIRED",
+        "confluence_score": 60.77,
+        "net_greeks": {
+          "delta": -11.5028,
+          "gamma": -0.0064,
+          "theta": 162.9963,
+          "vega": -10405.2148
+        }
+      },
+      {
+        "strategy_type": "IRON_CONDOR",
+        "index": "NIFTY",
+        "legs_summary": "SELL 22150.0PE + BUY 22050.0PE + SELL 22600.0CE + BUY 22700.0CE",
+        "entry_premium": 378.0,
+        "current_premium": 378.0,
+        "unrealized_pnl": 0.0,
+        "status": "EXPIRED",
+        "confluence_score": 60.32,
+        "net_greeks": {
+          "delta": -0.6761,
+          "gamma": -0.0134,
+          "theta": 209.3918,
+          "vega": -19346.859
+        }
+      },
+      {
+        "strategy_type": "BULL_PUT_SPREAD",
+        "index": "NIFTY",
+        "legs_summary": "SELL 22300.0PE + BUY 22200.0PE",
+        "entry_premium": 123.0,
+        "current_premium": 123.0,
+        "unrealized_pnl": 0.0,
+        "status": "EXPIRED",
+        "confluence_score": 60.32,
+        "net_greeks": {
+          "delta": 3.987,
+          "gamma": -0.0034,
+          "theta": 34.5256,
+          "vega": -4852.5387
+        }
+      },
+      {
+        "strategy_type": "IRON_CONDOR",
+        "index": "FINNIFTY",
+        "legs_summary": "SELL 23650.0CE + BUY 23750.0CE + SELL 23150.0PE + BUY 23050.0PE",
+        "entry_premium": 325.5,
+        "current_premium": 325.5,
+        "unrealized_pnl": 0.0,
+        "status": "EXPIRED",
+        "confluence_score": 58.5,
+        "net_greeks": {
+          "delta": -0.5709,
+          "gamma": -0.0127,
+          "theta": 215.7666,
+          "vega": -19971.2585
+        }
+      },
+      {
+        "strategy_type": "IRON_CONDOR",
+        "index": "BANKNIFTY",
+        "legs_summary": "SELL 49900.0CE + BUY 50300.0CE + SELL 49100.0PE + BUY 48700.0PE",
+        "entry_premium": 1036.8,
+        "current_premium": 1036.8,
+        "unrealized_pnl": 0.0,
+        "status": "EXPIRED",
+        "confluence_score": 54.86,
+        "net_greeks": {
+          "delta": -0.6042,
+          "gamma": -0.0065,
+          "theta": 493.4763,
+          "vega": -45703.4302
+        }
+      },
+      {
+        "strategy_type": "IRON_CONDOR",
+        "index": "FINNIFTY",
+        "legs_summary": "SELL 22350.0CE + BUY 22500.0CE + SELL 21950.0PE + BUY 21800.0PE",
+        "entry_premium": 584.25,
+        "current_premium": 584.25,
+        "unrealized_pnl": 0.0,
+        "status": "EXPIRED",
+        "confluence_score": 57.32,
+        "net_greeks": {
+          "delta": -0.1416,
+          "gamma": -0.0209,
+          "theta": 315.606,
+          "vega": -29511.4559
+        }
+      },
+      {
+        "strategy_type": "IRON_CONDOR",
+        "index": "FINNIFTY",
+        "legs_summary": "SELL 22300.0CE + BUY 22450.0CE + SELL 21800.0PE + BUY 21650.0PE",
+        "entry_premium": 512.25,
+        "current_premium": 512.25,
+        "unrealized_pnl": 0.0,
+        "status": "FORCE_EXITED",
+        "confluence_score": 59.86,
+        "net_greeks": {
+          "delta": -0.7429,
+          "gamma": -0.0231,
+          "theta": 348.8097,
+          "vega": -32359.009
+        }
+      },
+      {
+        "strategy_type": "BULL_PUT_SPREAD",
+        "index": "FINNIFTY",
+        "legs_summary": "SELL 21900.0PE + BUY 21750.0PE",
+        "entry_premium": 167.5,
+        "current_premium": 167.5,
+        "unrealized_pnl": 0.0,
+        "status": "FORCE_EXITED",
+        "confluence_score": 59.86,
+        "net_greeks": {
+          "delta": 5.5639,
+          "gamma": -0.007,
+          "theta": 80.5373,
+          "vega": -9752.0397
+        }
+      }
+    ],
+    "total_pnl": 0,
+    "realized_loss": 0,
+    "daily_loss_cap": 25000,
+    "loss_cap_pct": 0.0,
+    "net_greeks": {
+      "delta": -4.49,
+      "gamma": -0.13,
+      "theta": 2499.58,
+      "vega": -232034.19
+    }
+  },
+  "history": {
+    "daily_pnl": [
+      {
+        "date": "2026-04-23",
+        "pnl": 4725.7,
+        "strategies": 8,
+        "winners": 3,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-25",
+        "pnl": 0.0,
+        "strategies": 1,
+        "winners": 0,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-27",
+        "pnl": 0.0,
+        "strategies": 11,
+        "winners": 0,
+        "losers": 0
+      }
+    ],
+    "cumulative_pnl": 4725.7,
+    "win_rate": 100.0,
+    "total_days": 3,
+    "total_trades": 3,
+    "total_winners": 3,
+    "total_losers": 0,
+    "strategy_breakdown": {
+      "BEAR_CALL_SPREAD": {
+        "count": 1,
+        "win_rate": 0.0,
+        "total_pnl": 0.0
+      },
+      "BULL_PUT_SPREAD": {
+        "count": 3,
+        "win_rate": 33.3,
+        "total_pnl": 778.5
+      },
+      "IRON_CONDOR": {
+        "count": 15,
+        "win_rate": 6.7,
+        "total_pnl": 1468.2
+      },
+      "SHORT_STRANGLE": {
+        "count": 1,
+        "win_rate": 100.0,
+        "total_pnl": 2479.0
+      }
+    }
+  }
+}

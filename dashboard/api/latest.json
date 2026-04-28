@@ -1,0 +1,387 @@
+{
+  "portfolio_summary": {
+    "total_invested": 3363521.64,
+    "current_value": 3504863.55,
+    "total_pnl": 141341.90999999968,
+    "day_pnl": 141341.90999999968
+  },
+  "verdicts": [],
+  "mf_recommendations": [
+    {
+      "scheme_name": "Sundaram Aggressive Hybrid Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 9.86% XIRR and 120.08% returns."
+    },
+    {
+      "scheme_name": "Bandhan Small Cap Fund Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is consistently underperforming with -45.0% XIRR and -6.49% returns."
+    },
+    {
+      "scheme_name": "Mirae Asset Large & Midcap Fund Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 13.81% XIRR and 106.26% returns."
+    },
+    {
+      "scheme_name": "Franklin India Small Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 20.33% XIRR and 211.35% returns."
+    },
+    {
+      "scheme_name": "Axis ELSS Tax Saver Fund Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 11.49% XIRR and 6.58% returns."
+    },
+    {
+      "scheme_name": "ICICI Prudential Commodities Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 6.68% XIRR and 7.78% returns."
+    },
+    {
+      "scheme_name": "Axis Small Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 13.97% XIRR and 55.46% returns."
+    },
+    {
+      "scheme_name": "ICICI Prudential Technology Direct Plan Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -14.38% XIRR and -15.96% returns."
+    },
+    {
+      "scheme_name": "Franklin India Small Cap Fund Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 4.52% XIRR and 255.9% returns."
+    },
+    {
+      "scheme_name": "Bandhan Focused Fund Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -7.99% XIRR and -5.33% returns."
+    },
+    {
+      "scheme_name": "UTI Nifty 50 Index Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with -2.47% XIRR and -3.4% returns."
+    },
+    {
+      "scheme_name": "ICICI Prudential US Bluechip Equity Direct Plan Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -31.41% XIRR and -3.53% returns."
+    },
+    {
+      "scheme_name": "Aditya Birla Sun Life Large Cap Direct Fund Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 13.22% XIRR and 114.29% returns."
+    },
+    {
+      "scheme_name": "Canara Robeco Small Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 4.46% XIRR and 8.15% returns."
+    },
+    {
+      "scheme_name": "Parag Parikh Flexi Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with -4.98% XIRR and -3.84% returns."
+    },
+    {
+      "scheme_name": "Axis ELSS Tax Saver Direct Plan Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 8.11% XIRR and 41.77% returns."
+    },
+    {
+      "scheme_name": "HDFC Mid Cap Fund Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 13.06% XIRR and 292.01% returns."
+    },
+    {
+      "scheme_name": "Aditya Birla Sun Life Gold Fund Direct Growth",
+      "recommendation": "switch",
+      "alternative_scheme": "Axis Gold Direct Plan Growth",
+      "rationale": "While performing well, better alternative in Gold category exists."
+    },
+    {
+      "scheme_name": "PGIM India Midcap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 7.3% XIRR and 19.57% returns."
+    },
+    {
+      "scheme_name": "HDFC Mid Cap Fund Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -46.76% XIRR and -6.06% returns."
+    },
+    {
+      "scheme_name": "ICICI Prudential Technology Direct Plan Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 5.48% XIRR and 20.18% returns."
+    },
+    {
+      "scheme_name": "Aditya Birla Sun Life Nifty India Defence Index Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 5.11% XIRR and 4.52% returns."
+    },
+    {
+      "scheme_name": "Invesco India Infrastructure Fund Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -8.68% XIRR and -9.72% returns."
+    },
+    {
+      "scheme_name": "Bandhan ELSS Tax Saver Fund Direct Plan Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 12.81% XIRR and 167.55% returns."
+    },
+    {
+      "scheme_name": "Aditya Birla Sun Life Manufacturing Equity Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with -2.2% XIRR and -1.55% returns."
+    },
+    {
+      "scheme_name": "PGIM India Midcap Fund Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -9.46% XIRR and -7.8% returns."
+    },
+    {
+      "scheme_name": "Axis Gold Direct Plan Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 45.77% XIRR and 20.67% returns."
+    },
+    {
+      "scheme_name": "Motilal Oswal BSE Enhanced Value Index Fund Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -28.23% XIRR and -6.95% returns."
+    },
+    {
+      "scheme_name": "HDFC Mid Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 22.03% XIRR and 239.36% returns."
+    },
+    {
+      "scheme_name": "ICICI Prudential Commodities Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 9.79% XIRR and 14.56% returns."
+    },
+    {
+      "scheme_name": "Tata Nifty Midcap 150 Index Fund Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -7.36% XIRR and -5.92% returns."
+    },
+    {
+      "scheme_name": "Motilal Oswal Nifty India Defence Index Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with -0.17% XIRR and -0.29% returns."
+    },
+    {
+      "scheme_name": "Groww Nifty India Railways PSU Index Fund Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -21.52% XIRR and -17.61% returns."
+    },
+    {
+      "scheme_name": "JioBlackRock Flexi Cap Fund Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -18.61% XIRR and -9.4% returns."
+    },
+    {
+      "scheme_name": "Bandhan Focused Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 12.63% XIRR and 139.22% returns."
+    },
+    {
+      "scheme_name": "Aditya Birla Sun Life MNC Fund Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 8.33% XIRR and 56.24% returns."
+    },
+    {
+      "scheme_name": "SBI Large Cap Direct Plan Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 11.91% XIRR and 139.58% returns."
+    },
+    {
+      "scheme_name": "Tata India Consumer Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 11.62% XIRR and 140.04% returns."
+    },
+    {
+      "scheme_name": "Parag Parikh Flexi Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 15.19% XIRR and 70.09% returns."
+    },
+    {
+      "scheme_name": "SBI Gold Direct Plan Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 31.75% XIRR and 8.25% returns."
+    },
+    {
+      "scheme_name": "Aditya Birla Sun Life Value Fund Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 13.49% XIRR and 136.95% returns."
+    },
+    {
+      "scheme_name": "DSP India T.I.G.E.R. (The Infrastructure Growth and Economic Reforms Fund) Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 5.24% XIRR and 6.13% returns."
+    },
+    {
+      "scheme_name": "Quant Small Cap Fund Direct Plan Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 0.07% XIRR and 0.11% returns."
+    },
+    {
+      "scheme_name": "HDFC Small Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 21.44% XIRR and 229.32% returns."
+    },
+    {
+      "scheme_name": "Quant Infrastructure Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 3.66% XIRR and 6.58% returns."
+    },
+    {
+      "scheme_name": "HSBC Aggressive Hybrid Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 11.94% XIRR and 99.78% returns."
+    },
+    {
+      "scheme_name": "360 ONE Focused Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 9.14% XIRR and 29.66% returns."
+    },
+    {
+      "scheme_name": "Canara Robeco Small Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 5.34% XIRR and 11.03% returns."
+    },
+    {
+      "scheme_name": "Tata Gold ETF FoF Direct Growth",
+      "recommendation": "switch",
+      "alternative_scheme": "SBI Gold Direct Plan Growth",
+      "rationale": "While performing well, better alternative in Gold category exists."
+    },
+    {
+      "scheme_name": "Edelweiss US Technology Equity FoF Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -21.69% XIRR and -2.41% returns."
+    },
+    {
+      "scheme_name": "HSBC Small Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 17.65% XIRR and 217.64% returns."
+    },
+    {
+      "scheme_name": "Tata Digital India Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 11.91% XIRR and 57.03% returns."
+    },
+    {
+      "scheme_name": "LIC MF Gold ETF FoF Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 21.0% XIRR and 9.34% returns."
+    },
+    {
+      "scheme_name": "Nippon India Multi Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 18.84% XIRR and 188.44% returns."
+    },
+    {
+      "scheme_name": "Nippon India Pharma Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with -3.24% XIRR and -2.78% returns."
+    },
+    {
+      "scheme_name": "HDFC Defence Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 4.62% XIRR and 4.61% returns."
+    },
+    {
+      "scheme_name": "JM Flexicap Fund Direct Plan Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -15.36% XIRR and -10.33% returns."
+    },
+    {
+      "scheme_name": "SBI PSU Direct Plan Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -40.76% XIRR and -5.55% returns."
+    },
+    {
+      "scheme_name": "Axis Large Cap Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing reasonably with 8.52% XIRR and 37.28% returns."
+    },
+    {
+      "scheme_name": "Motilal Oswal Midcap Fund Direct Growth",
+      "recommendation": "stop",
+      "alternative_scheme": null,
+      "rationale": "Scheme is underperforming with -18.67% XIRR and -13.92% returns."
+    },
+    {
+      "scheme_name": "Nippon India Pharma Fund Direct Growth",
+      "recommendation": "continue",
+      "alternative_scheme": null,
+      "rationale": "Scheme is performing well with 14.55% XIRR and 64.45% returns."
+    }
+  ],
+  "fii_dii": {
+    "date": "02-Apr-2026",
+    "fii_buy": 10626.52,
+    "fii_sell": 20557.65,
+    "fii_net": -9931.130000000001,
+    "dii_buy": 18421.27,
+    "dii_sell": 11212.86,
+    "dii_net": 7208.41
+  },
+  "updated_at": "2026-04-06 17:50 IST"
+}

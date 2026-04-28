@@ -1,0 +1,52 @@
+=== Intraday Auto-Trader — 2026-04-23 ===
+Started at: Thu Apr 23 20:29:53 CEST 2026
+Python: /Users/vshorgha/kiro/websites/intraday-trader/.venv/bin/python
+2026-04-23 20:29:53 [INFO] intraday: --force: skipping time-of-day check
+2026-04-23 20:29:53 [INFO] intraday: 🟢 [23:59:53] Phase: Configuration — START
+2026-04-23 20:29:53 [INFO] intraday: ✅ [23:59:53] Phase: Configuration — DONE
+2026-04-23 20:29:53 [INFO] intraday: 🟢 [23:59:53] Phase: Database — START
+2026-04-23 20:29:54 [INFO] intraday: ✅ [23:59:54] Phase: Database — DONE
+2026-04-23 20:29:54 [INFO] intraday: 🟢 [23:59:54] Phase: Broker Authentication — START
+2026-04-23 20:29:54 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-04-23 20:29:54 [INFO] intraday: ✅ [23:59:54] Phase: Broker Authentication — DONE
+2026-04-23 20:29:54 [INFO] intraday: 🟢 [23:59:54] Phase: Pre-Market Scan — START
+2026-04-23 20:29:55 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
+2026-04-23 20:29:55 [INFO] intraday.scanner: India VIX: 18.59 | 27 sectors fetched
+2026-04-23 20:29:55 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-04-23 20:29:55 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
+2026-04-23 20:30:00 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-04-23 20:30:00 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
+2026-04-23 20:30:00 [WARNING] intraday.scanner: No gainers data — continuing with other sources
+2026-04-23 20:30:00 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-04-23 20:30:00 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
+2026-04-23 20:30:06 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-04-23 20:30:06 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
+2026-04-23 20:30:06 [WARNING] intraday.scanner: No losers data — continuing with other sources
+2026-04-23 20:30:06 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
+2026-04-23 20:30:06 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
+2026-04-23 20:30:06 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 18.59
+2026-04-23 20:30:06 [INFO] intraday: ✅ [00:00:06] Phase: Pre-Market Scan — DONE
+2026-04-23 20:30:06 [INFO] intraday: 🟢 [00:00:06] Phase: Pre-Filter — START
+2026-04-23 20:30:06 [INFO] intraday.selector: Pre-filter: 20 → 20 candidates
+2026-04-23 20:30:06 [INFO] intraday: Pre-filter: 20 candidates passed
+2026-04-23 20:30:06 [INFO] intraday: ✅ [00:00:06] Phase: Pre-Filter — DONE
+2026-04-23 20:30:06 [INFO] intraday: 🟢 [00:00:06] Phase: LLM Trade Selection — START
+2026-04-23 20:30:07 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-04-23 20:30:07 [INFO] intraday.selector: Sending 20 candidates to LLM for trade selection…
+2026-04-23 20:30:14 [INFO] intraday.selector: LLM market mood: BEARISH — 6/27 sectors green, Nifty down 0.84%, Banking down 1.43%, VIX elevated at 18.59
+2026-04-23 20:30:14 [INFO] intraday.selector: LLM VIX assessment: VIX at 18.59 showing elevated uncertainty, rising +1.58% today indicates increasing fear premium and potential volatility expansion
+2026-04-23 20:30:14 [INFO] intraday.selector: LLM skip reason: ALL candidate stocks showing ₹0.00 data across LTP, Open, High, Low, and Prev Close — no valid price data available for analysis. Without accurate pricing information, cannot calculate proper entry points, stop losses, or targets. Additionally, on a bearish day with only 6/27 sectors green and VIX rising, the risk/reward profile heavily favors capital preservation. Pharma and Healthcare are the only strong sectors (+2.36%, +2.11%) but none of the 20 candidates provide usable data to identify relative strength plays. Skipping all trades to protect capital until clean data and better market conditions emerge.
+2026-04-23 20:30:14 [INFO] intraday.selector: LLM recommends skipping today: ALL candidate stocks showing ₹0.00 data across LTP, Open, High, Low, and Prev Close — no valid price data available for analysis. Without accurate pricing information, cannot calculate proper entry points, stop losses, or targets. Additionally, on a bearish day with only 6/27 sectors green and VIX rising, the risk/reward profile heavily favors capital preservation. Pharma and Healthcare are the only strong sectors (+2.36%, +2.11%) but none of the 20 candidates provide usable data to identify relative strength plays. Skipping all trades to protect capital until clean data and better market conditions emerge.
+2026-04-23 20:30:14 [INFO] intraday: ❌ [00:00:14] Phase: LLM Trade Selection — FAIL
+2026-04-23 20:30:14 [ERROR] intraday: LLM returned zero valid picks — aborting
+2026-04-23 20:30:14 [INFO] intraday: No trades to report
+
+╔══════════════════════════════════════════════════════════════╗
+║           🚀 INTRADAY AUTO-TRADER — Wealth Builder Pro      ║
+║           Mode: 🧪 DRY-RUN                                  ║
+║           Time: 2026-04-23 23:59 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+Finished at: Thu Apr 23 20:30:14 CEST 2026
+Exit code: 0
+=== END ===

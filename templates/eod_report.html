@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>End-of-Day Report - Wealth Builder Pro</title>
+<style>
+  body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f6f9; color: #333; }
+  .header { background: #1a1a2e; color: #fff; padding: 20px; text-align: center; }
+  .header h1 { margin: 0; font-size: 22px; }
+  .header .date { font-size: 13px; color: #a0a0c0; margin-top: 4px; }
+  .container { max-width: 640px; margin: 0 auto; padding: 16px; }
+  .card { background: #fff; border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .card h2 { margin: 0 0 12px 0; font-size: 16px; color: #1a1a2e; border-bottom: 2px solid #e8e8f0; padding-bottom: 8px; }
+  .positive { color: #16a34a; }
+  .negative { color: #dc2626; }
+  .neutral { color: #6b7280; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .summary-item { flex: 1; min-width: 120px; text-align: center; padding: 12px; background: #f8f9fc; border-radius: 6px; }
+  .summary-item .label { font-size: 11px; color: #666; text-transform: uppercase; }
+  .summary-item .value { font-size: 20px; font-weight: 700; margin-top: 4px; }
+  .verdict-pill { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; color: #fff; }
+  .verdict-buy { background: #16a34a; }
+  .verdict-hold { background: #f59e0b; }
+  .verdict-sell { background: #dc2626; }
+  .verdict-exit { background: #7c3aed; }
+  .rec-continue { color: #16a34a; font-weight: 600; }
+  .rec-stop { color: #dc2626; font-weight: 600; }
+  .rec-switch { color: #f59e0b; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px; background: #f1f5f9; color: #475569; font-size: 11px; text-transform: uppercase; }
+  td { padding: 8px; border-bottom: 1px solid #e8e8f0; }
+  .tax-flag { background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+  .bar-container { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+  .bar-label { width: 40px; font-size: 12px; font-weight: 600; }
+  .bar { height: 18px; border-radius: 4px; min-width: 2px; }
+  .bar-fii { background: #3b82f6; }
+  .bar-dii { background: #f59e0b; }
+  .bar-value { font-size: 11px; color: #666; }
+  .footer { text-align: center; padding: 16px; font-size: 11px; color: #999; }
+  @media (max-width: 480px) {
+    .summary-item { min-width: 100px; }
+    .summary-item .value { font-size: 16px; }
+    table { font-size: 11px; }
+    th, td { padding: 6px 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🌙 End-of-Day Report</h1>
+  <div class="date">{{ report_date }}</div>
+</div>
+<div class="container">
+  <!-- Day P&L -->
+  <div class="card">
+    <h2>Day P&amp;L</h2>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="label">Invested</div>
+        <div class="value">₹{{ "%.0f"|format(portfolio_summary.total_invested|default(0)) }}</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">Current Value</div>
+        <div class="value">₹{{ "%.0f"|format(portfolio_summary.current_value|default(0)) }}</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">Day P&amp;L</div>
+        <div class="value {{ 'positive' if portfolio_summary.day_pnl|default(0) >= 0 else 'negative' }}">
+          ₹{{ "%.0f"|format(portfolio_summary.day_pnl|default(0)) }}
+        </div>
+      </div>
+      <div class="summary-item">
+        <div class="label">Total P&amp;L</div>
+        <div class="value {{ 'positive' if portfolio_summary.total_pnl|default(0) >= 0 else 'negative' }}">
+          ₹{{ "%.0f"|format(portfolio_summary.total_pnl|default(0)) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stock Verdicts -->
+  <div class="card">
+    <h2>Portfolio Verdicts</h2>
+    {% if verdicts %}
+    <table>
+      <tr><th>Stock</th><th>Verdict</th><th>Target</th><th>SL</th><th>Tax</th></tr>
+      {% for v in verdicts %}
+      <tr>
+        <td>{{ v.name }}</td>
+        <td><span class="verdict-pill verdict-{{ v.verdict }}">{{ v.verdict|upper }}</span></td>
+        <td>₹{{ "%.2f"|format(v.target_price) }}</td>
+        <td>₹{{ "%.2f"|format(v.stop_loss) }}</td>
+        <td>{% if v.tax_harvest_flag %}<span class="tax-flag">TLH</span>{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p class="neutral">Verdicts unavailable</p>
+    {% endif %}
+  </div>
+  <!-- MF Analysis -->
+  <div class="card">
+    <h2>Mutual Fund Analysis</h2>
+    {% if mf_recommendations %}
+    <table>
+      <tr><th>Scheme</th><th>Action</th><th>Alternative</th></tr>
+      {% for r in mf_recommendations %}
+      <tr>
+        <td>{{ r.scheme_name }}</td>
+        <td><span class="rec-{{ r.recommendation }}">{{ r.recommendation|upper }}</span></td>
+        <td>{{ r.alternative_scheme or '-' }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p class="neutral">MF analysis unavailable</p>
+    {% endif %}
+  </div>
+
+  <!-- Tax Harvesting -->
+  <div class="card">
+    <h2>Tax Loss Harvesting</h2>
+    {% if tax_harvest_candidates %}
+    <table>
+      <tr><th>Stock</th><th>Unrealised P&amp;L</th><th>Holding</th></tr>
+      {% for t in tax_harvest_candidates %}
+      <tr>
+        <td>{{ t.name }}</td>
+        <td class="negative">₹{{ "%.0f"|format(t.unrealised_pnl) }}</td>
+        <td>{{ t.holding_type }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p class="neutral">No tax harvesting opportunities</p>
+    {% endif %}
+  </div>
+  <!-- IPO GMP -->
+  <div class="card">
+    <h2>IPO GMP Tracker</h2>
+    {% if ipo_data %}
+    <table>
+      <tr><th>IPO</th><th>Price Band</th><th>GMP</th><th>Est. Listing</th><th>Status</th></tr>
+      {% for ipo in ipo_data %}
+      <tr>
+        <td>{{ ipo.name }}</td>
+        <td>{{ ipo.price_band }}</td>
+        <td class="{{ 'positive' if ipo.gmp > 0 else 'negative' }}">₹{{ "%.0f"|format(ipo.gmp) }}</td>
+        <td>₹{{ "%.0f"|format(ipo.estimated_listing_price) }}</td>
+        <td>{{ ipo.subscription_status }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p class="neutral">No active IPOs</p>
+    {% endif %}
+  </div>
+
+  <!-- FII/DII Bar Charts -->
+  <div class="card">
+    <h2>FII / DII Flows</h2>
+    {% if fii_dii %}
+    <div>
+      <div class="bar-container">
+        <div class="bar-label">FII</div>
+        <div class="bar bar-fii" style="width: {{ [fii_dii.fii_net|abs / 100, 200]|min }}px;"></div>
+        <div class="bar-value {{ 'positive' if fii_dii.fii_net >= 0 else 'negative' }}">{{ "%+.0f"|format(fii_dii.fii_net) }} Cr</div>
+      </div>
+      <div class="bar-container">
+        <div class="bar-label">DII</div>
+        <div class="bar bar-dii" style="width: {{ [fii_dii.dii_net|abs / 100, 200]|min }}px;"></div>
+        <div class="bar-value {{ 'positive' if fii_dii.dii_net >= 0 else 'negative' }}">{{ "%+.0f"|format(fii_dii.dii_net) }} Cr</div>
+      </div>
+    </div>
+    {% else %}
+    <p class="neutral">FII/DII data unavailable</p>
+    {% endif %}
+  </div>
+</div>
+<div class="footer">Wealth Builder Pro · Generated {{ report_date }}</div>
+</body>
+</html>

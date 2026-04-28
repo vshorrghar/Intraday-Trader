@@ -1,0 +1,154 @@
+2026-04-24 08:12:24 [INFO] fno: --force: skipping time-of-day check
+2026-04-24 08:12:24 [INFO] fno: 🟢 [11:42:24] Phase: Configuration — START
+2026-04-24 08:12:24 [INFO] fno: ✅ [11:42:24] Phase: Configuration — DONE
+2026-04-24 08:12:24 [INFO] fno: Config: broker=dhan, mode=paper, capital=₹1000000, max_positions=5
+2026-04-24 08:12:24 [INFO] fno: 🟢 [11:42:24] Phase: Database — START
+2026-04-24 08:12:24 [INFO] fno: ✅ [11:42:24] Phase: Database — DONE
+2026-04-24 08:12:24 [INFO] fno: 🟢 [11:42:24] Phase: Broker Authentication — START
+2026-04-24 08:12:24 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-04-24 08:12:24 [INFO] fno: ✅ [11:42:24] Phase: Broker Authentication — DONE
+2026-04-24 08:12:24 [INFO] fno: Broker: dhan, mode=paper, auth=DryRun
+2026-04-24 08:12:24 [INFO] fno: 🟢 [11:42:24] Phase: Option Chain Fetch — START
+2026-04-24 08:12:24 [INFO] fno: NIFTY: spot=22449.24, ATM=22450.0, PCR=0.66, MaxPain=22350.0
+2026-04-24 08:12:24 [INFO] fno: BANKNIFTY: spot=51330.52, ATM=51300.0, PCR=0.64, MaxPain=51200.0
+2026-04-24 08:12:24 [INFO] fno: FINNIFTY: spot=22545.18, ATM=22550.0, PCR=0.48, MaxPain=22450.0
+2026-04-24 08:12:24 [INFO] fno: ✅ [11:42:24] Phase: Option Chain Fetch — DONE
+2026-04-24 08:12:24 [INFO] fno: 🟢 [11:42:24] Phase: Greeks Computation — START
+2026-04-24 08:12:26 [INFO] fno: ✅ [11:42:26] Phase: Greeks Computation — DONE
+2026-04-24 08:12:26 [INFO] fno: 🟢 [11:42:26] Phase: Quant Edge Engine — START
+2026-04-24 08:12:26 [INFO] fno: NIFTY quant: IVP=92.0%, VRP=5.68, GEX=PINNED, Confluence=59
+2026-04-24 08:12:26 [INFO] fno: BANKNIFTY quant: IVP=95.5%, VRP=3.45, GEX=PINNED, Confluence=55
+2026-04-24 08:12:26 [INFO] fno: FINNIFTY quant: IVP=100.0%, VRP=11.71, GEX=PINNED, Confluence=61
+2026-04-24 08:12:26 [INFO] fno: ✅ [11:42:26] Phase: Quant Edge Engine — DONE
+2026-04-24 08:12:26 [INFO] fno: 🟢 [11:42:26] Phase: Strategy Selection — START
+2026-04-24 08:12:26 [INFO] fno.strategy_engine: Market regime: SIDEWAYS (VIX=15.0)
+2026-04-24 08:12:26 [INFO] botocore.credentials: Found credentials in environment variables.
+2026-04-24 08:12:27 [WARNING] fno.strategy_engine: Bedrock call failed (An error occurred (UnrecognizedClientException) when calling the InvokeModel operation: The security token included in the request is invalid) — using demo response
+2026-04-24 08:12:27 [WARNING] fno.strategy_engine: Bedrock call failed (An error occurred (UnrecognizedClientException) when calling the InvokeModel operation: The security token included in the request is invalid) — using demo response
+2026-04-24 08:12:28 [WARNING] fno.strategy_engine: Bedrock call failed (An error occurred (UnrecognizedClientException) when calling the InvokeModel operation: The security token included in the request is invalid) — using demo response
+2026-04-24 08:12:28 [INFO] fno: Selected 3 strategies
+2026-04-24 08:12:28 [INFO] fno:   IRON_CONDOR NIFTY: 4 legs, max_loss=₹250, confidence=8, confluence=59
+2026-04-24 08:12:28 [INFO] fno:   IRON_CONDOR BANKNIFTY: 4 legs, max_loss=₹900, confidence=8, confluence=55
+2026-04-24 08:12:28 [INFO] fno:   IRON_CONDOR FINNIFTY: 4 legs, max_loss=₹250, confidence=8, confluence=61
+2026-04-24 08:12:28 [INFO] fno: ✅ [11:42:28] Phase: Strategy Selection — DONE
+2026-04-24 08:12:28 [INFO] fno: 🟢 [11:42:28] Phase: Risk Validation — START
+2026-04-24 08:12:28 [INFO] fno: ✅ Approved: IRON_CONDOR NIFTY
+2026-04-24 08:12:28 [INFO] fno: ✅ Approved: IRON_CONDOR BANKNIFTY
+2026-04-24 08:12:28 [INFO] fno: ✅ Approved: IRON_CONDOR FINNIFTY
+2026-04-24 08:12:28 [INFO] fno: ✅ [11:42:28] Phase: Risk Validation — DONE
+2026-04-24 08:12:28 [INFO] fno: 🟢 [11:42:28] Phase: Order Execution — START
+2026-04-24 08:12:28 [INFO] fno.paper_engine: Paper fill: IRON_CONDOR NIFTY — margin ₹300, remaining ₹999700
+2026-04-24 08:12:28 [INFO] fno: Placed strategy 26: IRON_CONDOR NIFTY
+2026-04-24 08:12:28 [INFO] fno.paper_engine: Paper fill: IRON_CONDOR BANKNIFTY — margin ₹1080, remaining ₹998620
+2026-04-24 08:12:28 [INFO] fno: Placed strategy 27: IRON_CONDOR BANKNIFTY
+2026-04-24 08:12:28 [INFO] fno.paper_engine: Paper fill: IRON_CONDOR FINNIFTY — margin ₹300, remaining ₹998320
+2026-04-24 08:12:28 [INFO] fno: Placed strategy 28: IRON_CONDOR FINNIFTY
+2026-04-24 08:12:28 [INFO] fno: ✅ [11:42:28] Phase: Order Execution — DONE
+2026-04-24 08:12:28 [INFO] fno: 🟢 [11:42:28] Phase: Position Monitoring — START
+2026-04-24 08:12:28 [INFO] fno: Monitoring every 60s until 15:15 IST (paper mode)
+2026-04-24 08:12:28 [WARNING] fno.monitor: Vega exposure -7055.9 exceeds limit 1000
+2026-04-24 08:13:28 [WARNING] fno.monitor: Vega exposure -7055.9 exceeds limit 1000
+2026-04-24 08:14:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:15:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:16:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:17:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:18:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:19:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:20:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:21:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:21:28 [INFO] fno: Monitor cycle 10: open=5, exits=0, warnings=1
+2026-04-24 08:22:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:23:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:24:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:25:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:26:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:27:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:28:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:29:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:30:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:31:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:31:28 [INFO] fno: Monitor cycle 20: open=5, exits=0, warnings=1
+2026-04-24 08:32:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:33:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:34:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:35:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:36:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:37:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:38:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:39:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:40:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:41:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:41:28 [INFO] fno: Monitor cycle 30: open=5, exits=0, warnings=1
+2026-04-24 08:42:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:43:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:44:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:45:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:46:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:47:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:48:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:49:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:50:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:51:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:51:28 [INFO] fno: Monitor cycle 40: open=5, exits=0, warnings=1
+2026-04-24 08:52:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:53:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:54:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:55:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:56:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:57:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:58:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 08:59:28 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:00:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:01:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:01:29 [INFO] fno: Monitor cycle 50: open=5, exits=0, warnings=1
+2026-04-24 09:02:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:03:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:04:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:05:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:06:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:07:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:08:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:09:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:10:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:11:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:11:29 [INFO] fno: Monitor cycle 60: open=5, exits=0, warnings=1
+2026-04-24 09:12:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:13:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:14:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:15:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:16:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:17:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:18:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:19:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:20:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:21:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:21:29 [INFO] fno: Monitor cycle 70: open=5, exits=0, warnings=1
+2026-04-24 09:22:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:23:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:24:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:25:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:26:29 [WARNING] fno.monitor: Vega exposure -50780.9 exceeds limit 1000
+2026-04-24 09:27:29 [INFO] fno: No open positions — exiting monitor loop
+2026-04-24 09:27:29 [INFO] fno: ✅ [12:57:29] Phase: Position Monitoring — DONE
+2026-04-24 09:27:29 [INFO] fno: 🟢 [12:57:29] Phase: Force Exit — START
+2026-04-24 09:27:29 [INFO] fno.monitor: Force exited 0 strategies
+2026-04-24 09:27:29 [INFO] fno: Force exited 0 strategies
+2026-04-24 09:27:29 [INFO] fno: ✅ [12:57:29] Phase: Force Exit — DONE
+2026-04-24 09:27:29 [INFO] fno: 🟢 [12:57:29] Phase: EOD Report — START
+2026-04-24 09:27:29 [INFO] fno.reporter: Report written: output/reports/fno_2026-04-24.json
+2026-04-24 09:27:29 [INFO] fno.dashboard: F&O Dashboard JSON updated: dashboard/api/fno_latest.json
+2026-04-24 09:27:29 [INFO] fno.reporter: EOD report generated: 2026-04-24 — P&L ₹0.00, Win rate 0.0%
+2026-04-24 09:27:29 [INFO] fno: EOD: P&L=₹0.00, Win rate=0.0%, Strategies=0
+2026-04-24 09:27:29 [INFO] fno: ✅ [12:57:29] Phase: EOD Report — DONE
+2026-04-24 09:27:29 [INFO] fno: 🟢 [12:57:29] Phase: Dashboard Update — START
+2026-04-24 09:27:29 [INFO] fno: ✅ [12:57:29] Phase: Dashboard Update — DONE
+
+╔══════════════════════════════════════════════════════════════╗
+║           🎯 F&O AUTO-TRADER — Wealth Builder Pro            ║
+║           Mode: 🧪 PAPER MODE                               ║
+║           Time: 2026-04-24 11:42 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+🏁 F&O session complete!
+
