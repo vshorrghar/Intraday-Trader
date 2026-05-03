@@ -1,0 +1,76 @@
+{
+  "trade_date": "2026-05-01",
+  "mode": "DRY_RUN",
+  "broker_name": "dhan",
+  "generated_at": "2026-05-01T09:27:44.874319+05:30",
+  "trades": [
+    {
+      "tradingsymbol": "SYNGENE",
+      "symbol": "Syngene International Limited",
+      "entry_price": 432.0,
+      "exit_price": 468.05,
+      "target_price": 446.88,
+      "stop_loss_price": 423.36,
+      "quantity": 46,
+      "pnl": 1658.3,
+      "status": "CLOSED",
+      "confidence_score": 7,
+      "strategy_type": "REVERSAL",
+      "rationale": "Strong reversal play in Pharma sector (+0.03%, rank #3). Gapped flat (-0.05%) but rallied +8.3% from open (\u20b9431.95 to \u20b9468.05 high), showing exceptional relative strength vs bearish market. Entering near open \u20b9432 with volume 59M. Pharma defensive on red days."
+    },
+    {
+      "tradingsymbol": "MEESHO",
+      "symbol": "Meesho",
+      "entry_price": 173.5,
+      "exit_price": 194.0,
+      "target_price": 179.42,
+      "stop_loss_price": 169.83,
+      "quantity": 115,
+      "pnl": 2357.5,
+      "status": "CLOSED",
+      "confidence_score": 6,
+      "strategy_type": "GAP",
+      "rationale": "Micro gap-up (+0.41%) with explosive 13.4% intraday rally (\u20b9173.38 to \u20b9196.62 high) on massive volume 150M. IT sector holding green (+0.37%, rank #2). Entry near open provides safety. Strong momentum despite bearish market backdrop."
+    }
+  ],
+  "metrics": {
+    "total_pnl": 4015.8,
+    "total_trades": 2,
+    "winning_trades": 2,
+    "losing_trades": 0,
+    "win_rate": 100.0,
+    "avg_profit": 2007.9,
+    "avg_loss": 0,
+    "expectancy": 2007.9,
+    "profit_factor": "inf"
+  },
+  "strategy_breakdown": {
+    "REVERSAL": {
+      "total_pnl": 1658.3,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 1658.3,
+      "avg_loss": 0,
+      "expectancy": 1658.3,
+      "profit_factor": "inf"
+    },
+    "GAP": {
+      "total_pnl": 2357.5,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 2357.5,
+      "avg_loss": 0,
+      "expectancy": 2357.5,
+      "profit_factor": "inf"
+    }
+  },
+  "cumulative": {
+    "total_pnl": 7582.02,
+    "overall_win_rate": 100.0,
+    "max_drawdown": 0.0
+  }
+}

@@ -1,0 +1,118 @@
+2026-04-30 11:03:58 [INFO] intraday: --force: skipping time-of-day check
+2026-04-30 11:03:58 [INFO] intraday: 🟢 [16:33:58] Phase: Configuration — START
+2026-04-30 11:03:58 [INFO] intraday: ✅ [16:33:58] Phase: Configuration — DONE
+2026-04-30 11:03:58 [INFO] intraday: 🟢 [16:33:58] Phase: Database — START
+2026-04-30 11:03:58 [INFO] intraday: ✅ [16:33:58] Phase: Database — DONE
+2026-04-30 11:03:58 [INFO] intraday: 🟢 [16:33:58] Phase: Broker Authentication — START
+2026-04-30 11:03:58 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-04-30 11:03:58 [INFO] intraday: ✅ [16:33:58] Phase: Broker Authentication — DONE
+2026-04-30 11:03:58 [INFO] intraday: 🟢 [16:33:58] Phase: Pre-Market Scan — START
+2026-04-30 11:03:58 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
+2026-04-30 11:03:58 [INFO] intraday.scanner: India VIX: 18.46 | 27 sectors fetched
+2026-04-30 11:03:59 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-04-30 11:03:59 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
+2026-04-30 11:04:04 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-04-30 11:04:04 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
+2026-04-30 11:04:04 [WARNING] intraday.scanner: No gainers data — continuing with other sources
+2026-04-30 11:04:04 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-04-30 11:04:04 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
+2026-04-30 11:04:09 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-04-30 11:04:09 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
+2026-04-30 11:04:09 [WARNING] intraday.scanner: No losers data — continuing with other sources
+2026-04-30 11:04:09 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
+2026-04-30 11:04:09 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
+2026-04-30 11:04:18 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
+2026-04-30 11:04:18 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
+2026-04-30 11:04:18 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 18.46
+2026-04-30 11:04:18 [INFO] intraday: ✅ [16:34:18] Phase: Pre-Market Scan — DONE
+2026-04-30 11:04:18 [INFO] intraday: 🟢 [16:34:18] Phase: Pre-Filter — START
+2026-04-30 11:04:18 [INFO] intraday.selector: Pre-filter: 20 → 10 candidates
+2026-04-30 11:04:18 [INFO] intraday: Pre-filter: 10 candidates passed
+2026-04-30 11:04:18 [INFO] intraday: ✅ [16:34:18] Phase: Pre-Filter — DONE
+2026-04-30 11:04:18 [INFO] intraday: 🟢 [16:34:18] Phase: LLM Trade Selection — START
+2026-04-30 11:04:19 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-04-30 11:04:19 [INFO] intraday.selector: Sending 10 candidates to LLM for trade selection…
+2026-04-30 11:04:30 [INFO] intraday.selector: LLM market mood: Severely bearish with only 3/27 sectors green and VIX surging +5.86% to 18.46. Metal sector crushed -2.12%, Banking -0.98%, defensive rotation into IT/Pharma.
+2026-04-30 11:04:30 [INFO] intraday.selector: LLM VIX assessment: VIX spike to 18.46 (+5.86%) signals rising fear and volatility. This is NOT a day for aggressive positioning. Limiting to 2 high-conviction defensive plays with exceptional relative strength.
+2026-04-30 11:04:30 [INFO] intraday.selector: Pick #1 VALID: SYNGENE @ ₹432.00 → ₹446.00 (SL ₹423.00, R:R 1.6, conf 7) [REVERSAL] — Strong reversal play in Pharma sector (+0.03%, one of only 3 green sectors). Stock gapped flat (-0.05%) at ₹431.95, rallied 8.4% intraday to ₹468.05, now pulling back. Entry near open gives good R:R. Volume 59M confirms institutional interest. Pharma showing defensive strength on bearish day.
+2026-04-30 11:04:30 [INFO] intraday.selector: Pick #2 VALID: MEESHO @ ₹173.50 → ₹179.00 (SL ₹170.00, R:R 1.6, conf 6) [GAP] — Exceptional relative strength with +12.2% intraday move from open (₹173.38 to ₹194.00) on massive volume of 150M. Small gap up (+0.41%) expanding aggressively. Entry near open price gives chase-free setup. Technology/E-commerce play benefiting from IT sector strength (+0.37%). Risk entry on pullback to opening range.
+2026-04-30 11:04:30 [INFO] intraday.selector: LLM selection complete: 2 valid trade(s)
+2026-04-30 11:04:30 [INFO] intraday: ✅ [16:34:30] Phase: LLM Trade Selection — DONE
+2026-04-30 11:04:30 [INFO] intraday: 🟢 [16:34:30] Phase: Position Sizing — START
+2026-04-30 11:04:30 [INFO] intraday.risk_manager: Restored daily state: realized loss ₹0.00
+2026-04-30 11:04:30 [INFO] intraday.risk_manager: Sized SYNGENE: 46 shares × ₹432.00 = ₹19872 (conf 7, R:R 1.6)
+2026-04-30 11:04:30 [INFO] intraday.risk_manager: Sized MEESHO: 115 shares × ₹173.50 = ₹19952 (conf 6, R:R 1.6)
+2026-04-30 11:04:30 [INFO] intraday.risk_manager: Total capital allocated: ₹39824 / ₹50000 remaining
+2026-04-30 11:04:30 [INFO] intraday: ✅ [16:34:30] Phase: Position Sizing — DONE
+2026-04-30 11:04:30 [INFO] intraday: 🟢 [16:34:30] Phase: VIX Check — START
+2026-04-30 11:04:30 [INFO] intraday: ✅ [16:34:30] Phase: VIX Check — DONE
+2026-04-30 11:04:30 [INFO] intraday: 🟢 [16:34:30] Phase: Order Execution — START
+2026-04-30 11:04:30 [INFO] intraday.executor: --force: skipping entry delay
+2026-04-30 11:04:30 [INFO] intraday.auth_server: DryRun place_order: BUY SYNGENE x46 @ 432.00 → DRY-000001
+2026-04-30 11:04:30 [INFO] intraday.auth_server: DryRun place_order: SELL SYNGENE x46 @ 423.00 → DRY-000002
+2026-04-30 11:04:30 [INFO] intraday.executor: 📋 Placed SYNGENE: BUY 46 × ₹432.00 | Target ₹446.00 | SL ₹423.00 | 🧪 DRY-RUN
+2026-04-30 11:04:30 [INFO] intraday.auth_server: DryRun place_order: BUY MEESHO x115 @ 173.50 → DRY-000003
+2026-04-30 11:04:30 [INFO] intraday.auth_server: DryRun place_order: SELL MEESHO x115 @ 170.00 → DRY-000004
+2026-04-30 11:04:30 [INFO] intraday.executor: 📋 Placed MEESHO: BUY 115 × ₹173.50 | Target ₹179.00 | SL ₹170.00 | 🧪 DRY-RUN
+2026-04-30 11:04:30 [INFO] intraday.executor: Placed 2 / 2 orders (DRY_RUN mode)
+2026-04-30 11:04:30 [INFO] intraday: ✅ [16:34:30] Phase: Order Execution — DONE
+2026-04-30 11:04:30 [INFO] intraday: 🟢 [16:34:30] Phase: Position Monitoring — START
+2026-04-30 11:04:30 [INFO] intraday.monitor: 🔍 Starting position monitor for 2 trade(s)…
+2026-04-30 11:04:30 [INFO] intraday.monitor: ⏰ Force exit time reached — closing all positions
+2026-04-30 11:04:30 [INFO] intraday.monitor: ⏰ SYNGENE FORCE EXITED @ ₹432.00 | P&L: ₹0.00
+2026-04-30 11:04:30 [INFO] intraday.monitor: ⏰ MEESHO FORCE EXITED @ ₹173.50 | P&L: ₹0.00
+2026-04-30 11:04:30 [INFO] intraday: ✅ [16:34:30] Phase: Position Monitoring — DONE
+2026-04-30 11:04:30 [INFO] intraday: 🟢 [16:34:30] Phase: EOD Report — START
+2026-04-30 11:04:30 [INFO] intraday.reporter: EOD report saved to output/reports/intraday_2026-04-30.json
+2026-04-30 11:04:30 [INFO] intraday: ✅ [16:34:30] Phase: EOD Report — DONE
+2026-04-30 11:04:30 [INFO] intraday: 🟢 [16:34:30] Phase: Dashboard Update — START
+2026-04-30 11:04:30 [INFO] intraday.dashboard: Dashboard JSON updated: dashboard/api/intraday_latest.json
+2026-04-30 11:04:30 [INFO] intraday: ✅ [16:34:30] Phase: Dashboard Update — DONE
+
+╔══════════════════════════════════════════════════════════════╗
+║           🚀 INTRADAY AUTO-TRADER — Wealth Builder Pro      ║
+║           Mode: 🧪 DRY-RUN                                  ║
+║           Time: 2026-04-30 16:33 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+┌──────────────────────────────────────────────────────────────┐
+│              🌅 MORNING PICKS — Claude's Selections          │
+│              VIX: 18.46 | Budget: ₹50,000              │
+├──────────────────────────────────────────────────────────────┤
+│  1. Syngene International Limited (SYNGENE)
+│     📍 Entry: ₹432.00  🎯 Target: ₹446.00  🛑 SL: ₹423.00
+│     📊 R:R 1.6:1  ⭐ Confidence: 7/10  🏷️ REVERSAL
+│     💡 Strong reversal play in Pharma sector (+0.03%, one of only 3 green sec…
+│
+│  2. MEESHO Limited (MEESHO)
+│     📍 Entry: ₹173.50  🎯 Target: ₹179.00  🛑 SL: ₹170.00
+│     📊 R:R 1.6:1  ⭐ Confidence: 6/10  🏷️ GAP
+│     💡 Exceptional relative strength with +12.2% intraday move from open (₹17…
+│
+└──────────────────────────────────────────────────────────────┘
+
+
+============================================================
+  📊 INTRADAY TRADING REPORT — 2026-04-30
+  Mode: 🧪 DRY-RUN
+============================================================
+
+  ⏰ SYNGENE      Entry ₹432.00 → Exit ₹432.00  Qty 46  P&L [92m+₹0[0m  [REVERSAL]
+  ⏰ MEESHO       Entry ₹173.50 → Exit ₹173.50  Qty 115  P&L [92m+₹0[0m  [GAP]
+
+  🟢 Total P&L: [92m₹+0.00[0m
+  📈 Win Rate: 0.0% (0W / 0L)
+  💰 Avg Win: ₹0.00 | Avg Loss: ₹0.00
+  🎯 Expectancy: ₹0.00/trade
+  📊 Profit Factor: inf
+
+  Strategy Breakdown:
+    REVERSAL: 0% WR, ₹+0 P&L
+    GAP: 0% WR, ₹+0 P&L
+
+============================================================
+
+
+🏁 Intraday session complete!
+

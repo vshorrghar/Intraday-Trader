@@ -1,0 +1,140 @@
+{
+  "trade_date": "2026-04-30",
+  "mode": "PAPER",
+  "broker": "dhan",
+  "total_strategies": 2,
+  "winning_strategies": 1,
+  "losing_strategies": 1,
+  "win_rate": 50.0,
+  "total_pnl": 20.76,
+  "cumulative_pnl": 75202.96,
+  "max_drawdown": 0.0,
+  "expectancy": 10.38,
+  "avg_profit": 31.53,
+  "avg_loss": -10.77,
+  "theta_decay_pnl": 647.59,
+  "strategy_metrics": {
+    "IRON_CONDOR": {
+      "count": 2,
+      "win_rate": 50.0,
+      "avg_profit": 31.53,
+      "avg_loss": -10.77,
+      "profit_factor": 2.93,
+      "total_pnl": 20.76
+    }
+  },
+  "strategies": [
+    {
+      "id": 37,
+      "strategy_type": "IRON_CONDOR",
+      "index_name": "NIFTY",
+      "legs_json": "[{\"strike\": 24950.0, \"option_type\": \"CE\", \"transaction_type\": \"SELL\", \"num_lots\": 3, \"entry_price\": 274.01}, {\"strike\": 25150.0, \"option_type\": \"CE\", \"transaction_type\": \"BUY\", \"num_lots\": 3, \"entry_price\": 265.58}, {\"strike\": 24550.0, \"option_type\": \"PE\", \"transaction_type\": \"SELL\", \"num_lots\": 3, \"entry_price\": 272.59}, {\"strike\": 24350.0, \"option_type\": \"PE\", \"transaction_type\": \"BUY\", \"num_lots\": 3, \"entry_price\": 264.11}]",
+      "net_premium": 1268.25,
+      "max_profit": 1268.25,
+      "max_loss": 13731.75,
+      "status": "FORCE_EXITED",
+      "entry_time": "2026-04-30T16:34:55.271431+05:30",
+      "exit_time": "2026-04-30T16:34:55.315678+05:30",
+      "realized_pnl": -10.77,
+      "confidence_score": 7,
+      "confluence_score": 58.0
+    },
+    {
+      "id": 38,
+      "strategy_type": "IRON_CONDOR",
+      "index_name": "FINNIFTY",
+      "legs_json": "[{\"strike\": 22700.0, \"option_type\": \"PE\", \"transaction_type\": \"SELL\", \"num_lots\": 3, \"entry_price\": 214.93}, {\"strike\": 22600.0, \"option_type\": \"PE\", \"transaction_type\": \"BUY\", \"num_lots\": 3, \"entry_price\": 211.41}, {\"strike\": 23300.0, \"option_type\": \"CE\", \"transaction_type\": \"SELL\", \"num_lots\": 3, \"entry_price\": 216.8}, {\"strike\": 23400.0, \"option_type\": \"CE\", \"transaction_type\": \"BUY\", \"num_lots\": 3, \"entry_price\": 213.32}]",
+      "net_premium": 525.0,
+      "max_profit": 525.0,
+      "max_loss": 6975.0,
+      "status": "FORCE_EXITED",
+      "entry_time": "2026-04-30T16:34:55.292493+05:30",
+      "exit_time": "2026-04-30T16:34:55.315678+05:30",
+      "realized_pnl": 31.53,
+      "confidence_score": 7,
+      "confluence_score": 57.32
+    }
+  ],
+  "trades": [
+    {
+      "id": 127,
+      "tradingsymbol": "PAPER_NIFTY_24950.0_CE",
+      "action": "SELL",
+      "quantity": 75,
+      "entry_price": 274.01,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 128,
+      "tradingsymbol": "PAPER_NIFTY_25150.0_CE",
+      "action": "BUY",
+      "quantity": 75,
+      "entry_price": 265.58,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 129,
+      "tradingsymbol": "PAPER_NIFTY_24550.0_PE",
+      "action": "SELL",
+      "quantity": 75,
+      "entry_price": 272.59,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 130,
+      "tradingsymbol": "PAPER_NIFTY_24350.0_PE",
+      "action": "BUY",
+      "quantity": 75,
+      "entry_price": 264.11,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 131,
+      "tradingsymbol": "PAPER_FINNIFTY_22700.0_PE",
+      "action": "SELL",
+      "quantity": 75,
+      "entry_price": 214.93,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 132,
+      "tradingsymbol": "PAPER_FINNIFTY_22600.0_PE",
+      "action": "BUY",
+      "quantity": 75,
+      "entry_price": 211.41,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 133,
+      "tradingsymbol": "PAPER_FINNIFTY_23300.0_CE",
+      "action": "SELL",
+      "quantity": 75,
+      "entry_price": 216.8,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 134,
+      "tradingsymbol": "PAPER_FINNIFTY_23400.0_CE",
+      "action": "BUY",
+      "quantity": 75,
+      "entry_price": 213.32,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    }
+  ]
+}

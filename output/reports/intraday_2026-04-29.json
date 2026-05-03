@@ -1,0 +1,140 @@
+{
+  "trade_date": "2026-04-29",
+  "mode": "DRY_RUN",
+  "broker_name": "dhan",
+  "generated_at": "2026-04-29T13:33:22.737967+05:30",
+  "trades": [
+    {
+      "tradingsymbol": "BANDHANBNK",
+      "symbol": "Bandhan Bank Limited",
+      "entry_price": 186.01,
+      "exit_price": 195.93,
+      "target_price": 192.8,
+      "stop_loss_price": 182.68,
+      "quantity": 63,
+      "pnl": 624.96,
+      "status": "CLOSED",
+      "confidence_score": 8,
+      "strategy_type": "GAP",
+      "rationale": "Strong gap-up +4.12% with massive volume 21.3M, currently at open price \u20b9186.01 (perfect entry). Banking sector showing momentum despite lagging broader indices. Stock near day low provides good entry for continuation. Volume confirms institutional interest. R:R = 2.04:1"
+    },
+    {
+      "tradingsymbol": "ETERNAL",
+      "symbol": "Eternal Limited",
+      "entry_price": 263.3,
+      "exit_price": 256.94,
+      "target_price": 273.0,
+      "stop_loss_price": 258.43,
+      "quantity": 39,
+      "pnl": -248.04,
+      "status": "STOPPED_OUT",
+      "confidence_score": 7,
+      "strategy_type": "VWAP",
+      "rationale": "Gapped up +4.04% with exceptional volume 36.9M shares. Currently pulled back to near open \u20b9263.30 from high \u20b9265.40 - classic dip-buy setup. Infrastructure sector ranked #5 today (+0.46%). Volume spike indicates strong institutional accumulation. R:R = 2.0:1"
+    },
+    {
+      "tradingsymbol": "EMMVEE",
+      "symbol": "EMMVEE Solar Systems Limited",
+      "entry_price": 285.5,
+      "exit_price": 299.5,
+      "target_price": 296.5,
+      "stop_loss_price": 285.5,
+      "quantity": 22,
+      "pnl": 308.0,
+      "status": "CLOSED",
+      "confidence_score": 7,
+      "strategy_type": "GAP",
+      "rationale": "Strongest gap-up +4.86% with high volume 5.37M. Currently at \u20b9295.81 but entering at open \u20b9285.50 captures base. Energy/renewable sector gaining traction. Stock holding above day low \u20b9285.50 shows buying support. R:R = 2.07:1"
+    },
+    {
+      "tradingsymbol": "GROWW",
+      "symbol": "Groww (Nextbillion Technology)",
+      "entry_price": 222.5,
+      "exit_price": 217.23,
+      "target_price": 230.8,
+      "stop_loss_price": 218.25,
+      "quantity": 39,
+      "pnl": -205.53,
+      "status": "STOPPED_OUT",
+      "confidence_score": 6,
+      "strategy_type": "MOMENTUM",
+      "rationale": "Small gap +1.21% with LTP near open providing clean entry. Volume 9.96M adequate. Finance/fintech sector showing resilience. Stock at \u20b9221.52 vs open \u20b9222.50 within 0.5% threshold. Conservative play in bullish market. R:R = 1.95:1"
+    },
+    {
+      "tradingsymbol": "ONGC",
+      "symbol": "ONGC Limited",
+      "entry_price": 303.9,
+      "exit_price": 304.55,
+      "target_price": 315.0,
+      "stop_loss_price": 304.67,
+      "quantity": 29,
+      "pnl": 18.85,
+      "status": "STOPPED_OUT",
+      "confidence_score": 6,
+      "strategy_type": "ORB",
+      "rationale": "Small gap +0.86%, LTP \u20b9301.75 near open \u20b9303.90. Volume 5.49M sufficient for large-cap. Energy sector +0.12% today. Defensive play with tight range, good for portfolio diversification. Stable price action indicates controlled accumulation. R:R = 1.83:1"
+    }
+  ],
+  "metrics": {
+    "total_pnl": 498.24,
+    "total_trades": 5,
+    "winning_trades": 3,
+    "losing_trades": 2,
+    "win_rate": 60.0,
+    "avg_profit": 317.27,
+    "avg_loss": -226.78,
+    "expectancy": 99.65,
+    "profit_factor": 2.1
+  },
+  "strategy_breakdown": {
+    "GAP": {
+      "total_pnl": 932.96,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 466.48,
+      "avg_loss": 0,
+      "expectancy": 466.48,
+      "profit_factor": "inf"
+    },
+    "VWAP": {
+      "total_pnl": -248.04,
+      "total_trades": 1,
+      "winning_trades": 0,
+      "losing_trades": 1,
+      "win_rate": 0.0,
+      "avg_profit": 0,
+      "avg_loss": -248.04,
+      "expectancy": -248.04,
+      "profit_factor": 0.0
+    },
+    "MOMENTUM": {
+      "total_pnl": -205.53,
+      "total_trades": 1,
+      "winning_trades": 0,
+      "losing_trades": 1,
+      "win_rate": 0.0,
+      "avg_profit": 0,
+      "avg_loss": -205.53,
+      "expectancy": -205.53,
+      "profit_factor": 0.0
+    },
+    "ORB": {
+      "total_pnl": 18.85,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 18.85,
+      "avg_loss": 0,
+      "expectancy": 18.85,
+      "profit_factor": "inf"
+    }
+  },
+  "cumulative": {
+    "total_pnl": 48.66,
+    "overall_win_rate": 60.0,
+    "max_drawdown": 0.0
+  }
+}

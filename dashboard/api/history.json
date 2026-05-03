@@ -1,0 +1,164 @@
+{
+  "updated_at": "2026-05-04T02:37:55.839712+05:30",
+  "intraday": {
+    "daily": [
+      {
+        "date": "2026-04-15",
+        "pnl": -447.85,
+        "trades": 3,
+        "winners": 2,
+        "losers": 1
+      },
+      {
+        "date": "2026-04-17",
+        "pnl": 0.0,
+        "trades": 0,
+        "winners": 0,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-21",
+        "pnl": 0.0,
+        "trades": 0,
+        "winners": 0,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-23",
+        "pnl": 0.0,
+        "trades": 0,
+        "winners": 0,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-27",
+        "pnl": 861.29,
+        "trades": 5,
+        "winners": 5,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-28",
+        "pnl": 190.27,
+        "trades": 5,
+        "winners": 4,
+        "losers": 1
+      },
+      {
+        "date": "2026-04-29",
+        "pnl": 498.24,
+        "trades": 5,
+        "winners": 3,
+        "losers": 2
+      },
+      {
+        "date": "2026-04-30",
+        "pnl": 0.0,
+        "trades": 2,
+        "winners": 0,
+        "losers": 0
+      },
+      {
+        "date": "2026-05-01",
+        "pnl": 0.0,
+        "trades": 3,
+        "winners": 0,
+        "losers": 0
+      },
+      {
+        "date": "2026-05-04",
+        "pnl": 218.82,
+        "trades": 1,
+        "winners": 1,
+        "losers": 0
+      }
+    ],
+    "cumulative_pnl": 1320.77,
+    "total_trades": 24,
+    "winners": 15,
+    "losers": 4,
+    "win_rate": 78.9
+  },
+  "fno": {
+    "daily": [
+      {
+        "date": "2026-04-23",
+        "pnl": 4725.7,
+        "strategies": 8,
+        "winners": 3,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-24",
+        "pnl": 0.0,
+        "strategies": 0,
+        "winners": 0,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-25",
+        "pnl": 0.0,
+        "strategies": 1,
+        "winners": 0,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-27",
+        "pnl": 0.0,
+        "strategies": 2,
+        "winners": 0,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-28",
+        "pnl": 70456.5,
+        "strategies": 2,
+        "winners": 2,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-29",
+        "pnl": 1953.45,
+        "strategies": 1,
+        "winners": 1,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-30",
+        "pnl": 20.76,
+        "strategies": 2,
+        "winners": 1,
+        "losers": 1
+      },
+      {
+        "date": "2026-05-01",
+        "pnl": 4114.1,
+        "strategies": 7,
+        "winners": 5,
+        "losers": 2
+      }
+    ],
+    "cumulative_pnl": 81270.51,
+    "total_trades": 23,
+    "winners": 12,
+    "losers": 3,
+    "win_rate": 80.0
+  },
+  "swing": {
+    "daily": [],
+    "cumulative_pnl": 0,
+    "total_trades": 0,
+    "winners": 0,
+    "losers": 0,
+    "win_rate": 0
+  },
+  "positional": {
+    "daily": [],
+    "cumulative_pnl": 0,
+    "total_trades": 0,
+    "winners": 0,
+    "losers": 0,
+    "win_rate": 0
+  },
+  "grand_total": 82591.28
+}

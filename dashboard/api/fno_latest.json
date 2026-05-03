@@ -1,53 +1,69 @@
 {
-  "updated_at": "2026-04-27T15:43:24.241327+05:30",
+  "updated_at": "2026-05-01T15:15:15.856793+05:30",
   "mode": "PAPER",
   "broker": "dhan",
   "session_active": false,
-  "paper_capital_remaining": 1000000,
+  "paper_capital_remaining": 995150.25,
   "today": {
     "strategies": [
       {
         "strategy_type": "IRON_CONDOR",
-        "index": "FINNIFTY",
-        "legs_summary": "SELL 24100.0CE + BUY 24300.0CE + SELL 23650.0PE + BUY 23450.0PE",
-        "entry_premium": 603.0,
-        "current_premium": 603.0,
-        "unrealized_pnl": 0.0,
+        "index": "NIFTY",
+        "legs_summary": "SELL 22650.0CE + BUY 22800.0CE + SELL 22050.0PE + BUY 21900.0PE",
+        "entry_premium": 927.75,
+        "current_premium": 927.75,
+        "unrealized_pnl": 2783.25,
         "status": "FORCE_EXITED",
         "confluence_score": 61.0,
         "net_greeks": {
-          "delta": 0.2954,
-          "gamma": -0.0169,
-          "theta": 293.1234,
-          "vega": -27576.2847
+          "delta": -0.8644,
+          "gamma": -0.0238,
+          "theta": 369.0479,
+          "vega": -34183.5447
+        }
+      },
+      {
+        "strategy_type": "BULL_PUT_SPREAD",
+        "index": "NIFTY",
+        "legs_summary": "SELL 22200.0PE + BUY 22050.0PE",
+        "entry_premium": 302.0,
+        "current_premium": 302.0,
+        "unrealized_pnl": 604.0,
+        "status": "FORCE_EXITED",
+        "confluence_score": 61.0,
+        "net_greeks": {
+          "delta": 5.4893,
+          "gamma": -0.0068,
+          "theta": 80.5521,
+          "vega": -9753.7581
         }
       },
       {
         "strategy_type": "IRON_CONDOR",
-        "index": "NIFTY",
-        "legs_summary": "SELL 22650.0CE + SELL 22800.0PE + BUY 22550.0CE + BUY 22900.0PE",
-        "entry_premium": -12081.75,
-        "current_premium": -12081.75,
-        "unrealized_pnl": 0.0,
+        "index": "FINNIFTY",
+        "legs_summary": "SELL 22400.0CE + BUY 22500.0CE + SELL 21800.0PE + BUY 21700.0PE",
+        "entry_premium": 487.5,
+        "current_premium": 487.5,
+        "unrealized_pnl": 1462.5,
         "status": "FORCE_EXITED",
-        "confluence_score": 58.0,
+        "confluence_score": 57.32,
         "net_greeks": {
-          "delta": -0.9253,
-          "gamma": -0.0058,
-          "theta": 99.7387,
-          "vega": -8769.8156
+          "delta": -0.3715,
+          "gamma": -0.016,
+          "theta": 242.1507,
+          "vega": -22513.7801
         }
       }
     ],
-    "total_pnl": 0,
+    "total_pnl": 4849.75,
     "realized_loss": 0,
     "daily_loss_cap": 25000,
     "loss_cap_pct": 0.0,
     "net_greeks": {
-      "delta": -0.63,
-      "gamma": -0.02,
-      "theta": 392.86,
-      "vega": -36346.1
+      "delta": 4.25,
+      "gamma": -0.05,
+      "theta": 691.75,
+      "vega": -66451.08
     }
   },
   "history": {
@@ -72,24 +88,45 @@
         "strategies": 2,
         "winners": 0,
         "losers": 0
+      },
+      {
+        "date": "2026-04-28",
+        "pnl": 70456.5,
+        "strategies": 2,
+        "winners": 2,
+        "losers": 0
+      },
+      {
+        "date": "2026-04-29",
+        "pnl": 1953.45,
+        "strategies": 1,
+        "winners": 1,
+        "losers": 0
+      },
+      {
+        "date": "2026-05-01",
+        "pnl": 4849.75,
+        "strategies": 3,
+        "winners": 3,
+        "losers": 0
       }
     ],
-    "cumulative_pnl": 4725.7,
+    "cumulative_pnl": 81985.4,
     "win_rate": 100.0,
-    "total_days": 3,
-    "total_trades": 3,
-    "total_winners": 3,
+    "total_days": 6,
+    "total_trades": 9,
+    "total_winners": 9,
     "total_losers": 0,
     "strategy_breakdown": {
       "BULL_PUT_SPREAD": {
-        "count": 1,
+        "count": 2,
         "win_rate": 100.0,
-        "total_pnl": 778.5
+        "total_pnl": 1382.5
       },
       "IRON_CONDOR": {
-        "count": 9,
-        "win_rate": 11.1,
-        "total_pnl": 1468.2
+        "count": 14,
+        "win_rate": 42.9,
+        "total_pnl": 78123.9
       },
       "SHORT_STRANGLE": {
         "count": 1,

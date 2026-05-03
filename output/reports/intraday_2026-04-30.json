@@ -1,0 +1,76 @@
+{
+  "trade_date": "2026-04-30",
+  "mode": "DRY_RUN",
+  "broker_name": "dhan",
+  "generated_at": "2026-04-30T16:34:30.756509+05:30",
+  "trades": [
+    {
+      "tradingsymbol": "SYNGENE",
+      "symbol": "Syngene International Limited",
+      "entry_price": 432.0,
+      "exit_price": 432.0,
+      "target_price": 446.0,
+      "stop_loss_price": 423.0,
+      "quantity": 46,
+      "pnl": 0.0,
+      "status": "FORCE_EXITED",
+      "confidence_score": 7,
+      "strategy_type": "REVERSAL",
+      "rationale": "Strong reversal play in Pharma sector (+0.03%, one of only 3 green sectors). Stock gapped flat (-0.05%) at \u20b9431.95, rallied 8.4% intraday to \u20b9468.05, now pulling back. Entry near open gives good R:R. Volume 59M confirms institutional interest. Pharma showing defensive strength on bearish day."
+    },
+    {
+      "tradingsymbol": "MEESHO",
+      "symbol": "MEESHO Limited",
+      "entry_price": 173.5,
+      "exit_price": 173.5,
+      "target_price": 179.0,
+      "stop_loss_price": 170.0,
+      "quantity": 115,
+      "pnl": 0.0,
+      "status": "FORCE_EXITED",
+      "confidence_score": 6,
+      "strategy_type": "GAP",
+      "rationale": "Exceptional relative strength with +12.2% intraday move from open (\u20b9173.38 to \u20b9194.00) on massive volume of 150M. Small gap up (+0.41%) expanding aggressively. Entry near open price gives chase-free setup. Technology/E-commerce play benefiting from IT sector strength (+0.37%). Risk entry on pullback to opening range."
+    }
+  ],
+  "metrics": {
+    "total_pnl": 0,
+    "total_trades": 2,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "win_rate": 0.0,
+    "avg_profit": 0,
+    "avg_loss": 0,
+    "expectancy": 0.0,
+    "profit_factor": "inf"
+  },
+  "strategy_breakdown": {
+    "REVERSAL": {
+      "total_pnl": 0,
+      "total_trades": 1,
+      "winning_trades": 0,
+      "losing_trades": 0,
+      "win_rate": 0.0,
+      "avg_profit": 0,
+      "avg_loss": 0,
+      "expectancy": 0.0,
+      "profit_factor": "inf"
+    },
+    "GAP": {
+      "total_pnl": 0,
+      "total_trades": 1,
+      "winning_trades": 0,
+      "losing_trades": 0,
+      "win_rate": 0.0,
+      "avg_profit": 0,
+      "avg_loss": 0,
+      "expectancy": 0.0,
+      "profit_factor": "inf"
+    }
+  },
+  "cumulative": {
+    "total_pnl": -449.58,
+    "overall_win_rate": 0.0,
+    "max_drawdown": 0.0
+  }
+}

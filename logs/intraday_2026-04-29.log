@@ -1,0 +1,42 @@
+2026-04-29 07:05:55 [INFO] intraday: --force: skipping time-of-day check
+2026-04-29 07:05:55 [INFO] intraday: 🟢 [12:35:55] Phase: Configuration — START
+2026-04-29 07:05:55 [INFO] intraday: ✅ [12:35:55] Phase: Configuration — DONE
+2026-04-29 07:05:55 [INFO] intraday: 🟢 [12:35:55] Phase: Database — START
+2026-04-29 07:05:55 [INFO] intraday: ✅ [12:35:55] Phase: Database — DONE
+2026-04-29 07:05:55 [INFO] intraday: 🟢 [12:35:55] Phase: Broker Authentication — START
+2026-04-29 07:05:55 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-04-29 07:05:55 [INFO] intraday: ✅ [12:35:55] Phase: Broker Authentication — DONE
+2026-04-29 07:05:55 [INFO] intraday: 🟢 [12:35:55] Phase: Pre-Market Scan — START
+2026-04-29 07:05:55 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
+2026-04-29 07:05:55 [INFO] intraday.scanner: India VIX: 16.93 | 27 sectors fetched
+2026-04-29 07:05:55 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-04-29 07:05:55 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
+2026-04-29 07:06:00 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-04-29 07:06:00 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
+2026-04-29 07:06:00 [WARNING] intraday.scanner: No gainers data — continuing with other sources
+2026-04-29 07:06:00 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-04-29 07:06:00 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
+2026-04-29 07:06:05 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-04-29 07:06:05 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
+2026-04-29 07:06:05 [WARNING] intraday.scanner: No losers data — continuing with other sources
+2026-04-29 07:06:05 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
+2026-04-29 07:06:05 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
+2026-04-29 07:06:16 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
+2026-04-29 07:06:16 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
+2026-04-29 07:06:16 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 16.93
+2026-04-29 07:06:16 [INFO] intraday: ✅ [12:36:16] Phase: Pre-Market Scan — DONE
+2026-04-29 07:06:16 [INFO] intraday: 🟢 [12:36:16] Phase: Pre-Filter — START
+2026-04-29 07:06:16 [INFO] intraday.selector: Pre-filter: 20 → 9 candidates
+2026-04-29 07:06:16 [INFO] intraday: Pre-filter: 9 candidates passed
+2026-04-29 07:06:16 [INFO] intraday: ✅ [12:36:16] Phase: Pre-Filter — DONE
+2026-04-29 07:06:16 [INFO] intraday: 🟢 [12:36:16] Phase: LLM Trade Selection — START
+2026-04-29 07:06:16 [INFO] intraday: ❌ [12:36:16] Phase: LLM Trade Selection — FAIL
+2026-04-29 07:06:16 [ERROR] intraday: LLM selection failed: The config profile (vishal-admin) could not be found
+2026-04-29 07:06:16 [INFO] intraday: No trades to report
+
+╔══════════════════════════════════════════════════════════════╗
+║           🚀 INTRADAY AUTO-TRADER — Wealth Builder Pro      ║
+║           Mode: 🧪 DRY-RUN                                  ║
+║           Time: 2026-04-29 12:35 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+

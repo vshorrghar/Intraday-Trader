@@ -233,6 +233,44 @@ class DBManager:
                 close_price REAL NOT NULL,
                 log_return REAL NOT NULL DEFAULT 0
             )""",
+            # --- Swing trading tables ---
+            """CREATE TABLE IF NOT EXISTS swing_trades (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                symbol TEXT NOT NULL,
+                entry_price REAL NOT NULL,
+                entry_date TEXT NOT NULL,
+                target_price REAL NOT NULL,
+                stop_loss_price REAL NOT NULL,
+                current_price REAL DEFAULT 0,
+                quantity INTEGER NOT NULL,
+                status TEXT NOT NULL DEFAULT 'OPEN',
+                pnl REAL DEFAULT 0,
+                exit_price REAL DEFAULT 0,
+                exit_date TEXT DEFAULT '',
+                strategy_type TEXT DEFAULT '',
+                confidence_score INTEGER DEFAULT 0,
+                created_at TEXT NOT NULL
+            )""",
+            # --- Positional trading tables ---
+            """CREATE TABLE IF NOT EXISTS positional_trades (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                symbol TEXT NOT NULL,
+                entry_price REAL NOT NULL,
+                entry_date TEXT NOT NULL,
+                target_price REAL NOT NULL,
+                stop_loss_price REAL NOT NULL,
+                current_price REAL DEFAULT 0,
+                quantity INTEGER NOT NULL,
+                status TEXT NOT NULL DEFAULT 'OPEN',
+                pnl REAL DEFAULT 0,
+                exit_price REAL DEFAULT 0,
+                exit_date TEXT DEFAULT '',
+                strategy_type TEXT DEFAULT '',
+                confidence_score INTEGER DEFAULT 0,
+                sector TEXT DEFAULT '',
+                market_cap TEXT DEFAULT '',
+                created_at TEXT NOT NULL
+            )""",
         ]
         cursor = self.conn.cursor()
         for sql in statements:
@@ -819,6 +857,156 @@ class DBManager:
         except Exception:
             logger.error("Failed to query fno spot history", exc_info=True)
             return []
+
+    # ------------------------------------------------------------------
+    # Swing Trading
+    # ------------------------------------------------------------------
+
+    def insert_swing_trade(self, pos) -> int | None:
+        """Insert a swing trade position."""
+        try:
+            cursor = self.conn.execute(
+                """INSERT INTO swing_trades
+                   (symbol, entry_price, entry_date, target_price, stop_loss_price,
+                    quantity, status, strategy_type, confidence_score, created_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    pos.nse_symbol, pos.entry_price, pos.entry_date,
+                    pos.target_price, pos.stop_loss_price, pos.quantity,
+                    pos.status, pos.strategy_type, pos.confidence_score,
+                    self._ist_now(),
+                ),
+            )
+            self.conn.commit()
+            return cursor.lastrowid
+        except Exception:
+            logger.error("Failed to insert swing trade", exc_info=True)
+            return None
+
+    def get_swing_positions(self, status: str | None = None) -> list:
+        """Get swing positions, optionally filtered by status."""
+        from swing.models import SwingPosition
+        try:
+            if status:
+                rows = self.conn.execute(
+                    "SELECT * FROM swing_trades WHERE status = ? ORDER BY entry_date DESC", (status,)
+                ).fetchall()
+            else:
+                rows = self.conn.execute(
+                    "SELECT * FROM swing_trades ORDER BY entry_date DESC"
+                ).fetchall()
+
+            positions = []
+            for row in rows:
+                r = dict(row)
+                positions.append(SwingPosition(
+                    id=r.get("id", 0),
+                    nse_symbol=r.get("symbol", ""),
+                    entry_price=float(r.get("entry_price", 0)),
+                    entry_date=r.get("entry_date", ""),
+                    target_price=float(r.get("target_price", 0)),
+                    stop_loss_price=float(r.get("stop_loss_price", 0)),
+                    current_price=float(r.get("current_price", 0)),
+                    quantity=int(r.get("quantity", 0)),
+                    status=r.get("status", "OPEN"),
+                    pnl=float(r.get("pnl", 0)),
+                    exit_price=float(r.get("exit_price", 0)),
+                    exit_date=r.get("exit_date", ""),
+                    strategy_type=r.get("strategy_type", ""),
+                    confidence_score=int(r.get("confidence_score", 0)),
+                ))
+            return positions
+        except Exception:
+            logger.error("Failed to get swing positions", exc_info=True)
+            return []
+
+    def update_swing_trade(self, trade_id: int, **kwargs) -> None:
+        """Update a swing trade."""
+        if not kwargs:
+            return
+        sets = ", ".join(f"{k} = ?" for k in kwargs)
+        vals = list(kwargs.values()) + [trade_id]
+        try:
+            self.conn.execute(f"UPDATE swing_trades SET {sets} WHERE id = ?", vals)
+            self.conn.commit()
+        except Exception:
+            logger.error("Failed to update swing trade %d", trade_id, exc_info=True)
+
+    # ------------------------------------------------------------------
+    # Positional Trading
+    # ------------------------------------------------------------------
+
+    def insert_positional_trade(self, pos) -> int | None:
+        """Insert a positional trade position."""
+        try:
+            cursor = self.conn.execute(
+                """INSERT INTO positional_trades
+                   (symbol, entry_price, entry_date, target_price, stop_loss_price,
+                    quantity, status, strategy_type, confidence_score, sector, market_cap, created_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    pos.nse_symbol, pos.entry_price, pos.entry_date,
+                    pos.target_price, pos.stop_loss_price, pos.quantity,
+                    pos.status, pos.strategy_type, pos.confidence_score,
+                    pos.sector, pos.market_cap, self._ist_now(),
+                ),
+            )
+            self.conn.commit()
+            return cursor.lastrowid
+        except Exception:
+            logger.error("Failed to insert positional trade", exc_info=True)
+            return None
+
+    def get_positional_positions(self, status: str | None = None) -> list:
+        """Get positional positions, optionally filtered by status."""
+        from positional.models import PositionalPosition
+        try:
+            if status:
+                rows = self.conn.execute(
+                    "SELECT * FROM positional_trades WHERE status = ? ORDER BY entry_date DESC", (status,)
+                ).fetchall()
+            else:
+                rows = self.conn.execute(
+                    "SELECT * FROM positional_trades ORDER BY entry_date DESC"
+                ).fetchall()
+
+            positions = []
+            for row in rows:
+                r = dict(row)
+                positions.append(PositionalPosition(
+                    id=r.get("id", 0),
+                    nse_symbol=r.get("symbol", ""),
+                    entry_price=float(r.get("entry_price", 0)),
+                    entry_date=r.get("entry_date", ""),
+                    target_price=float(r.get("target_price", 0)),
+                    stop_loss_price=float(r.get("stop_loss_price", 0)),
+                    current_price=float(r.get("current_price", 0)),
+                    quantity=int(r.get("quantity", 0)),
+                    status=r.get("status", "OPEN"),
+                    pnl=float(r.get("pnl", 0)),
+                    exit_price=float(r.get("exit_price", 0)),
+                    exit_date=r.get("exit_date", ""),
+                    strategy_type=r.get("strategy_type", ""),
+                    confidence_score=int(r.get("confidence_score", 0)),
+                    sector=r.get("sector", ""),
+                    market_cap=r.get("market_cap", ""),
+                ))
+            return positions
+        except Exception:
+            logger.error("Failed to get positional positions", exc_info=True)
+            return []
+
+    def update_positional_trade(self, trade_id: int, **kwargs) -> None:
+        """Update a positional trade."""
+        if not kwargs:
+            return
+        sets = ", ".join(f"{k} = ?" for k in kwargs)
+        vals = list(kwargs.values()) + [trade_id]
+        try:
+            self.conn.execute(f"UPDATE positional_trades SET {sets} WHERE id = ?", vals)
+            self.conn.commit()
+        except Exception:
+            logger.error("Failed to update positional trade %d", trade_id, exc_info=True)
 
     def close(self) -> None:
         """Close the database connection."""

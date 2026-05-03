@@ -389,15 +389,8 @@ class FnO_Position_Monitor:
                 # Buyer profit = current_premium - entry_premium
                 realized_pnl = current_premium - entry_premium
 
-            # Multiply by lot size (approximate from legs)
-            try:
-                legs = json.loads(strat.get("legs_json", "[]"))
-                if legs:
-                    num_lots = legs[0].get("num_lots", 1)
-                    # Approximate lot multiplier
-                    realized_pnl *= num_lots
-            except Exception:
-                pass
+            # Cap at realistic bounds: max profit = entry premium, max loss = 3x entry
+            realized_pnl = max(-entry_premium * 3, min(realized_pnl, entry_premium))
 
         self.db.update_fno_strategy(
             strategy_id,

@@ -1,0 +1,85 @@
+{
+  "trade_date": "2026-04-29",
+  "mode": "PAPER",
+  "broker": "dhan",
+  "total_strategies": 1,
+  "winning_strategies": 1,
+  "losing_strategies": 0,
+  "win_rate": 100.0,
+  "total_pnl": 1953.45,
+  "cumulative_pnl": 77135.65,
+  "max_drawdown": 0.0,
+  "expectancy": 1953.45,
+  "avg_profit": 1953.45,
+  "avg_loss": 0,
+  "theta_decay_pnl": 434.35,
+  "strategy_metrics": {
+    "IRON_CONDOR": {
+      "count": 1,
+      "win_rate": 100.0,
+      "avg_profit": 1953.45,
+      "avg_loss": 0,
+      "profit_factor": "inf",
+      "total_pnl": 1953.45
+    }
+  },
+  "strategies": [
+    {
+      "id": 36,
+      "strategy_type": "IRON_CONDOR",
+      "index_name": "BANKNIFTY",
+      "legs_json": "[{\"strike\": 49700.0, \"option_type\": \"CE\", \"transaction_type\": \"SELL\", \"num_lots\": 3, \"entry_price\": 235.3}, {\"strike\": 50100.0, \"option_type\": \"CE\", \"transaction_type\": \"BUY\", \"num_lots\": 3, \"entry_price\": 228.05}, {\"strike\": 49100.0, \"option_type\": \"PE\", \"transaction_type\": \"SELL\", \"num_lots\": 3, \"entry_price\": 236.25}, {\"strike\": 48700.0, \"option_type\": \"PE\", \"transaction_type\": \"BUY\", \"num_lots\": 3, \"entry_price\": 229.03}]",
+      "net_premium": 651.15,
+      "max_profit": 651.15,
+      "max_loss": 17348.85,
+      "status": "FORCE_EXITED",
+      "entry_time": "2026-04-29T09:21:01.459331+05:30",
+      "exit_time": "2026-04-29T15:15:12.705882+05:30",
+      "realized_pnl": 1953.45,
+      "confidence_score": 7,
+      "confluence_score": 55.32
+    }
+  ],
+  "trades": [
+    {
+      "id": 123,
+      "tradingsymbol": "PAPER_BANKNIFTY_49700.0_CE",
+      "action": "SELL",
+      "quantity": 45,
+      "entry_price": 235.3,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 124,
+      "tradingsymbol": "PAPER_BANKNIFTY_50100.0_CE",
+      "action": "BUY",
+      "quantity": 45,
+      "entry_price": 228.05,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 125,
+      "tradingsymbol": "PAPER_BANKNIFTY_49100.0_PE",
+      "action": "SELL",
+      "quantity": 45,
+      "entry_price": 236.25,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 126,
+      "tradingsymbol": "PAPER_BANKNIFTY_48700.0_PE",
+      "action": "BUY",
+      "quantity": 45,
+      "entry_price": 229.03,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    }
+  ]
+}

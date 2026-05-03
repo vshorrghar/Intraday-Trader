@@ -1,0 +1,183 @@
+{
+  "trade_date": "2026-05-01",
+  "mode": "PAPER",
+  "broker": "dhan",
+  "total_strategies": 3,
+  "winning_strategies": 3,
+  "losing_strategies": 0,
+  "win_rate": 100.0,
+  "total_pnl": 4849.75,
+  "cumulative_pnl": 81985.4,
+  "max_drawdown": 0.0,
+  "expectancy": 1616.58,
+  "avg_profit": 1616.58,
+  "avg_loss": 0,
+  "theta_decay_pnl": 691.75,
+  "strategy_metrics": {
+    "IRON_CONDOR": {
+      "count": 2,
+      "win_rate": 100.0,
+      "avg_profit": 2122.88,
+      "avg_loss": 0,
+      "profit_factor": "inf",
+      "total_pnl": 4245.75
+    },
+    "BULL_PUT_SPREAD": {
+      "count": 1,
+      "win_rate": 100.0,
+      "avg_profit": 604.0,
+      "avg_loss": 0,
+      "profit_factor": "inf",
+      "total_pnl": 604.0
+    }
+  },
+  "strategies": [
+    {
+      "id": 37,
+      "strategy_type": "IRON_CONDOR",
+      "index_name": "NIFTY",
+      "legs_json": "[{\"strike\": 22650.0, \"option_type\": \"CE\", \"transaction_type\": \"SELL\", \"num_lots\": 3, \"entry_price\": 231.38}, {\"strike\": 22800.0, \"option_type\": \"CE\", \"transaction_type\": \"BUY\", \"num_lots\": 3, \"entry_price\": 225.2}, {\"strike\": 22050.0, \"option_type\": \"PE\", \"transaction_type\": \"SELL\", \"num_lots\": 3, \"entry_price\": 230.75}, {\"strike\": 21900.0, \"option_type\": \"PE\", \"transaction_type\": \"BUY\", \"num_lots\": 3, \"entry_price\": 224.56}]",
+      "net_premium": 927.75,
+      "max_profit": 927.75,
+      "max_loss": 10322.25,
+      "status": "FORCE_EXITED",
+      "entry_time": "2026-05-01T09:20:58.821753+05:30",
+      "exit_time": "2026-05-01T15:15:15.559958+05:30",
+      "realized_pnl": 2783.25,
+      "confidence_score": 8,
+      "confluence_score": 61.0
+    },
+    {
+      "id": 38,
+      "strategy_type": "BULL_PUT_SPREAD",
+      "index_name": "NIFTY",
+      "legs_json": "[{\"strike\": 22200.0, \"option_type\": \"PE\", \"transaction_type\": \"SELL\", \"num_lots\": 2, \"entry_price\": 236.79}, {\"strike\": 22050.0, \"option_type\": \"PE\", \"transaction_type\": \"BUY\", \"num_lots\": 2, \"entry_price\": 230.75}]",
+      "net_premium": 302.0,
+      "max_profit": 302.0,
+      "max_loss": 7198.0,
+      "status": "FORCE_EXITED",
+      "entry_time": "2026-05-01T09:20:58.843938+05:30",
+      "exit_time": "2026-05-01T15:15:15.559958+05:30",
+      "realized_pnl": 604.0,
+      "confidence_score": 7,
+      "confluence_score": 61.0
+    },
+    {
+      "id": 39,
+      "strategy_type": "IRON_CONDOR",
+      "index_name": "FINNIFTY",
+      "legs_json": "[{\"strike\": 22400.0, \"option_type\": \"CE\", \"transaction_type\": \"SELL\", \"num_lots\": 3, \"entry_price\": 192.59}, {\"strike\": 22500.0, \"option_type\": \"CE\", \"transaction_type\": \"BUY\", \"num_lots\": 3, \"entry_price\": 189.34}, {\"strike\": 21800.0, \"option_type\": \"PE\", \"transaction_type\": \"SELL\", \"num_lots\": 3, \"entry_price\": 192.89}, {\"strike\": 21700.0, \"option_type\": \"PE\", \"transaction_type\": \"BUY\", \"num_lots\": 3, \"entry_price\": 189.64}]",
+      "net_premium": 487.5,
+      "max_profit": 487.5,
+      "max_loss": 7012.5,
+      "status": "FORCE_EXITED",
+      "entry_time": "2026-05-01T09:20:58.890575+05:30",
+      "exit_time": "2026-05-01T15:15:15.559958+05:30",
+      "realized_pnl": 1462.5,
+      "confidence_score": 7,
+      "confluence_score": 57.32
+    }
+  ],
+  "trades": [
+    {
+      "id": 127,
+      "tradingsymbol": "PAPER_NIFTY_22650.0_CE",
+      "action": "SELL",
+      "quantity": 75,
+      "entry_price": 231.38,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 128,
+      "tradingsymbol": "PAPER_NIFTY_22800.0_CE",
+      "action": "BUY",
+      "quantity": 75,
+      "entry_price": 225.2,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 129,
+      "tradingsymbol": "PAPER_NIFTY_22050.0_PE",
+      "action": "SELL",
+      "quantity": 75,
+      "entry_price": 230.75,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 130,
+      "tradingsymbol": "PAPER_NIFTY_21900.0_PE",
+      "action": "BUY",
+      "quantity": 75,
+      "entry_price": 224.56,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 131,
+      "tradingsymbol": "PAPER_NIFTY_22200.0_PE",
+      "action": "SELL",
+      "quantity": 50,
+      "entry_price": 236.79,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 132,
+      "tradingsymbol": "PAPER_NIFTY_22050.0_PE",
+      "action": "BUY",
+      "quantity": 50,
+      "entry_price": 230.75,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 133,
+      "tradingsymbol": "PAPER_FINNIFTY_22400.0_CE",
+      "action": "SELL",
+      "quantity": 75,
+      "entry_price": 192.59,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 134,
+      "tradingsymbol": "PAPER_FINNIFTY_22500.0_CE",
+      "action": "BUY",
+      "quantity": 75,
+      "entry_price": 189.34,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 135,
+      "tradingsymbol": "PAPER_FINNIFTY_21800.0_PE",
+      "action": "SELL",
+      "quantity": 75,
+      "entry_price": 192.89,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    },
+    {
+      "id": 136,
+      "tradingsymbol": "PAPER_FINNIFTY_21700.0_PE",
+      "action": "BUY",
+      "quantity": 75,
+      "entry_price": 189.64,
+      "exit_price": null,
+      "pnl": null,
+      "status": "OPEN"
+    }
+  ]
+}

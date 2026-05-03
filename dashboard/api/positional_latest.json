@@ -1,0 +1,15 @@
+{
+  "updated_at": "2026-04-30T19:44:22.110997+05:30",
+  "mode": "DRY_RUN",
+  "capital": 25000,
+  "open_positions": [],
+  "closed_positions": [],
+  "summary": {
+    "total_open": 0,
+    "total_closed": 0,
+    "realized_pnl": 0,
+    "unrealized_pnl": 0,
+    "total_pnl": 0,
+    "win_rate": 0
+  }
+}

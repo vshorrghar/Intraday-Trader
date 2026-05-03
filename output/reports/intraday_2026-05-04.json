@@ -1,0 +1,51 @@
+{
+  "trade_date": "2026-05-04",
+  "mode": "DRY_RUN",
+  "broker_name": "dhan",
+  "generated_at": "2026-05-04T02:37:34.491712+05:30",
+  "trades": [
+    {
+      "tradingsymbol": "SYNGENE",
+      "symbol": "Syngene International Ltd",
+      "entry_price": 433.0,
+      "exit_price": 438.21,
+      "target_price": 450.0,
+      "stop_loss_price": 438.5,
+      "quantity": 42,
+      "pnl": 218.82,
+      "status": "STOPPED_OUT",
+      "confidence_score": 7,
+      "strategy_type": "REVERSAL",
+      "rationale": "Exceptional relative strength \u2014 Pharma sector is one of only 3 green sectors (+0.03%). Stock exploded from open \u20b9431.95 to high \u20b9518.55, now consolidating at \u20b9468. Huge volume 59M. Entry near open on pullback. Pharma is defensive on red days. R:R = 2.0:1."
+    }
+  ],
+  "metrics": {
+    "total_pnl": 218.82,
+    "total_trades": 1,
+    "winning_trades": 1,
+    "losing_trades": 0,
+    "win_rate": 100.0,
+    "avg_profit": 218.82,
+    "avg_loss": 0,
+    "expectancy": 218.82,
+    "profit_factor": "inf"
+  },
+  "strategy_breakdown": {
+    "REVERSAL": {
+      "total_pnl": 218.82,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "win_rate": 100.0,
+      "avg_profit": 218.82,
+      "avg_loss": 0,
+      "expectancy": 218.82,
+      "profit_factor": "inf"
+    }
+  },
+  "cumulative": {
+    "total_pnl": 5564.86,
+    "overall_win_rate": 100.0,
+    "max_drawdown": 0.0
+  }
+}

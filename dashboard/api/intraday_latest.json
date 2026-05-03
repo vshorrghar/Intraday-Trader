@@ -1,89 +1,44 @@
 {
-  "updated_at": "2026-04-27T14:10:00+05:30",
+  "updated_at": "2026-05-01T09:27:44.905150+05:30",
   "mode": "DRY_RUN",
   "broker": "dhan",
-  "session_active": true,
+  "session_active": false,
   "today": {
     "trades": [
       {
-        "tradingsymbol": "HFCL",
-        "entry_price": 102.00,
-        "current_price": 105.80,
-        "target_price": 106.08,
-        "stop_loss_price": 103.90,
-        "quantity": 63,
-        "pnl": 153.72,
-        "status": "PARTIAL_BOOKED",
+        "tradingsymbol": "SYNGENE",
+        "entry_price": 432.0,
+        "current_price": 468.05,
+        "target_price": 446.88,
+        "stop_loss_price": 423.36,
+        "quantity": 46,
+        "pnl": 1658.3,
+        "status": "CLOSED",
+        "strategy_type": "REVERSAL",
+        "confidence_score": 7
+      },
+      {
+        "tradingsymbol": "MEESHO",
+        "entry_price": 173.5,
+        "current_price": 194.0,
+        "target_price": 179.42,
+        "stop_loss_price": 169.83,
+        "quantity": 115,
+        "pnl": 2357.5,
+        "status": "CLOSED",
         "strategy_type": "GAP",
-        "confidence_score": 8,
-        "partial_booked_pnl": 153.72
-      },
-      {
-        "tradingsymbol": "NMDC",
-        "entry_price": 90.25,
-        "current_price": 90.90,
-        "target_price": 93.66,
-        "stop_loss_price": 90.58,
-        "quantity": 119,
-        "pnl": 77.35,
-        "status": "OPEN",
-        "strategy_type": "MOMENTUM",
-        "confidence_score": 8
-      },
-      {
-        "tradingsymbol": "SAIL",
-        "entry_price": 180.00,
-        "current_price": 184.36,
-        "target_price": 186.60,
-        "stop_loss_price": 182.18,
-        "quantity": 32,
-        "pnl": 88.00,
-        "status": "PARTIAL_BOOKED",
-        "strategy_type": "VWAP",
-        "confidence_score": 7,
-        "partial_booked_pnl": 88.00
-      },
-      {
-        "tradingsymbol": "ADANIPOWER",
-        "entry_price": 215.00,
-        "current_price": 219.20,
-        "target_price": 223.25,
-        "stop_loss_price": 217.10,
-        "quantity": 26,
-        "pnl": 71.40,
-        "status": "PARTIAL_BOOKED",
-        "strategy_type": "GAP",
-        "confidence_score": 7,
-        "partial_booked_pnl": 71.40
-      },
-      {
-        "tradingsymbol": "SUZLON",
-        "entry_price": 54.50,
-        "current_price": 55.85,
-        "target_price": 56.59,
-        "stop_loss_price": 55.27,
-        "quantity": 104,
-        "pnl": 93.15,
-        "status": "PARTIAL_BOOKED",
-        "strategy_type": "ORB",
-        "confidence_score": 7,
-        "partial_booked_pnl": 93.15
+        "confidence_score": 6
       }
     ],
-    "total_pnl": 483.62,
+    "total_pnl": 4015.8,
     "realized_loss": 0,
     "daily_loss_cap": 5000,
-    "loss_cap_pct": 0
+    "loss_cap_pct": 0.0
   },
   "history": {
-    "daily_pnl": [
-      {"date": "2026-04-17", "pnl": -802},
-      {"date": "2026-04-21", "pnl": 1699},
-      {"date": "2026-04-23", "pnl": 3006.0},
-      {"date": "2026-04-27", "pnl": 483.62}
-    ],
-    "cumulative_pnl": 4386.62,
-    "win_rate": 100.0,
-    "total_days": 4
+    "daily_pnl": [],
+    "cumulative_pnl": 3566.22,
+    "win_rate": 0,
+    "total_days": 0
   }
 }

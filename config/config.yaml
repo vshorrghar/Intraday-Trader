@@ -6,7 +6,7 @@ aws:
   s3_bucket: wealth-builder-pro-reports
   ses_sender: "vshorrghar@gmail.com"
   ses_recipient: "vshorrghar@gmail.com"
-  bedrock_model_id: "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
+  bedrock_model_id: "us.anthropic.claude-opus-4-7"
   bedrock_region: us-east-1
 
 portfolio:
@@ -50,8 +50,8 @@ dhan:
 
 intraday:
   broker: "dhan"
-  daily_capital_limit: 50000          # ₹50K — 5x more capital deployed
-  per_trade_max_capital: 20000        # ₹20K per trade — bigger positions
+  daily_capital_limit: 100000         # ₹1L for intraday
+  per_trade_max_capital: 30000        # ₹30K per trade
   max_trades_per_day: 5               # 5 trades — more shots on goal
   price_range_min: 50
   price_range_max: 3000               # Allow higher-priced stocks (HDFC, Reliance etc)
@@ -69,9 +69,9 @@ intraday:
 fno:
   broker: "dhan"
   mode: "paper"                     # "paper" or "live"
-  paper_capital: 1000000             # ₹10L virtual capital
-  daily_capital_limit: 1000000
-  per_trade_max_capital: 500000      # ₹5L per trade — go big
+  paper_capital: 100000              # ₹1L for FnO
+  daily_capital_limit: 100000
+  per_trade_max_capital: 30000       # ₹30K per trade
   max_positions: 8                   # 8 positions — diversified aggression
   allowed_indices:
     - "NIFTY"
@@ -85,6 +85,8 @@ fno:
     - "BEAR_PUT_SPREAD"
     - "NAKED_CE"
     - "NAKED_PE"
+    - "CALENDAR_SPREAD"
+    - "ZERO_DTE_SCALP"
   max_lots_per_trade: 5              # 5 lots — max aggression
   force_exit_time: "15:15"
   entry_delay_minutes: 5             # Enter faster
@@ -111,3 +113,34 @@ analysis:
   max_intraday_setups: 5
   tax_harvest_short_term_months_stocks: 12
   tax_harvest_short_term_months_debt_mf: 36
+
+
+swing:
+  broker: "dhan"
+  daily_capital_limit: 25000          # ₹25K for swing
+  per_trade_max_capital: 10000        # ₹10K per stock
+  max_open_positions: 5
+  min_confidence_score: 6
+  max_hold_days: 15
+  target_pct: 8.0
+  stop_loss_pct: 4.0
+  trailing_sl_trigger_pct: 5.0
+  price_range_min: 50
+  price_range_max: 5000
+  scan_time: "15:30"
+  monitor_time: "09:30"
+
+positional:
+  broker: "dhan"
+  total_capital: 25000                # ₹25K for positional
+  per_stock_max: 10000                # ₹10K per stock
+  max_positions: 5
+  min_confidence_score: 7
+  max_hold_weeks: 12
+  target_pct: 20.0
+  stop_loss_pct: 8.0
+  trailing_sl_trigger_pct: 12.0
+  price_range_min: 100
+  price_range_max: 5000
+  rebalance_day: "Friday"
+  scan_frequency: "weekly"

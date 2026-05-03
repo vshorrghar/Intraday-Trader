@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚡ Intraday Auto-Trader</title>
+<title>⚡ Trading Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#f4f6f9; color:#333; }
@@ -42,11 +42,13 @@ td { padding:8px; border-bottom:1px solid #e8e8f0; }
 </style>
 </head>
 <body>
-<div class="header"><h1>⚡ Intraday Auto-Trader</h1><div class="date" id="header-date">Loading...</div>
+<div class="header"><h1>⚡ Trading Dashboard</h1><div class="date" id="header-date">Loading...</div>
 <div class="tabs" style="margin-top:10px;">
-<button class="tab-btn" onclick="showTab('portfolio')">Portfolio</button>
-<button class="tab-btn active" onclick="showTab('intraday')">⚡ Intraday Live</button>
-<button class="tab-btn" onclick="showTab('fno')">🎯 F&O Live</button>
+<button class="tab-btn" onclick="showTab('overview')">📊 Overview</button>
+<button class="tab-btn active" onclick="showTab('intraday')">⚡ Intraday</button>
+<button class="tab-btn" onclick="showTab('fno')">🎯 F&O</button>
+<button class="tab-btn" onclick="showTab('swing')">📈 Swing</button>
+<button class="tab-btn" onclick="showTab('positional')">🏦 Positional</button>
 </div>
 </div>
 <div class="container" id="tab-portfolio" style="display:none;">
@@ -132,6 +134,40 @@ td { padding:8px; border-bottom:1px solid #e8e8f0; }
             <span class="positive">+7208 Cr</span></div></div>
 </div>
 <div class="footer" id="portfolio-footer">Wealth Builder Pro · Updated 2026-04-06 17:50 IST</div>
+
+<!-- ===== OVERVIEW TAB ===== -->
+<div class="container" id="tab-overview" style="display:none;">
+<div class="card"><h2>📊 Overall Performance — All Modules</h2>
+<div class="summary-grid">
+<div class="summary-item"><div class="label">Grand Total P&L</div><div class="value" id="ov-grand">₹0</div></div>
+<div class="summary-item"><div class="label">Intraday P&L</div><div class="value" id="ov-intra">₹0</div></div>
+<div class="summary-item"><div class="label">F&O P&L</div><div class="value" id="ov-fno">₹0</div></div>
+<div class="summary-item"><div class="label">Trading Days</div><div class="value" id="ov-days">0</div></div>
+</div>
+</div>
+
+<div class="card"><h2>📈 Cumulative P&L (Day by Day)</h2>
+<canvas id="ovCumChart" height="250"></canvas>
+</div>
+
+<div class="card"><h2>📊 Daily P&L (Profit / Loss per Day)</h2>
+<canvas id="ovDailyChart" height="250"></canvas>
+</div>
+
+<div class="card"><h2>🎯 Module Breakdown</h2>
+<table id="ov-breakdown">
+<tr><th>Module</th><th>Days</th><th>Total P&L</th><th>Winners</th><th>Losers</th><th>Win Rate</th></tr>
+<tr><td colspan="6" class="neutral">Loading...</td></tr>
+</table>
+</div>
+
+<div class="card"><h2>📅 Daily Log</h2>
+<table id="ov-daily-log">
+<tr><th>Date</th><th>Intraday</th><th>F&O</th><th>Total</th></tr>
+<tr><td colspan="4" class="neutral">Loading...</td></tr>
+</table>
+</div>
+</div>
 
 <!-- ===== INTRADAY LIVE TAB ===== -->
 <div class="container" id="tab-intraday">
@@ -226,17 +262,109 @@ td { padding:8px; border-bottom:1px solid #e8e8f0; }
 </div>
 
 <div class="footer">Wealth Builder Pro · Auto-refreshes during market hours</div>
+
+<!-- ===== SWING TAB ===== -->
+<div class="container" id="tab-swing" style="display:none;">
+<div class="card"><h2>📈 Swing Trading (Hold 2-15 days)</h2>
+<div class="summary-grid">
+<div class="summary-item"><div class="label">Capital</div><div class="value">₹25,000</div></div>
+<div class="summary-item"><div class="label">Open Positions</div><div class="value" id="swing-open">0</div></div>
+<div class="summary-item"><div class="label">Unrealized P&L</div><div class="value" id="swing-unrealized">₹0</div></div>
+<div class="summary-item"><div class="label">Realized P&L</div><div class="value" id="swing-realized">₹0</div></div>
+</div>
+</div>
+
+<div class="card"><h2>📋 How Swing Trading Works</h2>
+<p style="font-size:13px;color:#555;margin:0 0 10px;">Scans daily after 3:30 PM IST. Monitors every morning at 9:35 AM. Target: 8% | Stop Loss: 4% | R:R = 2:1</p>
+<table style="font-size:12px;">
+<tr><th>Strategy</th><th>What It Means</th><th>Example</th></tr>
+<tr><td><b>BREAKOUT</b></td><td>Stock crosses above resistance with volume</td><td>TATA MOTORS breaks ₹1,000 after 2-week consolidation</td></tr>
+<tr><td><b>PULLBACK</b></td><td>Strong stock dips 3-5% to support, then bounces</td><td>HDFC BANK falls to ₹1,720, bounces off 20-day MA</td></tr>
+<tr><td><b>REVERSAL</b></td><td>Beaten-down stock shows first recovery signs</td><td>INFOSYS drops 15%, forms bullish engulfing candle</td></tr>
+<tr><td><b>MOMENTUM</b></td><td>Stock in strong uptrend, riding sector tailwind</td><td>NMDC rising with metal sector rally</td></tr>
+</table>
+<p style="font-size:12px;color:#888;margin:10px 0 0;">Stocks: ₹50-5,000 range | Max 5 positions × ₹10K each | Trailing SL after 5% gain | Max hold: 15 days</p>
+</div>
+
+<div class="card"><h2>Open Positions</h2>
+<table id="swing-table">
+<tr><th>Symbol</th><th>Entry</th><th>Current</th><th>Target</th><th>SL</th><th>Qty</th><th>Days</th><th>P&L</th><th>Status</th></tr>
+<tr><td colspan="9" class="neutral">No swing positions yet — first scan runs after 3:30 PM IST</td></tr>
+</table>
+</div>
+<div class="card"><h2>Closed Trades</h2>
+<table id="swing-closed-table">
+<tr><th>Symbol</th><th>Entry</th><th>Exit</th><th>Days Held</th><th>P&L</th><th>Strategy</th></tr>
+<tr><td colspan="6" class="neutral">No closed trades yet</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ===== POSITIONAL TAB ===== -->
+<div class="container" id="tab-positional" style="display:none;">
+<div class="card"><h2>🏦 Positional Trading (Hold 4-12 weeks)</h2>
+<div class="summary-grid">
+<div class="summary-item"><div class="label">Capital</div><div class="value">₹25,000</div></div>
+<div class="summary-item"><div class="label">Open Positions</div><div class="value" id="pos-open">0</div></div>
+<div class="summary-item"><div class="label">Unrealized P&L</div><div class="value" id="pos-unrealized">₹0</div></div>
+<div class="summary-item"><div class="label">Realized P&L</div><div class="value" id="pos-realized">₹0</div></div>
+</div>
+</div>
+
+<div class="card"><h2>📋 How Positional Trading Works</h2>
+<p style="font-size:13px;color:#555;margin:0 0 10px;">Scans weekly on Friday after 3:30 PM IST. Reviews positions every Friday. Target: 20% | Stop Loss: 8% | R:R = 2.5:1</p>
+<table style="font-size:12px;">
+<tr><th>Strategy</th><th>What It Means</th><th>Example</th></tr>
+<tr><td><b>GROWTH</b></td><td>High growth company at reasonable valuation</td><td>PERSISTENT SYSTEMS — 30% revenue growth, PE 45</td></tr>
+<tr><td><b>VALUE</b></td><td>Undervalued stock with upcoming catalyst</td><td>COAL INDIA — PE 8, 6% dividend yield, disinvestment catalyst</td></tr>
+<tr><td><b>MOMENTUM</b></td><td>Multi-month uptrend with sector support</td><td>TRENT — retail sector booming, new highs monthly</td></tr>
+<tr><td><b>SECTOR_ROTATION</b></td><td>Money flowing into a new sector (FII/DII shift)</td><td>PHARMA stocks when FII rotates from IT to healthcare</td></tr>
+<tr><td><b>EARNINGS</b></td><td>Strong quarterly results expected</td><td>BAJAJ FINANCE — 25% profit growth, consolidating before results</td></tr>
+</table>
+<p style="font-size:12px;color:#888;margin:10px 0 0;">Stocks: ₹100-5,000 | Large/Mid cap preferred | Max 5 positions × ₹10K | Trailing SL after 12% gain | Max hold: 12 weeks</p>
+</div>
+
+<div class="card"><h2>Open Positions</h2>
+<table id="pos-table">
+<tr><th>Symbol</th><th>Entry</th><th>Current</th><th>Target</th><th>SL</th><th>Qty</th><th>Weeks</th><th>P&L</th><th>Sector</th></tr>
+<tr><td colspan="9" class="neutral">No positional trades yet — first scan runs Friday after 3:30 PM IST</td></tr>
+</table>
+</div>
+<div class="card"><h2>Closed Trades</h2>
+<table id="pos-closed-table">
+<tr><th>Symbol</th><th>Entry</th><th>Exit</th><th>Weeks Held</th><th>P&L</th><th>Strategy</th></tr>
+<tr><td colspan="6" class="neutral">No closed trades yet</td></tr>
+</table>
+</div>
+
+<div class="card"><h2>📊 Swing vs Positional Comparison</h2>
+<table style="font-size:12px;">
+<tr><th></th><th>Swing</th><th>Positional</th></tr>
+<tr><td><b>Hold time</b></td><td>2-15 days</td><td>4-12 weeks</td></tr>
+<tr><td><b>Target</b></td><td>8%</td><td>20%</td></tr>
+<tr><td><b>Stop loss</b></td><td>4%</td><td>8%</td></tr>
+<tr><td><b>Scan</b></td><td>Daily after close</td><td>Weekly (Friday)</td></tr>
+<tr><td><b>Focus</b></td><td>Technical setups</td><td>Fundamentals + technicals</td></tr>
+<tr><td><b>Stock type</b></td><td>Any with momentum</td><td>Large/mid cap quality</td></tr>
+</table>
+</div>
+</div>
 <script>
 // Tab switching
 function showTab(tab) {
-  document.getElementById('tab-portfolio').style.display = tab === 'portfolio' ? 'block' : 'none';
-  document.getElementById('tab-intraday').style.display = tab === 'intraday' ? 'block' : 'none';
-  document.getElementById('tab-fno').style.display = tab === 'fno' ? 'block' : 'none';
-  document.getElementById('portfolio-footer').style.display = tab === 'portfolio' ? 'block' : 'none';
+  ['overview','portfolio','intraday','fno','swing','positional'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === tab ? 'block' : 'none';
+  });
+  const pf = document.getElementById('portfolio-footer');
+  if (pf) pf.style.display = 'none';
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
+  if (tab === 'overview') loadOverviewData();
   if (tab === 'intraday') loadIntradayData();
   if (tab === 'fno') loadFnoData();
+  if (tab === 'swing') loadSwingData();
+  if (tab === 'positional') loadPositionalData();
 }
 
 // Intraday data loader
@@ -324,12 +452,18 @@ function loadFnoData() {
     document.getElementById('fno-theta').textContent = (ng.theta || 0).toFixed(1);
     document.getElementById('fno-vega').textContent = (ng.vega || 0).toFixed(1);
 
-    // Color Greeks
-    ['fno-delta','fno-gamma','fno-theta','fno-vega'].forEach(id => {
-      const el = document.getElementById(id);
-      const v = parseFloat(el.textContent);
-      el.className = 'value ' + (v > 0 ? 'positive' : v < 0 ? 'negative' : 'neutral');
-    });
+    // Color Greeks — for option sellers: positive theta = good, negative vega = good
+    const deltaEl = document.getElementById('fno-delta');
+    const gammaEl = document.getElementById('fno-gamma');
+    const thetaEl = document.getElementById('fno-theta');
+    const vegaEl = document.getElementById('fno-vega');
+    const dv = parseFloat(deltaEl.textContent);
+    deltaEl.className = 'value ' + (Math.abs(dv) < 5 ? 'positive' : 'negative');
+    gammaEl.className = 'value neutral';
+    const tv = parseFloat(thetaEl.textContent);
+    thetaEl.className = 'value ' + (tv > 0 ? 'positive' : 'negative');
+    const vv = parseFloat(vegaEl.textContent);
+    vegaEl.className = 'value ' + (vv <= 0 ? 'positive' : 'negative');
 
     // Loss tracker bar
     const pct = Math.min(today.loss_cap_pct || 0, 100);
@@ -452,5 +586,233 @@ setInterval(() => {
     if (document.getElementById('tab-fno').style.display !== 'none') loadFnoData();
   }
 }, 60000);
+
+// ===== SWING DATA LOADER =====
+function loadSwingData() {
+  fetch('api/swing_latest.json').then(r => r.json()).then(d => {
+    const open = (d.open_positions || []);
+    const closed = (d.closed_positions || []);
+
+    // Fix: treat 0 current_price as entry_price (no live data yet)
+    open.forEach(p => { if (!p.current_price || p.current_price <= 0) p.current_price = p.entry_price; });
+
+    const unrealized = open.reduce((a,p) => a + ((p.current_price - p.entry_price) * p.quantity || 0), 0);
+    const realized = closed.reduce((a,p) => a + (p.pnl || 0), 0);
+
+    document.getElementById('swing-open').textContent = open.length;
+    const uel = document.getElementById('swing-unrealized');
+    uel.textContent = '₹' + unrealized.toFixed(0);
+    uel.className = 'value ' + (unrealized >= 0 ? 'positive' : 'negative');
+    const rel = document.getElementById('swing-realized');
+    rel.textContent = '₹' + realized.toFixed(0);
+    rel.className = 'value ' + (realized >= 0 ? 'positive' : 'negative');
+
+    // Open positions table
+    const table = document.getElementById('swing-table');
+    let html = '<tr><th>Symbol</th><th>Entry</th><th>Current</th><th>Target</th><th>SL</th><th>Qty</th><th>Days</th><th>P&L</th><th>Status</th></tr>';
+    if (open.length === 0) {
+      html += '<tr><td colspan="9" class="neutral">No open swing positions</td></tr>';
+    } else {
+      open.forEach(p => {
+        const pnl = (p.current_price - p.entry_price) * p.quantity;
+        const cls = pnl >= 0 ? 'positive' : 'negative';
+        html += '<tr><td><b>' + p.symbol + '</b></td><td>₹' + p.entry_price.toFixed(2) + '</td>'
+          + '<td>₹' + (p.current_price||0).toFixed(2) + '</td><td>₹' + p.target_price.toFixed(2) + '</td>'
+          + '<td>₹' + p.stop_loss_price.toFixed(2) + '</td><td>' + p.quantity + '</td>'
+          + '<td>' + (p.days_held||0) + '</td><td class="' + cls + '">₹' + pnl.toFixed(0) + '</td>'
+          + '<td>' + p.status + '</td></tr>';
+      });
+    }
+    table.innerHTML = html;
+
+    // Closed trades table
+    const cTable = document.getElementById('swing-closed-table');
+    let cHtml = '<tr><th>Symbol</th><th>Entry</th><th>Exit</th><th>Days Held</th><th>P&L</th><th>Strategy</th></tr>';
+    if (closed.length === 0) {
+      cHtml += '<tr><td colspan="6" class="neutral">No closed trades yet</td></tr>';
+    } else {
+      closed.forEach(p => {
+        const cls = (p.pnl||0) >= 0 ? 'positive' : 'negative';
+        cHtml += '<tr><td><b>' + p.symbol + '</b></td><td>₹' + p.entry_price.toFixed(2) + '</td>'
+          + '<td>₹' + (p.exit_price||0).toFixed(2) + '</td><td>' + (p.days_held||0) + '</td>'
+          + '<td class="' + cls + '">₹' + (p.pnl||0).toFixed(0) + '</td>'
+          + '<td>' + (p.strategy_type||'') + '</td></tr>';
+      });
+    }
+    cTable.innerHTML = cHtml;
+  }).catch(e => console.log('No swing data yet'));
+}
+
+// ===== OVERVIEW DATA LOADER =====
+let ovCumChart = null, ovDailyChart = null;
+function loadOverviewData() {
+  fetch('api/history.json').then(r => r.json()).then(d => {
+    const intra = d.intraday || {};
+    const fno = d.fno || {};
+    const grand = d.grand_total || 0;
+
+    // Summary cards
+    const grandEl = document.getElementById('ov-grand');
+    grandEl.textContent = '₹' + grand.toLocaleString('en-IN', {minimumFractionDigits:0});
+    grandEl.className = 'value ' + (grand >= 0 ? 'positive' : 'negative');
+
+    const intraEl = document.getElementById('ov-intra');
+    intraEl.textContent = '₹' + (intra.cumulative_pnl||0).toLocaleString('en-IN', {minimumFractionDigits:0});
+    intraEl.className = 'value ' + ((intra.cumulative_pnl||0) >= 0 ? 'positive' : 'negative');
+
+    const fnoEl = document.getElementById('ov-fno');
+    fnoEl.textContent = '₹' + (fno.cumulative_pnl||0).toLocaleString('en-IN', {minimumFractionDigits:0});
+    fnoEl.className = 'value ' + ((fno.cumulative_pnl||0) >= 0 ? 'positive' : 'negative');
+
+    // Merge daily data from all modules by date
+    const dailyMap = {};
+    (intra.daily||[]).forEach(d => {
+      if (!dailyMap[d.date]) dailyMap[d.date] = {intraday:0, fno:0};
+      dailyMap[d.date].intraday = d.pnl;
+    });
+    (fno.daily||[]).forEach(d => {
+      if (!dailyMap[d.date]) dailyMap[d.date] = {intraday:0, fno:0};
+      dailyMap[d.date].fno = d.pnl;
+    });
+
+    const dates = Object.keys(dailyMap).sort();
+    document.getElementById('ov-days').textContent = dates.length;
+
+    // Daily P&L chart (bar)
+    const dailyTotals = dates.map(d => dailyMap[d].intraday + dailyMap[d].fno);
+    if (ovDailyChart) ovDailyChart.destroy();
+    const dailyCtx = document.getElementById('ovDailyChart');
+    if (dailyCtx) {
+      ovDailyChart = new Chart(dailyCtx, {
+        type: 'bar',
+        data: {
+          labels: dates,
+          datasets: [
+            { label: 'Intraday', data: dates.map(d => dailyMap[d].intraday), backgroundColor: '#3b82f6', borderRadius: 4 },
+            { label: 'F&O', data: dates.map(d => dailyMap[d].fno), backgroundColor: '#f59e0b', borderRadius: 4 },
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'top' } },
+          scales: {
+            x: { stacked: true },
+            y: { stacked: true, ticks: { callback: v => '₹' + v.toLocaleString('en-IN') } }
+          }
+        }
+      });
+    }
+
+    // Cumulative P&L chart (line)
+    let cumSum = 0;
+    const cumData = dates.map(d => { cumSum += dailyMap[d].intraday + dailyMap[d].fno; return cumSum; });
+    if (ovCumChart) ovCumChart.destroy();
+    const cumCtx = document.getElementById('ovCumChart');
+    if (cumCtx) {
+      ovCumChart = new Chart(cumCtx, {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [{
+            label: 'Cumulative P&L',
+            data: cumData,
+            borderColor: cumData[cumData.length-1] >= 0 ? '#16a34a' : '#dc2626',
+            backgroundColor: cumData[cumData.length-1] >= 0 ? 'rgba(22,163,74,0.1)' : 'rgba(220,38,38,0.1)',
+            fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#fff', borderWidth: 3,
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { y: { ticks: { callback: v => '₹' + v.toLocaleString('en-IN') } } }
+        }
+      });
+    }
+
+    // Module breakdown table
+    const bTable = document.getElementById('ov-breakdown');
+    let bHtml = '<tr><th>Module</th><th>Days</th><th>Total P&L</th><th>Winners</th><th>Losers</th><th>Win Rate</th></tr>';
+    [['⚡ Intraday', intra], ['🎯 F&O', fno]].forEach(([name, mod]) => {
+      const pnl = mod.cumulative_pnl || 0;
+      const cls = pnl >= 0 ? 'positive' : 'negative';
+      bHtml += '<tr><td><b>' + name + '</b></td><td>' + (mod.daily||[]).length + '</td>'
+        + '<td class="' + cls + '">₹' + pnl.toLocaleString('en-IN') + '</td>'
+        + '<td>' + (mod.winners||0) + '</td><td>' + (mod.losers||0) + '</td>'
+        + '<td>' + (mod.win_rate||0) + '%</td></tr>';
+    });
+    bTable.innerHTML = bHtml;
+
+    // Daily log table
+    const logTable = document.getElementById('ov-daily-log');
+    let logHtml = '<tr><th>Date</th><th>Intraday</th><th>F&O</th><th>Total</th></tr>';
+    dates.reverse().forEach(d => {
+      const day = dailyMap[d];
+      const total = day.intraday + day.fno;
+      const cls = total >= 0 ? 'positive' : 'negative';
+      logHtml += '<tr><td>' + d + '</td>'
+        + '<td class="' + (day.intraday >= 0 ? 'positive' : 'negative') + '">₹' + day.intraday.toLocaleString('en-IN') + '</td>'
+        + '<td class="' + (day.fno >= 0 ? 'positive' : 'negative') + '">₹' + day.fno.toLocaleString('en-IN') + '</td>'
+        + '<td class="' + cls + '"><b>₹' + total.toLocaleString('en-IN') + '</b></td></tr>';
+    });
+    logTable.innerHTML = logHtml;
+
+  }).catch(e => console.log('No history data yet', e));
+}
+
+// ===== POSITIONAL DATA LOADER =====
+function loadPositionalData() {
+  fetch('api/positional_latest.json').then(r => r.json()).then(d => {
+    const open = (d.open_positions || []);
+    const closed = (d.closed_positions || []);
+
+    // Fix: treat 0 current_price as entry_price (no live data yet)
+    open.forEach(p => { if (!p.current_price || p.current_price <= 0) p.current_price = p.entry_price; });
+
+    const unrealized = open.reduce((a,p) => a + ((p.current_price - p.entry_price) * p.quantity || 0), 0);
+    const realized = closed.reduce((a,p) => a + (p.pnl || 0), 0);
+
+    document.getElementById('pos-open').textContent = open.length;
+    const uel = document.getElementById('pos-unrealized');
+    uel.textContent = '₹' + unrealized.toFixed(0);
+    uel.className = 'value ' + (unrealized >= 0 ? 'positive' : 'negative');
+    const rel = document.getElementById('pos-realized');
+    rel.textContent = '₹' + realized.toFixed(0);
+    rel.className = 'value ' + (realized >= 0 ? 'positive' : 'negative');
+
+    // Open positions table
+    const table = document.getElementById('pos-table');
+    let html = '<tr><th>Symbol</th><th>Entry</th><th>Current</th><th>Target</th><th>SL</th><th>Qty</th><th>Weeks</th><th>P&L</th><th>Sector</th></tr>';
+    if (open.length === 0) {
+      html += '<tr><td colspan="9" class="neutral">No open positional trades</td></tr>';
+    } else {
+      open.forEach(p => {
+        const pnl = (p.current_price - p.entry_price) * p.quantity;
+        const cls = pnl >= 0 ? 'positive' : 'negative';
+        html += '<tr><td><b>' + p.symbol + '</b></td><td>₹' + p.entry_price.toFixed(2) + '</td>'
+          + '<td>₹' + (p.current_price||0).toFixed(2) + '</td><td>₹' + p.target_price.toFixed(2) + '</td>'
+          + '<td>₹' + p.stop_loss_price.toFixed(2) + '</td><td>' + p.quantity + '</td>'
+          + '<td>' + (p.weeks_held||0) + '</td><td class="' + cls + '">₹' + pnl.toFixed(0) + '</td>'
+          + '<td>' + (p.sector||'') + '</td></tr>';
+      });
+    }
+    table.innerHTML = html;
+
+    // Closed trades table
+    const cTable = document.getElementById('pos-closed-table');
+    let cHtml = '<tr><th>Symbol</th><th>Entry</th><th>Exit</th><th>Weeks Held</th><th>P&L</th><th>Strategy</th></tr>';
+    if (closed.length === 0) {
+      cHtml += '<tr><td colspan="6" class="neutral">No closed trades yet</td></tr>';
+    } else {
+      closed.forEach(p => {
+        const cls = (p.pnl||0) >= 0 ? 'positive' : 'negative';
+        cHtml += '<tr><td><b>' + p.symbol + '</b></td><td>₹' + p.entry_price.toFixed(2) + '</td>'
+          + '<td>₹' + (p.exit_price||0).toFixed(2) + '</td><td>' + (p.weeks_held||0) + '</td>'
+          + '<td class="' + cls + '">₹' + (p.pnl||0).toFixed(0) + '</td>'
+          + '<td>' + (p.strategy_type||'') + '</td></tr>';
+      });
+    }
+    cTable.innerHTML = cHtml;
+  }).catch(e => console.log('No positional data yet'));
+}
 </script>
 </body></html>
