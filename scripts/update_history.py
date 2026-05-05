@@ -45,7 +45,12 @@ def build_history():
             wins = sum(1 for t in trades if float(t.get("pnl", 0)) > 0)
             losses = sum(1 for t in trades if float(t.get("pnl", 0)) < 0)
             total_trades = len(trades)
-            history["intraday"]["daily"].append({"date": date, "pnl": round(pnl, 2), "trades": total_trades, "winners": wins, "losers": losses})
+            # Skip days with no actual trades
+            if total_trades == 0 or (total_trades > 0 and pnl == 0 and wins == 0):
+                continue
+            # Calculate capital deployed
+            capital_used = sum(float(t.get("entry_price", 0)) * int(t.get("quantity", 0)) for t in trades)
+            history["intraday"]["daily"].append({"date": date, "pnl": round(pnl, 2), "trades": total_trades, "winners": wins, "losers": losses, "capital_used": round(capital_used, 0)})
             history["intraday"]["cumulative_pnl"] += pnl
             history["intraday"]["total_trades"] += total_trades
             history["intraday"]["winners"] += wins
@@ -63,7 +68,15 @@ def build_history():
             strategies = int(data.get("total_strategies", 0))
             wins = int(data.get("winning_strategies", data.get("winners", 0)))
             losses = int(data.get("losing_strategies", data.get("losers", 0)))
+            # Skip days with no strategies or zero P&L
+            if strategies == 0 or (pnl == 0 and wins == 0):
+                continue
+            # Skip Apr 28 — buggy data from double lot multiplier
+            if "2026-04-28" in date:
+                continue
             history["fno"]["daily"].append({"date": date, "pnl": round(pnl, 2), "strategies": strategies, "winners": wins, "losers": losses})
+            if date == "2026-04-28" and pnl > 10000:
+                pnl = pnl / 50  # Approximate correction
             history["fno"]["cumulative_pnl"] += pnl
             history["fno"]["total_trades"] += strategies
             history["fno"]["winners"] += wins

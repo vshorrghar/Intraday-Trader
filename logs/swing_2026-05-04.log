@@ -1,0 +1,55 @@
+2026-05-04 04:05:01 [INFO] swing.monitor: Checking 16 open swing positions…
+2026-05-04 04:05:07 [INFO] swing.monitor: 📈 MEESHO trailing SL: ₹184.00 → ₹199.93 (gain 6.1%)
+2026-05-04 04:05:07 [INFO] swing.monitor: 📈 MEESHO trailing SL: ₹183.00 → ₹198.93 (gain 7.2%)
+2026-05-04 04:05:07 [INFO] swing.monitor: 📈 MEESHO trailing SL: ₹183.00 → ₹198.93 (gain 7.2%)
+2026-05-04 04:05:07 [INFO] swing.monitor: 📈 MEESHO trailing SL: ₹184.00 → ₹199.43 (gain 6.7%)
+2026-05-04 04:05:07 [INFO] swing.dashboard: Swing dashboard updated: dashboard/api/swing_latest.json
+
+╔══════════════════════════════════════════════════════════════╗
+║           📊 SWING MONITOR — Checking positions              ║
+║           Time: 2026-05-04 09:35 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+Open: 16 | Closed today: 0
+   HFCL: OPEN | ₹+385.28 | Day 0
+   SYNGENE: OPEN | ₹+55.65 | Day 0
+   MEESHO: OPEN | ₹+308.10 | Day 0
+   SAMMAANCAP: OPEN | ₹+2.54 | Day 0
+   HFCL: OPEN | ₹+424.84 | Day 3
+   MEESHO: OPEN | ₹+720.20 | Day 3
+   SYNGENE: OPEN | ₹+57.00 | Day 3
+   SAMMAANCAP: OPEN | ₹+6.84 | Day 3
+   HFCL: OPEN | ₹+424.84 | Day 3
+   MEESHO: OPEN | ₹+720.20 | Day 3
+   SYNGENE: OPEN | ₹+57.00 | Day 3
+   ADANIPOWER: OPEN | ₹+2.58 | Day 3
+   SAMMAANCAP: OPEN | ₹+3.42 | Day 3
+   HFCL: OPEN | ₹+424.84 | Day 3
+   MEESHO: OPEN | ₹+655.35 | Day 3
+   SYNGENE: OPEN | ₹+62.70 | Day 3
+
+2026-05-04 10:05:06 [INFO] swing.scanner: Enriched 11 swing candidates with live data
+2026-05-04 10:05:06 [INFO] swing.scanner: Swing scan: 11 candidates, 134 sectors
+2026-05-04 10:05:06 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-05-04 10:05:06 [INFO] swing.selector: Sending 11 candidates to LLM for swing selection…
+2026-05-04 10:05:22 [INFO] swing.selector: LLM market mood: Bullish with strong momentum in Realty, Healthcare, Financials ex-bank, and high-beta names. Risk-on environment favoring breakouts.
+2026-05-04 10:05:22 [INFO] swing.selector: Swing selection: 5 valid setups
+2026-05-04 10:05:22 [INFO] swing.executor: 📋 Swing DRY-RUN: BUY BHEL × 26 @ ₹379.00 | Target ₹410.00 | SL ₹363.00 | Hold ~7 days
+2026-05-04 10:05:22 [INFO] swing.executor: 📋 Swing DRY-RUN: BUY HFCL × 79 @ ₹126.00 | Target ₹137.00 | SL ₹120.00 | Hold ~7 days
+2026-05-04 10:05:22 [INFO] swing.executor: 📋 Swing DRY-RUN: BUY ADANIPOWER × 22 @ ₹228.00 | Target ₹245.00 | SL ₹219.00 | Hold ~8 days
+2026-05-04 10:05:22 [INFO] swing.executor: 📋 Swing DRY-RUN: BUY EQUITASBNK × 2 @ ₹71.40 | Target ₹77.50 | SL ₹68.50 | Hold ~6 days
+2026-05-04 10:05:22 [INFO] swing.executor: Swing: placed 4 positions, capital used ₹24967
+2026-05-04 10:05:22 [INFO] swing.dashboard: Swing dashboard updated: dashboard/api/swing_latest.json
+
+╔══════════════════════════════════════════════════════════════╗
+║           📈 SWING SCANNER — Looking for setups              ║
+║           Time: 2026-05-04 15:35 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+✅ 4 swing positions opened:
+   BHEL: ₹379.00 → ₹410.00 (SL ₹363.00) [BREAKOUT]
+   HFCL: ₹126.00 → ₹137.00 (SL ₹120.00) [BREAKOUT]
+   ADANIPOWER: ₹228.00 → ₹245.00 (SL ₹219.00) [BREAKOUT]
+   EQUITASBNK: ₹71.40 → ₹77.50 (SL ₹68.50) [BREAKOUT]
+

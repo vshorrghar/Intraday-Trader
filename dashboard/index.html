@@ -137,7 +137,22 @@ td { padding:8px; border-bottom:1px solid #e8e8f0; }
 
 <!-- ===== OVERVIEW TAB ===== -->
 <div class="container" id="tab-overview" style="display:none;">
-<div class="card"><h2>📊 Overall Performance — All Modules</h2>
+<div class="card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;">
+<h2 style="color:#fff;border-bottom-color:#334;">📅 Today's Performance</h2>
+<div style="display:flex;align-items:center;justify-content:center;gap:20px;padding:10px 0;">
+<div style="text-align:center;"><div style="font-size:11px;color:#a0a0c0;text-transform:uppercase;">Total P&L</div><div style="font-size:32px;font-weight:800;" id="ov-today-total">₹0</div></div>
+<div style="text-align:center;"><div style="font-size:11px;color:#a0a0c0;">Capital Used</div><div style="font-size:18px;font-weight:600;" id="ov-today-capital">₹0</div></div>
+<div style="text-align:center;"><div style="font-size:11px;color:#a0a0c0;">Return</div><div style="font-size:18px;font-weight:600;" id="ov-today-return">0%</div></div>
+</div>
+<div style="display:flex;justify-content:center;gap:30px;padding:8px 0;border-top:1px solid #334;">
+<div style="text-align:center;"><div style="font-size:10px;color:#a0a0c0;">⚡ Intraday</div><div style="font-size:16px;font-weight:600;" id="ov-today-intra">₹0</div></div>
+<div style="text-align:center;"><div style="font-size:10px;color:#a0a0c0;">🎯 F&O</div><div style="font-size:16px;font-weight:600;" id="ov-today-fno">₹0</div></div>
+<div style="text-align:center;"><div style="font-size:10px;color:#a0a0c0;">📈 Swing</div><div style="font-size:16px;font-weight:600;" id="ov-today-swing">₹0</div></div>
+</div>
+</div>
+
+<div class="card">
+<h2>📊 All-Time Stats</h2>
 <div class="summary-grid">
 <div class="summary-item"><div class="label">Grand Total P&L</div><div class="value" id="ov-grand">₹0</div></div>
 <div class="summary-item"><div class="label">Intraday P&L</div><div class="value" id="ov-intra">₹0</div></div>
@@ -667,16 +682,45 @@ function loadOverviewData() {
     // Merge daily data from all modules by date
     const dailyMap = {};
     (intra.daily||[]).forEach(d => {
-      if (!dailyMap[d.date]) dailyMap[d.date] = {intraday:0, fno:0};
+      if (!dailyMap[d.date]) dailyMap[d.date] = {intraday:0, fno:0, capital:0};
       dailyMap[d.date].intraday = d.pnl;
+      dailyMap[d.date].capital += (d.capital_used || 0);
     });
     (fno.daily||[]).forEach(d => {
-      if (!dailyMap[d.date]) dailyMap[d.date] = {intraday:0, fno:0};
+      if (!dailyMap[d.date]) dailyMap[d.date] = {intraday:0, fno:0, capital:0};
       dailyMap[d.date].fno = d.pnl;
     });
 
     const dates = Object.keys(dailyMap).sort();
     document.getElementById('ov-days').textContent = dates.length;
+
+    // Today's totals
+    const today = dates.length > 0 ? dates[dates.length - 1] : null;
+    if (today && dailyMap[today]) {
+      const todayIntra = dailyMap[today].intraday || 0;
+      const todayFno = dailyMap[today].fno || 0;
+      const todayTotal = todayIntra + todayFno;
+      const todayCapital = dailyMap[today].capital || 0;
+
+      const ttEl = document.getElementById('ov-today-total');
+      ttEl.textContent = '₹' + todayTotal.toLocaleString('en-IN', {minimumFractionDigits:0});
+      ttEl.className = 'value ' + (todayTotal >= 0 ? 'positive' : 'negative');
+
+      document.getElementById('ov-today-capital').textContent = '₹' + todayCapital.toLocaleString('en-IN');
+
+      const tiEl = document.getElementById('ov-today-intra');
+      tiEl.textContent = '₹' + todayIntra.toLocaleString('en-IN');
+      tiEl.className = 'value ' + (todayIntra >= 0 ? 'positive' : 'negative');
+
+      const tfEl = document.getElementById('ov-today-fno');
+      tfEl.textContent = '₹' + todayFno.toLocaleString('en-IN');
+      tfEl.className = 'value ' + (todayFno >= 0 ? 'positive' : 'negative');
+
+      const retPct = todayCapital > 0 ? (todayTotal / todayCapital * 100).toFixed(1) : 0;
+      const retEl = document.getElementById('ov-today-return');
+      retEl.textContent = retPct + '%';
+      retEl.className = 'value ' + (retPct >= 0 ? 'positive' : 'negative');
+    }
 
     // Daily P&L chart (bar)
     const dailyTotals = dates.map(d => dailyMap[d].intraday + dailyMap[d].fno);
@@ -744,15 +788,19 @@ function loadOverviewData() {
 
     // Daily log table
     const logTable = document.getElementById('ov-daily-log');
-    let logHtml = '<tr><th>Date</th><th>Intraday</th><th>F&O</th><th>Total</th></tr>';
+    let logHtml = '<tr><th>Date</th><th>Capital</th><th>Intraday</th><th>F&O</th><th>Total</th><th>Return</th></tr>';
     dates.reverse().forEach(d => {
       const day = dailyMap[d];
       const total = day.intraday + day.fno;
+      const cap = day.capital || 0;
+      const ret = cap > 0 ? (total / cap * 100).toFixed(1) + '%' : '—';
       const cls = total >= 0 ? 'positive' : 'negative';
       logHtml += '<tr><td>' + d + '</td>'
+        + '<td>₹' + cap.toLocaleString('en-IN') + '</td>'
         + '<td class="' + (day.intraday >= 0 ? 'positive' : 'negative') + '">₹' + day.intraday.toLocaleString('en-IN') + '</td>'
         + '<td class="' + (day.fno >= 0 ? 'positive' : 'negative') + '">₹' + day.fno.toLocaleString('en-IN') + '</td>'
-        + '<td class="' + cls + '"><b>₹' + total.toLocaleString('en-IN') + '</b></td></tr>';
+        + '<td class="' + cls + '"><b>₹' + total.toLocaleString('en-IN') + '</b></td>'
+        + '<td class="' + cls + '">' + ret + '</td></tr>';
     });
     logTable.innerHTML = logHtml;
 

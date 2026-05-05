@@ -1,0 +1,176 @@
+2026-05-04 07:30:02 [INFO] intraday: --force: skipping time-of-day check
+2026-05-04 07:30:02 [INFO] intraday: 🟢 [13:00:02] Phase: Configuration — START
+2026-05-04 07:30:02 [INFO] intraday: ✅ [13:00:02] Phase: Configuration — DONE
+2026-05-04 07:30:02 [INFO] intraday: 🟢 [13:00:02] Phase: Database — START
+2026-05-04 07:30:02 [INFO] intraday: ✅ [13:00:02] Phase: Database — DONE
+2026-05-04 07:30:02 [INFO] intraday: 🟢 [13:00:02] Phase: Broker Authentication — START
+2026-05-04 07:30:02 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-05-04 07:30:02 [INFO] intraday: ✅ [13:00:02] Phase: Broker Authentication — DONE
+2026-05-04 07:30:02 [INFO] intraday: 🟢 [13:00:02] Phase: Pre-Market Scan — START
+2026-05-04 07:30:02 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
+2026-05-04 07:30:02 [INFO] intraday.scanner: India VIX: 18.40 | 27 sectors fetched
+2026-05-04 07:30:02 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-05-04 07:30:02 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
+2026-05-04 07:30:08 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-05-04 07:30:08 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
+2026-05-04 07:30:08 [WARNING] intraday.scanner: No gainers data — continuing with other sources
+2026-05-04 07:30:08 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-05-04 07:30:08 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
+2026-05-04 07:30:13 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-05-04 07:30:13 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
+2026-05-04 07:30:13 [WARNING] intraday.scanner: No losers data — continuing with other sources
+2026-05-04 07:30:13 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
+2026-05-04 07:30:13 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
+2026-05-04 07:30:22 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
+2026-05-04 07:30:22 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
+2026-05-04 07:30:22 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 18.40
+2026-05-04 07:30:22 [INFO] intraday: ✅ [13:00:22] Phase: Pre-Market Scan — DONE
+2026-05-04 07:30:22 [INFO] intraday: 🟢 [13:00:22] Phase: Pre-Filter — START
+2026-05-04 07:30:22 [INFO] intraday.selector: Pre-filter: 20 → 11 candidates
+2026-05-04 07:30:22 [INFO] intraday: Pre-filter: 11 candidates passed
+2026-05-04 07:30:22 [INFO] intraday: ✅ [13:00:22] Phase: Pre-Filter — DONE
+2026-05-04 07:30:22 [INFO] intraday: 🟢 [13:00:22] Phase: LLM Trade Selection — START
+2026-05-04 07:30:22 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-05-04 07:30:22 [INFO] intraday.selector: Sending 11 candidates to LLM for trade selection…
+2026-05-04 07:30:34 [INFO] intraday.selector: LLM market mood: Bullish breadth with 21/27 sectors green; Realty, Metal, Pharma leading.
+2026-05-04 07:30:34 [INFO] intraday.selector: LLM VIX assessment: VIX at 18.40 is moderate and declining (-0.33%), supportive of long trades with standard 2% stops.
+2026-05-04 07:30:34 [INFO] intraday.selector: Pick #1 VALID: HFCL @ ₹122.50 → ₹126.80 (SL ₹120.05, R:R 1.8, conf 7) [GAP] — HFCL opened at 122.35 with strong gap +5.45%, massive volume 131M shares. Entry near open price. Telecom/Infra play aligned with NIFTY INFRASTRUCTURE +0.61%. Clean momentum setup.
+2026-05-04 07:30:34 [INFO] intraday.selector: Pick #2 VALID: BANDHANBNK @ ₹203.00 → ₹209.10 (SL ₹198.95, R:R 1.5, conf 6) [GAP] — Opened at 202.70, gapped +1.49% with volume 32M. NIFTY PSU BANK +0.07%, banking resilient. Entry near open, pullback from 212.66 high offers good risk reward.
+2026-05-04 07:30:34 [INFO] intraday.selector: Pick #3 VALID: VEDL @ ₹278.00 → ₹286.35 (SL ₹272.45, R:R 1.5, conf 8) [MOMENTUM] — VEDL opened 277, gapped +2.01%, volume 63M. NIFTY METAL +0.86% (rank 4). Strong sector tailwind, entry near open within 0.36%. High 294.85 shows momentum room.
+2026-05-04 07:30:34 [INFO] intraday.selector: Pick #4 VALID: BHEL @ ₹356.00 → ₹368.70 (SL ₹349.00, R:R 1.8, conf 7) [VWAP] — BHEL opened 355, volume 78M, hit high of 399 earlier showing strong demand. NIFTY PSE +0.60% aligned. Entry near open offers excellent R:R as price pulled back from highs.
+2026-05-04 07:30:34 [INFO] intraday.selector: Pick #5 VALID: ADANIPOWER @ ₹223.50 → ₹230.65 (SL ₹219.10, R:R 1.6, conf 6) [MOMENTUM] — ADANIPOWER opened 223, gapped +0.52%, volume 51M. NIFTY ENERGY +0.54% aligned. Entry near open, day high 234 shows upside potential. Clean setup.
+2026-05-04 07:30:34 [INFO] intraday.selector: LLM selection complete: 5 valid trade(s)
+2026-05-04 07:30:34 [INFO] intraday: ✅ [13:00:34] Phase: LLM Trade Selection — DONE
+2026-05-04 07:30:34 [INFO] intraday: 🟢 [13:00:34] Phase: Position Sizing — START
+2026-05-04 07:30:34 [INFO] intraday.risk_manager: Restored daily state: realized loss ₹67.28
+2026-05-04 07:30:34 [INFO] intraday.risk_manager: Sized HFCL: 168 shares × ₹122.50 = ₹20580 (conf 7, R:R 1.8)
+2026-05-04 07:30:34 [INFO] intraday.risk_manager: Sized BANDHANBNK: 86 shares × ₹203.00 = ₹17458 (conf 6, R:R 1.5)
+2026-05-04 07:30:34 [INFO] intraday.risk_manager: Sized VEDL: 84 shares × ₹278.00 = ₹23352 (conf 8, R:R 1.5)
+2026-05-04 07:30:34 [INFO] intraday.risk_manager: Sized BHEL: 57 shares × ₹356.00 = ₹20292 (conf 7, R:R 1.8)
+2026-05-04 07:30:34 [INFO] intraday.risk_manager: Sized ADANIPOWER: 78 shares × ₹223.50 = ₹17433 (conf 6, R:R 1.6)
+2026-05-04 07:30:34 [INFO] intraday.risk_manager: Total capital allocated: ₹99115 / ₹100000 remaining
+2026-05-04 07:30:34 [INFO] intraday: ✅ [13:00:34] Phase: Position Sizing — DONE
+2026-05-04 07:30:34 [INFO] intraday: 🟢 [13:00:34] Phase: VIX Check — START
+2026-05-04 07:30:34 [INFO] intraday: ✅ [13:00:34] Phase: VIX Check — DONE
+2026-05-04 07:30:34 [INFO] intraday: 🟢 [13:00:34] Phase: Order Execution — START
+2026-05-04 07:30:34 [INFO] intraday.executor: --force: skipping entry delay
+2026-05-04 07:30:34 [INFO] intraday.auth_server: DryRun place_order: BUY HFCL x168 @ 122.50 → DRY-000001
+2026-05-04 07:30:34 [INFO] intraday.auth_server: DryRun place_order: SELL HFCL x168 @ 120.05 → DRY-000002
+2026-05-04 07:30:34 [INFO] intraday.executor: 📋 Placed HFCL: BUY 168 × ₹122.50 | Target ₹126.80 | SL ₹120.05 | 🧪 DRY-RUN
+2026-05-04 07:30:34 [INFO] intraday.auth_server: DryRun place_order: BUY BANDHANBNK x86 @ 203.00 → DRY-000003
+2026-05-04 07:30:34 [INFO] intraday.auth_server: DryRun place_order: SELL BANDHANBNK x86 @ 198.95 → DRY-000004
+2026-05-04 07:30:34 [INFO] intraday.executor: 📋 Placed BANDHANBNK: BUY 86 × ₹203.00 | Target ₹209.10 | SL ₹198.95 | 🧪 DRY-RUN
+2026-05-04 07:30:34 [INFO] intraday.auth_server: DryRun place_order: BUY VEDL x84 @ 278.00 → DRY-000005
+2026-05-04 07:30:34 [INFO] intraday.auth_server: DryRun place_order: SELL VEDL x84 @ 272.45 → DRY-000006
+2026-05-04 07:30:34 [INFO] intraday.executor: 📋 Placed VEDL: BUY 84 × ₹278.00 | Target ₹286.35 | SL ₹272.45 | 🧪 DRY-RUN
+2026-05-04 07:30:34 [INFO] intraday.auth_server: DryRun place_order: BUY BHEL x57 @ 356.00 → DRY-000007
+2026-05-04 07:30:34 [INFO] intraday.auth_server: DryRun place_order: SELL BHEL x57 @ 349.00 → DRY-000008
+2026-05-04 07:30:34 [INFO] intraday.executor: 📋 Placed BHEL: BUY 57 × ₹356.00 | Target ₹368.70 | SL ₹349.00 | 🧪 DRY-RUN
+2026-05-04 07:30:34 [INFO] intraday.auth_server: DryRun place_order: BUY ADANIPOWER x78 @ 223.50 → DRY-000009
+2026-05-04 07:30:34 [INFO] intraday.auth_server: DryRun place_order: SELL ADANIPOWER x78 @ 219.10 → DRY-000010
+2026-05-04 07:30:34 [INFO] intraday.executor: 📋 Placed ADANIPOWER: BUY 78 × ₹223.50 | Target ₹230.65 | SL ₹219.10 | 🧪 DRY-RUN
+2026-05-04 07:30:34 [INFO] intraday.executor: Placed 5 / 5 orders (DRY_RUN mode)
+2026-05-04 07:30:34 [INFO] intraday: ✅ [13:00:34] Phase: Order Execution — DONE
+2026-05-04 07:30:34 [INFO] intraday: 🟢 [13:00:34] Phase: Position Monitoring — START
+2026-05-04 07:30:34 [INFO] intraday.monitor: 🔍 Starting position monitor for 5 trade(s)…
+2026-05-04 07:30:34 [INFO] intraday.monitor: 📡 Dry-run with LIVE NSE prices — monitoring every 120s until 15:15 IST
+2026-05-04 07:30:36 [INFO] intraday.monitor: 📈 HFCL trailing SL moved: ₹120.05 → ₹123.12
+2026-05-04 07:30:36 [INFO] intraday.monitor: 📊 BANDHANBNK PARTIAL BOOK: sold 34 @ ₹207.84, remaining 52, SL → ₹203.00 (breakeven)
+2026-05-04 07:30:36 [INFO] intraday.monitor: 🎯 VEDL TARGET HIT @ ₹290.75 | P&L: ₹1071.00
+2026-05-04 07:30:36 [INFO] intraday.monitor: 🎯 BHEL TARGET HIT @ ₹378.90 | P&L: ₹1305.30
+2026-05-04 07:30:36 [INFO] intraday.monitor: 📊 ADANIPOWER PARTIAL BOOK: sold 31 @ ₹228.80, remaining 47, SL → ₹223.50 (breakeven)
+2026-05-04 07:32:37 [INFO] intraday.monitor: 📈 BANDHANBNK trailing SL moved: ₹203.00 → ₹204.70
+2026-05-04 07:32:37 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹223.50 → ₹226.25
+2026-05-04 07:34:38 [INFO] intraday.monitor: 📈 HFCL trailing SL moved: ₹123.12 → ₹123.19
+2026-05-04 07:36:39 [INFO] intraday.monitor: 📈 HFCL trailing SL moved: ₹123.19 → ₹123.31
+2026-05-04 07:36:39 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹226.25 → ₹226.38
+2026-05-04 07:38:41 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹226.38 → ₹226.44
+2026-05-04 07:40:42 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹226.44 → ₹226.65
+2026-05-04 07:44:44 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹226.65 → ₹226.67
+2026-05-04 07:48:46 [INFO] intraday.monitor: 📊 Monitor cycle 10 | 3 open | unrealized P&L: ₹597.32 | 13:18:45 IST
+2026-05-04 08:00:54 [INFO] intraday.monitor: 🛑 HFCL STOPPED OUT @ ₹123.26 | P&L: ₹127.68
+2026-05-04 08:08:57 [INFO] intraday.monitor: 📊 Monitor cycle 20 | 2 open | unrealized P&L: ₹322.34 | 13:38:56 IST
+2026-05-04 08:17:01 [INFO] intraday.monitor: 📈 BANDHANBNK trailing SL moved: ₹204.70 → ₹204.86
+2026-05-04 08:19:02 [INFO] intraday.monitor: 📈 BANDHANBNK trailing SL moved: ₹204.86 → ₹204.87
+2026-05-04 08:21:03 [INFO] intraday.monitor: 📈 BANDHANBNK trailing SL moved: ₹204.87 → ₹204.94
+2026-05-04 08:29:06 [INFO] intraday.monitor: 📊 Monitor cycle 30 | 2 open | unrealized P&L: ₹354.90 | 13:59:05 IST
+2026-05-04 08:49:14 [INFO] intraday.monitor: 📊 Monitor cycle 40 | 2 open | unrealized P&L: ₹438.35 | 14:19:14 IST
+2026-05-04 09:09:27 [INFO] intraday.monitor: 📊 Monitor cycle 50 | 2 open | unrealized P&L: ₹394.01 | 14:39:26 IST
+2026-05-04 09:29:35 [INFO] intraday.monitor: 📊 Monitor cycle 60 | 2 open | unrealized P&L: ₹384.89 | 14:59:34 IST
+2026-05-04 09:45:40 [INFO] intraday.monitor: ⏰ Force exit time reached — closing all positions
+2026-05-04 09:45:40 [INFO] intraday.monitor: ⏰ BANDHANBNK FORCE EXITED @ ₹206.22 | P&L: ₹332.00
+2026-05-04 09:45:40 [INFO] intraday.monitor: ⏰ ADANIPOWER FORCE EXITED @ ₹227.10 | P&L: ₹333.50
+2026-05-04 09:45:40 [INFO] intraday: ✅ [15:15:40] Phase: Position Monitoring — DONE
+2026-05-04 09:45:40 [INFO] intraday: 🟢 [15:15:40] Phase: EOD Report — START
+2026-05-04 09:45:40 [INFO] intraday.reporter: EOD report saved to output/reports/intraday_2026-05-04.json
+2026-05-04 09:45:40 [INFO] intraday: ✅ [15:15:40] Phase: EOD Report — DONE
+2026-05-04 09:45:40 [INFO] intraday: 🟢 [15:15:40] Phase: Dashboard Update — START
+2026-05-04 09:45:40 [INFO] intraday.dashboard: Dashboard JSON updated: dashboard/api/intraday_latest.json
+2026-05-04 09:45:40 [INFO] intraday: ✅ [15:15:40] Phase: Dashboard Update — DONE
+
+╔══════════════════════════════════════════════════════════════╗
+║           🚀 INTRADAY AUTO-TRADER — Wealth Builder Pro      ║
+║           Mode: 🧪 DRY-RUN                                  ║
+║           Time: 2026-05-04 13:00 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+┌──────────────────────────────────────────────────────────────┐
+│              🌅 MORNING PICKS — Claude's Selections          │
+│              VIX: 18.40 | Budget: ₹100,000              │
+├──────────────────────────────────────────────────────────────┤
+│  1. InterGlobe Housing Finance (HFCL) (HFCL)
+│     📍 Entry: ₹122.50  🎯 Target: ₹126.80  🛑 SL: ₹120.05
+│     📊 R:R 1.8:1  ⭐ Confidence: 7/10  🏷️ GAP
+│     💡 HFCL opened at 122.35 with strong gap +5.45%, massive volume 131M shar…
+│
+│  2. Bandhan Bank (BANDHANBNK)
+│     📍 Entry: ₹203.00  🎯 Target: ₹209.10  🛑 SL: ₹198.95
+│     📊 R:R 1.5:1  ⭐ Confidence: 6/10  🏷️ GAP
+│     💡 Opened at 202.70, gapped +1.49% with volume 32M. NIFTY PSU BANK +0.07%…
+│
+│  3. Vedanta Ltd (VEDL)
+│     📍 Entry: ₹278.00  🎯 Target: ₹286.35  🛑 SL: ₹272.45
+│     📊 R:R 1.5:1  ⭐ Confidence: 8/10  🏷️ MOMENTUM
+│     💡 VEDL opened 277, gapped +2.01%, volume 63M. NIFTY METAL +0.86% (rank 4…
+│
+│  4. BHEL (BHEL)
+│     📍 Entry: ₹356.00  🎯 Target: ₹368.70  🛑 SL: ₹349.00
+│     📊 R:R 1.8:1  ⭐ Confidence: 7/10  🏷️ VWAP
+│     💡 BHEL opened 355, volume 78M, hit high of 399 earlier showing strong de…
+│
+│  5. Adani Power (ADANIPOWER)
+│     📍 Entry: ₹223.50  🎯 Target: ₹230.65  🛑 SL: ₹219.10
+│     📊 R:R 1.6:1  ⭐ Confidence: 6/10  🏷️ MOMENTUM
+│     💡 ADANIPOWER opened 223, gapped +0.52%, volume 51M. NIFTY ENERGY +0.54% …
+│
+└──────────────────────────────────────────────────────────────┘
+
+
+============================================================
+  📊 INTRADAY TRADING REPORT — 2026-05-04
+  Mode: 🧪 DRY-RUN
+============================================================
+
+  🛑 HFCL         Entry ₹122.50 → Exit ₹123.26  Qty 168  P&L [92m+₹128[0m  [GAP]
+  ⏰ BANDHANBNK   Entry ₹203.00 → Exit ₹206.22  Qty 52  P&L [92m+₹332[0m  [GAP]
+  🎯 VEDL         Entry ₹278.00 → Exit ₹290.75  Qty 84  P&L [92m+₹1071[0m  [MOMENTUM]
+  🎯 BHEL         Entry ₹356.00 → Exit ₹378.90  Qty 57  P&L [92m+₹1305[0m  [VWAP]
+  ⏰ ADANIPOWER   Entry ₹223.50 → Exit ₹227.10  Qty 47  P&L [92m+₹334[0m  [MOMENTUM]
+
+  🟢 Total P&L: [92m₹+3,169.48[0m
+  📈 Win Rate: 100.0% (5W / 0L)
+  💰 Avg Win: ₹633.90 | Avg Loss: ₹0.00
+  🎯 Expectancy: ₹633.90/trade
+  📊 Profit Factor: inf
+
+  Strategy Breakdown:
+    GAP: 100% WR, ₹+460 P&L
+    MOMENTUM: 100% WR, ₹+1,404 P&L
+    VWAP: 100% WR, ₹+1,305 P&L
+
+============================================================
+
+
+🏁 Intraday session complete!
+

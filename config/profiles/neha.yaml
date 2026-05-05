@@ -1,0 +1,32 @@
+# Profile: Neha
+# This file contains profile-specific overrides.
+# Shared settings (AWS, strategies, etc.) come from config/config.yaml
+
+profile:
+  name: "neha"
+  display_name: "Neha"
+
+dhan:
+  client_id: "REPLACE_ME"
+  api_key: "REPLACE_ME"
+  api_secret: "REPLACE_ME"
+  totp_secret: "REPLACE_ME"
+  pin: "REPLACE_ME"
+
+database:
+  path: database/neha.db
+
+dashboard:
+  api_dir: dashboard/api/neha
+
+intraday:
+  daily_capital_limit: 300000
+  per_trade_max_capital: 75000
+  daily_loss_limit: 5000
+
+fno:
+  mode: "paper"
+  paper_capital: 300000
+  daily_capital_limit: 300000
+  per_trade_max_capital: 75000
+  daily_loss_limit: 25000

@@ -1,105 +1,124 @@
-=== Dev Sandbox Intraday — 2026-04-28 ===
-Started at: Tue Apr 28 03:55:01 UTC 2026
-2026-04-28 03:55:01 [INFO] intraday: --force: skipping time-of-day check
-2026-04-28 03:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Configuration — START
-2026-04-28 03:55:01 [INFO] intraday: ✅ [09:25:01] Phase: Configuration — DONE
-2026-04-28 03:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Database — START
-2026-04-28 03:55:01 [INFO] intraday: ✅ [09:25:01] Phase: Database — DONE
-2026-04-28 03:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Broker Authentication — START
-2026-04-28 03:55:01 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
-2026-04-28 03:55:01 [INFO] intraday: ✅ [09:25:01] Phase: Broker Authentication — DONE
-2026-04-28 03:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Pre-Market Scan — START
-2026-04-28 03:55:01 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
-2026-04-28 03:55:01 [INFO] intraday.scanner: India VIX: 18.00 | 27 sectors fetched
-2026-04-28 03:55:02 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
-2026-04-28 03:55:02 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
-2026-04-28 03:55:07 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
-2026-04-28 03:55:07 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
-2026-04-28 03:55:07 [WARNING] intraday.scanner: No gainers data — continuing with other sources
-2026-04-28 03:55:07 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
-2026-04-28 03:55:07 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
-2026-04-28 03:55:12 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
-2026-04-28 03:55:12 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
-2026-04-28 03:55:12 [WARNING] intraday.scanner: No losers data — continuing with other sources
-2026-04-28 03:55:12 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
-2026-04-28 03:55:12 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
-2026-04-28 03:55:21 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
-2026-04-28 03:55:21 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
-2026-04-28 03:55:21 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 18.00
-2026-04-28 03:55:21 [INFO] intraday: ✅ [09:25:21] Phase: Pre-Market Scan — DONE
-2026-04-28 03:55:21 [INFO] intraday: 🟢 [09:25:21] Phase: Pre-Filter — START
-2026-04-28 03:55:21 [INFO] intraday.selector: Pre-filter: 20 → 13 candidates
-2026-04-28 03:55:21 [INFO] intraday: Pre-filter: 13 candidates passed
-2026-04-28 03:55:21 [INFO] intraday: ✅ [09:25:21] Phase: Pre-Filter — DONE
-2026-04-28 03:55:21 [INFO] intraday: 🟢 [09:25:21] Phase: LLM Trade Selection — START
-2026-04-28 03:55:21 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
-2026-04-28 03:55:21 [INFO] intraday.selector: Sending 13 candidates to LLM for trade selection…
-2026-04-28 03:55:37 [INFO] intraday.selector: LLM market mood: NEUTRAL with commodity/energy sector leadership — 16/27 sectors green, NIFTY flat but CPSE/Energy/Metal showing strength while Banking/IT lagging
-2026-04-28 03:55:37 [INFO] intraday.selector: LLM VIX assessment: VIX at 18.00 (down 2.08%) suggests moderate volatility — comfortable for intraday with 2% stop losses, not requiring defensive positioning
-2026-04-28 03:55:37 [INFO] intraday.selector: Pick #1 VALID: ADANIPOWER @ ₹219.50 → ₹227.50 (SL ₹215.00, R:R 1.8, conf 8) [GAP] — Energy sector leading (+0.70%), stock gapped up 0.66% with 7.87M volume. Entry at open price ₹219.50, currently trading near HOD at ₹221.50. Strong momentum in CPSE/Energy sectors. Gap continuation setup with volume confirmation.
-2026-04-28 03:55:37 [INFO] intraday.selector: Pick #2 VALID: SUZLON @ ₹57.15 → ₹59.15 (SL ₹56.00, R:R 1.7, conf 7) [MOMENTUM] — Massive volume 19.87M shares, highest among candidates. Small gap up 0.39% in Energy sector. Entry at open ₹57.15, showing sustained buying above open. Clean setup with exceptional liquidity for quick exits.
-2026-04-28 03:55:37 [INFO] intraday.selector: Pick #3 VALID: HFCL @ ₹107.20 → ₹111.00 (SL ₹105.00, R:R 1.7, conf 7) [MOMENTUM] — Telecom/Infrastructure play with 5.44M volume. Small gap up 0.48%, trading at ₹107.33 near entry. Infrastructure sector positive (+0.10%). Good volume confirmation with tight range from open, showing controlled momentum.
-2026-04-28 03:55:37 [INFO] intraday.selector: Pick #4 VALID: COHANCE @ ₹444.45 → ₹462.00 (SL ₹435.00, R:R 1.9, conf 6) [GAP] — Strong gap up +2.86% with 8.01M volume after pullback. Pharma sector slightly negative but stock showing relative strength. Currently at ₹494.10, well above open - indicating strong buying. Entry at open for gap continuation play.
-2026-04-28 03:55:37 [INFO] intraday.selector: LLM selection complete: 4 valid trade(s)
-2026-04-28 03:55:37 [INFO] intraday: ✅ [09:25:37] Phase: LLM Trade Selection — DONE
-2026-04-28 03:55:37 [INFO] intraday: 🟢 [09:25:37] Phase: Position Sizing — START
-2026-04-28 03:55:37 [INFO] intraday.risk_manager: Restored daily state: realized loss ₹0.00
-2026-04-28 03:55:37 [INFO] intraday.risk_manager: Sized ADANIPOWER: 65 shares × ₹219.50 = ₹14268 (conf 8, R:R 1.8)
-2026-04-28 03:55:37 [INFO] intraday.risk_manager: Sized SUZLON: 218 shares × ₹57.15 = ₹12459 (conf 7, R:R 1.7)
-2026-04-28 03:55:37 [INFO] intraday.risk_manager: Sized HFCL: 116 shares × ₹107.20 = ₹12435 (conf 7, R:R 1.7)
-2026-04-28 03:55:37 [INFO] intraday.risk_manager: Sized COHANCE: 24 shares × ₹444.45 = ₹10667 (conf 6, R:R 1.9)
-2026-04-28 03:55:37 [INFO] intraday.risk_manager: Total capital allocated: ₹49828 / ₹50000 remaining
-2026-04-28 03:55:37 [INFO] intraday: ✅ [09:25:37] Phase: Position Sizing — DONE
-2026-04-28 03:55:37 [INFO] intraday: 🟢 [09:25:37] Phase: VIX Check — START
-2026-04-28 03:55:37 [INFO] intraday: ✅ [09:25:37] Phase: VIX Check — DONE
-2026-04-28 03:55:37 [INFO] intraday: 🟢 [09:25:37] Phase: Order Execution — START
-2026-04-28 03:55:37 [INFO] intraday.executor: --force: skipping entry delay
-2026-04-28 03:55:37 [INFO] intraday.auth_server: DryRun place_order: BUY ADANIPOWER x65 @ 219.50 → DRY-000001
-2026-04-28 03:55:37 [INFO] intraday.auth_server: DryRun place_order: SELL ADANIPOWER x65 @ 215.00 → DRY-000002
-2026-04-28 03:55:37 [INFO] intraday.executor: 📋 Placed ADANIPOWER: BUY 65 × ₹219.50 | Target ₹227.50 | SL ₹215.00 | 🧪 DRY-RUN
-2026-04-28 03:55:37 [INFO] intraday.auth_server: DryRun place_order: BUY SUZLON x218 @ 57.15 → DRY-000003
-2026-04-28 03:55:37 [INFO] intraday.auth_server: DryRun place_order: SELL SUZLON x218 @ 56.00 → DRY-000004
-2026-04-28 03:55:37 [INFO] intraday.executor: 📋 Placed SUZLON: BUY 218 × ₹57.15 | Target ₹59.15 | SL ₹56.00 | 🧪 DRY-RUN
-2026-04-28 03:55:37 [INFO] intraday.auth_server: DryRun place_order: BUY HFCL x116 @ 107.20 → DRY-000005
-2026-04-28 03:55:37 [INFO] intraday.auth_server: DryRun place_order: SELL HFCL x116 @ 105.00 → DRY-000006
-2026-04-28 03:55:37 [INFO] intraday.executor: 📋 Placed HFCL: BUY 116 × ₹107.20 | Target ₹111.00 | SL ₹105.00 | 🧪 DRY-RUN
-2026-04-28 03:55:37 [INFO] intraday.auth_server: DryRun place_order: BUY COHANCE x24 @ 444.45 → DRY-000007
-2026-04-28 03:55:37 [INFO] intraday.auth_server: DryRun place_order: SELL COHANCE x24 @ 435.00 → DRY-000008
-2026-04-28 03:55:37 [INFO] intraday.executor: 📋 Placed COHANCE: BUY 24 × ₹444.45 | Target ₹462.00 | SL ₹435.00 | 🧪 DRY-RUN
-2026-04-28 03:55:37 [INFO] intraday.executor: Placed 4 / 4 orders (DRY_RUN mode)
-2026-04-28 03:55:37 [INFO] intraday: ✅ [09:25:37] Phase: Order Execution — DONE
-2026-04-28 03:55:37 [INFO] intraday: 🟢 [09:25:37] Phase: Position Monitoring — START
-2026-04-28 03:55:37 [INFO] intraday.monitor: 🔍 Starting position monitor for 4 trade(s)…
-2026-04-28 03:55:37 [INFO] intraday.monitor: 📡 Dry-run with LIVE NSE prices — monitoring every 120s until 15:15 IST
-2026-04-28 03:55:38 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹215.00 → ₹220.50
-2026-04-28 03:55:38 [INFO] intraday.monitor: 📈 SUZLON trailing SL moved: ₹56.00 → ₹57.35
-2026-04-28 03:55:38 [INFO] intraday.monitor: 🎯 COHANCE TARGET HIT @ ₹492.20 | P&L: ₹1146.00
-2026-04-28 03:57:40 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹220.50 → ₹220.53
-2026-04-28 03:59:41 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹220.53 → ₹220.74
-2026-04-28 03:59:41 [INFO] intraday.monitor: 🛑 SUZLON STOPPED OUT @ ₹57.35 | P&L: ₹43.60
-2026-04-28 04:01:42 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹220.74 → ₹220.94
-2026-04-28 04:07:44 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹220.94 → ₹221.30
-2026-04-28 04:13:47 [INFO] intraday.monitor: 📊 Monitor cycle 10 | 2 open | unrealized P&L: ₹128.00 | 09:43:46 IST
-2026-04-28 04:27:53 [INFO] intraday.monitor: 🛑 ADANIPOWER STOPPED OUT @ ₹220.60 | P&L: ₹71.50
-2026-04-28 04:33:54 [INFO] intraday.monitor: 📊 Monitor cycle 20 | 1 open | unrealized P&L: ₹-156.60 | 10:03:54 IST
-2026-04-28 04:53:59 [INFO] intraday.monitor: 📊 Monitor cycle 30 | 1 open | unrealized P&L: ₹-126.44 | 10:23:59 IST
-2026-04-28 05:14:04 [INFO] intraday.monitor: 📊 Monitor cycle 40 | 1 open | unrealized P&L: ₹-193.72 | 10:44:03 IST
-2026-04-28 05:34:09 [INFO] intraday.monitor: 📊 Monitor cycle 50 | 1 open | unrealized P&L: ₹-63.80 | 11:04:09 IST
-2026-04-28 05:54:14 [INFO] intraday.monitor: 📊 Monitor cycle 60 | 1 open | unrealized P&L: ₹-91.64 | 11:24:14 IST
-2026-04-28 06:14:18 [INFO] intraday.monitor: 📊 Monitor cycle 70 | 1 open | unrealized P&L: ₹-89.32 | 11:44:18 IST
-2026-04-28 06:34:23 [INFO] intraday.monitor: 📊 Monitor cycle 80 | 1 open | unrealized P&L: ₹-35.96 | 12:04:23 IST
-2026-04-28 06:54:27 [INFO] intraday.monitor: 📊 Monitor cycle 90 | 1 open | unrealized P&L: ₹-29.00 | 12:24:27 IST
-2026-04-28 07:14:32 [INFO] intraday.monitor: 📊 Monitor cycle 100 | 1 open | unrealized P&L: ₹-69.60 | 12:44:31 IST
-2026-04-28 07:34:36 [INFO] intraday.monitor: 📊 Monitor cycle 110 | 1 open | unrealized P&L: ₹-58.00 | 13:04:36 IST
-2026-04-28 07:40:38 [INFO] intraday.monitor: 📈 HFCL trailing SL moved: ₹105.00 → ₹107.77
-2026-04-28 07:42:38 [INFO] intraday.monitor: 🛑 HFCL STOPPED OUT @ ₹107.52 | P&L: ₹37.12
-2026-04-28 07:44:38 [INFO] intraday: ✅ [13:14:38] Phase: Position Monitoring — DONE
-2026-04-28 07:44:38 [INFO] intraday: 🟢 [13:14:38] Phase: EOD Report — START
-2026-04-28 07:44:38 [INFO] intraday.reporter: EOD report saved to output/reports/intraday_2026-04-28.json
-2026-04-28 07:44:38 [INFO] intraday: ✅ [13:14:38] Phase: EOD Report — DONE
-2026-04-28 07:44:38 [INFO] intraday: 🟢 [13:14:38] Phase: Dashboard Update — START
-2026-04-28 07:44:38 [INFO] intraday.dashboard: Dashboard JSON updated: dashboard/api/intraday_latest.json
-2026-04-28 07:44:38 [INFO] intraday: ✅ [13:14:38] Phase: Dashboard Update — DONE
+=== Intraday Auto-Trader — 2026-04-28 ===
+Started at: Tue Apr 28 05:55:00 CEST 2026
+Python: /Users/vshorgha/kiro/websites/intraday-trader/.venv/bin/python
+2026-04-28 05:55:01 [INFO] intraday: --force: skipping time-of-day check
+2026-04-28 05:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Configuration — START
+2026-04-28 05:55:01 [INFO] intraday: ✅ [09:25:01] Phase: Configuration — DONE
+2026-04-28 05:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Database — START
+2026-04-28 05:55:01 [INFO] intraday: ✅ [09:25:01] Phase: Database — DONE
+2026-04-28 05:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Broker Authentication — START
+2026-04-28 05:55:01 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-04-28 05:55:01 [INFO] intraday: ✅ [09:25:01] Phase: Broker Authentication — DONE
+2026-04-28 05:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Pre-Market Scan — START
+2026-04-28 05:55:02 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
+2026-04-28 05:55:02 [INFO] intraday.scanner: India VIX: 18.02 | 27 sectors fetched
+2026-04-28 05:55:02 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-04-28 05:55:02 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
+2026-04-28 05:55:08 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-04-28 05:55:08 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
+2026-04-28 05:55:08 [WARNING] intraday.scanner: No gainers data — continuing with other sources
+2026-04-28 05:55:08 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-04-28 05:55:08 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
+2026-04-28 05:55:14 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-04-28 05:55:14 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
+2026-04-28 05:55:14 [WARNING] intraday.scanner: No losers data — continuing with other sources
+2026-04-28 05:55:14 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
+2026-04-28 05:55:14 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
+2026-04-28 05:55:29 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
+2026-04-28 05:55:29 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
+2026-04-28 05:55:29 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 18.02
+2026-04-28 05:55:29 [INFO] intraday: ✅ [09:25:29] Phase: Pre-Market Scan — DONE
+2026-04-28 05:55:29 [INFO] intraday: 🟢 [09:25:29] Phase: Pre-Filter — START
+2026-04-28 05:55:29 [INFO] intraday.selector: Pre-filter: 20 → 14 candidates
+2026-04-28 05:55:29 [INFO] intraday: Pre-filter: 14 candidates passed
+2026-04-28 05:55:29 [INFO] intraday: ✅ [09:25:29] Phase: Pre-Filter — DONE
+2026-04-28 05:55:29 [INFO] intraday: 🟢 [09:25:29] Phase: LLM Trade Selection — START
+2026-04-28 05:55:30 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-04-28 05:55:31 [INFO] intraday.selector: Sending 14 candidates to LLM for trade selection…
+2026-04-28 05:55:51 [INFO] intraday.selector: LLM market mood: BULLISH bias with 17/27 sectors green, led by CPSE/Energy/Metal. Midcap momentum strong. Large-cap banks dragging but select private banks resilient.
+2026-04-28 05:55:51 [INFO] intraday.selector: LLM VIX assessment: VIX at 18.02 (down -1.97%) shows declining fear, supportive for intraday longs. Using 2% stop losses to account for normal intraday volatility.
+2026-04-28 05:55:51 [INFO] intraday.selector: Pick #1 VALID: CUB @ ₹281.50 → ₹291.00 (SL ₹275.90, R:R 1.7, conf 7) [GAP] — Strong gap-up +3.80% with 3.6M volume. Entry near open (₹281.52). Banking sector weak but private banks showing relative strength. Clean breakout above ₹280 resistance with conviction. Target ₹291 (+3.4%), SL ₹275.90 (-2.0%), R:R = 1.7:1 acceptable given momentum.
+2026-04-28 05:55:51 [INFO] intraday.selector: Pick #2 VALID: ADANIPOWER @ ₹219.50 → ₹227.50 (SL ₹215.10, R:R 1.8, conf 8) [MOMENTUM] — Energy sector leading today (+0.74% rank #2). Gap-up +0.66% with 7.6M volume. Entry at open ₹219.50, already tested ₹223.50 high. Strong sector alignment with NIFTY ENERGY. Target ₹227.50 (+3.6%), SL ₹215.10 (-2.0%), R:R = 1.8:1.
+2026-04-28 05:55:51 [INFO] intraday.selector: Pick #3 VALID: SUZLON @ ₹57.15 → ₹59.15 (SL ₹56.00, R:R 1.7, conf 8) [MOMENTUM] — Exceptional volume 18.8M shares. Small gap-up +0.39% from ₹56.93. Entry at open ₹57.15 near intraday low. Renewable energy play aligns with Energy sector strength. High liquidity reduces slippage risk. Target ₹59.15 (+3.5%), SL ₹56.00 (-2.0%), R:R = 1.7:1.
+2026-04-28 05:55:51 [INFO] intraday.selector: Pick #4 VALID: HFCL @ ₹107.20 → ₹111.00 (SL ₹105.05, R:R 1.8, conf 7) [ORB] — Telecom infrastructure play with 5.3M volume. Small gap-up +0.48%, entry at open ₹107.20. Already tested ₹108.80, showing momentum. Diversification into Telecom sector. Target ₹111.00 (+3.5%), SL ₹105.05 (-2.0%), R:R = 1.8:1.
+2026-04-28 05:55:51 [INFO] intraday.selector: Pick #5 VALID: IRMENERGY @ ₹339.00 → ₹351.00 (SL ₹332.20, R:R 1.8, conf 6) [GAP] — Gap-up +2.29% with 3.9M volume in Energy sector (rank #2 today). Entry near open ₹338.99. Sector momentum aligned with NIFTY ENERGY +0.74%. Already touched ₹343.97. Target ₹351 (+3.5%), SL ₹332.20 (-2.0%), R:R = 1.8:1. Lower confidence due to stock near day high.
+2026-04-28 05:55:51 [INFO] intraday.selector: LLM selection complete: 5 valid trade(s)
+2026-04-28 05:55:51 [INFO] intraday: ✅ [09:25:51] Phase: LLM Trade Selection — DONE
+2026-04-28 05:55:51 [INFO] intraday: 🟢 [09:25:51] Phase: Position Sizing — START
+2026-04-28 05:55:51 [INFO] intraday.risk_manager: Restored daily state: realized loss ₹0.00
+2026-04-28 05:55:51 [INFO] intraday.risk_manager: Sized CUB: 34 shares × ₹281.50 = ₹9571 (conf 7, R:R 1.7)
+2026-04-28 05:55:51 [INFO] intraday.risk_manager: Sized ADANIPOWER: 50 shares × ₹219.50 = ₹10975 (conf 8, R:R 1.8)
+2026-04-28 05:55:51 [INFO] intraday.risk_manager: Sized SUZLON: 194 shares × ₹57.15 = ₹11087 (conf 8, R:R 1.7)
+2026-04-28 05:55:51 [INFO] intraday.risk_manager: Sized HFCL: 90 shares × ₹107.20 = ₹9648 (conf 7, R:R 1.8)
+2026-04-28 05:55:51 [INFO] intraday.risk_manager: Sized IRMENERGY: 24 shares × ₹339.00 = ₹8136 (conf 6, R:R 1.8)
+2026-04-28 05:55:51 [INFO] intraday.risk_manager: Total capital allocated: ₹49417 / ₹50000 remaining
+2026-04-28 05:55:51 [INFO] intraday: ✅ [09:25:51] Phase: Position Sizing — DONE
+2026-04-28 05:55:51 [INFO] intraday: 🟢 [09:25:51] Phase: VIX Check — START
+2026-04-28 05:55:51 [INFO] intraday: ✅ [09:25:51] Phase: VIX Check — DONE
+2026-04-28 05:55:51 [INFO] intraday: 🟢 [09:25:51] Phase: Order Execution — START
+2026-04-28 05:55:51 [INFO] intraday.executor: --force: skipping entry delay
+2026-04-28 05:55:51 [INFO] intraday.auth_server: DryRun place_order: BUY CUB x34 @ 281.50 → DRY-000001
+2026-04-28 05:55:51 [INFO] intraday.auth_server: DryRun place_order: SELL CUB x34 @ 275.90 → DRY-000002
+2026-04-28 05:55:51 [INFO] intraday.executor: 📋 Placed CUB: BUY 34 × ₹281.50 | Target ₹291.00 | SL ₹275.90 | 🧪 DRY-RUN
+2026-04-28 05:55:51 [INFO] intraday.auth_server: DryRun place_order: BUY ADANIPOWER x50 @ 219.50 → DRY-000003
+2026-04-28 05:55:51 [INFO] intraday.auth_server: DryRun place_order: SELL ADANIPOWER x50 @ 215.10 → DRY-000004
+2026-04-28 05:55:51 [INFO] intraday.executor: 📋 Placed ADANIPOWER: BUY 50 × ₹219.50 | Target ₹227.50 | SL ₹215.10 | 🧪 DRY-RUN
+2026-04-28 05:55:51 [INFO] intraday.auth_server: DryRun place_order: BUY SUZLON x194 @ 57.15 → DRY-000005
+2026-04-28 05:55:51 [INFO] intraday.auth_server: DryRun place_order: SELL SUZLON x194 @ 56.00 → DRY-000006
+2026-04-28 05:55:52 [INFO] intraday.executor: 📋 Placed SUZLON: BUY 194 × ₹57.15 | Target ₹59.15 | SL ₹56.00 | 🧪 DRY-RUN
+2026-04-28 05:55:52 [INFO] intraday.auth_server: DryRun place_order: BUY HFCL x90 @ 107.20 → DRY-000007
+2026-04-28 05:55:52 [INFO] intraday.auth_server: DryRun place_order: SELL HFCL x90 @ 105.05 → DRY-000008
+2026-04-28 05:55:52 [INFO] intraday.executor: 📋 Placed HFCL: BUY 90 × ₹107.20 | Target ₹111.00 | SL ₹105.05 | 🧪 DRY-RUN
+2026-04-28 05:55:52 [INFO] intraday.auth_server: DryRun place_order: BUY IRMENERGY x24 @ 339.00 → DRY-000009
+2026-04-28 05:55:52 [INFO] intraday.auth_server: DryRun place_order: SELL IRMENERGY x24 @ 332.20 → DRY-000010
+2026-04-28 05:55:52 [INFO] intraday.executor: 📋 Placed IRMENERGY: BUY 24 × ₹339.00 | Target ₹351.00 | SL ₹332.20 | 🧪 DRY-RUN
+2026-04-28 05:55:52 [INFO] intraday.executor: Placed 5 / 5 orders (DRY_RUN mode)
+2026-04-28 05:55:52 [INFO] intraday: ✅ [09:25:52] Phase: Order Execution — DONE
+2026-04-28 05:55:52 [INFO] intraday: 🟢 [09:25:52] Phase: Position Monitoring — START
+2026-04-28 05:55:52 [INFO] intraday.monitor: 🔍 Starting position monitor for 5 trade(s)…
+2026-04-28 05:55:52 [INFO] intraday.monitor: 📡 Dry-run with LIVE NSE prices — monitoring every 120s until 15:15 IST
+2026-04-28 05:55:55 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹215.10 → ₹220.40
+2026-04-28 05:55:55 [INFO] intraday.monitor: 📈 SUZLON trailing SL moved: ₹56.00 → ₹57.38
+2026-04-28 05:57:59 [INFO] intraday.monitor: 📊 CUB PARTIAL BOOK: sold 13 @ ₹287.60, remaining 21, SL → ₹281.50 (breakeven)
+2026-04-28 05:57:59 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹220.40 → ₹220.69
+2026-04-28 05:57:59 [INFO] intraday.monitor: 📈 IRMENERGY trailing SL moved: ₹332.20 → ₹340.61
+2026-04-28 06:00:04 [INFO] intraday.monitor: 📈 CUB trailing SL moved: ₹281.50 → ₹286.11
+2026-04-28 06:00:04 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹220.69 → ₹220.88
+2026-04-28 06:00:04 [INFO] intraday.monitor: 🛑 SUZLON STOPPED OUT @ ₹57.35 | P&L: ₹38.80
+2026-04-28 06:00:04 [INFO] intraday.monitor: 📊 IRMENERGY PARTIAL BOOK: sold 9 @ ₹346.05, remaining 15, SL → ₹339.00 (breakeven)
+2026-04-28 06:02:07 [INFO] intraday.monitor: 🛑 CUB STOPPED OUT @ ₹285.17 | P&L: ₹77.07
+2026-04-28 06:02:07 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹220.88 → ₹221.00
+2026-04-28 06:02:07 [INFO] intraday.monitor: 📈 IRMENERGY trailing SL moved: ₹339.00 → ₹340.39
+2026-04-28 06:04:09 [INFO] intraday.monitor: 📈 IRMENERGY trailing SL moved: ₹340.39 → ₹341.12
+2026-04-28 06:06:12 [INFO] intraday.monitor: 📈 IRMENERGY trailing SL moved: ₹341.12 → ₹342.02
+2026-04-28 06:08:15 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹221.00 → ₹221.35
+2026-04-28 06:14:22 [INFO] intraday.monitor: 🛑 IRMENERGY STOPPED OUT @ ₹338.38 | P&L: ₹-9.30
+2026-04-28 06:14:22 [INFO] intraday.monitor: 📊 Monitor cycle 10 | 2 open | unrealized P&L: ₹94.70 | 09:44:20 IST
+2026-04-28 06:28:34 [INFO] intraday.monitor: 🛑 ADANIPOWER STOPPED OUT @ ₹220.85 | P&L: ₹67.50
+2026-04-28 06:34:38 [INFO] intraday.monitor: 📊 Monitor cycle 20 | 1 open | unrealized P&L: ₹-123.30 | 10:04:37 IST
+2026-04-28 06:54:49 [INFO] intraday.monitor: 📊 Monitor cycle 30 | 1 open | unrealized P&L: ₹-95.40 | 10:24:48 IST
+2026-04-28 07:15:00 [INFO] intraday.monitor: 📊 Monitor cycle 40 | 1 open | unrealized P&L: ₹-143.10 | 10:44:59 IST
+2026-04-28 07:35:10 [INFO] intraday.monitor: 📊 Monitor cycle 50 | 1 open | unrealized P&L: ₹-50.40 | 11:05:09 IST
+2026-04-28 07:55:20 [INFO] intraday.monitor: 📊 Monitor cycle 60 | 1 open | unrealized P&L: ₹-54.00 | 11:25:19 IST
+2026-04-28 08:15:29 [INFO] intraday.monitor: 📊 Monitor cycle 70 | 1 open | unrealized P&L: ₹-72.00 | 11:45:28 IST
+2026-04-28 08:35:39 [INFO] intraday.monitor: 📊 Monitor cycle 80 | 1 open | unrealized P&L: ₹-47.70 | 12:05:38 IST
+2026-04-28 08:55:50 [INFO] intraday.monitor: 📊 Monitor cycle 90 | 1 open | unrealized P&L: ₹-30.60 | 12:25:49 IST
+2026-04-28 09:16:01 [INFO] intraday.monitor: 📊 Monitor cycle 100 | 1 open | unrealized P&L: ₹-54.00 | 12:46:00 IST
+2026-04-28 09:36:12 [INFO] intraday.monitor: 📊 Monitor cycle 110 | 1 open | unrealized P&L: ₹-45.00 | 13:06:11 IST
+2026-04-28 09:56:23 [INFO] intraday.monitor: 📊 Monitor cycle 120 | 1 open | unrealized P&L: ₹-0.90 | 13:26:22 IST
+2026-04-28 10:16:34 [INFO] intraday.monitor: 📊 Monitor cycle 130 | 1 open | unrealized P&L: ₹-26.10 | 13:46:33 IST
+2026-04-28 10:36:45 [INFO] intraday.monitor: 📊 Monitor cycle 140 | 1 open | unrealized P&L: ₹-39.60 | 14:06:44 IST
+2026-04-28 10:56:57 [INFO] intraday.monitor: 📊 Monitor cycle 150 | 1 open | unrealized P&L: ₹-27.90 | 14:26:55 IST
+2026-04-28 11:17:08 [INFO] intraday.monitor: 📊 Monitor cycle 160 | 1 open | unrealized P&L: ₹3.60 | 14:47:07 IST
+2026-04-28 11:33:17 [INFO] intraday.monitor: 📈 HFCL trailing SL moved: ₹105.05 → ₹107.47
+2026-04-28 11:35:18 [INFO] intraday.monitor: 🛑 HFCL STOPPED OUT @ ₹107.38 | P&L: ₹16.20
+2026-04-28 11:37:18 [INFO] intraday: ✅ [15:07:18] Phase: Position Monitoring — DONE
+2026-04-28 11:37:18 [INFO] intraday: 🟢 [15:07:18] Phase: EOD Report — START
+2026-04-28 11:37:19 [INFO] intraday.reporter: EOD report saved to output/reports/intraday_2026-04-28.json
+2026-04-28 11:37:19 [INFO] intraday: ✅ [15:07:19] Phase: EOD Report — DONE
+2026-04-28 11:37:19 [INFO] intraday: 🟢 [15:07:19] Phase: Dashboard Update — START
+2026-04-28 11:37:19 [INFO] intraday.dashboard: Dashboard JSON updated: dashboard/api/intraday_latest.json
+2026-04-28 11:37:19 [INFO] intraday: ✅ [15:07:19] Phase: Dashboard Update — DONE
 
 ╔══════════════════════════════════════════════════════════════╗
 ║           🚀 INTRADAY AUTO-TRADER — Wealth Builder Pro      ║
@@ -110,27 +129,32 @@ Started at: Tue Apr 28 03:55:01 UTC 2026
 
 ┌──────────────────────────────────────────────────────────────┐
 │              🌅 MORNING PICKS — Claude's Selections          │
-│              VIX: 18.00 | Budget: ₹50,000              │
+│              VIX: 18.02 | Budget: ₹50,000              │
 ├──────────────────────────────────────────────────────────────┤
-│  1. Adani Power Limited (ADANIPOWER)
-│     📍 Entry: ₹219.50  🎯 Target: ₹227.50  🛑 SL: ₹215.00
-│     📊 R:R 1.8:1  ⭐ Confidence: 8/10  🏷️ GAP
-│     💡 Energy sector leading (+0.70%), stock gapped up 0.66% with 7.87M volum…
+│  1. City Union Bank Limited (CUB)
+│     📍 Entry: ₹281.50  🎯 Target: ₹291.00  🛑 SL: ₹275.90
+│     📊 R:R 1.7:1  ⭐ Confidence: 7/10  🏷️ GAP
+│     💡 Strong gap-up +3.80% with 3.6M volume. Entry near open (₹281.52). Bank…
 │
-│  2. Suzlon Energy Limited (SUZLON)
+│  2. Adani Power Limited (ADANIPOWER)
+│     📍 Entry: ₹219.50  🎯 Target: ₹227.50  🛑 SL: ₹215.10
+│     📊 R:R 1.8:1  ⭐ Confidence: 8/10  🏷️ MOMENTUM
+│     💡 Energy sector leading today (+0.74% rank #2). Gap-up +0.66% with 7.6M …
+│
+│  3. Suzlon Energy Limited (SUZLON)
 │     📍 Entry: ₹57.15  🎯 Target: ₹59.15  🛑 SL: ₹56.00
-│     📊 R:R 1.7:1  ⭐ Confidence: 7/10  🏷️ MOMENTUM
-│     💡 Massive volume 19.87M shares, highest among candidates. Small gap up 0…
+│     📊 R:R 1.7:1  ⭐ Confidence: 8/10  🏷️ MOMENTUM
+│     💡 Exceptional volume 18.8M shares. Small gap-up +0.39% from ₹56.93. Entr…
 │
-│  3. HFCL Limited (HFCL)
-│     📍 Entry: ₹107.20  🎯 Target: ₹111.00  🛑 SL: ₹105.00
-│     📊 R:R 1.7:1  ⭐ Confidence: 7/10  🏷️ MOMENTUM
-│     💡 Telecom/Infrastructure play with 5.44M volume. Small gap up 0.48%, tra…
+│  4. HFCL Limited (HFCL)
+│     📍 Entry: ₹107.20  🎯 Target: ₹111.00  🛑 SL: ₹105.05
+│     📊 R:R 1.8:1  ⭐ Confidence: 7/10  🏷️ ORB
+│     💡 Telecom infrastructure play with 5.3M volume. Small gap-up +0.48%, ent…
 │
-│  4. Cohance Lifesciences Limited (COHANCE)
-│     📍 Entry: ₹444.45  🎯 Target: ₹462.00  🛑 SL: ₹435.00
-│     📊 R:R 1.9:1  ⭐ Confidence: 6/10  🏷️ GAP
-│     💡 Strong gap up +2.86% with 8.01M volume after pullback. Pharma sector s…
+│  5. IRM Energy Limited (IRMENERGY)
+│     📍 Entry: ₹339.00  🎯 Target: ₹351.00  🛑 SL: ₹332.20
+│     📊 R:R 1.8:1  ⭐ Confidence: 6/10  🏷️ GAP
+│     💡 Gap-up +2.29% with 3.9M volume in Energy sector (rank #2 today). Entry…
 │
 └──────────────────────────────────────────────────────────────┘
 
@@ -140,25 +164,28 @@ Started at: Tue Apr 28 03:55:01 UTC 2026
   Mode: 🧪 DRY-RUN
 ============================================================
 
-  🛑 ADANIPOWER   Entry ₹219.50 → Exit ₹220.60  Qty 65  P&L [92m+₹72[0m  [GAP]
-  🛑 SUZLON       Entry ₹57.15 → Exit ₹57.35  Qty 218  P&L [92m+₹44[0m  [MOMENTUM]
-  🛑 HFCL         Entry ₹107.20 → Exit ₹107.52  Qty 116  P&L [92m+₹37[0m  [MOMENTUM]
-  🎯 COHANCE      Entry ₹444.45 → Exit ₹492.20  Qty 24  P&L [92m+₹1146[0m  [GAP]
+  🛑 CUB          Entry ₹281.50 → Exit ₹285.17  Qty 21  P&L [92m+₹77[0m  [GAP]
+  🛑 ADANIPOWER   Entry ₹219.50 → Exit ₹220.85  Qty 50  P&L [92m+₹68[0m  [MOMENTUM]
+  🛑 SUZLON       Entry ₹57.15 → Exit ₹57.35  Qty 194  P&L [92m+₹39[0m  [MOMENTUM]
+  🛑 HFCL         Entry ₹107.20 → Exit ₹107.38  Qty 90  P&L [92m+₹16[0m  [ORB]
+  🛑 IRMENERGY    Entry ₹339.00 → Exit ₹338.38  Qty 15  P&L [91m-₹9[0m  [GAP]
 
-  🟢 Total P&L: [92m₹+1,298.22[0m
-  📈 Win Rate: 100.0% (4W / 0L)
-  💰 Avg Win: ₹324.56 | Avg Loss: ₹0.00
-  🎯 Expectancy: ₹324.56/trade
-  📊 Profit Factor: inf
+  🟢 Total P&L: [92m₹+190.27[0m
+  📈 Win Rate: 80.0% (4W / 1L)
+  💰 Avg Win: ₹49.89 | Avg Loss: ₹-9.30
+  🎯 Expectancy: ₹38.05/trade
+  📊 Profit Factor: 21.46
 
   Strategy Breakdown:
-    GAP: 100% WR, ₹+1,218 P&L
-    MOMENTUM: 100% WR, ₹+81 P&L
+    GAP: 50% WR, ₹+68 P&L
+    MOMENTUM: 100% WR, ₹+106 P&L
+    ORB: 100% WR, ₹+16 P&L
 
 ============================================================
 
 
 🏁 Intraday session complete!
 
-Finished at: Tue Apr 28 07:44:38 UTC 2026
+Finished at: Tue Apr 28 11:37:19 CEST 2026
+Exit code: 0
 === END ===

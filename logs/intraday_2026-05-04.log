@@ -1,0 +1,181 @@
+=== Intraday Auto-Trader — 2026-05-04 ===
+Started at: Mon May  4 05:55:00 CEST 2026
+Python: /Users/vshorgha/kiro/websites/intraday-trader/.venv/bin/python
+2026-05-04 05:55:01 [INFO] intraday: --force: skipping time-of-day check
+2026-05-04 05:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Configuration — START
+2026-05-04 05:55:02 [INFO] intraday: ✅ [09:25:02] Phase: Configuration — DONE
+2026-05-04 05:55:02 [INFO] intraday: 🟢 [09:25:02] Phase: Database — START
+2026-05-04 05:55:02 [INFO] intraday: ✅ [09:25:02] Phase: Database — DONE
+2026-05-04 05:55:02 [INFO] intraday: 🟢 [09:25:02] Phase: Broker Authentication — START
+2026-05-04 05:55:02 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-05-04 05:55:02 [INFO] intraday: ✅ [09:25:02] Phase: Broker Authentication — DONE
+2026-05-04 05:55:02 [INFO] intraday: 🟢 [09:25:02] Phase: Pre-Market Scan — START
+2026-05-04 05:55:03 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
+2026-05-04 05:55:03 [INFO] intraday.scanner: India VIX: 17.92 | 27 sectors fetched
+2026-05-04 05:55:03 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-05-04 05:55:03 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
+2026-05-04 05:55:09 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-05-04 05:55:09 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
+2026-05-04 05:55:09 [WARNING] intraday.scanner: No gainers data — continuing with other sources
+2026-05-04 05:55:09 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-05-04 05:55:09 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
+2026-05-04 05:55:14 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-05-04 05:55:14 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
+2026-05-04 05:55:14 [WARNING] intraday.scanner: No losers data — continuing with other sources
+2026-05-04 05:55:15 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
+2026-05-04 05:55:15 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
+2026-05-04 05:55:31 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
+2026-05-04 05:55:31 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
+2026-05-04 05:55:31 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 17.92
+2026-05-04 05:55:31 [INFO] intraday: ✅ [09:25:31] Phase: Pre-Market Scan — DONE
+2026-05-04 05:55:31 [INFO] intraday: 🟢 [09:25:31] Phase: Pre-Filter — START
+2026-05-04 05:55:31 [INFO] intraday.selector: Pre-filter: 20 → 10 candidates
+2026-05-04 05:55:31 [INFO] intraday: Pre-filter: 10 candidates passed
+2026-05-04 05:55:31 [INFO] intraday: ✅ [09:25:31] Phase: Pre-Filter — DONE
+2026-05-04 05:55:31 [INFO] intraday: 🟢 [09:25:31] Phase: LLM Trade Selection — START
+2026-05-04 05:55:32 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-05-04 05:55:32 [INFO] intraday.selector: Sending 10 candidates to LLM for trade selection…
+2026-05-04 05:55:45 [INFO] intraday.selector: LLM market mood: Strongly bullish — 25/27 sectors green led by Auto +1.81%, Realty +1.42%, FMCG +1.05%.
+2026-05-04 05:55:45 [INFO] intraday.selector: LLM VIX assessment: VIX at 17.92 and falling -2.92% — supportive of directional long trades with standard 2% stops.
+2026-05-04 05:55:45 [INFO] intraday.selector: Pick #1 VALID: VEDL @ ₹277.50 → ₹286.00 (SL ₹272.00, R:R 1.6, conf 7) [GAP] — Opened at 277 with +2% gap, metal sector +0.61% green, volume 8.09M confirms strong interest. Entry near open (277.50 vs 277 open), day high 285.80 shows upside room. R:R = 8.5/5.5 = 1.55 — adjusted: SL 272 gives R:R 1.54, widening target to 286.
+2026-05-04 05:55:45 [INFO] intraday.selector: Pick #2 VALID: KOTAKBANK @ ₹374.50 → ₹386.00 (SL ₹368.50, R:R 1.9, conf 6) [REVERSAL] — Gapped down -1.15% but recovering from low 363 to 374. Banking sector green +0.58%, volume 13M very strong. Reversal play with VIX falling -2.92%. R:R = 11.5/6 = 1.92.
+2026-05-04 05:55:45 [INFO] intraday.selector: Pick #3 VALID: ADANIPOWER @ ₹223.50 → ₹231.00 (SL ₹219.50, R:R 1.9, conf 7) [ORB] — Opened 223, LTP 225, tight range near open — ideal non-chased entry. Energy sector +0.72% green, volume 5.39M healthy. Day high 226.93 close to entry. R:R = 7.5/4 = 1.88.
+2026-05-04 05:55:45 [INFO] intraday.selector: Pick #4 VALID: HFCL @ ₹122.80 → ₹127.50 (SL ₹120.50, R:R 2.0, conf 8) [GAP] — Gapped up +5.45% on massive volume 36.16M — exceptional momentum. Currently pulled back near open 122.35 offering clean entry. Infrastructure sector +0.83% green. Day high 128.49 shows target is realistic. R:R = 4.7/2.3 = 2.04.
+2026-05-04 05:55:45 [INFO] intraday.selector: Pick #5 VALID: MEESHO @ ₹195.50 → ₹203.50 (SL ₹191.50, R:R 2.0, conf 7) [MOMENTUM] — Opened 195, LTP 202 — pullback to open would be ideal entry at 195.50. Volume 8.99M strong, day high 203.40. Consumer/ecommerce sector aligned with FMCG +1.05%. R:R = 8/4 = 2.0.
+2026-05-04 05:55:45 [INFO] intraday.selector: LLM selection complete: 5 valid trade(s)
+2026-05-04 05:55:45 [INFO] intraday: ✅ [09:25:45] Phase: LLM Trade Selection — DONE
+2026-05-04 05:55:45 [INFO] intraday: 🟢 [09:25:45] Phase: Position Sizing — START
+2026-05-04 05:55:45 [INFO] intraday.risk_manager: Restored daily state: realized loss ₹0.00
+2026-05-04 05:55:45 [INFO] intraday.risk_manager: Sized VEDL: 72 shares × ₹277.50 = ₹19980 (conf 7, R:R 1.6)
+2026-05-04 05:55:45 [INFO] intraday.risk_manager: Sized KOTAKBANK: 45 shares × ₹374.50 = ₹16852 (conf 6, R:R 1.9)
+2026-05-04 05:55:45 [INFO] intraday.risk_manager: Sized ADANIPOWER: 89 shares × ₹223.50 = ₹19892 (conf 7, R:R 1.9)
+2026-05-04 05:55:45 [INFO] intraday.risk_manager: Sized HFCL: 186 shares × ₹122.80 = ₹22841 (conf 8, R:R 2.0)
+2026-05-04 05:55:45 [INFO] intraday.risk_manager: Sized MEESHO: 102 shares × ₹195.50 = ₹19941 (conf 7, R:R 2.0)
+2026-05-04 05:55:45 [INFO] intraday.risk_manager: Total capital allocated: ₹99506 / ₹100000 remaining
+2026-05-04 05:55:45 [INFO] intraday: ✅ [09:25:45] Phase: Position Sizing — DONE
+2026-05-04 05:55:45 [INFO] intraday: 🟢 [09:25:45] Phase: VIX Check — START
+2026-05-04 05:55:45 [INFO] intraday: ✅ [09:25:45] Phase: VIX Check — DONE
+2026-05-04 05:55:45 [INFO] intraday: 🟢 [09:25:45] Phase: Order Execution — START
+2026-05-04 05:55:45 [INFO] intraday.executor: --force: skipping entry delay
+2026-05-04 05:55:45 [INFO] intraday.auth_server: DryRun place_order: BUY VEDL x72 @ 277.50 → DRY-000001
+2026-05-04 05:55:45 [INFO] intraday.auth_server: DryRun place_order: SELL VEDL x72 @ 272.00 → DRY-000002
+2026-05-04 05:55:45 [INFO] intraday.executor: 📋 Placed VEDL: BUY 72 × ₹277.50 | Target ₹286.00 | SL ₹272.00 | 🧪 DRY-RUN
+2026-05-04 05:55:45 [INFO] intraday.auth_server: DryRun place_order: BUY KOTAKBANK x45 @ 374.50 → DRY-000003
+2026-05-04 05:55:45 [INFO] intraday.auth_server: DryRun place_order: SELL KOTAKBANK x45 @ 368.50 → DRY-000004
+2026-05-04 05:55:45 [INFO] intraday.executor: 📋 Placed KOTAKBANK: BUY 45 × ₹374.50 | Target ₹386.00 | SL ₹368.50 | 🧪 DRY-RUN
+2026-05-04 05:55:45 [INFO] intraday.auth_server: DryRun place_order: BUY ADANIPOWER x89 @ 223.50 → DRY-000005
+2026-05-04 05:55:45 [INFO] intraday.auth_server: DryRun place_order: SELL ADANIPOWER x89 @ 219.50 → DRY-000006
+2026-05-04 05:55:45 [INFO] intraday.executor: 📋 Placed ADANIPOWER: BUY 89 × ₹223.50 | Target ₹231.00 | SL ₹219.50 | 🧪 DRY-RUN
+2026-05-04 05:55:45 [INFO] intraday.auth_server: DryRun place_order: BUY HFCL x186 @ 122.80 → DRY-000007
+2026-05-04 05:55:45 [INFO] intraday.auth_server: DryRun place_order: SELL HFCL x186 @ 120.50 → DRY-000008
+2026-05-04 05:55:45 [INFO] intraday.executor: 📋 Placed HFCL: BUY 186 × ₹122.80 | Target ₹127.50 | SL ₹120.50 | 🧪 DRY-RUN
+2026-05-04 05:55:45 [INFO] intraday.auth_server: DryRun place_order: BUY MEESHO x102 @ 195.50 → DRY-000009
+2026-05-04 05:55:45 [INFO] intraday.auth_server: DryRun place_order: SELL MEESHO x102 @ 191.50 → DRY-000010
+2026-05-04 05:55:45 [INFO] intraday.executor: 📋 Placed MEESHO: BUY 102 × ₹195.50 | Target ₹203.50 | SL ₹191.50 | 🧪 DRY-RUN
+2026-05-04 05:55:45 [INFO] intraday.executor: Placed 5 / 5 orders (DRY_RUN mode)
+2026-05-04 05:55:45 [INFO] intraday: ✅ [09:25:45] Phase: Order Execution — DONE
+2026-05-04 05:55:45 [INFO] intraday: 🟢 [09:25:45] Phase: Position Monitoring — START
+2026-05-04 05:55:45 [INFO] intraday.monitor: 🔍 Starting position monitor for 5 trade(s)…
+2026-05-04 05:55:45 [INFO] intraday.monitor: 📡 Dry-run with LIVE NSE prices — monitoring every 120s until 15:15 IST
+2026-05-04 05:55:49 [INFO] intraday.monitor: 📊 VEDL PARTIAL BOOK: sold 28 @ ₹284.05, remaining 44, SL → ₹277.50 (breakeven)
+2026-05-04 05:55:49 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹219.50 → ₹224.44
+2026-05-04 05:55:49 [INFO] intraday.monitor: 📈 HFCL trailing SL moved: ₹120.50 → ₹123.25
+2026-05-04 05:55:49 [INFO] intraday.monitor: 📊 MEESHO PARTIAL BOOK: sold 40 @ ₹202.10, remaining 62, SL → ₹195.50 (breakeven)
+2026-05-04 05:57:53 [INFO] intraday.monitor: 📈 VEDL trailing SL moved: ₹277.50 → ₹281.52
+2026-05-04 05:57:53 [INFO] intraday.monitor: 🛑 ADANIPOWER STOPPED OUT @ ₹224.21 | P&L: ₹63.19
+2026-05-04 05:57:53 [INFO] intraday.monitor: 🛑 HFCL STOPPED OUT @ ₹121.40 | P&L: ₹-260.40
+2026-05-04 05:57:53 [INFO] intraday.monitor: 🎯 MEESHO TARGET HIT @ ₹206.05 | P&L: ₹654.10
+2026-05-04 05:59:54 [INFO] intraday.monitor: 📈 VEDL trailing SL moved: ₹281.52 → ₹281.62
+2026-05-04 06:01:56 [INFO] intraday.monitor: 🎯 VEDL TARGET HIT @ ₹286.80 | P&L: ₹409.20
+2026-05-04 06:14:02 [INFO] intraday.monitor: 📊 Monitor cycle 10 | 1 open | unrealized P&L: ₹-63.00 | 09:44:02 IST
+2026-05-04 06:34:13 [INFO] intraday.monitor: 📊 Monitor cycle 20 | 1 open | unrealized P&L: ₹-15.75 | 10:04:12 IST
+2026-05-04 08:28:52 [INFO] intraday.monitor: 📊 Monitor cycle 30 | 1 open | unrealized P&L: ₹-15.75 | 11:58:51 IST
+2026-05-04 08:49:06 [INFO] intraday.monitor: 📊 Monitor cycle 40 | 1 open | unrealized P&L: ₹-56.25 | 12:19:05 IST
+2026-05-04 09:09:19 [INFO] intraday.monitor: 📊 Monitor cycle 50 | 1 open | unrealized P&L: ₹-54.00 | 12:39:18 IST
+2026-05-04 09:29:33 [INFO] intraday.monitor: 📊 Monitor cycle 60 | 1 open | unrealized P&L: ₹-112.50 | 12:59:31 IST
+2026-05-04 09:49:47 [INFO] intraday.monitor: 📊 Monitor cycle 70 | 1 open | unrealized P&L: ₹-117.00 | 13:19:46 IST
+2026-05-04 10:10:01 [INFO] intraday.monitor: 📊 Monitor cycle 80 | 1 open | unrealized P&L: ₹-162.00 | 13:40:00 IST
+2026-05-04 10:30:16 [INFO] intraday.monitor: 📊 Monitor cycle 90 | 1 open | unrealized P&L: ₹-135.00 | 14:00:14 IST
+2026-05-04 10:50:31 [INFO] intraday.monitor: 📊 Monitor cycle 100 | 1 open | unrealized P&L: ₹-112.50 | 14:20:29 IST
+2026-05-04 11:10:59 [INFO] intraday.monitor: 📊 Monitor cycle 110 | 1 open | unrealized P&L: ₹-144.00 | 14:40:57 IST
+2026-05-04 11:31:12 [INFO] intraday.monitor: 📊 Monitor cycle 120 | 1 open | unrealized P&L: ₹-157.50 | 15:01:10 IST
+2026-05-04 11:45:21 [INFO] intraday.monitor: ⏰ Force exit time reached — closing all positions
+2026-05-04 11:45:21 [INFO] intraday.monitor: ⏰ KOTAKBANK FORCE EXITED @ ₹371.65 | P&L: ₹-128.25
+2026-05-04 11:45:21 [INFO] intraday: ✅ [15:15:21] Phase: Position Monitoring — DONE
+2026-05-04 11:45:21 [INFO] intraday: 🟢 [15:15:21] Phase: EOD Report — START
+2026-05-04 11:45:22 [INFO] intraday.reporter: EOD report saved to output/reports/intraday_2026-05-04.json
+2026-05-04 11:45:22 [INFO] intraday: ✅ [15:15:22] Phase: EOD Report — DONE
+2026-05-04 11:45:22 [INFO] intraday: 🟢 [15:15:22] Phase: Dashboard Update — START
+2026-05-04 11:45:23 [INFO] intraday.dashboard: Dashboard JSON updated: dashboard/api/intraday_latest.json
+2026-05-04 11:45:23 [INFO] intraday: ✅ [15:15:23] Phase: Dashboard Update — DONE
+
+╔══════════════════════════════════════════════════════════════╗
+║           🚀 INTRADAY AUTO-TRADER — Wealth Builder Pro      ║
+║           Mode: 🧪 DRY-RUN                                  ║
+║           Time: 2026-05-04 09:25 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+┌──────────────────────────────────────────────────────────────┐
+│              🌅 MORNING PICKS — Claude's Selections          │
+│              VIX: 17.92 | Budget: ₹100,000              │
+├──────────────────────────────────────────────────────────────┤
+│  1. Vedanta Limited (VEDL)
+│     📍 Entry: ₹277.50  🎯 Target: ₹286.00  🛑 SL: ₹272.00
+│     📊 R:R 1.6:1  ⭐ Confidence: 7/10  🏷️ GAP
+│     💡 Opened at 277 with +2% gap, metal sector +0.61% green, volume 8.09M co…
+│
+│  2. Kotak Mahindra Bank (KOTAKBANK)
+│     📍 Entry: ₹374.50  🎯 Target: ₹386.00  🛑 SL: ₹368.50
+│     📊 R:R 1.9:1  ⭐ Confidence: 6/10  🏷️ REVERSAL
+│     💡 Gapped down -1.15% but recovering from low 363 to 374. Banking sector …
+│
+│  3. Adani Power (ADANIPOWER)
+│     📍 Entry: ₹223.50  🎯 Target: ₹231.00  🛑 SL: ₹219.50
+│     📊 R:R 1.9:1  ⭐ Confidence: 7/10  🏷️ ORB
+│     💡 Opened 223, LTP 225, tight range near open — ideal non-chased entry. E…
+│
+│  4. HFCL Limited (HFCL)
+│     📍 Entry: ₹122.80  🎯 Target: ₹127.50  🛑 SL: ₹120.50
+│     📊 R:R 2.0:1  ⭐ Confidence: 8/10  🏷️ GAP
+│     💡 Gapped up +5.45% on massive volume 36.16M — exceptional momentum. Curr…
+│
+│  5. Meesho (MEESHO)
+│     📍 Entry: ₹195.50  🎯 Target: ₹203.50  🛑 SL: ₹191.50
+│     📊 R:R 2.0:1  ⭐ Confidence: 7/10  🏷️ MOMENTUM
+│     💡 Opened 195, LTP 202 — pullback to open would be ideal entry at 195.50.…
+│
+└──────────────────────────────────────────────────────────────┘
+
+
+============================================================
+  📊 INTRADAY TRADING REPORT — 2026-05-04
+  Mode: 🧪 DRY-RUN
+============================================================
+
+  🎯 VEDL         Entry ₹277.50 → Exit ₹286.80  Qty 44  P&L [92m+₹409[0m  [GAP]
+  ⏰ KOTAKBANK    Entry ₹374.50 → Exit ₹371.65  Qty 45  P&L [91m-₹128[0m  [REVERSAL]
+  🛑 ADANIPOWER   Entry ₹223.50 → Exit ₹224.21  Qty 89  P&L [92m+₹63[0m  [ORB]
+  🛑 HFCL         Entry ₹122.80 → Exit ₹121.40  Qty 186  P&L [91m-₹260[0m  [GAP]
+  🎯 MEESHO       Entry ₹195.50 → Exit ₹206.05  Qty 62  P&L [92m+₹654[0m  [MOMENTUM]
+
+  🟢 Total P&L: [92m₹+737.84[0m
+  📈 Win Rate: 60.0% (3W / 2L)
+  💰 Avg Win: ₹375.50 | Avg Loss: ₹-194.32
+  🎯 Expectancy: ₹147.57/trade
+  📊 Profit Factor: 2.90
+
+  Strategy Breakdown:
+    GAP: 50% WR, ₹+149 P&L
+    REVERSAL: 0% WR, ₹-128 P&L
+    ORB: 100% WR, ₹+63 P&L
+    MOMENTUM: 100% WR, ₹+654 P&L
+
+============================================================
+
+
+🏁 Intraday session complete!
+
+Finished at: Mon May  4 11:45:27 CEST 2026
+Exit code: 0
+=== END ===

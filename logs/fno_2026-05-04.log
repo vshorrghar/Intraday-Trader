@@ -1,0 +1,649 @@
+=== F&O Auto-Trader — 2026-05-04 ===
+Started at: Mon May  4 05:50:00 CEST 2026
+Python: /Users/vshorgha/kiro/websites/intraday-trader/.venv/bin/python
+2026-05-04 05:50:01 [INFO] fno: --force: skipping time-of-day check
+2026-05-04 05:50:01 [INFO] fno: 🟢 [09:20:01] Phase: Configuration — START
+2026-05-04 05:50:01 [INFO] fno: ✅ [09:20:01] Phase: Configuration — DONE
+2026-05-04 05:50:01 [INFO] fno: Config: broker=dhan, mode=paper, capital=₹100000, max_positions=8
+2026-05-04 05:50:01 [INFO] fno: 🟢 [09:20:01] Phase: Database — START
+2026-05-04 05:50:01 [INFO] fno: ✅ [09:20:01] Phase: Database — DONE
+2026-05-04 05:50:01 [INFO] fno: 🟢 [09:20:01] Phase: Broker Authentication — START
+2026-05-04 05:50:02 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-05-04 05:50:02 [INFO] fno: ✅ [09:20:02] Phase: Broker Authentication — DONE
+2026-05-04 05:50:02 [INFO] fno: Broker: dhan, mode=paper, auth=DryRun
+2026-05-04 05:50:02 [INFO] fno: 🟢 [09:20:02] Phase: Option Chain Fetch — START
+2026-05-04 05:50:02 [INFO] fno: NIFTY: spot=24967.26, ATM=24950.0, PCR=0.65, MaxPain=24900.0
+2026-05-04 05:50:02 [INFO] fno: BANKNIFTY: spot=54171.80, ATM=54200.0, PCR=0.47, MaxPain=53900.0
+2026-05-04 05:50:02 [INFO] fno: FINNIFTY: spot=22844.02, ATM=22850.0, PCR=0.49, MaxPain=22700.0
+2026-05-04 05:50:02 [INFO] fno: ✅ [09:20:02] Phase: Option Chain Fetch — DONE
+2026-05-04 05:50:02 [INFO] fno: 🟢 [09:20:02] Phase: Greeks Computation — START
+2026-05-04 05:50:06 [INFO] fno: ✅ [09:20:06] Phase: Greeks Computation — DONE
+2026-05-04 05:50:06 [INFO] fno: 🟢 [09:20:06] Phase: Quant Edge Engine — START
+2026-05-04 05:50:06 [INFO] fno: NIFTY quant: IVP=100.0%, VRP=8.49, GEX=PINNED, Confluence=61
+2026-05-04 05:50:06 [INFO] fno: BANKNIFTY quant: IVP=88.6%, VRP=2.33, GEX=PINNED, Confluence=51
+2026-05-04 05:50:06 [INFO] fno: FINNIFTY quant: IVP=93.2%, VRP=7.82, GEX=PINNED, Confluence=57
+2026-05-04 05:50:06 [INFO] fno: ✅ [09:20:06] Phase: Quant Edge Engine — DONE
+2026-05-04 05:50:06 [INFO] fno: 🟢 [09:20:06] Phase: Strategy Selection — START
+2026-05-04 05:50:06 [INFO] fno.strategy_engine: Market regime: SIDEWAYS (VIX=15.0)
+2026-05-04 05:50:07 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-05-04 05:50:08 [WARNING] fno.strategy_engine: Bedrock call failed (An error occurred (ValidationException) when calling the InvokeModel operation: `temperature` is deprecated for this model.) — using demo response
+2026-05-04 05:50:09 [WARNING] fno.strategy_engine: Bedrock call failed (An error occurred (ValidationException) when calling the InvokeModel operation: `temperature` is deprecated for this model.) — using demo response
+2026-05-04 05:50:10 [WARNING] fno.strategy_engine: Bedrock call failed (An error occurred (ValidationException) when calling the InvokeModel operation: `temperature` is deprecated for this model.) — using demo response
+2026-05-04 05:50:10 [INFO] fno: Selected 3 strategies
+2026-05-04 05:50:10 [INFO] fno:   IRON_CONDOR NIFTY: 4 legs, max_loss=₹250, confidence=8, confluence=61
+2026-05-04 05:50:10 [INFO] fno:   IRON_CONDOR BANKNIFTY: 4 legs, max_loss=₹900, confidence=8, confluence=51
+2026-05-04 05:50:10 [INFO] fno:   IRON_CONDOR FINNIFTY: 4 legs, max_loss=₹250, confidence=8, confluence=57
+2026-05-04 05:50:10 [INFO] fno: ✅ [09:20:10] Phase: Strategy Selection — DONE
+2026-05-04 05:50:10 [INFO] fno: 🟢 [09:20:10] Phase: Risk Validation — START
+2026-05-04 05:50:10 [INFO] fno: ✅ Approved: IRON_CONDOR NIFTY
+2026-05-04 05:50:10 [INFO] fno: ✅ Approved: IRON_CONDOR BANKNIFTY
+2026-05-04 05:50:10 [INFO] fno: ✅ Approved: IRON_CONDOR FINNIFTY
+2026-05-04 05:50:10 [INFO] fno: ✅ [09:20:10] Phase: Risk Validation — DONE
+2026-05-04 05:50:10 [INFO] fno: 🟢 [09:20:10] Phase: Order Execution — START
+2026-05-04 05:50:10 [INFO] fno.paper_engine: Paper fill: IRON_CONDOR NIFTY — margin ₹300, remaining ₹99700
+2026-05-04 05:50:10 [INFO] fno: Placed strategy 40: IRON_CONDOR NIFTY
+2026-05-04 05:50:10 [INFO] fno.paper_engine: Paper fill: IRON_CONDOR BANKNIFTY — margin ₹1080, remaining ₹98620
+2026-05-04 05:50:10 [INFO] fno: Placed strategy 41: IRON_CONDOR BANKNIFTY
+2026-05-04 05:50:10 [INFO] fno.paper_engine: Paper fill: IRON_CONDOR FINNIFTY — margin ₹300, remaining ₹98320
+2026-05-04 05:50:10 [INFO] fno: Placed strategy 42: IRON_CONDOR FINNIFTY
+2026-05-04 05:50:10 [INFO] fno: ✅ [09:20:10] Phase: Order Execution — DONE
+2026-05-04 05:50:10 [INFO] fno: 🟢 [09:20:10] Phase: Position Monitoring — START
+2026-05-04 05:50:10 [INFO] fno: Monitoring every 30s until 15:15 IST (paper mode)
+2026-05-04 05:50:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:50:40 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:51:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:51:40 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:52:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:52:41 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:53:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:53:41 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:54:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:54:41 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:54:41 [INFO] fno: Monitor cycle 10: open=3, exits=0, warnings=1
+2026-05-04 05:55:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:55:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:56:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:56:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:57:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:57:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:58:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:58:43 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:59:13 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:59:43 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 05:59:43 [INFO] fno: Monitor cycle 20: open=3, exits=0, warnings=1
+2026-05-04 06:00:13 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:00:43 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:01:13 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:01:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:02:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:02:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:03:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:03:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:04:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:04:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:04:45 [INFO] fno: Monitor cycle 30: open=3, exits=0, warnings=1
+2026-05-04 06:05:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:05:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:06:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:06:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:07:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:07:46 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:08:16 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:08:46 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:09:16 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:09:46 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:09:46 [INFO] fno: Monitor cycle 40: open=3, exits=0, warnings=1
+2026-05-04 06:10:17 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:10:47 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:11:17 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:11:47 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:12:17 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:12:47 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:13:17 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:13:48 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:14:18 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:14:48 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:14:48 [INFO] fno: Monitor cycle 50: open=3, exits=0, warnings=1
+2026-05-04 06:15:18 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:15:48 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:16:18 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:16:49 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:17:19 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:17:49 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:18:19 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:18:49 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:19:19 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:19:50 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:19:50 [INFO] fno: Monitor cycle 60: open=3, exits=0, warnings=1
+2026-05-04 06:20:20 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:20:50 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:21:20 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:21:50 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:22:21 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:22:51 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:23:21 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:23:51 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:24:21 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:24:51 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:24:51 [INFO] fno: Monitor cycle 70: open=3, exits=0, warnings=1
+2026-05-04 06:25:21 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:25:52 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:26:22 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:26:52 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:27:22 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:27:52 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:28:22 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:28:53 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:29:23 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:29:53 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:29:53 [INFO] fno: Monitor cycle 80: open=3, exits=0, warnings=1
+2026-05-04 06:30:23 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:30:53 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:31:23 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:31:54 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:32:24 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:32:54 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:33:24 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:33:54 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:34:24 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:34:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:34:55 [INFO] fno: Monitor cycle 90: open=3, exits=0, warnings=1
+2026-05-04 06:35:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:35:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:36:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:36:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:37:26 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:37:56 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:38:26 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 06:56:56 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 07:14:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 07:16:48 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 07:16:48 [INFO] fno: Monitor cycle 100: open=3, exits=0, warnings=1
+2026-05-04 07:17:18 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 07:37:21 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:15:16 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:15:47 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:16:51 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:17:27 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:18:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:18:31 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:19:02 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:19:32 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:19:32 [INFO] fno: Monitor cycle 110: open=3, exits=0, warnings=1
+2026-05-04 08:20:02 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:20:32 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:21:03 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:21:33 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:22:03 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:22:33 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:23:03 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:23:33 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:24:03 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:24:33 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:24:33 [INFO] fno: Monitor cycle 120: open=3, exits=0, warnings=1
+2026-05-04 08:25:03 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:25:34 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:26:04 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:26:34 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:27:04 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:27:34 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:28:04 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:28:34 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:29:04 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:29:34 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:29:34 [INFO] fno: Monitor cycle 130: open=3, exits=0, warnings=1
+2026-05-04 08:30:05 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:30:35 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:31:05 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:31:35 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:32:05 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:32:35 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:33:05 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:33:35 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:34:06 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:34:36 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:34:36 [INFO] fno: Monitor cycle 140: open=3, exits=0, warnings=1
+2026-05-04 08:35:07 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:35:37 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:36:07 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:36:37 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:37:07 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:37:37 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:38:07 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:38:37 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:39:07 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:39:37 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:39:37 [INFO] fno: Monitor cycle 150: open=3, exits=0, warnings=1
+2026-05-04 08:40:08 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:40:38 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:41:08 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:41:38 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:42:08 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:42:38 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:43:08 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:43:38 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:44:08 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:44:39 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:44:39 [INFO] fno: Monitor cycle 160: open=3, exits=0, warnings=1
+2026-05-04 08:45:09 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:45:39 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:46:09 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:46:39 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:47:09 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:47:39 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:48:09 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:48:39 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:49:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:49:40 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:49:40 [INFO] fno: Monitor cycle 170: open=3, exits=0, warnings=1
+2026-05-04 08:50:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:50:40 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:51:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:51:40 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:52:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:52:40 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:53:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:53:40 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:54:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:54:41 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:54:41 [INFO] fno: Monitor cycle 180: open=3, exits=0, warnings=1
+2026-05-04 08:55:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:55:41 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:56:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:56:41 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:57:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:57:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:58:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:58:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:59:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:59:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 08:59:42 [INFO] fno: Monitor cycle 190: open=3, exits=0, warnings=1
+2026-05-04 09:00:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:00:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:01:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:01:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:02:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:02:43 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:03:13 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:03:43 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:04:13 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:04:43 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:04:43 [INFO] fno: Monitor cycle 200: open=3, exits=0, warnings=1
+2026-05-04 09:05:13 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:05:43 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:06:13 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:06:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:07:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:07:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:08:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:08:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:09:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:09:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:09:44 [INFO] fno: Monitor cycle 210: open=3, exits=0, warnings=1
+2026-05-04 09:10:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:10:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:11:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:11:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:12:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:12:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:13:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:13:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:14:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:14:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:14:45 [INFO] fno: Monitor cycle 220: open=3, exits=0, warnings=1
+2026-05-04 09:15:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:15:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:16:16 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:16:51 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:17:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:17:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:18:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:18:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:19:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:19:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:19:55 [INFO] fno: Monitor cycle 230: open=3, exits=0, warnings=1
+2026-05-04 09:20:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:20:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:21:26 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:21:56 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:22:26 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:22:56 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:23:26 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:23:56 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:24:26 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:24:56 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:24:56 [INFO] fno: Monitor cycle 240: open=3, exits=0, warnings=1
+2026-05-04 09:25:27 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:25:57 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:26:27 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:26:57 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:27:27 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:27:57 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:28:27 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:28:57 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:29:27 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:29:57 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:29:57 [INFO] fno: Monitor cycle 250: open=3, exits=0, warnings=1
+2026-05-04 09:30:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:30:58 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:31:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:31:58 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:32:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:32:58 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:33:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:33:58 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:34:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:34:58 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:34:58 [INFO] fno: Monitor cycle 260: open=3, exits=0, warnings=1
+2026-05-04 09:35:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:35:59 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:36:29 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:36:59 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:37:29 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:37:59 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:38:29 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:38:59 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:39:29 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:39:59 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:39:59 [INFO] fno: Monitor cycle 270: open=3, exits=0, warnings=1
+2026-05-04 09:40:29 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:41:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:41:30 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:42:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:42:30 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:43:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:43:30 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:44:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:44:30 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:45:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:45:00 [INFO] fno: Monitor cycle 280: open=3, exits=0, warnings=1
+2026-05-04 09:45:31 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:46:01 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:46:31 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:47:01 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:47:31 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:48:01 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:48:31 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:49:01 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:49:31 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:50:01 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:50:01 [INFO] fno: Monitor cycle 290: open=3, exits=0, warnings=1
+2026-05-04 09:50:32 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:51:02 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:51:32 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:52:02 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:52:32 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:53:02 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:53:32 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:54:02 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:54:32 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:55:03 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:55:03 [INFO] fno: Monitor cycle 300: open=3, exits=0, warnings=1
+2026-05-04 09:55:33 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:56:03 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:56:33 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:57:03 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:57:33 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:58:03 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:58:33 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:59:03 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 09:59:33 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:00:04 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:00:04 [INFO] fno: Monitor cycle 310: open=3, exits=0, warnings=1
+2026-05-04 10:00:34 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:01:04 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:01:34 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:02:04 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:02:34 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:03:04 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:03:34 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:04:04 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:04:34 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:05:04 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:05:04 [INFO] fno: Monitor cycle 320: open=3, exits=0, warnings=1
+2026-05-04 10:05:35 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:06:05 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:06:35 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:07:05 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:07:35 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:08:05 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:08:36 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:09:06 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:09:36 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:10:06 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:10:06 [INFO] fno: Monitor cycle 330: open=3, exits=0, warnings=1
+2026-05-04 10:10:36 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:11:06 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:11:36 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:12:06 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:12:36 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:13:07 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:13:37 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:14:07 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:14:37 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:15:07 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:15:07 [INFO] fno: Monitor cycle 340: open=3, exits=0, warnings=1
+2026-05-04 10:15:37 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:16:07 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:16:37 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:17:07 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:17:37 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:18:08 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:18:38 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:19:08 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:19:38 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:20:08 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:20:08 [INFO] fno: Monitor cycle 350: open=3, exits=0, warnings=1
+2026-05-04 10:20:38 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:21:08 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:21:38 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:22:09 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:22:39 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:23:09 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:23:39 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:24:09 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:24:39 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:25:09 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:25:09 [INFO] fno: Monitor cycle 360: open=3, exits=0, warnings=1
+2026-05-04 10:25:39 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:26:09 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:26:39 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:27:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:27:40 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:28:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:28:40 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:29:10 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:29:40 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:30:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:30:11 [INFO] fno: Monitor cycle 370: open=3, exits=0, warnings=1
+2026-05-04 10:30:41 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:31:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:31:41 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:32:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:32:41 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:33:11 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:33:41 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:34:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:34:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:35:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:35:12 [INFO] fno: Monitor cycle 380: open=3, exits=0, warnings=1
+2026-05-04 10:35:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:36:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:36:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:37:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:37:42 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:38:12 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:38:43 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:39:13 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:39:43 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:40:13 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:40:13 [INFO] fno: Monitor cycle 390: open=3, exits=0, warnings=1
+2026-05-04 10:40:43 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:41:13 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:41:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:42:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:42:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:43:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:43:44 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:44:14 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:44:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:45:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:45:15 [INFO] fno: Monitor cycle 400: open=3, exits=0, warnings=1
+2026-05-04 10:45:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:46:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:46:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:47:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:47:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:48:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:48:45 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:49:15 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:49:46 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:50:16 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:50:16 [INFO] fno: Monitor cycle 410: open=3, exits=0, warnings=1
+2026-05-04 10:50:46 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:51:16 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:51:46 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:52:16 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:52:46 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:53:16 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:53:46 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:54:16 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:54:47 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:55:17 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:55:17 [INFO] fno: Monitor cycle 420: open=3, exits=0, warnings=1
+2026-05-04 10:55:47 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:56:17 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:56:47 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:57:17 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:57:47 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:58:17 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:58:47 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:59:17 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 10:59:48 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:00:18 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:00:18 [INFO] fno: Monitor cycle 430: open=3, exits=0, warnings=1
+2026-05-04 11:00:48 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:01:18 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:01:48 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:02:18 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:02:48 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:03:19 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:03:49 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:04:19 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:04:52 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:05:23 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:05:23 [INFO] fno: Monitor cycle 440: open=3, exits=0, warnings=1
+2026-05-04 11:05:53 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:06:23 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:06:53 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:07:23 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:07:53 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:08:23 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:08:53 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:09:24 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:09:54 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:10:24 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:10:24 [INFO] fno: Monitor cycle 450: open=3, exits=0, warnings=1
+2026-05-04 11:10:54 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:11:24 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:11:54 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:12:24 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:12:54 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:13:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:13:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:14:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:14:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:15:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:15:25 [INFO] fno: Monitor cycle 460: open=3, exits=0, warnings=1
+2026-05-04 11:15:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:16:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:16:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:17:25 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:17:55 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:18:26 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:18:56 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:19:26 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:19:56 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:20:26 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:20:26 [INFO] fno: Monitor cycle 470: open=3, exits=0, warnings=1
+2026-05-04 11:20:56 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:21:26 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:21:57 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:22:27 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:22:57 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:23:27 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:23:57 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:24:27 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:24:57 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:25:27 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:25:27 [INFO] fno: Monitor cycle 480: open=3, exits=0, warnings=1
+2026-05-04 11:25:57 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:26:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:26:58 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:27:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:27:58 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:28:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:28:58 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:29:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:29:58 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:30:28 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:30:28 [INFO] fno: Monitor cycle 490: open=3, exits=0, warnings=1
+2026-05-04 11:30:58 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:31:29 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:31:59 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:32:29 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:32:59 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:33:29 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:33:59 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:34:29 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:34:59 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:35:29 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:35:29 [INFO] fno: Monitor cycle 500: open=3, exits=0, warnings=1
+2026-05-04 11:35:59 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:36:30 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:37:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:37:30 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:38:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:38:30 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:39:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:39:30 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:40:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:40:30 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:40:30 [INFO] fno: Monitor cycle 510: open=3, exits=0, warnings=1
+2026-05-04 11:41:00 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:41:31 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:42:01 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:42:31 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:43:01 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:43:31 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:44:02 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:44:32 [WARNING] fno.monitor: Vega exposure -6717.2 exceeds limit 2000
+2026-05-04 11:45:02 [INFO] fno: ✅ [15:15:02] Phase: Position Monitoring — DONE
+2026-05-04 11:45:02 [INFO] fno: 🟢 [15:15:02] Phase: Force Exit — START
+2026-05-04 11:45:02 [INFO] fno.monitor: Strategy 40 → FORCE_EXITED | P&L: ₹1000.00
+2026-05-04 11:45:02 [INFO] fno.monitor: Strategy 41 → FORCE_EXITED | P&L: ₹600.00
+2026-05-04 11:45:02 [INFO] fno.monitor: Strategy 42 → FORCE_EXITED | P&L: ₹1000.00
+2026-05-04 11:45:02 [INFO] fno.monitor: Force exited 3 strategies
+2026-05-04 11:45:02 [INFO] fno: Force exited 3 strategies
+2026-05-04 11:45:02 [INFO] fno: ✅ [15:15:02] Phase: Force Exit — DONE
+2026-05-04 11:45:02 [INFO] fno: 🟢 [15:15:02] Phase: EOD Report — START
+2026-05-04 11:45:03 [INFO] fno.reporter: Report written: output/reports/fno_2026-05-04.json
+2026-05-04 11:45:03 [INFO] fno.dashboard: F&O Dashboard JSON updated: dashboard/api/fno_latest.json
+2026-05-04 11:45:03 [INFO] fno.reporter: EOD report generated: 2026-05-04 — P&L ₹2600.00, Win rate 100.0%
+2026-05-04 11:45:03 [INFO] fno: EOD: P&L=₹2600.00, Win rate=100.0%, Strategies=3
+2026-05-04 11:45:03 [INFO] fno: ✅ [15:15:03] Phase: EOD Report — DONE
+2026-05-04 11:45:03 [INFO] fno: 🟢 [15:15:03] Phase: Dashboard Update — START
+2026-05-04 11:45:03 [INFO] fno: ✅ [15:15:03] Phase: Dashboard Update — DONE
+
+╔══════════════════════════════════════════════════════════════╗
+║           🎯 F&O AUTO-TRADER — Wealth Builder Pro            ║
+║           Mode: 🧪 PAPER MODE                               ║
+║           Time: 2026-05-04 09:20 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+🏁 F&O session complete!
+
+Finished at: Mon May  4 11:45:06 CEST 2026
+Exit code: 0
+=== END ===

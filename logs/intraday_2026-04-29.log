@@ -1,42 +1,173 @@
-2026-04-29 07:05:55 [INFO] intraday: --force: skipping time-of-day check
-2026-04-29 07:05:55 [INFO] intraday: 🟢 [12:35:55] Phase: Configuration — START
-2026-04-29 07:05:55 [INFO] intraday: ✅ [12:35:55] Phase: Configuration — DONE
-2026-04-29 07:05:55 [INFO] intraday: 🟢 [12:35:55] Phase: Database — START
-2026-04-29 07:05:55 [INFO] intraday: ✅ [12:35:55] Phase: Database — DONE
-2026-04-29 07:05:55 [INFO] intraday: 🟢 [12:35:55] Phase: Broker Authentication — START
-2026-04-29 07:05:55 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
-2026-04-29 07:05:55 [INFO] intraday: ✅ [12:35:55] Phase: Broker Authentication — DONE
-2026-04-29 07:05:55 [INFO] intraday: 🟢 [12:35:55] Phase: Pre-Market Scan — START
-2026-04-29 07:05:55 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
-2026-04-29 07:05:55 [INFO] intraday.scanner: India VIX: 16.93 | 27 sectors fetched
-2026-04-29 07:05:55 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
-2026-04-29 07:05:55 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
-2026-04-29 07:06:00 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
-2026-04-29 07:06:00 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
-2026-04-29 07:06:00 [WARNING] intraday.scanner: No gainers data — continuing with other sources
-2026-04-29 07:06:00 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
-2026-04-29 07:06:00 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
-2026-04-29 07:06:05 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
-2026-04-29 07:06:05 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
-2026-04-29 07:06:05 [WARNING] intraday.scanner: No losers data — continuing with other sources
-2026-04-29 07:06:05 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
-2026-04-29 07:06:05 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
-2026-04-29 07:06:16 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
-2026-04-29 07:06:16 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
-2026-04-29 07:06:16 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 16.93
-2026-04-29 07:06:16 [INFO] intraday: ✅ [12:36:16] Phase: Pre-Market Scan — DONE
-2026-04-29 07:06:16 [INFO] intraday: 🟢 [12:36:16] Phase: Pre-Filter — START
-2026-04-29 07:06:16 [INFO] intraday.selector: Pre-filter: 20 → 9 candidates
-2026-04-29 07:06:16 [INFO] intraday: Pre-filter: 9 candidates passed
-2026-04-29 07:06:16 [INFO] intraday: ✅ [12:36:16] Phase: Pre-Filter — DONE
-2026-04-29 07:06:16 [INFO] intraday: 🟢 [12:36:16] Phase: LLM Trade Selection — START
-2026-04-29 07:06:16 [INFO] intraday: ❌ [12:36:16] Phase: LLM Trade Selection — FAIL
-2026-04-29 07:06:16 [ERROR] intraday: LLM selection failed: The config profile (vishal-admin) could not be found
-2026-04-29 07:06:16 [INFO] intraday: No trades to report
+=== Intraday Auto-Trader — 2026-04-29 ===
+Started at: Wed Apr 29 05:55:01 CEST 2026
+Python: /Users/vshorgha/kiro/websites/intraday-trader/.venv/bin/python
+2026-04-29 05:55:01 [INFO] intraday: --force: skipping time-of-day check
+2026-04-29 05:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Configuration — START
+2026-04-29 05:55:01 [INFO] intraday: ✅ [09:25:01] Phase: Configuration — DONE
+2026-04-29 05:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Database — START
+2026-04-29 05:55:01 [INFO] intraday: ✅ [09:25:01] Phase: Database — DONE
+2026-04-29 05:55:01 [INFO] intraday: 🟢 [09:25:01] Phase: Broker Authentication — START
+2026-04-29 05:55:03 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-04-29 05:55:03 [INFO] intraday: ✅ [09:25:03] Phase: Broker Authentication — DONE
+2026-04-29 05:55:03 [INFO] intraday: 🟢 [09:25:03] Phase: Pre-Market Scan — START
+2026-04-29 05:55:03 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
+2026-04-29 05:55:03 [INFO] intraday.scanner: India VIX: 17.66 | 27 sectors fetched
+2026-04-29 05:55:04 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-04-29 05:55:04 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
+2026-04-29 05:55:09 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-04-29 05:55:09 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
+2026-04-29 05:55:09 [WARNING] intraday.scanner: No gainers data — continuing with other sources
+2026-04-29 05:55:10 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-04-29 05:55:10 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
+2026-04-29 05:55:15 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-04-29 05:55:15 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
+2026-04-29 05:55:15 [WARNING] intraday.scanner: No losers data — continuing with other sources
+2026-04-29 05:55:16 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
+2026-04-29 05:55:16 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
+2026-04-29 05:55:31 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
+2026-04-29 05:55:31 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
+2026-04-29 05:55:31 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 17.66
+2026-04-29 05:55:31 [INFO] intraday: ✅ [09:25:31] Phase: Pre-Market Scan — DONE
+2026-04-29 05:55:31 [INFO] intraday: 🟢 [09:25:31] Phase: Pre-Filter — START
+2026-04-29 05:55:31 [INFO] intraday.selector: Pre-filter: 20 → 9 candidates
+2026-04-29 05:55:31 [INFO] intraday: Pre-filter: 9 candidates passed
+2026-04-29 05:55:31 [INFO] intraday: ✅ [09:25:31] Phase: Pre-Filter — DONE
+2026-04-29 05:55:31 [INFO] intraday: 🟢 [09:25:31] Phase: LLM Trade Selection — START
+2026-04-29 05:55:33 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-04-29 05:55:33 [INFO] intraday.selector: Sending 9 candidates to LLM for trade selection…
+2026-04-29 05:55:51 [INFO] intraday.selector: LLM market mood: Strong bullish sentiment with 22/27 sectors green, led by Auto +1.38%, FMCG +0.79%, and IT +0.58%. Broad market participation supports intraday long strategies.
+2026-04-29 05:55:51 [INFO] intraday.selector: LLM VIX assessment: VIX at 17.66 (down -2.17%) indicates low-moderate volatility, favorable for intraday trades. Using 1.8-2% stop losses to avoid noise while protecting capital.
+2026-04-29 05:55:51 [INFO] intraday.selector: Pick #1 VALID: BANDHANBNK @ ₹186.01 → ₹192.80 (SL ₹182.68, R:R 2.0, conf 8) [GAP] — Strong gap-up +4.12% with massive volume 21.3M, currently at open price ₹186.01 (perfect entry). Banking sector showing momentum despite lagging broader indices. Stock near day low provides good entry for continuation. Volume confirms institutional interest. R:R = 2.04:1
+2026-04-29 05:55:51 [INFO] intraday.selector: Pick #2 VALID: ETERNAL @ ₹263.30 → ₹273.00 (SL ₹258.43, R:R 2.0, conf 7) [VWAP] — Gapped up +4.04% with exceptional volume 36.9M shares. Currently pulled back to near open ₹263.30 from high ₹265.40 - classic dip-buy setup. Infrastructure sector ranked #5 today (+0.46%). Volume spike indicates strong institutional accumulation. R:R = 2.0:1
+2026-04-29 05:55:51 [INFO] intraday.selector: Pick #3 VALID: EMMVEE @ ₹285.50 → ₹296.50 (SL ₹280.19, R:R 2.1, conf 7) [GAP] — Strongest gap-up +4.86% with high volume 5.37M. Currently at ₹295.81 but entering at open ₹285.50 captures base. Energy/renewable sector gaining traction. Stock holding above day low ₹285.50 shows buying support. R:R = 2.07:1
+2026-04-29 05:55:51 [INFO] intraday.selector: Pick #4 VALID: GROWW @ ₹222.50 → ₹230.80 (SL ₹218.25, R:R 1.9, conf 6) [MOMENTUM] — Small gap +1.21% with LTP near open providing clean entry. Volume 9.96M adequate. Finance/fintech sector showing resilience. Stock at ₹221.52 vs open ₹222.50 within 0.5% threshold. Conservative play in bullish market. R:R = 1.95:1
+2026-04-29 05:55:51 [INFO] intraday.selector: Pick #5 VALID: ONGC @ ₹303.90 → ₹315.00 (SL ₹297.82, R:R 1.8, conf 6) [ORB] — Small gap +0.86%, LTP ₹301.75 near open ₹303.90. Volume 5.49M sufficient for large-cap. Energy sector +0.12% today. Defensive play with tight range, good for portfolio diversification. Stable price action indicates controlled accumulation. R:R = 1.83:1
+2026-04-29 05:55:51 [INFO] intraday.selector: LLM selection complete: 5 valid trade(s)
+2026-04-29 05:55:51 [INFO] intraday: ✅ [09:25:51] Phase: LLM Trade Selection — DONE
+2026-04-29 05:55:51 [INFO] intraday: 🟢 [09:25:51] Phase: Position Sizing — START
+2026-04-29 05:55:51 [INFO] intraday.risk_manager: Restored daily state: realized loss ₹0.00
+2026-04-29 05:55:51 [INFO] intraday.risk_manager: Sized BANDHANBNK: 63 shares × ₹186.01 = ₹11719 (conf 8, R:R 2.0)
+2026-04-29 05:55:51 [INFO] intraday.risk_manager: Sized ETERNAL: 39 shares × ₹263.30 = ₹10269 (conf 7, R:R 2.0)
+2026-04-29 05:55:51 [INFO] intraday.risk_manager: Sized EMMVEE: 36 shares × ₹285.50 = ₹10278 (conf 7, R:R 2.1)
+2026-04-29 05:55:51 [INFO] intraday.risk_manager: Sized GROWW: 39 shares × ₹222.50 = ₹8678 (conf 6, R:R 1.9)
+2026-04-29 05:55:51 [INFO] intraday.risk_manager: Sized ONGC: 29 shares × ₹303.90 = ₹8813 (conf 6, R:R 1.8)
+2026-04-29 05:55:51 [INFO] intraday.risk_manager: Total capital allocated: ₹49756 / ₹50000 remaining
+2026-04-29 05:55:51 [INFO] intraday: ✅ [09:25:51] Phase: Position Sizing — DONE
+2026-04-29 05:55:51 [INFO] intraday: 🟢 [09:25:51] Phase: VIX Check — START
+2026-04-29 05:55:51 [INFO] intraday: ✅ [09:25:51] Phase: VIX Check — DONE
+2026-04-29 05:55:51 [INFO] intraday: 🟢 [09:25:51] Phase: Order Execution — START
+2026-04-29 05:55:51 [INFO] intraday.executor: --force: skipping entry delay
+2026-04-29 05:55:51 [INFO] intraday.auth_server: DryRun place_order: BUY BANDHANBNK x63 @ 186.01 → DRY-000001
+2026-04-29 05:55:51 [INFO] intraday.auth_server: DryRun place_order: SELL BANDHANBNK x63 @ 182.68 → DRY-000002
+2026-04-29 05:55:51 [INFO] intraday.executor: 📋 Placed BANDHANBNK: BUY 63 × ₹186.01 | Target ₹192.80 | SL ₹182.68 | 🧪 DRY-RUN
+2026-04-29 05:55:51 [INFO] intraday.auth_server: DryRun place_order: BUY ETERNAL x39 @ 263.30 → DRY-000003
+2026-04-29 05:55:51 [INFO] intraday.auth_server: DryRun place_order: SELL ETERNAL x39 @ 258.43 → DRY-000004
+2026-04-29 05:55:51 [INFO] intraday.executor: 📋 Placed ETERNAL: BUY 39 × ₹263.30 | Target ₹273.00 | SL ₹258.43 | 🧪 DRY-RUN
+2026-04-29 05:55:51 [INFO] intraday.auth_server: DryRun place_order: BUY EMMVEE x36 @ 285.50 → DRY-000005
+2026-04-29 05:55:51 [INFO] intraday.auth_server: DryRun place_order: SELL EMMVEE x36 @ 280.19 → DRY-000006
+2026-04-29 05:55:51 [INFO] intraday.executor: 📋 Placed EMMVEE: BUY 36 × ₹285.50 | Target ₹296.50 | SL ₹280.19 | 🧪 DRY-RUN
+2026-04-29 05:55:51 [INFO] intraday.auth_server: DryRun place_order: BUY GROWW x39 @ 222.50 → DRY-000007
+2026-04-29 05:55:51 [INFO] intraday.auth_server: DryRun place_order: SELL GROWW x39 @ 218.25 → DRY-000008
+2026-04-29 05:55:51 [INFO] intraday.executor: 📋 Placed GROWW: BUY 39 × ₹222.50 | Target ₹230.80 | SL ₹218.25 | 🧪 DRY-RUN
+2026-04-29 05:55:51 [INFO] intraday.auth_server: DryRun place_order: BUY ONGC x29 @ 303.90 → DRY-000009
+2026-04-29 05:55:51 [INFO] intraday.auth_server: DryRun place_order: SELL ONGC x29 @ 297.82 → DRY-000010
+2026-04-29 05:55:51 [INFO] intraday.executor: 📋 Placed ONGC: BUY 29 × ₹303.90 | Target ₹315.00 | SL ₹297.82 | 🧪 DRY-RUN
+2026-04-29 05:55:51 [INFO] intraday.executor: Placed 5 / 5 orders (DRY_RUN mode)
+2026-04-29 05:55:51 [INFO] intraday: ✅ [09:25:51] Phase: Order Execution — DONE
+2026-04-29 05:55:51 [INFO] intraday: 🟢 [09:25:51] Phase: Position Monitoring — START
+2026-04-29 05:55:51 [INFO] intraday.monitor: 🔍 Starting position monitor for 5 trade(s)…
+2026-04-29 05:55:51 [INFO] intraday.monitor: 📡 Dry-run with LIVE NSE prices — monitoring every 120s until 15:15 IST
+2026-04-29 05:55:55 [INFO] intraday.monitor: 🎯 BANDHANBNK TARGET HIT @ ₹195.93 | P&L: ₹624.96
+2026-04-29 05:55:55 [INFO] intraday.monitor: 🛑 ETERNAL STOPPED OUT @ ₹256.94 | P&L: ₹-248.04
+2026-04-29 05:55:55 [INFO] intraday.monitor: 📊 EMMVEE PARTIAL BOOK: sold 14 @ ₹295.81, remaining 22, SL → ₹285.50 (breakeven)
+2026-04-29 05:57:57 [INFO] intraday.monitor: 🎯 EMMVEE TARGET HIT @ ₹299.50 | P&L: ₹308.00
+2026-04-29 06:14:13 [INFO] intraday.monitor: 📊 Monitor cycle 10 | 2 open | unrealized P&L: ₹-143.25 | 09:44:11 IST
+2026-04-29 06:34:32 [INFO] intraday.monitor: 📊 Monitor cycle 20 | 2 open | unrealized P&L: ₹-115.47 | 10:04:30 IST
+2026-04-29 06:54:49 [INFO] intraday.monitor: 📊 Monitor cycle 30 | 2 open | unrealized P&L: ₹-141.75 | 10:24:48 IST
+2026-04-29 07:11:04 [INFO] intraday.monitor: 🛑 GROWW STOPPED OUT @ ₹217.23 | P&L: ₹-205.53
+2026-04-29 07:59:48 [WARNING] intraday.monitor: NSE session failed: HTTPSConnectionPool(host='www.nseindia.com', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host='www.nseindia.com', port=443): Failed to resolve 'www.nseindia.com' ([Errno 8] nodename nor servname provided, or not known)")) — keeping last known prices
+2026-04-29 07:59:48 [INFO] intraday.monitor: 📊 Monitor cycle 40 | 1 open | unrealized P&L: ₹20.30 | 11:29:48 IST
+2026-04-29 08:46:28 [INFO] intraday.monitor: 📊 Monitor cycle 50 | 1 open | unrealized P&L: ₹18.85 | 12:16:27 IST
+2026-04-29 09:02:39 [INFO] intraday.monitor: 📈 ONGC trailing SL moved: ₹297.82 → ₹304.67
+2026-04-29 09:06:42 [INFO] intraday.monitor: 📊 Monitor cycle 60 | 1 open | unrealized P&L: ₹43.50 | 12:36:40 IST
+2026-04-29 09:26:55 [INFO] intraday.monitor: 📊 Monitor cycle 70 | 1 open | unrealized P&L: ₹40.60 | 12:56:54 IST
+2026-04-29 09:47:12 [INFO] intraday.monitor: 📊 Monitor cycle 80 | 1 open | unrealized P&L: ₹31.90 | 13:17:11 IST
+2026-04-29 10:01:22 [INFO] intraday.monitor: 🛑 ONGC STOPPED OUT @ ₹304.55 | P&L: ₹18.85
+2026-04-29 10:03:22 [INFO] intraday: ✅ [13:33:22] Phase: Position Monitoring — DONE
+2026-04-29 10:03:22 [INFO] intraday: 🟢 [13:33:22] Phase: EOD Report — START
+2026-04-29 10:03:22 [INFO] intraday.reporter: EOD report saved to output/reports/intraday_2026-04-29.json
+2026-04-29 10:03:22 [INFO] intraday: ✅ [13:33:22] Phase: EOD Report — DONE
+2026-04-29 10:03:22 [INFO] intraday: 🟢 [13:33:22] Phase: Dashboard Update — START
+2026-04-29 10:03:22 [INFO] intraday.dashboard: Dashboard JSON updated: dashboard/api/intraday_latest.json
+2026-04-29 10:03:22 [INFO] intraday: ✅ [13:33:22] Phase: Dashboard Update — DONE
 
 ╔══════════════════════════════════════════════════════════════╗
 ║           🚀 INTRADAY AUTO-TRADER — Wealth Builder Pro      ║
 ║           Mode: 🧪 DRY-RUN                                  ║
-║           Time: 2026-04-29 12:35 IST                       ║
+║           Time: 2026-04-29 09:25 IST                       ║
 ╚══════════════════════════════════════════════════════════════╝
 
+
+┌──────────────────────────────────────────────────────────────┐
+│              🌅 MORNING PICKS — Claude's Selections          │
+│              VIX: 17.66 | Budget: ₹50,000              │
+├──────────────────────────────────────────────────────────────┤
+│  1. Bandhan Bank Limited (BANDHANBNK)
+│     📍 Entry: ₹186.01  🎯 Target: ₹192.80  🛑 SL: ₹182.68
+│     📊 R:R 2.0:1  ⭐ Confidence: 8/10  🏷️ GAP
+│     💡 Strong gap-up +4.12% with massive volume 21.3M, currently at open pric…
+│
+│  2. Eternal Limited (ETERNAL)
+│     📍 Entry: ₹263.30  🎯 Target: ₹273.00  🛑 SL: ₹258.43
+│     📊 R:R 2.0:1  ⭐ Confidence: 7/10  🏷️ VWAP
+│     💡 Gapped up +4.04% with exceptional volume 36.9M shares. Currently pulle…
+│
+│  3. EMMVEE Solar Systems Limited (EMMVEE)
+│     📍 Entry: ₹285.50  🎯 Target: ₹296.50  🛑 SL: ₹280.19
+│     📊 R:R 2.1:1  ⭐ Confidence: 7/10  🏷️ GAP
+│     💡 Strongest gap-up +4.86% with high volume 5.37M. Currently at ₹295.81 b…
+│
+│  4. Groww (Nextbillion Technology) (GROWW)
+│     📍 Entry: ₹222.50  🎯 Target: ₹230.80  🛑 SL: ₹218.25
+│     📊 R:R 1.9:1  ⭐ Confidence: 6/10  🏷️ MOMENTUM
+│     💡 Small gap +1.21% with LTP near open providing clean entry. Volume 9.96…
+│
+│  5. ONGC Limited (ONGC)
+│     📍 Entry: ₹303.90  🎯 Target: ₹315.00  🛑 SL: ₹297.82
+│     📊 R:R 1.8:1  ⭐ Confidence: 6/10  🏷️ ORB
+│     💡 Small gap +0.86%, LTP ₹301.75 near open ₹303.90. Volume 5.49M sufficie…
+│
+└──────────────────────────────────────────────────────────────┘
+
+
+============================================================
+  📊 INTRADAY TRADING REPORT — 2026-04-29
+  Mode: 🧪 DRY-RUN
+============================================================
+
+  🎯 BANDHANBNK   Entry ₹186.01 → Exit ₹195.93  Qty 63  P&L [92m+₹625[0m  [GAP]
+  🛑 ETERNAL      Entry ₹263.30 → Exit ₹256.94  Qty 39  P&L [91m-₹248[0m  [VWAP]
+  🎯 EMMVEE       Entry ₹285.50 → Exit ₹299.50  Qty 22  P&L [92m+₹308[0m  [GAP]
+  🛑 GROWW        Entry ₹222.50 → Exit ₹217.23  Qty 39  P&L [91m-₹206[0m  [MOMENTUM]
+  🛑 ONGC         Entry ₹303.90 → Exit ₹304.55  Qty 29  P&L [92m+₹19[0m  [ORB]
+
+  🟢 Total P&L: [92m₹+498.24[0m
+  📈 Win Rate: 60.0% (3W / 2L)
+  💰 Avg Win: ₹317.27 | Avg Loss: ₹-226.78
+  🎯 Expectancy: ₹99.65/trade
+  📊 Profit Factor: 2.10
+
+  Strategy Breakdown:
+    GAP: 100% WR, ₹+933 P&L
+    VWAP: 0% WR, ₹-248 P&L
+    MOMENTUM: 0% WR, ₹-206 P&L
+    ORB: 100% WR, ₹+19 P&L
+
+============================================================
+
+
+🏁 Intraday session complete!
+
+Finished at: Wed Apr 29 10:03:24 CEST 2026
+Exit code: 0
+=== END ===

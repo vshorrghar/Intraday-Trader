@@ -50,8 +50,8 @@ dhan:
 
 intraday:
   broker: "dhan"
-  daily_capital_limit: 100000         # ₹1L for intraday
-  per_trade_max_capital: 30000        # ₹30K per trade
+  daily_capital_limit: 300000         # ₹3L for intraday (paper experiment)
+  per_trade_max_capital: 75000        # ₹75K per trade
   max_trades_per_day: 5               # 5 trades — more shots on goal
   price_range_min: 50
   price_range_max: 3000               # Allow higher-priced stocks (HDFC, Reliance etc)
@@ -69,9 +69,9 @@ intraday:
 fno:
   broker: "dhan"
   mode: "paper"                     # "paper" or "live"
-  paper_capital: 100000              # ₹1L for FnO
-  daily_capital_limit: 100000
-  per_trade_max_capital: 30000       # ₹30K per trade
+  paper_capital: 300000              # ₹3L for FnO (paper experiment)
+  daily_capital_limit: 300000
+  per_trade_max_capital: 75000       # ₹75K per trade
   max_positions: 8                   # 8 positions — diversified aggression
   allowed_indices:
     - "NIFTY"

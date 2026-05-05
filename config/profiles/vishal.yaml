@@ -1,0 +1,32 @@
+# Profile: Vishal
+# This file contains profile-specific overrides.
+# Shared settings (AWS, strategies, etc.) come from config/config.yaml
+
+profile:
+  name: "vishal"
+  display_name: "Vishal"
+
+dhan:
+  client_id: "1110941563"
+  api_key: "72817899"
+  api_secret: "ae43eec5-2733-4bbf-b38a-9f2f82dd1858"
+  totp_secret: "4A62ID3S5MIAY7B45H7QNRRAVK2T556T"
+  pin: "121212"
+
+database:
+  path: database/vishal.db
+
+dashboard:
+  api_dir: dashboard/api/vishal
+
+intraday:
+  daily_capital_limit: 300000
+  per_trade_max_capital: 75000
+  daily_loss_limit: 5000
+
+fno:
+  mode: "paper"
+  paper_capital: 300000
+  daily_capital_limit: 300000
+  per_trade_max_capital: 75000
+  daily_loss_limit: 25000

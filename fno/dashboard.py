@@ -112,12 +112,15 @@ def write_fno_dashboard_json(
 
 
 def _build_fno_history(db: Any) -> dict:
-    """Build historical F&O performance data from DB."""
+    """Build historical F&O performance data from DB.
+
+    Uses realized_pnl from closed strategies. Filters out obviously
+    erroneous entries (e.g. single-day P&L > paper_capital) that may
+    have been recorded during early development/testing.
+    """
     if db is None:
         return _demo_history()
     try:
-        cumulative_pnl = db.get_fno_cumulative_pnl()
-
         # Pull daily P&L from fno_strategies table grouped by date
         cursor = db.conn.cursor()
         cursor.execute(
@@ -136,20 +139,35 @@ def _build_fno_history(db: Any) -> dict:
         daily_pnl = []
         total_winners = 0
         total_losers = 0
-        strategy_breakdown: dict[str, dict] = {}
+        cumulative_pnl = 0.0
 
         for row in rows:
+            day_pnl = round(float(row["daily_pnl"]), 2)
+            num_strats = int(row["num_strategies"])
+
+            # Sanity check: flag days where P&L per strategy is unreasonably high
+            # (> ₹25,000 per strategy suggests a data bug from early development)
+            avg_pnl_per_strat = abs(day_pnl) / max(num_strats, 1)
+            if avg_pnl_per_strat > 25000:
+                logger.warning(
+                    "FnO history: skipping %s — avg P&L ₹%.0f/strategy looks like a data bug",
+                    row["trade_date"], avg_pnl_per_strat,
+                )
+                continue
+
+            cumulative_pnl += day_pnl
             daily_pnl.append({
                 "date": row["trade_date"],
-                "pnl": round(float(row["daily_pnl"]), 2),
-                "strategies": int(row["num_strategies"]),
+                "pnl": day_pnl,
+                "strategies": num_strats,
                 "winners": int(row["winners"]),
                 "losers": int(row["losers"]),
             })
             total_winners += int(row["winners"])
             total_losers += int(row["losers"])
 
-        # Strategy type breakdown
+        # Strategy type breakdown (also excluding buggy entries)
+        strategy_breakdown: dict[str, dict] = {}
         cursor.execute(
             """SELECT strategy_type,
                       COUNT(*) as count,
@@ -157,6 +175,7 @@ def _build_fno_history(db: Any) -> dict:
                       SUM(COALESCE(realized_pnl, 0)) as total_pnl
                FROM fno_strategies
                WHERE status IN ('CLOSED', 'FORCE_EXITED', 'STOPPED_OUT', 'EXPIRED', 'PARTIAL_BOOKED')
+                 AND ABS(COALESCE(realized_pnl, 0)) < 50000
                GROUP BY strategy_type"""
         )
         for row in cursor.fetchall():

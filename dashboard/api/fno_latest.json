@@ -1,69 +1,69 @@
 {
-  "updated_at": "2026-05-01T15:15:15.856793+05:30",
+  "updated_at": "2026-05-04T15:15:03.201953+05:30",
   "mode": "PAPER",
   "broker": "dhan",
   "session_active": false,
-  "paper_capital_remaining": 995150.25,
+  "paper_capital_remaining": 97400.0,
   "today": {
     "strategies": [
       {
         "strategy_type": "IRON_CONDOR",
         "index": "NIFTY",
-        "legs_summary": "SELL 22650.0CE + BUY 22800.0CE + SELL 22050.0PE + BUY 21900.0PE",
-        "entry_premium": 927.75,
-        "current_premium": 927.75,
-        "unrealized_pnl": 2783.25,
+        "legs_summary": "SELL 25100.0CE + BUY 25150.0CE + SELL 24800.0PE + BUY 24750.0PE",
+        "entry_premium": 1000.0,
+        "current_premium": 1000.0,
+        "unrealized_pnl": 1000.0,
         "status": "FORCE_EXITED",
         "confluence_score": 61.0,
         "net_greeks": {
-          "delta": -0.8644,
-          "gamma": -0.0238,
-          "theta": 369.0479,
-          "vega": -34183.5447
+          "delta": -0.0541,
+          "gamma": -0.0012,
+          "theta": 22.4505,
+          "vega": -2087.6695
         }
       },
       {
-        "strategy_type": "BULL_PUT_SPREAD",
-        "index": "NIFTY",
-        "legs_summary": "SELL 22200.0PE + BUY 22050.0PE",
-        "entry_premium": 302.0,
-        "current_premium": 302.0,
-        "unrealized_pnl": 604.0,
+        "strategy_type": "IRON_CONDOR",
+        "index": "BANKNIFTY",
+        "legs_summary": "SELL 54500.0CE + BUY 54600.0CE + SELL 53900.0PE + BUY 53800.0PE",
+        "entry_premium": 600.0,
+        "current_premium": 600.0,
+        "unrealized_pnl": 600.0,
         "status": "FORCE_EXITED",
-        "confluence_score": 61.0,
+        "confluence_score": 50.73,
         "net_greeks": {
-          "delta": 5.4893,
-          "gamma": -0.0068,
-          "theta": 80.5521,
-          "vega": -9753.7581
+          "delta": -0.0095,
+          "gamma": -0.0003,
+          "theta": 25.0961,
+          "vega": -2353.3702
         }
       },
       {
         "strategy_type": "IRON_CONDOR",
         "index": "FINNIFTY",
-        "legs_summary": "SELL 22400.0CE + BUY 22500.0CE + SELL 21800.0PE + BUY 21700.0PE",
-        "entry_premium": 487.5,
-        "current_premium": 487.5,
-        "unrealized_pnl": 1462.5,
+        "legs_summary": "SELL 23000.0CE + BUY 23050.0CE + SELL 22700.0PE + BUY 22650.0PE",
+        "entry_premium": 1000.0,
+        "current_premium": 1000.0,
+        "unrealized_pnl": 1000.0,
         "status": "FORCE_EXITED",
-        "confluence_score": 57.32,
+        "confluence_score": 56.64,
         "net_greeks": {
-          "delta": -0.3715,
-          "gamma": -0.016,
-          "theta": 242.1507,
-          "vega": -22513.7801
+          "delta": -0.0311,
+          "gamma": -0.0015,
+          "theta": 24.3531,
+          "vega": -2276.1771
         }
       }
     ],
-    "total_pnl": 4849.75,
+    "total_pnl": 2600.0,
     "realized_loss": 0,
     "daily_loss_cap": 25000,
     "loss_cap_pct": 0.0,
     "net_greeks": {
-      "delta": 4.25,
-      "gamma": -0.05,
-      "theta": 691.75,
-      "vega": -66451.08
+      "delta": -0.09,
+      "gamma": -0.0,
+      "theta": 71.9,
+      "vega": -6717.22
     }
   },
   "history": {
@@ -109,13 +109,20 @@
         "strategies": 3,
         "winners": 3,
         "losers": 0
+      },
+      {
+        "date": "2026-05-04",
+        "pnl": 2600.0,
+        "strategies": 3,
+        "winners": 3,
+        "losers": 0
       }
     ],
-    "cumulative_pnl": 81985.4,
+    "cumulative_pnl": 84585.4,
     "win_rate": 100.0,
-    "total_days": 6,
-    "total_trades": 9,
-    "total_winners": 9,
+    "total_days": 7,
+    "total_trades": 12,
+    "total_winners": 12,
     "total_losers": 0,
     "strategy_breakdown": {
       "BULL_PUT_SPREAD": {
@@ -124,9 +131,9 @@
         "total_pnl": 1382.5
       },
       "IRON_CONDOR": {
-        "count": 14,
-        "win_rate": 42.9,
-        "total_pnl": 78123.9
+        "count": 17,
+        "win_rate": 52.9,
+        "total_pnl": 80723.9
       },
       "SHORT_STRANGLE": {
         "count": 1,

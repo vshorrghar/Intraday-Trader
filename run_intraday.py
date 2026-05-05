@@ -58,6 +58,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-scan", action="store_true", help="Skip pre-market scan, use cached data")
     parser.add_argument("--force", action="store_true", help="Ignore time-of-day checks")
     parser.add_argument("--demo", action="store_true", help="Demo mode: simulate today's trading with REAL NSE closing data")
+    parser.add_argument("--profile", type=str, default=None, help="User profile name (e.g. vishal, neha). Uses config/profiles/<name>.yaml")
     return parser.parse_args()
 
 
@@ -120,8 +121,30 @@ def main() -> None:
     phase_log("Configuration", "START")
     try:
         from config.config_loader import load_config, load_intraday_config
+        import yaml
+
+        # Profile support: load profile-specific config if --profile given
+        profile_name = args.profile
+        profile_config = None
+        if profile_name:
+            from config.profile_loader import load_profile
+            profile_config = load_profile(profile_name)
+            logger.info("Using profile: %s", profile_name)
+
         app_config = load_config("config/config.yaml")
         intra_config = load_intraday_config("config/config.yaml")
+
+        # Apply profile overrides
+        if profile_config:
+            intra_overrides = profile_config.get("intraday", {})
+            for k, v in intra_overrides.items():
+                if hasattr(intra_config, k):
+                    setattr(intra_config, k, v)
+            # Override DB path
+            db_path_override = profile_config.get("database", {}).get("path")
+            if db_path_override:
+                app_config.db_path = db_path_override
+
         phase_log("Configuration", "DONE")
     except Exception as exc:
         phase_log("Configuration", "FAIL")
@@ -148,7 +171,11 @@ def main() -> None:
         with open("config/config.yaml") as f:
             raw_config = yaml.safe_load(f)
 
-        broker_config = raw_config.get(intra_config.broker, {})
+        # Use profile-specific Dhan creds if available
+        if profile_config:
+            broker_config = profile_config.get(intra_config.broker, {})
+        else:
+            broker_config = raw_config.get(intra_config.broker, {})
         broker = authenticate_broker(intra_config.broker, broker_config, dry_run=dry_run)
         phase_log("Broker Authentication", "DONE")
     except Exception as exc:
@@ -332,6 +359,9 @@ def main() -> None:
     # ── Phase 13: Dashboard update ──
     phase_log("Dashboard Update", "START")
     from intraday.dashboard import write_dashboard_json
+    dashboard_dir = None
+    if profile_config:
+        dashboard_dir = profile_config.get("dashboard", {}).get("api_dir")
     write_dashboard_json(
         trades=final_trades,
         config=intra_config,
@@ -339,6 +369,7 @@ def main() -> None:
         mode="DRY_RUN" if dry_run else "LIVE",
         broker=intra_config.broker,
         session_active=False,
+        api_dir=dashboard_dir,
     )
     phase_log("Dashboard Update", "DONE")
 

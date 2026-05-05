@@ -1,0 +1,39 @@
+# ═══════════════════════════════════════════════════════════════
+# PROFILE TEMPLATE — Copy this file to add a new user
+#
+# Steps:
+#   1. cp config/profiles/_template.yaml config/profiles/<name>.yaml
+#   2. Fill in Dhan credentials
+#   3. Set capital limits
+#   4. Run: ./sync_to_ec2.sh
+#   5. Cron will auto-discover new profiles
+# ═══════════════════════════════════════════════════════════════
+
+profile:
+  name: "REPLACE_ME"          # lowercase, no spaces (used in URLs, DB names)
+  display_name: "REPLACE_ME"  # display name for dashboard
+
+dhan:
+  client_id: "REPLACE_ME"
+  api_key: "REPLACE_ME"
+  api_secret: "REPLACE_ME"
+  totp_secret: "REPLACE_ME"
+  pin: "REPLACE_ME"
+
+database:
+  path: database/REPLACE_ME.db
+
+dashboard:
+  api_dir: dashboard/api/REPLACE_ME
+
+intraday:
+  daily_capital_limit: 100000       # ₹1L default
+  per_trade_max_capital: 30000      # ₹30K per trade
+  daily_loss_limit: 5000            # ₹5K max loss/day
+
+fno:
+  mode: "paper"                     # "paper" or "live"
+  paper_capital: 100000             # ₹1L default
+  daily_capital_limit: 100000
+  per_trade_max_capital: 30000
+  daily_loss_limit: 25000           # ₹25K max loss/day

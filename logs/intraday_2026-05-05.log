@@ -1,0 +1,173 @@
+=== Dev Sandbox Intraday — 2026-05-05 ===
+Started at: Tue May  5 05:29:40 UTC 2026, PID: 165249, User: ec2-user
+2026-05-05 05:29:40 [INFO] intraday: --force: skipping time-of-day check
+2026-05-05 05:29:40 [INFO] intraday: 🟢 [10:59:40] Phase: Configuration — START
+2026-05-05 05:29:40 [INFO] intraday: ✅ [10:59:40] Phase: Configuration — DONE
+2026-05-05 05:29:40 [INFO] intraday: 🟢 [10:59:40] Phase: Database — START
+2026-05-05 05:29:40 [INFO] intraday: ✅ [10:59:40] Phase: Database — DONE
+2026-05-05 05:29:40 [INFO] intraday: 🟢 [10:59:40] Phase: Broker Authentication — START
+2026-05-05 05:29:40 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-05-05 05:29:40 [INFO] intraday: ✅ [10:59:40] Phase: Broker Authentication — DONE
+2026-05-05 05:29:40 [INFO] intraday: 🟢 [10:59:40] Phase: Pre-Market Scan — START
+2026-05-05 05:29:41 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
+2026-05-05 05:29:41 [INFO] intraday.scanner: India VIX: 18.77 | 27 sectors fetched
+2026-05-05 05:29:41 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-05-05 05:29:41 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
+2026-05-05 05:29:46 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-05-05 05:29:46 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
+2026-05-05 05:29:46 [WARNING] intraday.scanner: No gainers data — continuing with other sources
+2026-05-05 05:29:46 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-05-05 05:29:46 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
+2026-05-05 05:29:51 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-05-05 05:29:51 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
+2026-05-05 05:29:51 [WARNING] intraday.scanner: No losers data — continuing with other sources
+2026-05-05 05:29:51 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
+2026-05-05 05:29:51 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
+2026-05-05 05:29:58 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
+2026-05-05 05:29:58 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
+2026-05-05 05:29:58 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 18.77
+2026-05-05 05:29:58 [INFO] intraday: ✅ [10:59:58] Phase: Pre-Market Scan — DONE
+2026-05-05 05:29:58 [INFO] intraday: 🟢 [10:59:58] Phase: Pre-Filter — START
+2026-05-05 05:29:58 [INFO] intraday.selector: Pre-filter: 20 → 9 candidates
+2026-05-05 05:29:58 [INFO] intraday: Pre-filter: 9 candidates passed
+2026-05-05 05:29:58 [INFO] intraday: ✅ [10:59:58] Phase: Pre-Filter — DONE
+2026-05-05 05:29:58 [INFO] intraday: 🟢 [10:59:58] Phase: LLM Trade Selection — START
+2026-05-05 05:29:58 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-05-05 05:29:59 [INFO] intraday.selector: Sending 9 candidates to LLM for trade selection…
+2026-05-05 05:29:59 [ERROR] llm.bedrock_client: Bedrock API error: An error occurred (UnrecognizedClientException) when calling the InvokeModel operation: The security token included in the request is invalid.
+2026-05-05 05:29:59 [ERROR] intraday.selector: LLM returned empty response — aborting trade selection
+2026-05-05 05:29:59 [INFO] intraday: ❌ [10:59:59] Phase: LLM Trade Selection — FAIL
+2026-05-05 05:29:59 [ERROR] intraday: LLM returned zero valid picks — aborting
+2026-05-05 05:29:59 [INFO] intraday: No trades to report
+
+╔══════════════════════════════════════════════════════════════╗
+║           🚀 INTRADAY AUTO-TRADER — Wealth Builder Pro      ║
+║           Mode: 🧪 DRY-RUN                                  ║
+║           Time: 2026-05-05 10:59 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+Finished at: Tue May  5 05:29:59 UTC 2026
+=== END ===
+=== Dev Sandbox Intraday — 2026-05-05 ===
+Started at: Tue May  5 05:44:33 UTC 2026, PID: 166554, User: ec2-user
+2026-05-05 05:44:33 [INFO] intraday: --force: skipping time-of-day check
+2026-05-05 05:44:33 [INFO] intraday: 🟢 [11:14:33] Phase: Configuration — START
+2026-05-05 05:44:33 [INFO] intraday: ✅ [11:14:33] Phase: Configuration — DONE
+2026-05-05 05:44:33 [INFO] intraday: 🟢 [11:14:33] Phase: Database — START
+2026-05-05 05:44:33 [INFO] intraday: ✅ [11:14:33] Phase: Database — DONE
+2026-05-05 05:44:33 [INFO] intraday: 🟢 [11:14:33] Phase: Broker Authentication — START
+2026-05-05 05:44:33 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-05-05 05:44:33 [INFO] intraday: ✅ [11:14:33] Phase: Broker Authentication — DONE
+2026-05-05 05:44:33 [INFO] intraday: 🟢 [11:14:33] Phase: Pre-Market Scan — START
+2026-05-05 05:44:33 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
+2026-05-05 05:44:33 [INFO] intraday.scanner: India VIX: 18.55 | 27 sectors fetched
+2026-05-05 05:44:33 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-05-05 05:44:33 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
+2026-05-05 05:44:38 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-05-05 05:44:38 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
+2026-05-05 05:44:38 [WARNING] intraday.scanner: No gainers data — continuing with other sources
+2026-05-05 05:44:38 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-05-05 05:44:38 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
+2026-05-05 05:44:44 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-05-05 05:44:44 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
+2026-05-05 05:44:44 [WARNING] intraday.scanner: No losers data — continuing with other sources
+2026-05-05 05:44:44 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
+2026-05-05 05:44:44 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
+2026-05-05 05:44:52 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
+2026-05-05 05:44:52 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
+2026-05-05 05:44:52 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 18.55
+2026-05-05 05:44:52 [INFO] intraday: ✅ [11:14:52] Phase: Pre-Market Scan — DONE
+2026-05-05 05:44:52 [INFO] intraday: 🟢 [11:14:52] Phase: Pre-Filter — START
+2026-05-05 05:44:52 [INFO] intraday.selector: Pre-filter: 20 → 8 candidates
+2026-05-05 05:44:52 [INFO] intraday: Pre-filter: 8 candidates passed
+2026-05-05 05:44:52 [INFO] intraday: ✅ [11:14:52] Phase: Pre-Filter — DONE
+2026-05-05 05:44:52 [INFO] intraday: 🟢 [11:14:52] Phase: LLM Trade Selection — START
+2026-05-05 05:44:52 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-05-05 05:44:52 [INFO] intraday.selector: Sending 8 candidates to LLM for trade selection…
+2026-05-05 05:44:53 [ERROR] llm.bedrock_client: Bedrock API error: An error occurred (UnrecognizedClientException) when calling the InvokeModel operation: The security token included in the request is invalid.
+2026-05-05 05:44:53 [ERROR] intraday.selector: LLM returned empty response — aborting trade selection
+2026-05-05 05:44:53 [INFO] intraday: ❌ [11:14:53] Phase: LLM Trade Selection — FAIL
+2026-05-05 05:44:53 [ERROR] intraday: LLM returned zero valid picks — aborting
+2026-05-05 05:44:53 [INFO] intraday: No trades to report
+
+╔══════════════════════════════════════════════════════════════╗
+║           🚀 INTRADAY AUTO-TRADER — Wealth Builder Pro      ║
+║           Mode: 🧪 DRY-RUN                                  ║
+║           Time: 2026-05-05 11:14 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+Finished at: Tue May  5 05:44:53 UTC 2026
+=== END ===
+=== Dev Sandbox Intraday — 2026-05-05 ===
+Started at: Tue May  5 05:53:23 UTC 2026, PID: 167118, User: ec2-user
+2026-05-05 05:53:23 [INFO] intraday: --force: skipping time-of-day check
+2026-05-05 05:53:23 [INFO] intraday: 🟢 [11:23:23] Phase: Configuration — START
+2026-05-05 05:53:23 [INFO] intraday: ✅ [11:23:23] Phase: Configuration — DONE
+2026-05-05 05:53:23 [INFO] intraday: 🟢 [11:23:23] Phase: Database — START
+2026-05-05 05:53:23 [INFO] intraday: ✅ [11:23:23] Phase: Database — DONE
+2026-05-05 05:53:23 [INFO] intraday: 🟢 [11:23:23] Phase: Broker Authentication — START
+2026-05-05 05:53:23 [INFO] intraday.auth_server: Dry-run mode — skipping broker authentication
+2026-05-05 05:53:23 [INFO] intraday: ✅ [11:23:23] Phase: Broker Authentication — DONE
+2026-05-05 05:53:23 [INFO] intraday: 🟢 [11:23:23] Phase: Pre-Market Scan — START
+2026-05-05 05:53:24 [INFO] fetchers.nse_market_movers: Fetched 27 sector indices
+2026-05-05 05:53:24 [INFO] intraday.scanner: India VIX: 18.61 | 27 sectors fetched
+2026-05-05 05:53:24 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-05-05 05:53:24 [WARNING] intraday.scanner: First attempt to fetch top gainers failed or returned empty. Retrying in 5s…
+2026-05-05 05:53:29 [INFO] fetchers.nse_market_movers: Fetched 0 top gainers
+2026-05-05 05:53:29 [ERROR] intraday.scanner: Retry for top gainers also failed. Aborting.
+2026-05-05 05:53:29 [WARNING] intraday.scanner: No gainers data — continuing with other sources
+2026-05-05 05:53:29 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-05-05 05:53:29 [WARNING] intraday.scanner: First attempt to fetch top losers failed or returned empty. Retrying in 5s…
+2026-05-05 05:53:34 [INFO] fetchers.nse_market_movers: Fetched 0 top losers
+2026-05-05 05:53:34 [ERROR] intraday.scanner: Retry for top losers also failed. Aborting.
+2026-05-05 05:53:34 [WARNING] intraday.scanner: No losers data — continuing with other sources
+2026-05-05 05:53:34 [INFO] fetchers.nse_market_movers: Fetched 20 most active stocks
+2026-05-05 05:53:34 [INFO] intraday.scanner: Enriching 20 candidates with live NSE quotes…
+2026-05-05 05:53:42 [INFO] intraday.scanner: Enriched 20/20 candidates with live quotes
+2026-05-05 05:53:42 [INFO] intraday.scanner: Scan complete: 20 candidates, 27 sectors
+2026-05-05 05:53:42 [INFO] intraday: Scan: 20 candidates, 27 sectors, VIX 18.61
+2026-05-05 05:53:42 [INFO] intraday: ✅ [11:23:42] Phase: Pre-Market Scan — DONE
+2026-05-05 05:53:42 [INFO] intraday: 🟢 [11:23:42] Phase: Pre-Filter — START
+2026-05-05 05:53:42 [INFO] intraday.selector: Pre-filter: 20 → 9 candidates
+2026-05-05 05:53:42 [INFO] intraday: Pre-filter: 9 candidates passed
+2026-05-05 05:53:42 [INFO] intraday: ✅ [11:23:42] Phase: Pre-Filter — DONE
+2026-05-05 05:53:42 [INFO] intraday: 🟢 [11:23:42] Phase: LLM Trade Selection — START
+2026-05-05 05:53:42 [INFO] botocore.credentials: Found credentials in shared credentials file: ~/.aws/credentials
+2026-05-05 05:53:42 [INFO] intraday.selector: Sending 9 candidates to LLM for trade selection…
+2026-05-05 05:53:52 [INFO] intraday.selector: LLM market mood: Bearish session — only 4/27 sectors green with Nifty Bank and Realty under heavy pressure. Selective relative-strength plays only.
+2026-05-05 05:53:52 [INFO] intraday.selector: LLM VIX assessment: VIX at 18.61 rising +1.66% signals elevated caution. Using 1.5-2% SL with conservative 2 picks instead of forcing 5.
+2026-05-05 05:53:52 [INFO] intraday.selector: Pick #1 VALID: VEDL @ ₹297.50 → ₹306.50 (SL ₹291.55, R:R 1.5, conf 6) [REVERSAL] — VEDL showing relative strength on bearish day — Metal sector is one of only 4 green sectors (+0.05%). Massive volume of 39M shares confirms institutional interest. Entry near open ₹296.95 (within 0.2%). Gap up +0.78% with strong follow-through to ₹305.90 high. R:R = 1.51:1... adjusting.
+2026-05-05 05:53:52 [INFO] intraday.selector: Pick #2 VALID: ADANIPOWER @ ₹228.50 → ₹237.65 (SL ₹224.00, R:R 2.0, conf 6) [REVERSAL] — ADANIPOWER holding green against weak Energy sector (-0.39%) and broader red market. Entry near open ₹227.97 (within 0.25%). Huge volume 27M shares, held low at open with steady climb to ₹234.40 high showing accumulation. SL below day's low of ₹227.30. R:R = 2.03:1.
+2026-05-05 05:53:52 [INFO] intraday.selector: LLM selection complete: 2 valid trade(s)
+2026-05-05 05:53:52 [INFO] intraday: ✅ [11:23:52] Phase: LLM Trade Selection — DONE
+2026-05-05 05:53:52 [INFO] intraday: 🟢 [11:23:52] Phase: Position Sizing — START
+2026-05-05 05:53:52 [INFO] intraday.risk_manager: Restored daily state: realized loss ₹0.00
+2026-05-05 05:53:52 [INFO] intraday.risk_manager: Sized VEDL: 252 shares × ₹297.50 = ₹74970 (conf 6, R:R 1.5)
+2026-05-05 05:53:52 [INFO] intraday.risk_manager: Sized ADANIPOWER: 328 shares × ₹228.50 = ₹74948 (conf 6, R:R 2.0)
+2026-05-05 05:53:52 [INFO] intraday.risk_manager: Total capital allocated: ₹149918 / ₹150000 remaining
+2026-05-05 05:53:52 [INFO] intraday: ✅ [11:23:52] Phase: Position Sizing — DONE
+2026-05-05 05:53:52 [INFO] intraday: 🟢 [11:23:52] Phase: VIX Check — START
+2026-05-05 05:53:52 [INFO] intraday: ✅ [11:23:52] Phase: VIX Check — DONE
+2026-05-05 05:53:52 [INFO] intraday: 🟢 [11:23:52] Phase: Order Execution — START
+2026-05-05 05:53:52 [INFO] intraday.executor: --force: skipping entry delay
+2026-05-05 05:53:52 [INFO] intraday.auth_server: DryRun place_order: BUY VEDL x252 @ 297.50 → DRY-000001
+2026-05-05 05:53:52 [INFO] intraday.auth_server: DryRun place_order: SELL VEDL x252 @ 291.55 → DRY-000002
+2026-05-05 05:53:52 [INFO] intraday.executor: 📋 Placed VEDL: BUY 252 × ₹297.50 | Target ₹306.50 | SL ₹291.55 | 🧪 DRY-RUN
+2026-05-05 05:53:52 [INFO] intraday.auth_server: DryRun place_order: BUY ADANIPOWER x328 @ 228.50 → DRY-000003
+2026-05-05 05:53:52 [INFO] intraday.auth_server: DryRun place_order: SELL ADANIPOWER x328 @ 224.00 → DRY-000004
+2026-05-05 05:53:52 [INFO] intraday.executor: 📋 Placed ADANIPOWER: BUY 328 × ₹228.50 | Target ₹237.65 | SL ₹224.00 | 🧪 DRY-RUN
+2026-05-05 05:53:52 [INFO] intraday.executor: Placed 2 / 2 orders (DRY_RUN mode)
+2026-05-05 05:53:52 [INFO] intraday: ✅ [11:23:52] Phase: Order Execution — DONE
+2026-05-05 05:53:52 [INFO] intraday: 🟢 [11:23:52] Phase: Position Monitoring — START
+2026-05-05 05:53:52 [INFO] intraday.monitor: 🔍 Starting position monitor for 2 trade(s)…
+2026-05-05 05:53:52 [INFO] intraday.monitor: 📡 Dry-run with LIVE NSE prices — monitoring every 120s until 15:15 IST
+2026-05-05 05:53:52 [INFO] intraday.monitor: 📊 VEDL PARTIAL BOOK: sold 100 @ ₹302.35, remaining 152, SL → ₹297.50 (breakeven)
+2026-05-05 05:53:52 [INFO] intraday.monitor: 📈 ADANIPOWER trailing SL moved: ₹224.00 → ₹230.38
+2026-05-05 05:55:53 [INFO] intraday.monitor: 📈 VEDL trailing SL moved: ₹297.50 → ₹299.52
+2026-05-05 05:59:55 [INFO] intraday.monitor: 📈 VEDL trailing SL moved: ₹299.52 → ₹299.57
+2026-05-05 06:12:00 [INFO] intraday.monitor: 📊 Monitor cycle 10 | 2 open | unrealized P&L: ₹1446.00 | 11:41:59 IST
+2026-05-05 06:14:01 [INFO] intraday.monitor: 🛑 VEDL STOPPED OUT @ ₹299.05 | P&L: ₹235.60
+Tue May  5 06:30:01 UTC 2026: SKIPPED — another instance is running (lock age: 2198s, PID: 167118)
+2026-05-05 06:32:05 [INFO] intraday.monitor: 📊 Monitor cycle 20 | 1 open | unrealized P&L: ₹754.40 | 12:02:04 IST
+2026-05-05 06:52:09 [INFO] intraday.monitor: 📊 Monitor cycle 30 | 1 open | unrealized P&L: ₹984.00 | 12:22:09 IST
+2026-05-05 07:12:14 [INFO] intraday.monitor: 📊 Monitor cycle 40 | 1 open | unrealized P&L: ₹849.52 | 12:42:13 IST

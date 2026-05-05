@@ -56,6 +56,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--live", action="store_true", help="Enable LIVE trading (real money)")
     parser.add_argument("--skip-scan", action="store_true", help="Skip option chain fetch, use cached data")
     parser.add_argument("--force", action="store_true", help="Ignore time-of-day checks")
+    parser.add_argument("--profile", type=str, default=None, help="User profile name (e.g. vishal, neha). Uses config/profiles/<name>.yaml")
     return parser.parse_args()
 
 
@@ -113,6 +114,15 @@ def main() -> None:
 
         with open("config/config.yaml") as f:
             raw_config = yaml.safe_load(f)
+
+        # Profile support
+        profile_name = args.profile
+        profile_config = None
+        if profile_name:
+            from config.profile_loader import load_profile
+            profile_config = load_profile(profile_name)
+            raw_config = profile_config  # Use merged config
+            logger.info("Using profile: %s", profile_name)
 
         config = load_fno_config(raw_config)
 
