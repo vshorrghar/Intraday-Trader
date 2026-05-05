@@ -301,3 +301,12 @@ Tue May  5 05:44:33 UTC 2026: SKIPPED — another instance is running (lock age:
 2026-05-05 07:14:27 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
 2026-05-05 07:14:57 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
 2026-05-05 07:14:57 [INFO] fno: Monitor cycle 190: open=1, exits=0, warnings=1
+2026-05-05 07:15:27 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
+2026-05-05 07:15:57 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
+2026-05-05 07:16:27 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
+2026-05-05 07:16:57 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
+2026-05-05 07:17:27 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
+2026-05-05 07:17:57 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
+2026-05-05 07:18:27 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
+2026-05-05 07:18:57 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
+2026-05-05 07:19:27 [WARNING] fno.monitor: Vega exposure -2319.0 exceeds limit 2000
