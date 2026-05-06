@@ -1,17 +1,17 @@
-# Profile: Neha
-# This file contains profile-specific overrides.
-# Shared settings (AWS, strategies, etc.) come from config/config.yaml
+# Profile: Neha Saxena
+# Paper trading — mirrors vishal paper profile
+# Same capital, same settings, separate DB and dashboard
 
 profile:
   name: "neha"
   display_name: "Neha"
 
 dhan:
-  client_id: "REPLACE_ME"
-  api_key: "REPLACE_ME"
-  api_secret: "REPLACE_ME"
-  totp_secret: "REPLACE_ME"
-  pin: "REPLACE_ME"
+  client_id: "1111523334"
+  api_key: "1111523334"
+  api_secret: "not_needed_for_totp"
+  totp_secret: "FT3MBW5JTPWA2B5HMUWHX4AIDS2CBG4P"
+  pin: "281986"
 
 database:
   path: database/neha.db
@@ -21,12 +21,18 @@ dashboard:
 
 intraday:
   daily_capital_limit: 300000
-  per_trade_max_capital: 75000
-  daily_loss_limit: 5000
+  per_trade_max_capital: 60000
+  max_trades_per_day: 5
+  daily_loss_limit: 9000
+  min_confidence_score: 7
+  vix_threshold: 18
 
 fno:
   mode: "paper"
   paper_capital: 300000
   daily_capital_limit: 300000
-  per_trade_max_capital: 75000
+  per_trade_max_capital: 60000
   daily_loss_limit: 25000
+  max_lots_per_trade: 2
+  min_confidence_score: 7
+  vix_threshold: 22

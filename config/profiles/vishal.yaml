@@ -1,6 +1,6 @@
-# Profile: Vishal
-# This file contains profile-specific overrides.
-# Shared settings (AWS, strategies, etc.) come from config/config.yaml
+# Profile: Vishal (Paper)
+# Paper trading with ₹3L capital
+# Same strategy as neha — separate DB and dashboard
 
 profile:
   name: "vishal"
@@ -8,10 +8,10 @@ profile:
 
 dhan:
   client_id: "1110941563"
-  api_key: "72817899"
-  api_secret: "ae43eec5-2733-4bbf-b38a-9f2f82dd1858"
-  totp_secret: "4A62ID3S5MIAY7B45H7QNRRAVK2T556T"
-  pin: "121212"
+  api_key: "UPDATE_WITH_NEW_KEY"
+  api_secret: "UPDATE_WITH_NEW_SECRET"
+  totp_secret: "UPDATE_WITH_NEW_TOTP"
+  pin: "UPDATE_WITH_NEW_PIN"
 
 database:
   path: database/vishal.db
@@ -21,12 +21,18 @@ dashboard:
 
 intraday:
   daily_capital_limit: 300000
-  per_trade_max_capital: 75000
-  daily_loss_limit: 5000
+  per_trade_max_capital: 60000
+  max_trades_per_day: 5
+  daily_loss_limit: 9000
+  min_confidence_score: 7
+  vix_threshold: 18
 
 fno:
   mode: "paper"
   paper_capital: 300000
   daily_capital_limit: 300000
-  per_trade_max_capital: 75000
+  per_trade_max_capital: 60000
   daily_loss_limit: 25000
+  max_lots_per_trade: 2
+  min_confidence_score: 7
+  vix_threshold: 22
