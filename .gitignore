@@ -41,3 +41,4 @@ config/config.yaml
 # Runtime files
 *.lock
 neha_index.html
+config/profiles/*.yaml
