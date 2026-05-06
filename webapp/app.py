@@ -208,8 +208,8 @@ def api_analyze():
             'error': None
         }
 
-        # Load config
-        config_path = Path('config/config.yaml')
+        # Load config (profile-aware)
+        config_path = Path(app.config.get('CONFIG_PATH', 'config/config.yaml'))
         with open(config_path) as f:
             config = yaml.safe_load(f)
 
@@ -368,8 +368,9 @@ def api_analyze():
             'crisis_opportunities': [vars(o) for o in crisis_opps],
         }
 
-        # Save results
-        output_dir = Path('webapp/results')
+        # Save results (profile-specific directory)
+        profile_name = app.config.get('ACTIVE_PROFILE', 'vishal')
+        output_dir = Path(f'webapp/results_{profile_name}') if profile_name != 'vishal' else Path('webapp/results')
         output_dir.mkdir(parents=True, exist_ok=True)
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         results_file = output_dir / f'analysis_{timestamp}.json'
@@ -417,7 +418,8 @@ def api_status():
 @app.route('/api/results/latest', methods=['GET'])
 def api_latest_results():
     """Get latest analysis results."""
-    results_dir = Path('webapp/results')
+    profile_name = app.config.get('ACTIVE_PROFILE', 'vishal')
+    results_dir = Path(f'webapp/results_{profile_name}') if profile_name != 'vishal' else Path('webapp/results')
     if not results_dir.exists():
         return jsonify({'success': False, 'error': 'No results found'}), 404
 
@@ -432,6 +434,30 @@ def api_latest_results():
 
 
 if __name__ == '__main__':
-    logger.info("Starting Wealth Manager Web Application")
-    logger.info("Access at: http://localhost:8080")
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    # Support multi-user profiles: --profile neha runs on her port with her config
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Wealth Manager Web App")
+    parser.add_argument("--profile", default=None, help="User profile (vishal, neha)")
+    cli_args, _ = parser.parse_known_args()
+
+    # Resolve profile and config
+    try:
+        from config.profile import get_config_path, get_profile_name, PROFILES
+        profile = cli_args.profile or get_profile_name()
+        config_path = get_config_path(profile)
+    except Exception:
+        profile = "vishal"
+        config_path = "config/config.yaml"
+
+    # Load port from config
+    with open(config_path) as f:
+        _cfg = yaml.safe_load(f)
+    port = _cfg.get("webapp", {}).get("port", 8080)
+
+    logger.info("Starting Wealth Manager Web Application [profile=%s]", profile)
+    logger.info("Config: %s", config_path)
+    logger.info("Access at: http://localhost:%d", port)
+    app.config['ACTIVE_PROFILE'] = profile
+    app.config['CONFIG_PATH'] = config_path
+    app.run(host='0.0.0.0', port=port, debug=True)

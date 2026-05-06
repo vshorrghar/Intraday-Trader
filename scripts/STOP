@@ -1,0 +1,3 @@
+#!/bin/bash
+# 🚨 STOP ALL TRADES NOW
+ssh -i ~/Downloads/wealth-builder-pro.pem -o ConnectTimeout=10 -o StrictHostKeyChecking=no ec2-user@13.206.144.6 "pkill -f run_intraday; pkill -f run_fno; touch ~/dev-sandbox/logs/.KILL_ALL; rm -f ~/dev-sandbox/logs/.*.lock; echo '🛑 ALL STOPPED'"

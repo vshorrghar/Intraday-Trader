@@ -22,6 +22,7 @@ tar czf /tmp/wb_code.tar.gz \
     --exclude='database/*.db' --exclude='config/groww_api.yaml' \
     --exclude='.git' --exclude='.hypothesis' \
     --exclude='run_daily.sh' --exclude='run_fno_daily.sh' \
+    --exclude='dashboard/api/*.json' \
     .
 
 scp -i "$KEY" -o ConnectTimeout=15 -o StrictHostKeyChecking=no /tmp/wb_code.tar.gz "$EC2":~/

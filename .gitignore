@@ -1,3 +1,44 @@
 __pycache__/
 *.pyc
 .venv/
+
+# Broker sessions (contain access tokens)
+config/.broker_session*.json
+
+# User-specific config files (contain credentials)
+config/config.yaml
+config/config_neha.yaml
+
+# User-specific data directories
+input_neha/
+cache_neha/
+dashboard_neha/
+webapp/results_neha/
+database/portfolio_neha.db
+
+# Databases (contain real trading data)
+database/*.db
+
+# Logs (runtime, not code)
+logs/
+
+# Dashboard JSON (runtime data)
+dashboard/api/*.json
+dashboard/api/neha/
+dashboard/api/vishal/
+dashboard/api/vishal-live/
+
+# Reports (runtime data)
+output/reports/
+
+# Mac junk files
+._*
+.DS_Store
+
+# Profile configs (contain credentials)
+config/profiles/*.yaml
+config/config.yaml
+
+# Runtime files
+*.lock
+neha_index.html

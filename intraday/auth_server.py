@@ -40,10 +40,19 @@ logger = logging.getLogger(__name__)
 # Constants
 # ---------------------------------------------------------------------------
 
-SESSION_FILE = Path("config/.broker_session.json")
+SESSION_FILE = Path("config/.broker_session.json")  # default; overridden by profile
 CALLBACK_HOST = "127.0.0.1"
 CALLBACK_PORT = 5000
 CALLBACK_URL = f"http://{CALLBACK_HOST}:{CALLBACK_PORT}/callback"
+
+
+def _get_session_file() -> Path:
+    """Get the profile-specific session file path."""
+    try:
+        from config.profile import get_session_file
+        return get_session_file()
+    except (ImportError, Exception):
+        return SESSION_FILE
 
 DHAN_AUTH_BASE = "https://auth.dhan.co"
 DHAN_GENERATE_TOKEN_URL = f"{DHAN_AUTH_BASE}/app/generateAccessToken"

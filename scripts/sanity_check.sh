@@ -147,9 +147,10 @@ fi
 layer_check
 
 # Root crontab is empty (issue #7)
-ROOT_CRON=$($SSH "sudo crontab -l 2>/dev/null | grep -c 'dev-sandbox'" 2>/dev/null || echo "0")
-ROOT_CRON=$(echo "$ROOT_CRON" | tr -d ' \n')
-if [ "$ROOT_CRON" = "0" ] || [ -z "$ROOT_CRON" ]; then
+# Root crontab is empty (issue #7)
+ROOT_CRON=$($SSH "sudo crontab -l 2>&1 | grep -c 'dev-sandbox'" 2>/dev/null || echo "0")
+ROOT_CRON=$(echo "$ROOT_CRON" | tr -dc '0-9')
+if [ -z "$ROOT_CRON" ] || [ "$ROOT_CRON" -eq 0 ] 2>/dev/null; then
     pass "Root crontab clean — no duplicate processes"
 else
     fail "Root has $ROOT_CRON cron entries — WILL CAUSE DUPLICATES"
@@ -221,10 +222,16 @@ with open(\"config/config.yaml\") as f:
     cfg = yaml.safe_load(f)
 model = cfg[\"aws\"][\"bedrock_model_id\"]
 region = cfg[\"aws\"][\"bedrock_region\"]
-client = boto3.client(\"bedrock-runtime\", region_name=region)
-body = json.dumps({\"anthropic_version\":\"bedrock-2023-05-31\",\"max_tokens\":5,\"messages\":[{\"role\":\"user\",\"content\":\"1+1\"}]})
-resp = client.invoke_model(modelId=model, body=body, contentType=\"application/json\")
-print(f\"OK model={model} region={region}\")
+
+# Approved models only
+approved = [\"us.anthropic.claude-opus-4-7\", \"us.anthropic.claude-sonnet-4-20250514-v1:0\", \"anthropic.claude-3-5-sonnet-20241022-v2:0\"]
+if model not in approved:
+    print(f\"FAIL model={model} not in approved list: {approved}\")
+else:
+    client = boto3.client(\"bedrock-runtime\", region_name=region)
+    body = json.dumps({\"anthropic_version\":\"bedrock-2023-05-31\",\"max_tokens\":5,\"messages\":[{\"role\":\"user\",\"content\":\"1+1\"}]})
+    resp = client.invoke_model(modelId=model, body=body, contentType=\"application/json\")
+    print(f\"OK model={model} region={region}\")
 ' 2>&1" || echo "FAIL unknown")
 
 if echo "$BEDROCK_RESULT" | grep -q "^OK"; then
@@ -360,46 +367,71 @@ layer_check
 echo ""
 echo "━━━ Layer 7: NSE Data Access ━━━"
 
-NSE_RESULT=$($SSH "cd ~/$REMOTE_DIR && .venv/bin/python -c '
+NSE_RESULT=$($SSH "cd ~/$REMOTE_DIR && .venv/bin/python << 'PYEOF'
 from fetchers.nse_market_movers import fetch_market_movers
 data = fetch_market_movers()
-sectors = data.get(\"sectors\", [])
-gainers = data.get(\"gainers\", [])
-losers = data.get(\"losers\", [])
-active = data.get(\"most_active\", [])
-print(f\"OK sectors={len(sectors)} gainers={len(gainers)} losers={len(losers)} active={len(active)}\")
-' 2>&1" || echo "FAIL fetch crashed")
+sectors = data.get('sectors', [])
+gainers = data.get('gainers', [])
+losers = data.get('losers', [])
+active = data.get('most_active', [])
+print(f'OK sectors={len(sectors)} gainers={len(gainers)} losers={len(losers)} active={len(active)}')
+PYEOF" 2>&1 || echo "FAIL fetch crashed")
 
 if echo "$NSE_RESULT" | grep -q "^OK"; then
-    pass "NSE data: $(echo $NSE_RESULT | sed 's/OK //')"
+    pass "NSE data: $(echo $NSE_RESULT | grep '^OK' | sed 's/OK //')"
 else
     fail "NSE fetch failed: $(echo $NSE_RESULT | tail -1 | cut -c1-100)"
 fi
 
 # Dhan TOTP auth test (issue #20)
-DHAN_RESULT=$($SSH "cd ~/$REMOTE_DIR && .venv/bin/python -c '
+DHAN_RESULT=$($SSH "cd ~/$REMOTE_DIR && .venv/bin/python << 'PYEOF'
 import yaml, pyotp, requests
-with open(\"config/config.yaml\") as f:
+with open('config/config.yaml') as f:
     cfg = yaml.safe_load(f)
-dhan = cfg[\"dhan\"]
-code = pyotp.TOTP(dhan[\"totp_secret\"]).now()
+dhan = cfg['dhan']
+code = pyotp.TOTP(dhan['totp_secret']).now()
 url = f\"https://auth.dhan.co/app/generateAccessToken?dhanClientId={dhan['client_id']}&pin={dhan['pin']}&totp={code}\"
 resp = requests.post(url, timeout=30)
 if resp.status_code == 200:
     data = resp.json()
-    token = data.get(\"accessToken\") or data.get(\"access_token\")
+    token = data.get('accessToken') or data.get('access_token')
     if token:
-        print(f\"OK token_len={len(token)}\")
+        print(f'OK token_len={len(token)}')
     else:
-        print(f\"FAIL no token in response: {list(data.keys())}\")
+        print(f'FAIL no token in response: {list(data.keys())}')
 else:
-    print(f\"FAIL HTTP {resp.status_code}\")
-' 2>&1" || echo "FAIL dhan crashed")
+    print(f'FAIL HTTP {resp.status_code}')
+PYEOF" 2>&1 || echo "FAIL dhan crashed")
 
 if echo "$DHAN_RESULT" | grep -q "^OK"; then
     pass "Dhan TOTP auth works: $(echo $DHAN_RESULT | sed 's/OK //')"
 else
     fail "Dhan auth failed: $(echo $DHAN_RESULT | sed 's/FAIL //')"
+fi
+
+# S3 bucket access check (must use vishal-admin, correct bucket)
+S3_BUCKET="dev-sandbox-dashboard-176767908884"
+S3_RESULT=$($SSH "export AWS_PROFILE=vishal-admin && aws s3 ls s3://$S3_BUCKET/dashboard/ 2>&1 | head -3" 2>/dev/null || echo "FAIL")
+if echo "$S3_RESULT" | grep -q "PRE\|json\|html"; then
+    pass "S3 bucket accessible: $S3_BUCKET (using vishal-admin)"
+else
+    fail "S3 bucket '$S3_BUCKET' not accessible — check AWS_PROFILE=vishal-admin"
+fi
+
+# Verify no code uses 'default' profile or wrong bucket name
+WRONG_BUCKET=$($SSH "grep -r 'wealth-builder-pro-reports' ~/$REMOTE_DIR/scripts/ ~/$REMOTE_DIR/run_*.sh 2>/dev/null | grep -v '.pyc' | head -3" || echo "")
+if [ -z "$WRONG_BUCKET" ]; then
+    pass "No scripts reference wrong bucket name"
+else
+    fail "Scripts still reference old bucket 'wealth-builder-pro-reports'"
+fi
+
+# S3 bucket must be PRIVATE (no public access) — AWS IT Paladin catches public buckets
+S3_PUBLIC=$($SSH "export AWS_PROFILE=vishal-admin && aws s3api get-public-access-block --bucket $S3_BUCKET 2>&1" 2>/dev/null || echo "FAIL")
+if echo "$S3_PUBLIC" | grep -q '"BlockPublicAcls": true'; then
+    pass "S3 bucket is PRIVATE (public access blocked)"
+else
+    fail "S3 bucket may be PUBLIC — AWS IT Paladin will flag this! Run: aws s3api put-public-access-block"
 fi
 
 # ═══════════════════════════════════════════════════════════════

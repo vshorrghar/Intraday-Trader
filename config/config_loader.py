@@ -74,23 +74,9 @@ class AppConfig:
 
 # Keys that must be present in the YAML config, expressed as dot-separated paths.
 _REQUIRED_KEYS: list[tuple[str, ...]] = [
-    ("aws", "region"),
-    ("aws", "s3_bucket"),
-    ("aws", "ses_sender"),
-    ("aws", "ses_recipient"),
     ("aws", "bedrock_model_id"),
     ("aws", "bedrock_region"),
-    ("portfolio", "stocks_xlsx"),
-    ("portfolio", "mf_xlsx"),
-    ("portfolio", "pnl_xlsx"),
     ("database", "path"),
-    ("cache", "dir"),
-    ("dashboard", "output_dir"),
-    ("investor", "name"),
-    ("schedule", "morning_brief"),
-    ("schedule", "midday_snapshot"),
-    ("schedule", "eod_report"),
-    ("schedule", "midday_threshold_pct"),
 ]
 
 
@@ -135,12 +121,12 @@ def load_config(config_path: str) -> AppConfig:
     _validate_required_keys(data)
 
     aws = data["aws"]
-    portfolio = data["portfolio"]
-    schedule = data["schedule"]
+    portfolio = data.get("portfolio", {})
+    schedule = data.get("schedule", {})
     database = data["database"]
-    cache = data["cache"]
-    dashboard = data["dashboard"]
-    investor = data["investor"]
+    cache = data.get("cache", {"dir": "cache"})
+    dashboard = data.get("dashboard", {"output_dir": "dashboard", "api_dir": "dashboard/api"})
+    investor = data.get("investor", {"name": "User"})
 
     # Build nested configs from optional sections, falling back to defaults.
     alerts_data = data.get("alerts", {})
@@ -162,24 +148,24 @@ def load_config(config_path: str) -> AppConfig:
     )
 
     return AppConfig(
-        aws_region=str(aws["region"]),
-        s3_bucket=str(aws["s3_bucket"]),
-        ses_sender=str(aws["ses_sender"]),
-        ses_recipient=str(aws["ses_recipient"]),
+        aws_region=str(aws.get("region", "ap-south-1")),
+        s3_bucket=str(aws.get("s3_bucket", "")),
+        ses_sender=str(aws.get("ses_sender", "")),
+        ses_recipient=str(aws.get("ses_recipient", "")),
         bedrock_model_id=str(aws["bedrock_model_id"]),
         bedrock_region=str(aws["bedrock_region"]),
-        stocks_xlsx=str(portfolio["stocks_xlsx"]),
-        mf_xlsx=str(portfolio["mf_xlsx"]),
-        pnl_xlsx=str(portfolio["pnl_xlsx"]),
+        stocks_xlsx=str(portfolio.get("stocks_xlsx", "")),
+        mf_xlsx=str(portfolio.get("mf_xlsx", "")),
+        pnl_xlsx=str(portfolio.get("pnl_xlsx", "")),
         invit_isins=list(portfolio.get("invit_isins", [])),
         db_path=str(database["path"]),
         cache_dir=str(cache["dir"]),
-        dashboard_output_dir=str(dashboard["output_dir"]),
-        investor_name=str(investor["name"]),
-        schedule_morning=str(schedule["morning_brief"]),
-        schedule_midday=str(schedule["midday_snapshot"]),
-        schedule_eod=str(schedule["eod_report"]),
-        midday_threshold_pct=float(schedule["midday_threshold_pct"]),
+        dashboard_output_dir=str(dashboard.get("output_dir", "dashboard")),
+        investor_name=str(investor.get("name", "User")),
+        schedule_morning=str(schedule.get("morning_brief", "03:15")),
+        schedule_midday=str(schedule.get("midday_snapshot", "07:00")),
+        schedule_eod=str(schedule.get("eod_report", "10:45")),
+        midday_threshold_pct=float(schedule.get("midday_threshold_pct", 2.0)),
         alerts=alerts,
         analysis=analysis,
     )

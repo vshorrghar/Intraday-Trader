@@ -191,7 +191,7 @@ def _build_history(db: Any) -> dict:
                           COALESCE(total_trades, 0) as trades,
                           COALESCE(winning_trades, 0) as winners,
                           COALESCE(losing_trades, 0) as losers
-                   FROM daily_summary
+                   FROM intraday_daily_summary
                    WHERE total_trades > 0
                    ORDER BY trade_date ASC"""
             )

@@ -304,7 +304,14 @@ def main() -> None:
     margins = broker.get_margins()
     available = margins.get("available_cash", intra_config.daily_capital_limit)
 
-    sized_trades = risk_mgr.size_trades(trades, available_margin=available)
+    # Account for capital already used in earlier sessions today
+    capital_remaining = min(available, intra_config.daily_capital_limit - risk_mgr.capital_used_today)
+    if capital_remaining <= 0:
+        logger.warning("No capital remaining today (used ₹%.0f) — skipping", risk_mgr.capital_used_today)
+        _generate_partial_report([], db, intra_config, dry_run)
+        sys.exit(0)
+
+    sized_trades = risk_mgr.size_trades(trades, available_margin=capital_remaining)
     if not sized_trades:
         logger.error("No trades could be sized — aborting")
         _generate_partial_report([], db, intra_config, dry_run)
