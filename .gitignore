@@ -36,7 +36,6 @@ output/reports/
 .DS_Store
 
 # Profile configs (contain credentials)
-config/profiles/*.yaml
 config/config.yaml
 
 # Runtime files
