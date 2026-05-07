@@ -191,7 +191,7 @@ def _load_session(broker_name: str) -> Optional[dict]:
         if saved_at:
             from datetime import datetime
             age_hours = (datetime.now() - datetime.fromisoformat(saved_at)).total_seconds() / 3600
-            if age_hours > 6:
+            if age_hours > 3.5:
                 logger.info("Session too old (%.1f hours) — re-authenticating", age_hours)
                 return None
         logger.info("Reusing same-day session for %s (date=%s)", broker_name, today)
