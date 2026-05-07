@@ -302,7 +302,7 @@ def main() -> None:
     risk_mgr = Risk_Manager(intra_config, db=db)
 
     margins = broker.get_margins()
-    available = margins.get("available_cash", intra_config.daily_capital_limit)
+    available = margins.get("available_cash") or intra_config.daily_capital_limit
 
     # Account for capital already used in earlier sessions today
     capital_remaining = min(available, intra_config.daily_capital_limit - risk_mgr.capital_used_today)
