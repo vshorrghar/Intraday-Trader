@@ -186,6 +186,14 @@ def _load_session(broker_name: str) -> Optional[dict]:
         and data.get("date") == today
         and data.get("access_token")
     ):
+        # Check session age — reject if older than 6 hours
+        saved_at = data.get("saved_at")
+        if saved_at:
+            from datetime import datetime
+            age_hours = (datetime.now() - datetime.fromisoformat(saved_at)).total_seconds() / 3600
+            if age_hours > 6:
+                logger.info("Session too old (%.1f hours) — re-authenticating", age_hours)
+                return None
         logger.info("Reusing same-day session for %s (date=%s)", broker_name, today)
         return data
 
@@ -199,6 +207,7 @@ def _save_session(broker_name: str, access_token: str, client_id: str = "") -> N
     payload = {
         "broker": broker_name,
         "date": date.today().isoformat(),
+        "saved_at": __import__("datetime").datetime.now().isoformat(),
         "access_token": access_token,
         "client_id": client_id,
     }
