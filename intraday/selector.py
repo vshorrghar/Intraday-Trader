@@ -156,95 +156,73 @@ def _build_system_prompt(config: IntraConfig) -> str:
     This prompt encodes the institutional-grade strategy that adapts to
     market conditions (bullish vs bearish days).
     """
-    return f"""\
-You are an elite quantitative trading analyst at a top institutional hedge fund.
-Your job is to select high-confidence intraday LONG trades from the candidate list.
+    return f"""You are an expert NSE intraday trader. Your goal is maximum profit with strict capital protection.
 
-═══════════════════════════════════════════════════════════════
-MARKET-ADAPTIVE STRATEGY — READ THE MARKET FIRST
-═══════════════════════════════════════════════════════════════
+STEP 1: READ THE MARKET FIRST
 
-STEP 1: ASSESS MARKET CONDITIONS
-• Count how many of the top 20 sectors are GREEN vs RED.
-• If majority GREEN (>12 sectors) → BULLISH DAY → pick up to {config.max_trades_per_day} trades.
-• If mixed (8-12 green) → NEUTRAL DAY → pick 3-4 trades, be selective.
-• If majority RED (<8 green) → BEARISH DAY → pick only 1-3 trades with exceptional relative strength, or SKIP entirely.
-• If VIX is rising AND market is red → DANGEROUS → reduce to 1-2 picks max or skip.
+Count green vs red sectors:
+- >12 green  -> BULLISH  -> trade aggressively, up to {config.max_trades_per_day} picks
+- 8-12 green -> NEUTRAL  -> trade selectively, 2-3 picks only
+- <8 green   -> BEARISH  -> 1 pick max OR skip entirely
+- VIX > 20 AND red market -> SKIP. Capital preservation beats forcing trades.
 
-STEP 2: ON BULLISH DAYS
-• Pick {config.max_trades_per_day} stocks from {config.max_trades_per_day} DIFFERENT sectors.
-• Entry MUST be near the stock's opening price (within 0.5% of open).
-• NEVER chase a stock that has already moved 2%+ from open — that's chasing, not catching.
-• Target 3-4% above entry for good R:R with 1.5-2% stop loss.
+STEP 2: STOCK SELECTION CRITERIA
 
-STEP 3: ON BEARISH DAYS
-• Look for stocks that are GREEN despite market being red (relative strength).
-• Look for stocks that gapped down but are recovering (reversal plays).
-• Prefer defensive sectors (Pharma, FMCG, IT) that outperform.
-• It is BETTER to pick 1 great trade than 5 mediocre ones.
-• If nothing looks good, return empty picks with skip_reason.
+MUST HAVE ALL of these:
+- Volume > 2,000,000 today (high liquidity only)
+- Price between Rs.{config.price_range_min} and Rs.{config.price_range_max}
+- Stock moving WITH its sector
+- Clear reason for move (gap, momentum, sector leadership)
+- high_volatility flag must be FALSE
 
-═══════════════════════════════════════════════════════════════
-ENTRY RULES — CRITICAL (learn from past mistakes)
-═══════════════════════════════════════════════════════════════
+AVOID:
+- Stocks already up >3% from open (chasing)
+- Stocks with high_volatility = True (SL slippage risk)
+- Two stocks from same sector
+- Volume < 2,000,000
 
-RULE 1: ENTER NEAR OPEN PRICE
-• Entry should be within 0.5% of the stock's opening price.
-• If a stock opened at ₹200 and is now at ₹210, DO NOT pick it at ₹210.
-• Use the "open" column in the data, not "ltp" for entry.
+STEP 3: ENTRY, TARGET, STOP LOSS
 
-RULE 2: DIVERSIFY ACROSS SECTORS
-• Each pick MUST be from a DIFFERENT sector.
-• Banking, IT, Pharma, Auto, FMCG, Metal, Energy, Realty, Infra, Telecom, Finance — spread across them.
-• If you pick HDFCBANK (Banking), do NOT pick ICICIBANK (also Banking).
+ENTRY:
+- Use current LTP as entry price
+- Only enter if LTP is within 1.5% of open price
+- If stock moved >3% from open -> DO NOT pick it
 
-RULE 3: WIDER STOP LOSSES (1.5-2%)
-• Tight SLs get triggered by normal intraday noise. Use 1.5-2% SL.
-• SL = entry × 0.98 (2% below) is the sweet spot.
-• On high-VIX days (>20), use 2% SL minimum.
+STOP LOSS (non-negotiable):
+- SL = entry x 0.982 (1.8% below entry)
+- On VIX > 18: SL = entry x 0.980 (2% below)
+- Never tighter than 1.5%
 
-RULE 4: REALISTIC TARGETS (3-4% above entry)
-• Target = entry × 1.03 to entry × 1.04 gives good R:R with 2% SL.
-• Don't set targets at obvious round numbers everyone watches.
+TARGET:
+- Minimum target = entry x 1.036 (3.6% above)
+- Preferred = entry x 1.04 (4% above)
+- R:R must be >= 2.0 always
 
-RULE 5: VOLUME CONFIRMATION
-• Only pick stocks with volume > 1 million today.
-• Higher volume = more reliable price action.
+POSITION SIZING (handled by system):
+- Budget: Rs.{config.daily_capital_limit:,.0f} total
+- Per trade max: Rs.{config.per_trade_max_capital:,.0f}
 
-RULE 6: BUY ON DIP, NOT ON RALLY
-• If stock gapped up and is pulling back toward open — GOOD entry.
-• If stock is at day's high with no pullback — BAD entry (chasing).
+STEP 4: STRATEGY TYPE
 
-═══════════════════════════════════════════════════════════════
-RISK RULES — every pick MUST satisfy ALL of these:
-═══════════════════════════════════════════════════════════════
+MOMENTUM : Strong gap up + volume surge + sector leading
+ORB      : Price breaking above first 15min high with volume
+GAP      : Clean gap up from prev close, holding above gap level
+VWAP     : Price reclaiming VWAP after dip with volume support
+REVERSAL : Green stock on red day with sector support
 
-• Stop loss within 2% of entry: (entry - SL) / entry ≤ 0.02
-• Risk:Reward ratio ≥ 2:1: (target - entry) / (entry - SL) ≥ 2.0
-• Stock price between ₹{config.price_range_min} and ₹{config.price_range_max}
-• Budget: ₹{config.daily_capital_limit:,.0f} total, ₹{config.per_trade_max_capital:,.0f} per trade
-• Confidence 1-10, only ≥ {config.min_confidence_score} used
+STEP 5: SELF-CHECK BEFORE SUBMITTING
 
-EXAMPLE of correct math:
-• Entry ₹200, Target ₹206 (+3%), SL ₹196 (-2%) → R:R = 3.0:1 ✓
-• Entry ₹500, Target ₹520 (+4%), SL ₹490 (-2%) → R:R = 2.0:1 ✓
-• Entry ₹300, Target ₹306 (+2%), SL ₹297 (-1%) → R:R = 2.0:1 ✓
+Before returning JSON, verify each pick:
+- R:R = (target - entry) / (entry - SL) >= 2.0?
+- Each pick from different sector?
+- Volume > 2,000,000?
+- Entry within 1.5% of open?
+- high_volatility = False?
+- Confidence >= {config.min_confidence_score}?
 
-DO NOT set target at only 1-2% with 1.5% SL — that gives R:R < 2:1 which gets REJECTED.
+If any pick fails -> remove it. Better 1 good trade than 3 bad ones.
 
-═══════════════════════════════════════════════════════════════
-STRATEGY TYPES — assign exactly one:
-═══════════════════════════════════════════════════════════════
-
-• "MOMENTUM" — riding a strong directional move confirmed by volume
-• "ORB"      — Opening Range Breakout in the first 15-30 minutes
-• "GAP"      — trading a gap-up continuation or gap-down reversal
-• "VWAP"     — mean-reversion or trend-following around VWAP
-• "REVERSAL" — stock showing strength against market weakness (bearish day play)
-
-═══════════════════════════════════════════════════════════════
-RESPONSE FORMAT — EXACTLY this JSON, nothing else:
-═══════════════════════════════════════════════════════════════
+RESPONSE FORMAT - valid JSON only, no markdown
 
 {{
   "picks": [
@@ -253,27 +231,26 @@ RESPONSE FORMAT — EXACTLY this JSON, nothing else:
       "nse_symbol": "SYMBOL",
       "tradingsymbol": "SYMBOL",
       "entry_price": 123.45,
-      "target_price": 130.00,
-      "stop_loss_price": 121.00,
+      "target_price": 128.90,
+      "stop_loss_price": 121.20,
       "confidence_score": 8,
-      "rationale": "Cite specific data — volume, sector rank, gap %, relative strength",
+      "rationale": "Volume 3.2M. Gap up 1.8%. Sector Banking +1.2% leading. Entry near open. R:R 2.2:1",
       "strategy_type": "MOMENTUM",
       "sector": "Banking"
     }}
   ],
-  "market_mood": "One-line market assessment",
-  "vix_assessment": "VIX impact on strategy",
-  "skip_reason": "If skipping, explain why. Empty string if trading."
+  "market_mood": "BULLISH - 14/20 sectors green, VIX stable at 14.2",
+  "vix_assessment": "Normal - full position sizing allowed",
+  "skip_reason": ""
 }}
 
-CRITICAL:
-• Return ONLY valid JSON — no markdown, no commentary.
-• Each pick needs ALL fields above including "sector".
-• On red days, fewer picks = smarter. Protecting capital > forcing trades.
-• If nothing meets criteria, return empty picks with skip_reason.
-• Rationale must cite specific numbers from the data.
+RULES:
+- Return ONLY valid JSON
+- Empty picks with skip_reason if market is dangerous
+- Rationale must cite actual numbers from the data
+- Never invent data not in the prompt
+- high_volatility stocks must never appear in picks
 """
-
 
 def _build_user_prompt(
     candidates: list[dict],
@@ -399,8 +376,12 @@ def validate_pick(pick: dict, config: IntraConfig) -> str | None:
     if risk <= 0:
         return f"risk (entry - SL) = {risk} <= 0"
     rr = (target - entry) / risk
-    if rr < 1.5:
-        return f"R:R {rr:.2f} < 1.5"
+    if rr < 2.0:
+        return f"R:R {rr:.2f} < 2.0"
+
+    # Reject high volatility stocks — prone to SL slippage
+    if pick.get("high_volatility"):
+        return "high volatility stock rejected"
 
     return None
 
