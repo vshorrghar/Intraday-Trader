@@ -47,6 +47,18 @@ class DhanBrokerClient(BrokerClient):
         self.access_token = access_token or ""
         self._session = requests.Session()
 
+        # Load NSE security ID mapping
+        import json as _json
+        import os as _os
+        _map_path = _os.path.join(_os.path.dirname(__file__), '..', 'config', 'nse_security_ids.json')
+        try:
+            with open(_map_path) as _f:
+                self._security_ids = _json.load(_f)
+            logger.info("Loaded %d NSE security IDs", len(self._security_ids))
+        except Exception:
+            self._security_ids = {}
+            logger.warning("Could not load nse_security_ids.json — securityId will use symbol name")
+
     # ------------------------------------------------------------------
     # Helpers
     # ------------------------------------------------------------------
@@ -73,6 +85,10 @@ class DhanBrokerClient(BrokerClient):
             return {"status": "error", "error": data, "broker_order_id": ""}
 
         return data
+
+    def _get_security_id(self, symbol: str) -> str:
+        """Return numeric Dhan security ID for NSE symbol."""
+        return self._security_ids.get(symbol, symbol)
 
     # ------------------------------------------------------------------
     # BrokerClient interface
@@ -127,7 +143,7 @@ class DhanBrokerClient(BrokerClient):
             "productType": "INTRADAY",
             "orderType": dhan_order_type_map.get(order_type, order_type),
             "validity": "DAY",
-            "securityId": symbol,
+            "securityId": self._get_security_id(symbol),
             "quantity": quantity,
             "price": price,
             "triggerPrice": trigger_price,
@@ -317,7 +333,7 @@ class DhanBrokerClient(BrokerClient):
             "productType": product_type.upper(),
             "orderType": dhan_order_type_map.get(order_type, order_type),
             "validity": "DAY",
-            "securityId": tradingsymbol,
+            "securityId": self._get_security_id(tradingsymbol),
             "quantity": quantity,
             "price": price,
             "triggerPrice": trigger_price,
