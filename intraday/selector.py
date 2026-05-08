@@ -150,7 +150,7 @@ def _check_sector_alignment(candidate: dict, positive_sectors: set[str]) -> bool
 # ===================================================================
 
 
-def _build_system_prompt(config: IntraConfig) -> str:
+def _build_system_prompt(config: IntraConfig, dry_run: bool = False) -> str:
     """Build the system prompt for Claude Sonnet 4.5 trade selection.
 
     This prompt encodes the institutional-grade strategy that adapts to
@@ -165,6 +165,7 @@ Count green vs red sectors:
 - 8-12 green -> NEUTRAL  -> trade selectively, 2-3 picks only
 - <8 green   -> BEARISH  -> 1 pick max OR skip entirely
 - VIX > 20 AND red market -> SKIP. Capital preservation beats forcing trades.
+- PAPER/TEST MODE: If dry_run is True, always pick the top {config.max_trades_per_day} candidates regardless of market conditions. Paper trading tests the execution pipeline — forced trades are correct behavior.
 
 STEP 2: STOCK SELECTION CRITERIA
 
@@ -421,6 +422,7 @@ def select_trades_llm(
     *,
     gainers: list[dict] | None = None,
     losers: list[dict] | None = None,
+    dry_run: bool = False,
 ) -> list[TradeSetup]:
     """Send pre-filtered candidates to Claude and return validated trades.
 
@@ -446,7 +448,7 @@ def select_trades_llm(
     list[TradeSetup]
         Validated trade setups. Empty list if LLM fails or no valid picks.
     """
-    system_prompt = _build_system_prompt(config)
+    system_prompt = _build_system_prompt(config, dry_run=dry_run)
     user_prompt = _build_user_prompt(
         candidates, sectors, vix_value, config,
         gainers=gainers, losers=losers,

@@ -279,6 +279,7 @@ def main() -> None:
             bedrock_client=bedrock,
             gainers=scan_result.gainers,
             losers=scan_result.losers,
+            dry_run=dry_run,
         )
         if not trades:
             phase_log("LLM Trade Selection", "FAIL")
@@ -537,6 +538,7 @@ def run_demo_mode() -> None:
             bedrock_client=bedrock,
             gainers=gainers_summary,
             losers=losers_summary,
+            dry_run=dry_run,
         )
         if not trades:
             phase_log("LLM Trade Selection (Real Data)", "FAIL")
