@@ -69,3 +69,23 @@ cd ~/kiro/websites/intraday-trader && bash scripts/sync_to_ec2.sh
 ### Git pull (run from Mac):
 cd ~/kiro/websites/intraday-trader && git pull origin main
 
+
+## Rule: Where To Edit Different File Types
+
+### Edit on EC2, push from EC2, pull to Mac:
+- config/*.yaml
+- config/profiles/*.yaml  
+- LLM prompts (string changes inside .py files)
+- Any small text/string change in .py files
+
+### Edit on Mac (Kiro), sync to EC2, push from EC2:
+- New Python functions or classes
+- New files
+- Structural code changes
+- HTML/CSS/JS files
+
+### Never:
+- Use sed on .py files
+- Push from Mac (Code Defender blocks it)
+- Edit config/profiles/*.yaml on Mac (credentials)
+
