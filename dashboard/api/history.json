@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-04T15:37:53.236112+05:30",
+  "updated_at": "2026-05-05T18:22:53.718686+05:30",
   "intraday": {
     "daily": [
       {
@@ -49,6 +49,14 @@
         "winners": 5,
         "losers": 0,
         "capital_used": 85284.0
+      },
+      {
+        "date": "2026-05-05",
+        "pnl": 730.88,
+        "trades": 2,
+        "winners": 2,
+        "losers": 0,
+        "capital_used": 149918.0
       }
     ],
     "cumulative_pnl": 8287.23,
@@ -92,6 +100,13 @@
         "pnl": 5600.0,
         "strategies": 6,
         "winners": 6,
+        "losers": 0
+      },
+      {
+        "date": "2026-05-05",
+        "pnl": 1000.0,
+        "strategies": 1,
+        "winners": 1,
         "losers": 0
       }
     ],

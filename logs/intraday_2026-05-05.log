@@ -172,3 +172,60 @@ Tue May  5 06:30:01 UTC 2026: SKIPPED — another instance is running (lock age:
 2026-05-05 06:52:09 [INFO] intraday.monitor: 📊 Monitor cycle 30 | 1 open | unrealized P&L: ₹984.00 | 12:22:09 IST
 2026-05-05 07:12:14 [INFO] intraday.monitor: 📊 Monitor cycle 40 | 1 open | unrealized P&L: ₹849.52 | 12:42:13 IST
 2026-05-05 07:18:15 [INFO] intraday.monitor: 🛑 ADANIPOWER STOPPED OUT @ ₹230.01 | P&L: ₹495.28
+2026-05-05 07:20:15 [INFO] intraday: ✅ [12:50:15] Phase: Position Monitoring — DONE
+2026-05-05 07:20:15 [INFO] intraday: 🟢 [12:50:15] Phase: EOD Report — START
+2026-05-05 07:20:15 [INFO] intraday.reporter: EOD report saved to output/reports/intraday_2026-05-05.json
+2026-05-05 07:20:15 [INFO] intraday: ✅ [12:50:15] Phase: EOD Report — DONE
+2026-05-05 07:20:15 [INFO] intraday: 🟢 [12:50:15] Phase: Dashboard Update — START
+2026-05-05 07:20:15 [INFO] intraday.dashboard: Dashboard file is from a previous day — starting fresh
+2026-05-05 07:20:15 [INFO] intraday.dashboard: Dashboard JSON updated: dashboard/api/intraday_latest.json (2 trades, ₹730.88 P&L)
+2026-05-05 07:20:15 [INFO] intraday: ✅ [12:50:15] Phase: Dashboard Update — DONE
+
+╔══════════════════════════════════════════════════════════════╗
+║           🚀 INTRADAY AUTO-TRADER — Wealth Builder Pro      ║
+║           Mode: 🧪 DRY-RUN                                  ║
+║           Time: 2026-05-05 11:23 IST                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+┌──────────────────────────────────────────────────────────────┐
+│              🌅 MORNING PICKS — Claude's Selections          │
+│              VIX: 18.61 | Budget: ₹300,000              │
+├──────────────────────────────────────────────────────────────┤
+│  1. Vedanta Limited (VEDL)
+│     📍 Entry: ₹297.50  🎯 Target: ₹306.50  🛑 SL: ₹291.55
+│     📊 R:R 1.5:1  ⭐ Confidence: 6/10  🏷️ REVERSAL
+│     💡 VEDL showing relative strength on bearish day — Metal sector is one of…
+│
+│  2. Adani Power Limited (ADANIPOWER)
+│     📍 Entry: ₹228.50  🎯 Target: ₹237.65  🛑 SL: ₹224.00
+│     📊 R:R 2.0:1  ⭐ Confidence: 6/10  🏷️ REVERSAL
+│     💡 ADANIPOWER holding green against weak Energy sector (-0.39%) and broad…
+│
+└──────────────────────────────────────────────────────────────┘
+
+
+============================================================
+  📊 INTRADAY TRADING REPORT — 2026-05-05
+  Mode: 🧪 DRY-RUN
+============================================================
+
+  🛑 VEDL         Entry ₹297.50 → Exit ₹299.05  Qty 152  P&L [92m+₹236[0m  [REVERSAL]
+  🛑 ADANIPOWER   Entry ₹228.50 → Exit ₹230.01  Qty 328  P&L [92m+₹495[0m  [REVERSAL]
+
+  🟢 Total P&L: [92m₹+730.88[0m
+  📈 Win Rate: 100.0% (2W / 0L)
+  💰 Avg Win: ₹365.44 | Avg Loss: ₹0.00
+  🎯 Expectancy: ₹365.44/trade
+  📊 Profit Factor: inf
+
+  Strategy Breakdown:
+    REVERSAL: 100% WR, ₹+731 P&L
+
+============================================================
+
+
+🏁 Intraday session complete!
+
+Finished at: Tue May  5 07:20:15 UTC 2026
+=== END ===

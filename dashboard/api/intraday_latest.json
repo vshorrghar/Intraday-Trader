@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-04T15:15:23.228040+05:30",
+  "updated_at": "2026-05-05T17:46:55.510608+05:30",
   "mode": "DRY_RUN",
   "broker": "dhan",
   "session_active": false,
@@ -7,74 +7,38 @@
     "trades": [
       {
         "tradingsymbol": "VEDL",
-        "entry_price": 277.5,
-        "current_price": 286.8,
-        "target_price": 286.0,
-        "stop_loss_price": 281.62,
-        "quantity": 44,
-        "pnl": 409.2,
-        "status": "CLOSED",
-        "strategy_type": "GAP",
-        "confidence_score": 7
-      },
-      {
-        "tradingsymbol": "KOTAKBANK",
-        "entry_price": 374.5,
-        "current_price": 371.65,
-        "target_price": 386.0,
-        "stop_loss_price": 368.5,
-        "quantity": 45,
-        "pnl": -128.25,
-        "status": "FORCE_EXITED",
+        "entry_price": 297.5,
+        "current_price": 299.05,
+        "target_price": 306.5,
+        "stop_loss_price": 299.57,
+        "quantity": 152,
+        "pnl": 235.6,
+        "status": "STOPPED_OUT",
         "strategy_type": "REVERSAL",
         "confidence_score": 6
       },
       {
         "tradingsymbol": "ADANIPOWER",
-        "entry_price": 223.5,
-        "current_price": 224.21,
-        "target_price": 231.0,
-        "stop_loss_price": 224.44,
-        "quantity": 89,
-        "pnl": 63.19,
+        "entry_price": 228.5,
+        "current_price": 230.01,
+        "target_price": 237.65,
+        "stop_loss_price": 230.38,
+        "quantity": 328,
+        "pnl": 495.28,
         "status": "STOPPED_OUT",
-        "strategy_type": "ORB",
-        "confidence_score": 7
-      },
-      {
-        "tradingsymbol": "HFCL",
-        "entry_price": 122.8,
-        "current_price": 121.4,
-        "target_price": 127.5,
-        "stop_loss_price": 123.25,
-        "quantity": 186,
-        "pnl": -260.4,
-        "status": "STOPPED_OUT",
-        "strategy_type": "GAP",
-        "confidence_score": 8
-      },
-      {
-        "tradingsymbol": "MEESHO",
-        "entry_price": 195.5,
-        "current_price": 206.05,
-        "target_price": 203.5,
-        "stop_loss_price": 195.5,
-        "quantity": 62,
-        "pnl": 654.1,
-        "status": "CLOSED",
-        "strategy_type": "MOMENTUM",
-        "confidence_score": 7
+        "strategy_type": "REVERSAL",
+        "confidence_score": 6
       }
     ],
-    "total_pnl": 737.84,
-    "realized_loss": 388.65,
+    "total_pnl": 730.88,
+    "realized_loss": 0,
     "daily_loss_cap": 5000,
-    "loss_cap_pct": 7.8
+    "loss_cap_pct": 0
   },
   "history": {
     "daily_pnl": [],
-    "cumulative_pnl": 4304.06,
-    "win_rate": 0,
+    "cumulative_pnl": 0,
+    "win_rate": 100.0,
     "total_days": 0
   }
 }

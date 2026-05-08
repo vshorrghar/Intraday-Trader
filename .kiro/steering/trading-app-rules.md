@@ -49,3 +49,23 @@ neha paper (mirrors vishal paper):
 - Do not touch run_daily.sh without explicit instruction
 - Always check current value before suggesting a change
 - Always ask "are you sure?" before changing vishal-live config
+
+## CRITICAL: Folder Paths — Never Confuse These
+
+### Mac (Kiro environment):
+~/kiro/websites/intraday-trader    ← THIS is the project on Mac
+NOT ~/dev-sandbox — that folder does NOT exist on Mac
+
+### EC2:
+~/dev-sandbox    ← THIS is the project on EC2
+
+### Every command Kiro writes must use correct path:
+- If command runs on Mac:   ~/kiro/websites/intraday-trader
+- If command runs on EC2:   ~/dev-sandbox
+
+### Sync command (run from Mac):
+cd ~/kiro/websites/intraday-trader && bash scripts/sync_to_ec2.sh
+
+### Git pull (run from Mac):
+cd ~/kiro/websites/intraday-trader && git pull origin main
+
