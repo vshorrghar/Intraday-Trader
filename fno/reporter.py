@@ -300,6 +300,8 @@ class FnO_Reporter:
                     },
                 })
 
+            # Get profile-specific dashboard directory
+            api_dir = getattr(self.config, 'dashboard_api_dir', None)
             write_fno_dashboard_json(
                 strategies=dash_strategies,
                 config=self.config,
@@ -307,6 +309,7 @@ class FnO_Reporter:
                 mode=self.config.mode.upper(),
                 broker=self.config.broker,
                 session_active=False,
+                api_dir=api_dir,
             )
         except Exception:
             logger.error("Failed to update dashboard", exc_info=True)

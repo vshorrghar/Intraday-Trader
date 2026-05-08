@@ -52,6 +52,7 @@ class FnO_Config:
     min_confidence_score: int = 7
     vix_threshold: float = 20.0
     paper_trading_weeks: int = 3
+    dashboard_api_dir: str = "dashboard/api"
 
 
 # ── Per-key validators ────────────────────────────────────────────────────
@@ -138,6 +139,11 @@ def load_fno_config(yaml_dict: dict[str, Any]) -> FnO_Config:
             continue
 
         resolved[key] = raw
+
+    # ── Dashboard API directory (from profile dashboard section) ──────
+    dashboard_section = yaml_dict.get("dashboard", {})
+    if isinstance(dashboard_section, dict) and dashboard_section.get("api_dir"):
+        resolved["dashboard_api_dir"] = dashboard_section["api_dir"]
 
     # ── Broker config validation ──────────────────────────────────────
     broker = resolved["broker"]

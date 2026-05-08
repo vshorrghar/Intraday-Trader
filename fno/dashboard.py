@@ -27,6 +27,7 @@ def write_fno_dashboard_json(
     mode: str = "PAPER",
     broker: str = "dhan",
     session_active: bool = False,
+    api_dir: str | None = None,
 ) -> None:
     """Write the F&O dashboard JSON file.
 
@@ -48,8 +49,12 @@ def write_fno_dashboard_json(
     """
     now = datetime.now(IST)
 
+    # Use profile-specific directory if provided
+    output_dir = api_dir or DASHBOARD_API_DIR
+    output_file = os.path.join(output_dir, "fno_latest.json")
+
     if not strategies:
-        strategies = _generate_demo_strategies(now)
+        strategies = []
 
     total_pnl = sum(s.get("unrealized_pnl", 0) or 0 for s in strategies)
     realized_loss = sum(
@@ -104,9 +109,10 @@ def write_fno_dashboard_json(
 
     os.makedirs(DASHBOARD_API_DIR, exist_ok=True)
     try:
-        with open(DASHBOARD_FILE, "w") as f:
+        os.makedirs(output_dir, exist_ok=True)
+        with open(output_file, "w") as f:
             json.dump(data, f, indent=2, default=str)
-        logger.info("F&O Dashboard JSON updated: %s", DASHBOARD_FILE)
+        logger.info("F&O Dashboard JSON updated: %s", output_file)
     except Exception:
         logger.error("Failed to write F&O dashboard JSON", exc_info=True)
 

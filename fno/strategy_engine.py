@@ -422,7 +422,6 @@ class FnO_Strategy_Engine:
                 "max_tokens": 4096,
                 "system": system_prompt,
                 "messages": [{"role": "user", "content": user_prompt}],
-                "temperature": 0.3,
             })
 
             resp = client.invoke_model(modelId=model_id, body=body)
