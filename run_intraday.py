@@ -312,6 +312,48 @@ def main() -> None:
         _generate_partial_report([], db, intra_config, dry_run)
         sys.exit(0)
 
+    # ── Gate conditions for non-morning sessions ──
+    now_ist = ist_now()
+    is_late_session = now_ist.hour >= 11  # after 11 AM = midday or afternoon
+    if is_late_session:
+        # Gate 1: Skip if already hit max trades today
+        if risk_mgr._trades_placed_today >= intra_config.max_trades_per_day:
+            logger.info(
+                "Late session gate: max trades already placed today (%d/%d) — skipping",
+                risk_mgr._trades_placed_today, intra_config.max_trades_per_day,
+            )
+            _generate_partial_report([], db, intra_config, dry_run)
+            sys.exit(0)
+
+        # Gate 2: Skip if loss > 50% of daily limit — protect capital, no revenge trading
+        if intra_config.daily_loss_limit > 0:
+            loss_pct = risk_mgr._realized_loss_today / intra_config.daily_loss_limit * 100
+            if loss_pct > 50:
+                logger.warning(
+                    "Late session gate: loss ₹%.0f is %.0f%% of daily limit — skipping to protect capital",
+                    risk_mgr._realized_loss_today, loss_pct,
+                )
+                _generate_partial_report([], db, intra_config, dry_run)
+                sys.exit(0)
+
+        # Gate 3: Skip if market breadth < 25% green — too bearish for late entry
+        total_stocks = len(scan_result.gainers) + len(scan_result.losers)
+        breadth_pct = len(scan_result.gainers) / total_stocks * 100 if total_stocks > 0 else 0
+        if breadth_pct < 25:
+            logger.warning(
+                "Late session gate: only %.0f%% stocks green — market too bearish for late entry",
+                breadth_pct,
+            )
+            _generate_partial_report([], db, intra_config, dry_run)
+            sys.exit(0)
+
+        logger.info(
+            "Late session gate passed: trades=%d/%d, loss=%.0f%%, breadth=%.0f%% green",
+            risk_mgr._trades_placed_today, intra_config.max_trades_per_day,
+            risk_mgr._realized_loss_today / intra_config.daily_loss_limit * 100 if intra_config.daily_loss_limit > 0 else 0,
+            breadth_pct,
+        )
+
     sized_trades = risk_mgr.size_trades(trades, available_margin=capital_remaining)
     if not sized_trades:
         logger.error("No trades could be sized — aborting")
