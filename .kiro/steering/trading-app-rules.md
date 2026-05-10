@@ -150,3 +150,22 @@ cd ~/kiro/websites/intraday-trader && git pull origin main
 - Paper accounts: vishal + neha — can run freely
 - Scale capital only after 60% win rate proven on paper
 - When in doubt, protect capital first
+
+### NSE Market Holidays
+- NSE is closed on Indian public holidays in addition to weekends
+- 2026 NSE holidays include (not exhaustive):
+  - Jan 26 — Republic Day
+  - Mar 25 — Holi
+  - Apr 14 — Dr. Ambedkar Jayanti
+  - Apr 17 — Good Friday
+  - May 1 — Maharashtra Day
+  - Jun 5 — Eid ul-Adha (tentative)
+  - Aug 15 — Independence Day
+  - Oct 2 — Gandhi Jayanti
+  - Oct 24 — Dussehra (tentative)
+  - Nov 14 — Diwali Laxmi Puja (tentative)
+  - Nov 28 — Gurunanak Jayanti (tentative)
+  - Dec 25 — Christmas
+- Always check NSE holiday calendar before assuming missing logs = bug
+- If today is a market holiday — no trades will run, no logs will exist
+- This is correct behavior not a bug
