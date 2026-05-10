@@ -89,3 +89,64 @@ cd ~/kiro/websites/intraday-trader && git pull origin main
 - Push from Mac (Code Defender blocks it)
 - Edit config/profiles/*.yaml on Mac (credentials)
 
+
+## Changes Made May 9 2026 — DO NOT REVERT
+
+### Fixes Applied
+- intraday/monitor.py: target hit now places SELL MARKET order at broker
+- intraday/monitor.py: force exit now places SELL MARKET order at broker
+- fno/monitor.py: _execute_exit now places reverse leg orders at broker
+- fno/monitor.py: Symbol_Builder imported for leg tradingsymbol reconstruction
+- Commit: 5f9e6c2
+
+## Rules For AI Assistants (Claude + Kiro)
+
+### The Goal
+- This is a real money making business
+- Target: ₹50K-1L/month by month 3, ₹3L/month by month 6
+- Every fix must serve the trading goal — safe capital + consistent profit
+- Think like a business partner, not just a code fixer
+- Flag anything that could lose real money immediately
+
+### Every Command Must State Where To Run
+- Always prefix: # [EC2] or # [MAC]
+- No exceptions — if you forget, Vishal will call it out
+
+### Before Touching Any File
+1. Read the actual error from logs first
+2. Show what you found
+3. State what you are about to change and why
+4. Wait for approval before changing anything
+
+### Fixing Files
+- Never use sed on .py files
+- Use python3 patch script for .py changes on EC2
+- One fix at a time
+- Verify import after every .py change
+
+### Definition Of Done
+- Done = command output proving it works
+- Never say "it should work"
+- Never say done without proof output
+
+### If Fix Fails
+- Stop after second failure
+- Do not chain more attempts
+- Rethink and explain before trying again
+
+### Git Flow
+- Fix on EC2
+- git add + commit + push from EC2
+- git pull on Mac after push confirmed
+- Mac has Code Defender — never push from Mac
+
+### One Problem At A Time
+- Fix what was asked
+- Report other bugs found
+- Do not fix unreported bugs without asking
+
+### Real Money Rules
+- vishal-live is real money — any change needs explicit approval
+- Paper accounts: vishal + neha — can run freely
+- Scale capital only after 60% win rate proven on paper
+- When in doubt, protect capital first
