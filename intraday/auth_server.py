@@ -478,24 +478,31 @@ def authenticate_broker(
     access_token: Optional[str] = None
 
     if name == "dhan":
-        # Try TOTP first (headless) if pin and totp_secret are available
+        # Try TOTP (headless) with 3 retries — TOTP codes rotate every 30s
         pin = broker_config.get("pin", "")
         totp_secret = broker_config.get("totp_secret", "")
         if pin and totp_secret:
-            logger.info("Dhan: attempting TOTP-based auth (headless)")
-            access_token = _dhan_totp_auth(
-                client_id=broker_config.get("client_id", ""),
-                pin=pin,
-                totp_secret=totp_secret,
-            )
+            for attempt in range(1, 4):
+                logger.info("Dhan: TOTP auth attempt %d/3", attempt)
+                access_token = _dhan_totp_auth(
+                    client_id=broker_config.get("client_id", ""),
+                    pin=pin,
+                    totp_secret=totp_secret,
+                )
+                if access_token:
+                    break
+                if attempt < 3:
+                    logger.warning("Dhan TOTP attempt %d failed — waiting 5s for next code window", attempt)
+                    time.sleep(5)
 
-        # Fall back to OAuth browser flow
+        # EC2 has no browser — do not fall back to OAuth browser flow
         if not access_token:
-            logger.info("Dhan: falling back to OAuth browser flow")
-            access_token = _dhan_oauth_browser(
-                client_id=broker_config.get("client_id", ""),
-                api_key=broker_config.get("api_key", ""),
-                api_secret=broker_config.get("api_secret", ""),
+            logger.error(
+                "Dhan TOTP auth failed after 3 attempts. "
+                "Check: 1) totp_secret in profile yaml "
+                "2) EC2 clock sync (timedatectl) "
+                "3) Dhan PIN correct "
+                "4) Dhan API not rate-limiting"
             )
 
     elif name == "zerodha":
