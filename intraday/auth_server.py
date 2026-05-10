@@ -171,11 +171,12 @@ class DryRunBrokerClient(BrokerClient):
 
 def _load_session(broker_name: str) -> Optional[dict]:
     """Load a same-day session from disk, or return ``None``."""
-    if not SESSION_FILE.exists():
+    session_file = _get_session_file()
+    if not session_file.exists():
         return None
 
     try:
-        data = json.loads(SESSION_FILE.read_text())
+        data = json.loads(session_file.read_text())
     except (json.JSONDecodeError, OSError) as exc:
         logger.warning("Failed to read session file: %s", exc)
         return None
@@ -202,8 +203,9 @@ def _load_session(broker_name: str) -> Optional[dict]:
 
 
 def _save_session(broker_name: str, access_token: str, client_id: str = "") -> None:
-    """Persist a session to ``config/.broker_session.json``."""
-    SESSION_FILE.parent.mkdir(parents=True, exist_ok=True)
+    """Persist a session to a profile-specific broker session file."""
+    session_file = _get_session_file()
+    session_file.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "broker": broker_name,
         "date": date.today().isoformat(),
@@ -211,15 +213,16 @@ def _save_session(broker_name: str, access_token: str, client_id: str = "") -> N
         "access_token": access_token,
         "client_id": client_id,
     }
-    SESSION_FILE.write_text(json.dumps(payload, indent=2))
-    logger.info("Session saved for %s", broker_name)
+    session_file.write_text(json.dumps(payload, indent=2))
+    logger.info("Session saved for %s to %s", broker_name, session_file)
 
 
 def _delete_session() -> None:
     """Remove the session file (e.g. on token expiry)."""
-    if SESSION_FILE.exists():
-        SESSION_FILE.unlink()
-        logger.info("Deleted stale session file")
+    session_file = _get_session_file()
+    if session_file.exists():
+        session_file.unlink()
+        logger.info("Deleted stale session file: %s", session_file)
 
 
 # ---------------------------------------------------------------------------
