@@ -211,14 +211,31 @@ class Risk_Manager:
     # ------------------------------------------------------------------
 
     def _restore_daily_state(self) -> None:
-        """Restore today's capital/loss state from DB."""
+        """Restore today's capital/loss/trade state from DB."""
         if self.db is None:
             return
         try:
             today = datetime.now(IST).strftime("%Y-%m-%d")
+
+            # Restore realized loss
             loss = self.db.get_daily_realized_loss(today)
             self._realized_loss_today = loss or 0.0
-            logger.info("Restored daily state: realized loss ₹%.2f", self._realized_loss_today)
+
+            # Restore trades placed and capital used from today's trade records
+            trades = self.db.get_trades_for_date(today)
+            buy_trades = [t for t in trades if t.get("action", "").upper() == "BUY"]
+            self._trades_placed_today = len(buy_trades)
+            self._capital_used_today = sum(
+                float(t.get("price", 0)) * int(t.get("quantity", 0))
+                for t in buy_trades
+            )
+
+            logger.info(
+                "Restored daily state: trades=%d, capital_used=₹%.2f, realized_loss=₹%.2f",
+                self._trades_placed_today,
+                self._capital_used_today,
+                self._realized_loss_today,
+            )
         except Exception:
             logger.debug("Could not restore daily state from DB", exc_info=True)
 
