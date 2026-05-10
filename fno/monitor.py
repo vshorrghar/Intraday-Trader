@@ -13,6 +13,7 @@ from datetime import datetime, timedelta, timezone
 from typing import TYPE_CHECKING, Any
 
 from fno.models import FnOPositionState, Greeks
+from fno.symbols import Symbol_Builder
 
 if TYPE_CHECKING:
     from database.db_manager import DBManager
@@ -402,6 +403,69 @@ class FnO_Position_Monitor:
             "Strategy %d → %s | P&L: ₹%.2f",
             strategy_id, new_status, realized_pnl,
         )
+
+        # --- Place broker exit orders for each leg ---
+        if self.broker and strat:
+            try:
+                legs_json = strat.get("legs_json", "[]")
+                legs = json.loads(legs_json) if isinstance(legs_json, str) else legs_json
+                index_name = strat.get("index_name", "NIFTY")
+                broker_name = self.config.broker.lower() if hasattr(self.config, "broker") else "dhan"
+                exchange = "NSE_FNO" if broker_name == "dhan" else "NFO"
+
+                for leg in legs:
+                    option_type = leg.get("option_type", "")
+                    strike = leg.get("strike", 0)
+                    expiry_str = leg.get("expiry_date", "")
+                    orig_txn = leg.get("transaction_type", "SELL")
+                    num_lots = leg.get("num_lots", 1)
+                    quantity = leg.get("quantity", num_lots * 50)
+
+                    # Reverse transaction to close
+                    close_txn = "BUY" if orig_txn == "SELL" else "SELL"
+
+                    # Build tradingsymbol
+                    try:
+                        expiry_dt = datetime.strptime(expiry_str, "%Y-%m-%d").date()
+                        if option_type in ("CE", "PE"):
+                            if broker_name == "dhan":
+                                tradingsymbol = Symbol_Builder.build_dhan(
+                                    index_name, expiry_dt, strike, option_type,
+                                )
+                            else:
+                                tradingsymbol = Symbol_Builder.build_zerodha(
+                                    index_name, expiry_dt, strike, option_type,
+                                )
+                        else:
+                            if broker_name == "dhan":
+                                tradingsymbol = Symbol_Builder.build_futures_dhan(index_name, expiry_dt)
+                            else:
+                                tradingsymbol = Symbol_Builder.build_futures_zerodha(index_name, expiry_dt)
+                    except Exception as sym_err:
+                        logger.error("❌ Could not build tradingsymbol for leg %s: %s", leg, sym_err)
+                        continue
+
+                    try:
+                        self.broker.place_fno_order(
+                            tradingsymbol=tradingsymbol,
+                            exchange=exchange,
+                            transaction_type=close_txn,
+                            order_type="MARKET",
+                            product_type="NRML",
+                            quantity=quantity,
+                            price=0.0,
+                        )
+                        logger.info(
+                            "✅ FnO exit leg placed: %s %s %s qty=%d",
+                            close_txn, tradingsymbol, new_status, quantity,
+                        )
+                    except Exception as leg_err:
+                        logger.error(
+                            "❌ FnO exit leg failed: %s %s — %s",
+                            close_txn, tradingsymbol, leg_err,
+                        )
+            except Exception as e:
+                logger.error("❌ FnO broker exit failed for strategy %d: %s", strategy_id, e)
 
     @staticmethod
     def _is_valid_transition(current: str, target: str) -> bool:

@@ -396,6 +396,20 @@ class Position_Monitor:
             if self.risk_manager:
                 self.risk_manager.record_trade_closed(pnl)
             logger.info("🎯 %s TARGET HIT @ ₹%.2f | P&L: ₹%.2f", trade["tradingsymbol"], current, pnl)
+            if self.broker:
+                try:
+                    self.broker.place_order(
+                        symbol=trade["tradingsymbol"],
+                        exchange="NSE",
+                        transaction_type="SELL",
+                        order_type="MARKET",
+                        product_type="INTRADAY",
+                        quantity=trade["quantity"],
+                        price=0.0,
+                    )
+                    logger.info("✅ %s target exit order placed at broker", trade["tradingsymbol"])
+                except Exception as e:
+                    logger.error("❌ %s target exit broker order failed: %s", trade["tradingsymbol"], e)
             return
 
         # --- Partial profit booking (only if not already partially booked) ---
@@ -437,6 +451,20 @@ class Position_Monitor:
             if self.risk_manager:
                 self.risk_manager.record_trade_closed(pnl)
             logger.info("⏰ %s FORCE EXITED @ ₹%.2f | P&L: ₹%.2f", trade["tradingsymbol"], current, trade["pnl"])
+            if self.broker:
+                try:
+                    self.broker.place_order(
+                        symbol=trade["tradingsymbol"],
+                        exchange="NSE",
+                        transaction_type="SELL",
+                        order_type="MARKET",
+                        product_type="INTRADAY",
+                        quantity=trade["quantity"],
+                        price=0.0,
+                    )
+                    logger.info("✅ %s force exit order placed at broker", trade["tradingsymbol"])
+                except Exception as e:
+                    logger.error("❌ %s force exit broker order failed: %s", trade["tradingsymbol"], e)
 
     def _calc_unrealized_pnl(self, trade: dict) -> float:
         current = trade.get("current_price", trade["entry_price"])
