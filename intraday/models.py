@@ -19,6 +19,7 @@ class TradeSetup:
     strategy_type: str  # "MOMENTUM", "ORB", "GAP", "VWAP"
     quantity: int = 0  # Filled by Risk_Manager
     risk_reward_ratio: float = 0.0
+    transaction_type: str = "BUY"  # "BUY" for long, "SELL" for short
 
 
 class PositionState(str, Enum):

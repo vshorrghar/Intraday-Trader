@@ -185,20 +185,23 @@ AVOID:
 
 STEP 3: ENTRY, TARGET, STOP LOSS
 
-ENTRY:
-- Use current LTP as entry price
-- Only enter if LTP is within 1.5% of open price
-- If stock moved >3% from open -> DO NOT pick it
-
-STOP LOSS (non-negotiable):
+FOR LONG SETUPS (setup_type = LONG):
+- ENTRY: Use current LTP as entry price
+- Only enter if LTP is within 3% of open price
 - SL = entry x 0.982 (1.8% below entry)
 - On VIX > 18: SL = entry x 0.980 (2% below)
-- Never tighter than 1.5%
-
-TARGET:
-- Minimum target = entry x 1.036 (3.6% above)
-- Preferred = entry x 1.04 (4% above)
+- TARGET: Minimum entry x 1.036 (3.6% above), preferred entry x 1.04
 - R:R must be >= 2.0 always
+
+FOR SHORT SETUPS (setup_type = SHORT):
+- ENTRY: Use current LTP as entry price
+- Only enter if LTP is within 3% of open price (from below)
+- SL = entry x 1.018 (1.8% above entry)
+- On VIX > 18: SL = entry x 1.020 (2% above)
+- TARGET: Minimum entry x 0.964 (3.6% below), preferred entry x 0.96
+- R:R must be >= 2.0 always
+- SHORT candidates are stocks with setup_type=SHORT in the data
+- Do not short a stock unless it has setup_type=SHORT
 
 POSITION SIZING (handled by system):
 - Budget: Rs.{config.daily_capital_limit:,.0f} total
@@ -206,11 +209,18 @@ POSITION SIZING (handled by system):
 
 STEP 4: STRATEGY TYPE
 
+LONG strategies:
 MOMENTUM : Strong gap up + volume surge + sector leading
 ORB      : Price breaking above first 15min high with volume
 GAP      : Clean gap up from prev close, holding above gap level
 VWAP     : Price reclaiming VWAP after dip with volume support
 REVERSAL : Green stock on red day with sector support
+
+SHORT strategies:
+SHORT_MOMENTUM : Strong gap down + volume surge + sector falling
+SHORT_ORB      : Price breaking below first 15min low with volume
+SHORT_GAP      : Clean gap down from prev close, holding below gap
+SHORT_REVERSAL : Red stock on green day — weak stock in strong market
 
 STEP 5: SELF-CHECK BEFORE SUBMITTING
 
@@ -238,7 +248,8 @@ RESPONSE FORMAT - valid JSON only, no markdown
       "confidence_score": 8,
       "rationale": "Volume 3.2M. Gap up 1.8%. Sector Banking +1.2% leading. Entry near open. R:R 2.2:1",
       "strategy_type": "MOMENTUM",
-      "sector": "Banking"
+      "sector": "Banking",
+      "transaction_type": "BUY"
     }}
   ],
   "market_mood": "BULLISH - 14/20 sectors green, VIX stable at 14.2",
@@ -365,19 +376,29 @@ def validate_pick(pick: dict, config: IntraConfig) -> str | None:
     if confidence < config.min_confidence_score:
         return f"confidence {confidence} < min {config.min_confidence_score}"
 
-    # Target must be above entry for long trades
-    if target <= entry:
-        return f"target {target} <= entry {entry}"
+    transaction_type = str(pick.get("transaction_type", "BUY")).upper()
 
-    # SL must be below entry for long trades
-    if sl >= entry:
-        return f"stop_loss {sl} >= entry {entry}"
+    if transaction_type == "SELL":
+        # SHORT trade: target below entry, SL above entry
+        if target >= entry:
+            return f"SHORT: target {target} >= entry {entry}"
+        if sl <= entry:
+            return f"SHORT: stop_loss {sl} <= entry {entry}"
+        risk = sl - entry
+        if risk <= 0:
+            return f"SHORT: risk (SL - entry) = {risk} <= 0"
+        rr = (entry - target) / risk
+    else:
+        # LONG trade: target above entry, SL below entry
+        if target <= entry:
+            return f"target {target} <= entry {entry}"
+        if sl >= entry:
+            return f"stop_loss {sl} >= entry {entry}"
+        risk = entry - sl
+        if risk <= 0:
+            return f"risk (entry - SL) = {risk} <= 0"
+        rr = (target - entry) / risk
 
-    # Risk:Reward >= 1.5 (aggressive mode)
-    risk = entry - sl
-    if risk <= 0:
-        return f"risk (entry - SL) = {risk} <= 0"
-    rr = (target - entry) / risk
     if rr < 1.99:
         return f"R:R {rr:.2f} < 2.0"
 
@@ -393,8 +414,15 @@ def _pick_to_trade_setup(pick: dict) -> TradeSetup:
     entry = float(pick["entry_price"])
     target = float(pick["target_price"])
     sl = float(pick["stop_loss_price"])
-    risk = entry - sl
-    rr = (target - entry) / risk if risk > 0 else 0.0
+    transaction_type = str(pick.get("transaction_type", "BUY")).upper()
+
+    # R:R calculation differs for long vs short
+    if transaction_type == "SELL":
+        risk = sl - entry  # for short: SL is above entry
+        rr = (entry - target) / risk if risk > 0 else 0.0
+    else:
+        risk = entry - sl
+        rr = (target - entry) / risk if risk > 0 else 0.0
 
     return TradeSetup(
         stock_name=str(pick["stock_name"]),
@@ -407,6 +435,7 @@ def _pick_to_trade_setup(pick: dict) -> TradeSetup:
         rationale=str(pick["rationale"]),
         strategy_type=str(pick["strategy_type"]),
         risk_reward_ratio=round(rr, 2),
+        transaction_type=transaction_type,
     )
 
 

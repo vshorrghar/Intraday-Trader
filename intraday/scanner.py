@@ -278,25 +278,29 @@ class Pre_Market_Scanner:
             logger.error("All data sources returned empty — aborting scan")
             return None
 
-        # --- Build candidate list from gainers + losers ---
-        seen: set[str] = set()
-        candidates: list[dict] = []
-        for mover in gainers_raw + losers_raw:
-            if mover.symbol and mover.symbol not in seen:
-                seen.add(mover.symbol)
-                candidates.append(_mover_to_candidate(mover))
+        # --- Build candidate list from Nifty 500 (primary) ---
+        candidates = _fetch_nifty500_candidates(
+            price_min=50,
+            price_max=5000,
+            min_volume=500_000,
+            top_n_long=15,
+            top_n_short=15,
+        )
 
-        # Also add most-active stocks not already present
-        for mover in active_raw:
-            if mover.symbol and mover.symbol not in seen:
-                seen.add(mover.symbol)
-                candidates.append(_mover_to_candidate(mover))
-
-        # --- Volume spike identification ---
-        candidates = _identify_volume_spikes(candidates, active_raw)
-
-        # --- Enrich candidates with live NSE quotes if prices are missing ---
-        candidates = _enrich_with_live_quotes(candidates)
+        # --- Fallback to gainers/losers/active if Nifty500 failed ---
+        if not candidates:
+            logger.warning("Nifty500 scan failed — falling back to gainers/losers/active")
+            seen: set[str] = set()
+            for mover in gainers_raw + losers_raw:
+                if mover.symbol and mover.symbol not in seen:
+                    seen.add(mover.symbol)
+                    candidates.append(_mover_to_candidate(mover))
+            for mover in active_raw:
+                if mover.symbol and mover.symbol not in seen:
+                    seen.add(mover.symbol)
+                    candidates.append(_mover_to_candidate(mover))
+            candidates = _identify_volume_spikes(candidates, active_raw)
+            candidates = _enrich_with_live_quotes(candidates)
 
         # --- Summaries ---
         gainers_summary = [_mover_to_summary(m) for m in gainers_raw[:10]]
@@ -311,3 +315,165 @@ class Pre_Market_Scanner:
             gainers=gainers_summary,
             losers=losers_summary,
         )
+
+
+def _fetch_nifty500_candidates(
+    price_min: float = 50,
+    price_max: float = 5000,
+    min_volume: int = 500_000,
+    top_n_long: int = 15,
+    top_n_short: int = 15,
+) -> list[dict]:
+    """Fetch Nifty 500 stocks and return top long + short candidates.
+
+    Filters by price range and minimum volume.
+    Scores long setups (gap up, volume surge, green on green day).
+    Scores short setups (gap down, volume surge, red on red day).
+    Returns top_n_long + top_n_short candidates combined.
+    """
+    from fetchers.nse_market_movers import _get_nse_session
+    try:
+        s = _get_nse_session()
+        r = s.get(
+            "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%20500",
+            timeout=20,
+        )
+        r.raise_for_status()
+        raw = r.json().get("data", [])
+    except Exception as exc:
+        logger.error("Nifty500 fetch failed: %s", exc)
+        return []
+
+    candidates = []
+    for item in raw:
+        symbol = item.get("symbol", "")
+        if not symbol:
+            continue
+
+        ltp = float(item.get("lastPrice") or 0)
+        open_price = float(item.get("open") or 0)
+        prev_close = float(item.get("previousClose") or 0)
+        volume = int(item.get("totalTradedVolume") or 0)
+        day_high = float(item.get("dayHigh") or 0)
+        day_low = float(item.get("dayLow") or 0)
+        change_pct = float(item.get("pChange") or 0)
+        year_high = float(item.get("yearHigh") or 0)
+        year_low = float(item.get("yearLow") or 0)
+        industry = item.get("meta", {}).get("industry", "")
+        is_fno = item.get("meta", {}).get("isFNOSec", False)
+
+        # Basic filters
+        if ltp < price_min or ltp > price_max:
+            continue
+        if volume < min_volume:
+            continue
+        if prev_close <= 0 or open_price <= 0:
+            continue
+
+        gap_pct = (open_price - prev_close) / prev_close * 100
+        change_from_open = (ltp - open_price) / open_price * 100 if open_price > 0 else 0
+        near_52w_high = (year_high - ltp) / year_high * 100 if year_high > 0 else 100
+        near_52w_low = (ltp - year_low) / year_low * 100 if year_low > 0 else 100
+        day_range = (day_high - day_low) / prev_close * 100 if prev_close > 0 else 0
+        high_volatility = day_range > 5 or abs(gap_pct) > 8
+
+        # Long score — higher is better long candidate
+        long_score = 0
+        if change_pct > 0:
+            long_score += 2
+        if gap_pct > 0.5:
+            long_score += 1
+        if volume > 2_000_000:
+            long_score += 2
+        if volume > 5_000_000:
+            long_score += 1
+        if change_from_open > 0:
+            long_score += 1
+        if near_52w_high < 10:
+            long_score += 1
+        if is_fno:
+            long_score += 1
+        if high_volatility:
+            long_score -= 3
+
+        # Short score — higher is better short candidate
+        short_score = 0
+        if change_pct < 0:
+            short_score += 2
+        if gap_pct < -0.5:
+            short_score += 1
+        if volume > 2_000_000:
+            short_score += 2
+        if volume > 5_000_000:
+            short_score += 1
+        if change_from_open < 0:
+            short_score += 1
+        if near_52w_low < 10:
+            short_score += 1
+        if is_fno:
+            short_score += 1
+        if high_volatility:
+            short_score -= 3
+
+        candidates.append({
+            "symbol": symbol,
+            "name": item.get("meta", {}).get("companyName", symbol),
+            "ltp": ltp,
+            "open_price": open_price,
+            "prev_close": prev_close,
+            "change": float(item.get("change") or 0),
+            "change_pct": change_pct,
+            "volume": volume,
+            "gap_pct": round(gap_pct, 2),
+            "day_high": day_high,
+            "day_low": day_low,
+            "year_high": year_high,
+            "year_low": year_low,
+            "near_52w_high_pct": round(near_52w_high, 2),
+            "near_52w_low_pct": round(near_52w_low, 2),
+            "change_from_open": round(change_from_open, 2),
+            "high_volatility": high_volatility,
+            "is_fno": is_fno,
+            "industry": industry,
+            "category": "active",
+            "high": day_high,
+            "low": day_low,
+            "long_score": long_score,
+            "short_score": short_score,
+            "setup_type": "",
+        })
+
+    # Pick top long and short candidates
+    long_candidates = sorted(
+        [c for c in candidates if c["long_score"] > 0],
+        key=lambda x: x["long_score"],
+        reverse=True,
+    )[:top_n_long]
+
+    short_candidates = sorted(
+        [c for c in candidates if c["short_score"] > 0 and c["change_pct"] < 0],
+        key=lambda x: x["short_score"],
+        reverse=True,
+    )[:top_n_short]
+
+    for c in long_candidates:
+        c["setup_type"] = "LONG"
+    for c in short_candidates:
+        c["setup_type"] = "SHORT"
+
+    # Deduplicate — if same stock in both, keep the higher scored one
+    seen: set[str] = set()
+    result = []
+    for c in long_candidates + short_candidates:
+        if c["symbol"] not in seen:
+            seen.add(c["symbol"])
+            result.append(c)
+
+    logger.info(
+        "Nifty500 scan: %d total, %d long candidates, %d short candidates, %d combined",
+        len(candidates),
+        len(long_candidates),
+        len(short_candidates),
+        len(result),
+    )
+    return result
