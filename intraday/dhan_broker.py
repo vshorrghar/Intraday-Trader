@@ -272,6 +272,18 @@ class DhanBrokerClient(BrokerClient):
 
         return normalised
 
+    def get_order_status(self, order_id: str) -> str:
+        """Get status of a specific order. Returns status string or empty string on failure."""
+        try:
+            orders = self.get_order_list()
+            for o in orders:
+                if str(o.get("orderId", "")) == str(order_id):
+                    return str(o.get("orderStatus", ""))
+            return ""
+        except Exception as e:
+            logger.warning("get_order_status failed for %s: %s", order_id, e)
+            return ""
+
     def get_margins(self) -> dict:
         """Fetch fund limits via GET ``/v2/fundlimit``.
 
