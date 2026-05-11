@@ -378,7 +378,7 @@ def validate_pick(pick: dict, config: IntraConfig) -> str | None:
     if risk <= 0:
         return f"risk (entry - SL) = {risk} <= 0"
     rr = (target - entry) / risk
-    if rr < 2.0:
+    if rr < 1.99:
         return f"R:R {rr:.2f} < 2.0"
 
     # Reject high volatility stocks — prone to SL slippage
