@@ -116,6 +116,14 @@ def write_dashboard_json(
     except Exception:
         logger.error("Failed to write dashboard JSON", exc_info=True)
 
+    # Write separate history.json for dashboard JS
+    try:
+        history_file = os.path.join(output_dir, "history.json")
+        with open(history_file, "w") as f:
+            json.dump(history, f, indent=2, default=str)
+    except Exception:
+        logger.error("Failed to write history JSON", exc_info=True)
+
 
 def _load_existing_trades(today: str, dashboard_file: str = DASHBOARD_FILE) -> list[dict]:
     """Load existing trades from today's dashboard file (if any).
@@ -176,7 +184,7 @@ def _merge_trades(existing: list[dict], new: list[dict]) -> list[dict]:
 def _build_history(db: Any) -> dict:
     """Build historical performance data from DB."""
     if db is None:
-        return {"daily_pnl": [], "cumulative_pnl": 0, "win_rate": 0, "total_days": 0}
+        return {"days": [], "cumulative_pnl": 0, "win_rate": 0, "total_days": 0}
 
     try:
         cumulative_pnl = db.get_cumulative_pnl()
@@ -216,10 +224,10 @@ def _build_history(db: Any) -> dict:
             total_trades = 0
 
         return {
-            "daily_pnl": daily_pnl,
+            "days": daily_pnl,
             "cumulative_pnl": round(cumulative_pnl, 2),
             "win_rate": win_rate,
             "total_days": len(daily_pnl),
         }
     except Exception:
-        return {"daily_pnl": [], "cumulative_pnl": 0, "win_rate": 0, "total_days": 0}
+        return {"days": [], "cumulative_pnl": 0, "win_rate": 0, "total_days": 0}

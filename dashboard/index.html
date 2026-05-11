@@ -565,7 +565,7 @@ function renderOverview() {
   sv('ov-today-strategies', strategies.join(', ') || '—');
 
   // All-time from history
-  const days = (h && h.days) ? h.days : [];
+  const days = (h && h.days) ? h.days : (h && h.daily_pnl) ? h.daily_pnl : [];
   const totalPnl = days.reduce((s,d)=>s+(d.pnl||0),0);
   const totalDays = days.length;
   const allWinners = days.filter(d=>(d.pnl||0)>0).length;
