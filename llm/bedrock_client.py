@@ -112,6 +112,10 @@ class BedrockClient:
             if len(lines) >= 3:
                 cleaned = "\n".join(lines[1:-1]).strip()
 
+        # If LLM returned reasoning text before JSON, find the first {
+        if not cleaned.startswith("{") and "{" in cleaned:
+            cleaned = cleaned[cleaned.index("{"):]
+
         try:
             result = json.loads(cleaned)
             if isinstance(result, dict):
