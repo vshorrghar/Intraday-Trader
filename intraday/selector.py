@@ -296,20 +296,19 @@ def _build_user_prompt(
 
     # --- Candidates table ---
     cand_lines = [
-        "| # | Symbol | LTP (₹) | Open (₹) | Prev Close (₹) | High (₹) | Low (₹) | Gap % | Volume | High Vol | Sector Aligned |",
-        "|---|--------|---------|----------|----------------|----------|---------|-------|--------|----------|----------------|",
+        "| # | Symbol | Setup | LTP (₹) | Open (₹) | Prev Close (₹) | Change % | Gap % | Volume | High Vol |",
+        "|---|--------|-------|---------|----------|----------------|----------|-------|--------|----------|",
     ]
     for i, c in enumerate(candidates, 1):
         hv = "⚠️ YES" if c.get("high_volatility") else "no"
-        sa = "✅" if c.get("sector_aligned") else "—"
         open_p = c.get("open_price", 0)
         prev_cl = c.get("prev_close", 0)
-        high_p = c.get("high", 0)
-        low_p = c.get("low", 0)
+        setup = c.get("setup_type", "LONG")
         cand_lines.append(
-            f"| {i} | {c.get('symbol', '?')} | ₹{c.get('ltp', 0):.2f} "
-            f"| ₹{open_p:.2f} | ₹{prev_cl:.2f} | ₹{high_p:.2f} | ₹{low_p:.2f} "
-            f"| {c.get('gap_pct', 0):+.2f}% | {c.get('volume', 0):,} | {hv} | {sa} |"
+            f"| {i} | {c.get('symbol', '?')} | {setup} | ₹{c.get('ltp', 0):.2f} "
+            f"| ₹{open_p:.2f} | ₹{prev_cl:.2f} "
+            f"| {c.get('change_pct', 0):+.2f}% "
+            f"| {c.get('gap_pct', 0):+.2f}% | {c.get('volume', 0):,} | {hv} |"
         )
     candidates_table = "\n".join(cand_lines)
 
