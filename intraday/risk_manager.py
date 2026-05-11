@@ -223,7 +223,13 @@ class Risk_Manager:
 
             # Restore trades placed and capital used from today's trade records
             trades = self.db.get_trades_for_date(today)
-            buy_trades = [t for t in trades if t.get("action", "").upper() == "BUY"]
+            # Only count trades that actually executed — not OPEN stubs or CANCELLED test runs
+            COUNTED_STATUSES = {"STOPPED_OUT", "TARGET_HIT", "FORCE_EXITED", "CLOSED", "PARTIAL_BOOKED"}
+            buy_trades = [
+                t for t in trades
+                if t.get("action", "").upper() == "BUY"
+                and t.get("status", "").upper() in COUNTED_STATUSES
+            ]
             self._trades_placed_today = len(buy_trades)
             self._capital_used_today = sum(
                 float(t.get("price", 0)) * int(t.get("quantity", 0))
