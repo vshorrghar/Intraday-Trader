@@ -340,16 +340,9 @@ def main() -> None:
         # Paper profiles skip this gate — they need experience on bearish days
         total_stocks = len(scan_result.gainers) + len(scan_result.losers)
         breadth_pct = len(scan_result.gainers) / total_stocks * 100 if total_stocks > 0 else 0
-        if breadth_pct < 25 and not dry_run:
-            logger.warning(
-                "Late session gate: only %.0f%% stocks green — market too bearish for late entry",
-                breadth_pct,
-            )
-            _generate_partial_report([], db, intra_config, dry_run)
-            sys.exit(0)
-        elif breadth_pct < 25 and dry_run:
+        if breadth_pct < 25:
             logger.info(
-                "Late session gate: breadth %.0f%% — bearish but continuing (paper mode)",
+                "Late session gate: breadth %.0f%% — bearish but continuing (shorts available)",
                 breadth_pct,
             )
 
