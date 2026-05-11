@@ -337,15 +337,21 @@ def main() -> None:
                 sys.exit(0)
 
         # Gate 3: Skip if market breadth < 25% green — too bearish for late entry
+        # Paper profiles skip this gate — they need experience on bearish days
         total_stocks = len(scan_result.gainers) + len(scan_result.losers)
         breadth_pct = len(scan_result.gainers) / total_stocks * 100 if total_stocks > 0 else 0
-        if breadth_pct < 25:
+        if breadth_pct < 25 and not dry_run:
             logger.warning(
                 "Late session gate: only %.0f%% stocks green — market too bearish for late entry",
                 breadth_pct,
             )
             _generate_partial_report([], db, intra_config, dry_run)
             sys.exit(0)
+        elif breadth_pct < 25 and dry_run:
+            logger.info(
+                "Late session gate: breadth %.0f%% — bearish but continuing (paper mode)",
+                breadth_pct,
+            )
 
         logger.info(
             "Late session gate passed: trades=%d/%d, loss=%.0f%%, breadth=%.0f%% green",
@@ -791,22 +797,40 @@ def _print_morning_picks(trades, vix_value: float, config) -> None:
     print()
 
 
-def _generate_partial_report(trades: list, db, config, dry_run: bool) -> None:
+def _generate_partial_report(trades: list, db, config, dry_run: bool, profile_config: dict | None = None) -> None:
     """Generate a partial report when session aborts early."""
     if not trades:
         logger.info("No trades to report")
-        return
+    else:
+        try:
+            from intraday.reporter import Performance_Tracker
+            reporter = Performance_Tracker(
+                db=db,
+                broker_name=config.broker,
+                mode="DRY_RUN" if dry_run else "LIVE",
+            )
+            report = reporter.generate_eod_report(trades)
+            reporter.print_summary(report)
+        except Exception:
+            logger.error("Failed to generate partial report", exc_info=True)
+
+    # Always write dashboard even on early abort — so dashboard shows current state
     try:
-        from intraday.reporter import Performance_Tracker
-        reporter = Performance_Tracker(
+        from intraday.dashboard import write_dashboard_json
+        dashboard_dir = None
+        if profile_config:
+            dashboard_dir = profile_config.get("dashboard", {}).get("api_dir")
+        write_dashboard_json(
+            trades=trades,
+            config=config,
             db=db,
-            broker_name=config.broker,
             mode="DRY_RUN" if dry_run else "LIVE",
+            broker=config.broker,
+            session_active=False,
+            api_dir=dashboard_dir,
         )
-        report = reporter.generate_eod_report(trades)
-        reporter.print_summary(report)
     except Exception:
-        logger.error("Failed to generate partial report", exc_info=True)
+        logger.error("Failed to write dashboard on partial report", exc_info=True)
 
 
 if __name__ == "__main__":
