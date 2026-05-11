@@ -423,6 +423,7 @@ def select_trades_llm(
     *,
     gainers: list[dict] | None = None,
     losers: list[dict] | None = None,
+    dry_run: bool = False,
 ) -> list[TradeSetup]:
     """Send pre-filtered candidates to Claude and return validated trades.
 
