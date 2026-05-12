@@ -268,7 +268,19 @@ def main() -> None:
         from fno.strategy_engine import FnO_Strategy_Engine
 
         strategy_engine = FnO_Strategy_Engine(config, db, greeks_calc)
-        vix = 15.0  # Default VIX for paper mode
+        # Fetch real VIX from NSE sector indices
+        try:
+            from fetchers.nse_market_movers import fetch_sector_indices
+            sectors = fetch_sector_indices()
+            vix = 15.0
+            for s in sectors:
+                if "VIX" in s.name.upper():
+                    vix = float(s.last_price)
+                    break
+            logger.info("FnO VIX fetched: %.2f", vix)
+        except Exception as vix_err:
+            vix = 15.0
+            logger.warning("VIX fetch failed, using default 15.0: %s", vix_err)
 
         strategies = strategy_engine.select_strategies(
             chains=chains,
