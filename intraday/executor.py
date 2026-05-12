@@ -93,8 +93,40 @@ class Order_Executor:
         logger.info("Placed %d / %d orders (%s mode)", len(placed), len(trades), mode)
         return placed
 
+    def _wait_for_fill(self, order_id: str, expected_qty: int, timeout: int = 10) -> int:
+        """
+        Poll order status until filled, rejected, or timeout.
+        Returns: filled quantity (0 if not filled at all).
+        """
+        if not hasattr(self.broker, "get_order_list"):
+            # DryRun broker has no get_order_list — assume instant fill
+            return expected_qty
+
+        start = time.time()
+        last_filled = 0
+        while time.time() - start < timeout:
+            try:
+                orders = self.broker.get_order_list()
+                for o in orders:
+                    if str(o.get("orderId", "")) == str(order_id):
+                        status = str(o.get("orderStatus", "")).upper()
+                        filled = int(o.get("filledQty", 0) or 0)
+                        last_filled = filled
+
+                        if status == "TRADED" and filled >= expected_qty:
+                            return filled
+                        if status in ("REJECTED", "CANCELLED"):
+                            return filled  # Could be 0 or partial
+                        break  # Still pending — keep polling
+            except Exception as e:
+                logger.warning("wait_for_fill poll failed for %s: %s", order_id, e)
+            time.sleep(2)
+
+        # Timed out — return whatever filled so far
+        return last_filled
+
     def _place_single_trade(self, trade: TradeSetup, mode: str) -> dict | None:
-        """Place a LIMIT buy + SL sell for one trade."""
+        """Place a LIMIT buy, wait for fill, then place SL for actual filled qty."""
         # --- Place BUY order ---
         buy_result = self.broker.place_order(
             symbol=trade.tradingsymbol,
@@ -111,14 +143,40 @@ class Order_Executor:
             logger.error("No order ID returned for BUY %s", trade.nse_symbol)
             return None
 
-        # --- Place SL sell order ---
+        # --- Wait for BUY to fill (10s timeout, 2s polling) ---
+        filled_qty = self._wait_for_fill(buy_order_id, trade.quantity, timeout=10)
+
+        if filled_qty == 0:
+            # BUY did not fill — cancel and abort (no SL placed = no phantom short)
+            try:
+                self.broker.cancel_order(buy_order_id)
+            except Exception as e:
+                logger.warning("cancel_order failed for %s: %s", buy_order_id, e)
+            logger.warning(
+                "BUY %s (order %s) did not fill in 10s — cancelled, no SL placed",
+                trade.nse_symbol, buy_order_id,
+            )
+            return None
+
+        if filled_qty < trade.quantity:
+            # Partial fill — cancel rest, place SL only for filled qty
+            try:
+                self.broker.cancel_order(buy_order_id)
+            except Exception as e:
+                logger.warning("cancel_order failed for partial %s: %s", buy_order_id, e)
+            logger.warning(
+                "BUY %s partial fill: %d/%d — placing SL for %d, remainder cancelled",
+                trade.nse_symbol, filled_qty, trade.quantity, filled_qty,
+            )
+
+        # --- Place SL sell order for ACTUAL filled qty ---
         sl_result = self.broker.place_order(
             symbol=trade.tradingsymbol,
             exchange="NSE",
             transaction_type="SELL",
             order_type="SL",
             product_type="INTRADAY",
-            quantity=trade.quantity,
+            quantity=filled_qty,
             price=round(trade.stop_loss_price - 0.50, 2),
             trigger_price=trade.stop_loss_price,
         )
@@ -132,7 +190,7 @@ class Order_Executor:
                 tradingsymbol=trade.tradingsymbol,
                 action="BUY",
                 order_type="LIMIT",
-                quantity=trade.quantity,
+                quantity=filled_qty,
                 price=trade.entry_price,
                 trigger_price=trade.stop_loss_price,
                 broker_order_id=buy_order_id,

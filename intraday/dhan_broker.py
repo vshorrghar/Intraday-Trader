@@ -272,6 +272,29 @@ class DhanBrokerClient(BrokerClient):
 
         return normalised
 
+    def get_order_list(self) -> list[dict]:
+        """Fetch all orders for the day via GET ``/v2/orders``.
+
+        Returns list of order dicts. Each dict has fields:
+        - orderId: str
+        - orderStatus: str (PENDING, TRADED, REJECTED, CANCELLED, etc.)
+        - filledQty: int (quantity actually executed)
+        - remainingQuantity: int (quantity not yet executed)
+        - tradingSymbol, transactionType, price, etc.
+        """
+        logger.info("Dhan get_order_list")
+        resp = self._session.get(
+            f"{BASE_URL}/orders",
+            headers=self._headers(),
+        )
+        data = self._handle_response(resp, "Dhan get_order_list")
+        # Dhan returns either a list directly OR {"data": [...]}
+        if isinstance(data, list):
+            return data
+        if isinstance(data, dict):
+            return data.get("data", []) or []
+        return []
+
     def get_order_status(self, order_id: str) -> str:
         """Get status of a specific order. Returns status string or empty string on failure."""
         try:

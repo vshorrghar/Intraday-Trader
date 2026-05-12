@@ -82,3 +82,30 @@ echo "  Log files today:"
 ls ${LOG_DIR}/*${DATE}*.log 2>/dev/null | \
     xargs -I{} basename {} | sed 's/^/  /'
 echo "=============================================="
+
+# Neha-live real P&L from Dhan API
+echo ""
+echo "--- REAL P&L FROM DHAN API (neha-live) ---"
+cd ~/dev-sandbox && .venv/bin/python -c "
+import sys, json, requests
+sys.path.insert(0, '.')
+try:
+    with open('config/.broker_session_neha-live.json') as f:
+        session = json.load(f)
+    headers = {
+        'access-token': session['access_token'],
+        'client-id': session['client_id'],
+        'Content-Type': 'application/json'
+    }
+    r = requests.get('https://api.dhan.co/v2/positions', headers=headers, timeout=15)
+    positions = r.json()
+    total = 0
+    for p in positions:
+        sym = p.get('tradingSymbol')
+        pnl = p.get('realizedProfit', 0)
+        total += pnl
+        print(f'  {sym}: P&L=₹{pnl}')
+    print(f'  TOTAL: ₹{round(total, 2)}')
+except Exception as e:
+    print(f'  Error: {e}')
+" 2>/dev/null

@@ -15,6 +15,13 @@
 # If any layer fails, subsequent layers are SKIPPED (they'd fail anyway).
 # ═══════════════════════════════════════════════════════════════════════════
 
+# --- Parse --local flag ---
+LOCAL_MODE=0
+for arg in "$@"; do
+    if [ "$arg" = "--local" ]; then
+        LOCAL_MODE=1
+    fi
+done
 KEY="$HOME/Downloads/wealth-builder-pro.pem"
 EC2="ec2-user@13.206.144.6"
 REMOTE_DIR="dev-sandbox"
@@ -63,16 +70,24 @@ echo "════════════════════════�
 echo ""
 echo "━━━ Layer 1: EC2 Connectivity ━━━"
 
-if $SSH "echo ok" > /dev/null 2>&1; then
-    pass "EC2 reachable at 13.206.144.6"
+if [ "$LOCAL_MODE" = "1" ]; then
+    pass "Layer 1 SKIPPED (--local mode, running from EC2 directly)"
 else
-    fail "EC2 unreachable — check IP, security group, or key"
-    LAYER_FAILED="1"
+    if $SSH "echo ok" > /dev/null 2>&1; then
+        pass "EC2 reachable at 13.206.144.6"
+    else
+        fail "EC2 unreachable — check IP, security group, or key"
+        LAYER_FAILED="1"
+    fi
+    layer_check
 fi
-layer_check
 
-# Check EC2 timezone
-EC2_TZ=$($SSH "date +%Z" 2>/dev/null)
+# Check EC2 timezone (use local date if --local)
+if [ "$LOCAL_MODE" = "1" ]; then
+    EC2_TZ=$(date +%Z 2>/dev/null)
+else
+    EC2_TZ=$($SSH "date +%Z" 2>/dev/null)
+fi
 if [ "$EC2_TZ" = "UTC" ]; then
     pass "EC2 timezone is UTC (cron times must be in UTC)"
 else

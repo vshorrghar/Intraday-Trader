@@ -13,6 +13,7 @@ import time
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
+from intraday.charges import calculate_intraday_charges
 from intraday.broker_base import BrokerClient
 from intraday.models import IntraConfig, PositionState
 
@@ -362,16 +363,34 @@ class Position_Monitor:
                 sym = t.get("tradingsymbol", "")
                 if sym in pos_map:
                     p = pos_map[sym]
-                    # Use sellAvg for current price (actual exit/current price)
-                    # Use realizedProfit from Dhan if position closed
-                    if p.get("netQty", 1) == 0 and p.get("realizedProfit") is not None:
-                        t["pnl"] = round(p["realizedProfit"], 2)
-                        t["current_price"] = p.get("sellAvg", t["entry_price"])
+                    # Dhan returns snake_case fields:
+                    #   quantity (0 = closed), pnl (gross), buy_avg, sell_avg
+                    qty_remaining = p.get("quantity", p.get("netQty", 1))
+                    dhan_pnl = p.get("pnl", p.get("realizedProfit"))
+
+                    if qty_remaining == 0 and dhan_pnl is not None:
+                        # Position closed — calculate net P&L (gross - charges)
+                        gross_pnl = float(dhan_pnl)
+                        buy_avg = float(p.get("buy_avg", p.get("buyAvg", t["entry_price"])))
+                        sell_avg = float(p.get("sell_avg", p.get("sellAvg", t["entry_price"])))
+                        qty = int(t.get("quantity", 0))
+                        charges = self._calculate_dhan_charges(buy_avg, sell_avg, qty)
+                        t["pnl"] = round(gross_pnl - charges, 2)
+                        t["gross_pnl"] = round(gross_pnl, 2)
+                        t["charges"] = charges
+                        t["current_price"] = sell_avg if sell_avg else t["entry_price"]
                     else:
-                        ltp = p.get("ltp") or p.get("lastTradedPrice") or p.get("sellAvg")
+                        # Position still open — just update LTP
+                        ltp = (p.get("ltp") or p.get("last_traded_price") or
+                               p.get("lastTradedPrice") or p.get("sell_avg") or p.get("sellAvg"))
                         t["current_price"] = ltp if ltp else t["entry_price"]
         except Exception as exc:
             logger.error("Failed to fetch positions: %s — will retry", exc)
+
+    @staticmethod
+    def _calculate_dhan_charges(buy_price: float, sell_price: float, qty: int) -> float:
+        """Delegates to intraday.charges module (single source of truth for rates)."""
+        return calculate_intraday_charges(buy_price, sell_price, qty)
 
     def _check_position(self, trade: dict) -> None:
         """Check a single position for target/SL/trailing/partial triggers."""
