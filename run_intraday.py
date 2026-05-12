@@ -421,6 +421,8 @@ def main() -> None:
         api_dir=dashboard_dir,
     )
     phase_log("Dashboard Update", "DONE")
+    import subprocess
+    subprocess.Popen(["bash", "/home/ec2-user/dev-sandbox/scripts/sync_dashboard.sh"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     # ── Cleanup ──
     if db:
