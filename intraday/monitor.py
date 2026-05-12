@@ -78,6 +78,23 @@ def calc_partial_book(
 # ------------------------------------------------------------------
 
 class Position_Monitor:
+
+    @staticmethod
+    def _trade_direction(trade: dict) -> str:
+        """Returns 'LONG' or 'SHORT' based on action field. Defaults to LONG."""
+        action = (trade.get("action") or "BUY").upper()
+        return "SHORT" if action == "SELL" else "LONG"
+
+    @staticmethod
+    def _calc_pnl(trade: dict, exit_price: float) -> float:
+        """Calculate P&L respecting LONG vs SHORT direction."""
+        entry = trade.get("entry_price", 0.0)
+        qty = trade.get("quantity", 0)
+        if Position_Monitor._trade_direction(trade) == "LONG":
+            return (exit_price - entry) * qty
+        else:  # SHORT
+            return (entry - exit_price) * qty
+
     """Monitors open positions and manages state transitions."""
 
     def __init__(
@@ -400,40 +417,45 @@ class Position_Monitor:
         sl = trade["stop_loss_price"]
         qty = trade["quantity"]
 
-        # --- Stop loss hit ---
-        if current <= sl:
-            pnl = (current - entry) * qty
+        # --- Stop loss hit (direction-aware) ---
+        direction = self._trade_direction(trade)
+        sl_hit = (direction == "LONG" and current <= sl) or (direction == "SHORT" and current >= sl)
+        if sl_hit:
+            pnl = self._calc_pnl(trade, current)
             trade["pnl"] = round(pnl, 2)
             trade["exit_price"] = current
             trade["status"] = PositionState.STOPPED_OUT.value
             self._update_db(trade, PositionState.STOPPED_OUT)
             if self.risk_manager:
                 self.risk_manager.record_trade_closed(pnl)
-            logger.info("🛑 %s STOPPED OUT @ ₹%.2f | P&L: ₹%.2f", trade["tradingsymbol"], current, pnl)
+            logger.info("🛑 %s STOPPED OUT @ ₹%.2f | P&L: ₹%.2f [%s]", trade["tradingsymbol"], current, pnl, direction)
             return
 
-        # --- Target hit ---
-        if current >= target:
-            pnl = (current - entry) * qty
+        # --- Target hit (direction-aware) ---
+        target_hit = (direction == "LONG" and current >= target) or (direction == "SHORT" and current <= target)
+        if target_hit:
+            pnl = self._calc_pnl(trade, current)
             trade["pnl"] = round(pnl, 2)
             trade["exit_price"] = current
             trade["status"] = PositionState.CLOSED.value
             self._update_db(trade, PositionState.CLOSED)
             if self.risk_manager:
                 self.risk_manager.record_trade_closed(pnl)
-            logger.info("🎯 %s TARGET HIT @ ₹%.2f | P&L: ₹%.2f", trade["tradingsymbol"], current, pnl)
+            logger.info("🎯 %s TARGET HIT @ ₹%.2f | P&L: ₹%.2f [%s]", trade["tradingsymbol"], current, pnl, direction)
             if self.broker:
+                # Exit order is OPPOSITE of entry: LONG→SELL, SHORT→BUY
+                exit_side = "BUY" if direction == "SHORT" else "SELL"
                 try:
                     self.broker.place_order(
                         symbol=trade["tradingsymbol"],
                         exchange="NSE",
-                        transaction_type="SELL",
+                        transaction_type=exit_side,
                         order_type="MARKET",
                         product_type="INTRADAY",
                         quantity=trade["quantity"],
                         price=0.0,
                     )
-                    logger.info("✅ %s target exit order placed at broker", trade["tradingsymbol"])
+                    logger.info("✅ %s target exit order placed at broker (%s)", trade["tradingsymbol"], exit_side)
                 except Exception as e:
                     logger.error("❌ %s target exit broker order failed: %s", trade["tradingsymbol"], e)
             return
@@ -464,37 +486,41 @@ class Position_Monitor:
                 self._audit("SL_ADJUST", {"symbol": trade["tradingsymbol"], "old_sl": sl, "new_sl": new_sl})
 
     def _force_exit_all(self) -> None:
-        """Force-exit all open positions."""
+        """Force-exit all open positions (direction-aware)."""
         for trade in self._active_trades:
             if trade["status"] not in (PositionState.OPEN.value, PositionState.PARTIAL_BOOKED.value):
                 continue
             current = trade.get("current_price", trade["entry_price"])
-            pnl = (current - trade["entry_price"]) * trade["quantity"]
+            direction = self._trade_direction(trade)
+            pnl = self._calc_pnl(trade, current)
             trade["pnl"] = round((trade.get("pnl", 0) or 0) + pnl, 2)
             trade["exit_price"] = current
             trade["status"] = PositionState.FORCE_EXITED.value
             self._update_db(trade, PositionState.FORCE_EXITED)
             if self.risk_manager:
                 self.risk_manager.record_trade_closed(pnl)
-            logger.info("⏰ %s FORCE EXITED @ ₹%.2f | P&L: ₹%.2f", trade["tradingsymbol"], current, trade["pnl"])
+            logger.info("⏰ %s FORCE EXITED @ ₹%.2f | P&L: ₹%.2f [%s]", trade["tradingsymbol"], current, trade["pnl"], direction)
             if self.broker:
+                # Exit order is OPPOSITE of entry: LONG→SELL, SHORT→BUY
+                exit_side = "BUY" if direction == "SHORT" else "SELL"
                 try:
                     self.broker.place_order(
                         symbol=trade["tradingsymbol"],
                         exchange="NSE",
-                        transaction_type="SELL",
+                        transaction_type=exit_side,
                         order_type="MARKET",
                         product_type="INTRADAY",
                         quantity=trade["quantity"],
                         price=0.0,
                     )
-                    logger.info("✅ %s force exit order placed at broker", trade["tradingsymbol"])
+                    logger.info("✅ %s force exit order placed at broker (%s)", trade["tradingsymbol"], exit_side)
                 except Exception as e:
                     logger.error("❌ %s force exit broker order failed: %s", trade["tradingsymbol"], e)
 
     def _calc_unrealized_pnl(self, trade: dict) -> float:
+        """Direction-aware unrealized P&L."""
         current = trade.get("current_price", trade["entry_price"])
-        return (current - trade["entry_price"]) * trade["quantity"]
+        return self._calc_pnl(trade, current)
 
     def _update_db(self, trade: dict, new_state: PositionState) -> None:
         if self.db and trade.get("trade_id"):

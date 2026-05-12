@@ -127,11 +127,23 @@ class Order_Executor:
 
     def _place_single_trade(self, trade: TradeSetup, mode: str) -> dict | None:
         """Place a LIMIT buy, wait for fill, then place SL for actual filled qty."""
-        # --- Place BUY order ---
+        # --- Determine direction ---
+        # LONG: BUY first, SELL stop-loss (when price drops below SL)
+        # SHORT: SELL first, BUY stop-loss (when price rises above SL to cover short)
+        entry_side = (trade.transaction_type or "BUY").upper()
+        if entry_side not in ("BUY", "SELL"):
+            logger.error(
+                "Invalid transaction_type '%s' for %s — defaulting to BUY",
+                trade.transaction_type, trade.nse_symbol,
+            )
+            entry_side = "BUY"
+        sl_side = "SELL" if entry_side == "BUY" else "BUY"
+
+        # --- Place ENTRY order (BUY for long, SELL for short) ---
         buy_result = self.broker.place_order(
             symbol=trade.tradingsymbol,
             exchange="NSE",
-            transaction_type="BUY",
+            transaction_type=entry_side,
             order_type="LIMIT",
             product_type="INTRADAY",
             quantity=trade.quantity,
@@ -140,21 +152,21 @@ class Order_Executor:
 
         buy_order_id = buy_result.get("broker_order_id", "")
         if not buy_order_id:
-            logger.error("No order ID returned for BUY %s", trade.nse_symbol)
+            logger.error("No order ID returned for %s %s", entry_side, trade.nse_symbol)
             return None
 
-        # --- Wait for BUY to fill (10s timeout, 2s polling) ---
+        # --- Wait for ENTRY to fill (10s timeout, 2s polling) ---
         filled_qty = self._wait_for_fill(buy_order_id, trade.quantity, timeout=10)
 
         if filled_qty == 0:
-            # BUY did not fill — cancel and abort (no SL placed = no phantom short)
+            # Entry did not fill — cancel and abort (no SL placed)
             try:
                 self.broker.cancel_order(buy_order_id)
             except Exception as e:
                 logger.warning("cancel_order failed for %s: %s", buy_order_id, e)
             logger.warning(
-                "BUY %s (order %s) did not fill in 10s — cancelled, no SL placed",
-                trade.nse_symbol, buy_order_id,
+                "%s %s (order %s) did not fill in 10s — cancelled, no SL placed",
+                entry_side, trade.nse_symbol, buy_order_id,
             )
             return None
 
@@ -165,19 +177,26 @@ class Order_Executor:
             except Exception as e:
                 logger.warning("cancel_order failed for partial %s: %s", buy_order_id, e)
             logger.warning(
-                "BUY %s partial fill: %d/%d — placing SL for %d, remainder cancelled",
-                trade.nse_symbol, filled_qty, trade.quantity, filled_qty,
+                "%s %s partial fill: %d/%d — placing SL for %d, remainder cancelled",
+                entry_side, trade.nse_symbol, filled_qty, trade.quantity, filled_qty,
             )
 
-        # --- Place SL sell order for ACTUAL filled qty ---
+        # --- Place SL order in OPPOSITE direction ---
+        # LONG SL: SELL with limit price slightly BELOW trigger (SL when price drops)
+        # SHORT SL: BUY with limit price slightly ABOVE trigger (SL when price rises)
+        if sl_side == "SELL":
+            sl_limit_price = round(trade.stop_loss_price - 0.50, 2)
+        else:
+            sl_limit_price = round(trade.stop_loss_price + 0.50, 2)
+
         sl_result = self.broker.place_order(
             symbol=trade.tradingsymbol,
             exchange="NSE",
-            transaction_type="SELL",
+            transaction_type=sl_side,
             order_type="SL",
             product_type="INTRADAY",
             quantity=filled_qty,
-            price=round(trade.stop_loss_price - 0.50, 2),
+            price=sl_limit_price,
             trigger_price=trade.stop_loss_price,
         )
         sl_order_id = sl_result.get("broker_order_id", "")
@@ -188,7 +207,7 @@ class Order_Executor:
             trade_id = self.db.insert_intraday_trade(
                 symbol=trade.stock_name,
                 tradingsymbol=trade.tradingsymbol,
-                action="BUY",
+                action=entry_side,
                 order_type="LIMIT",
                 quantity=filled_qty,
                 price=trade.entry_price,
