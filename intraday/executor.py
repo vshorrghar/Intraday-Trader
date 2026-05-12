@@ -119,7 +119,7 @@ class Order_Executor:
             order_type="SL",
             product_type="INTRADAY",
             quantity=trade.quantity,
-            price=trade.stop_loss_price,
+            price=round(trade.stop_loss_price - 0.50, 2),
             trigger_price=trade.stop_loss_price,
         )
         sl_order_id = sl_result.get("broker_order_id", "")
