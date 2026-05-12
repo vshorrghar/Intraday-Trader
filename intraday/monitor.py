@@ -362,7 +362,14 @@ class Position_Monitor:
                 sym = t.get("tradingsymbol", "")
                 if sym in pos_map:
                     p = pos_map[sym]
-                    t["current_price"] = p.get("buy_avg", t["entry_price"])
+                    # Use sellAvg for current price (actual exit/current price)
+                    # Use realizedProfit from Dhan if position closed
+                    if p.get("netQty", 1) == 0 and p.get("realizedProfit") is not None:
+                        t["pnl"] = round(p["realizedProfit"], 2)
+                        t["current_price"] = p.get("sellAvg", t["entry_price"])
+                    else:
+                        ltp = p.get("ltp") or p.get("lastTradedPrice") or p.get("sellAvg")
+                        t["current_price"] = ltp if ltp else t["entry_price"]
         except Exception as exc:
             logger.error("Failed to fetch positions: %s — will retry", exc)
 
