@@ -146,6 +146,58 @@ def _check_sector_alignment(candidate: dict, positive_sectors: set[str]) -> bool
 
 
 # ===================================================================
+# Trade history for LLM context
+# ===================================================================
+
+
+def _fetch_trade_history(db, days: int = 30) -> str:
+    """Fetch last N days of trade history and format as LLM context."""
+    if db is None:
+        return ""
+    try:
+        from datetime import datetime, timedelta
+        stock_stats: dict = {}
+        total_trades = 0
+        total_wins = 0
+
+        for i in range(days):
+            date = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
+            try:
+                trades = db.get_trades_for_date(date)
+            except Exception:
+                continue
+            for t in trades:
+                if t.get("action") != "BUY":
+                    continue
+                symbol = t.get("tradingsymbol", "")
+                pnl = float(t.get("pnl") or 0)
+                total_trades += 1
+                if pnl > 0:
+                    total_wins += 1
+                if symbol not in stock_stats:
+                    stock_stats[symbol] = {"trades": 0, "wins": 0, "total_pnl": 0.0}
+                stock_stats[symbol]["trades"] += 1
+                stock_stats[symbol]["total_pnl"] += pnl
+                if pnl > 0:
+                    stock_stats[symbol]["wins"] += 1
+
+        if total_trades == 0:
+            return ""
+
+        win_rate = total_wins / total_trades * 100
+        lines = [f"Last {days} days: {total_trades} trades, {win_rate:.0f}% win rate\nStock performance:"]
+
+        for sym, stats in sorted(stock_stats.items(), key=lambda x: x[1]["trades"], reverse=True)[:10]:
+            wr = stats["wins"] / stats["trades"] * 100 if stats["trades"] > 0 else 0
+            avg_pnl = stats["total_pnl"] / stats["trades"]
+            lines.append(f"  {sym}: {stats['trades']} trades, {wr:.0f}% WR, avg P&L ₹{avg_pnl:.0f}")
+
+        return "\n".join(lines)
+    except Exception as e:
+        return ""
+
+
+# ===================================================================
 # Task 7.1 — LLM trade selection
 # ===================================================================
 
@@ -272,6 +324,7 @@ def _build_user_prompt(
     config: IntraConfig,
     gainers: list[dict] | None = None,
     losers: list[dict] | None = None,
+    history: str = "",
 ) -> str:
     """Build the user prompt with today's market data."""
     now = datetime.now(IST)
@@ -330,7 +383,7 @@ India VIX: {vix_value:.2f}
 
 MARKET CONDITION: {market_condition} ({green_sectors}/{total_sectors} sectors green)
 
-SECTOR PERFORMANCE (ranked by change %, strongest first):
+{f"TRADE HISTORY (use this to avoid repeating mistakes):{chr(10)}{history}{chr(10)}" if history else ""}SECTOR PERFORMANCE (ranked by change %, strongest first):
 {sector_table}
 
 PRE-FILTERED CANDIDATES ({len(candidates)} stocks):
@@ -452,6 +505,7 @@ def select_trades_llm(
     gainers: list[dict] | None = None,
     losers: list[dict] | None = None,
     dry_run: bool = False,
+    db=None,
 ) -> list[TradeSetup]:
     """Send pre-filtered candidates to Claude and return validated trades.
 
@@ -478,9 +532,10 @@ def select_trades_llm(
         Validated trade setups. Empty list if LLM fails or no valid picks.
     """
     system_prompt = _build_system_prompt(config)
+    history = _fetch_trade_history(db)
     user_prompt = _build_user_prompt(
         candidates, sectors, vix_value, config,
-        gainers=gainers, losers=losers,
+        gainers=gainers, losers=losers, history=history,
     )
 
     logger.info("Sending %d candidates to LLM for trade selection…", len(candidates))

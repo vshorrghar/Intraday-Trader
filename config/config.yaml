@@ -121,3 +121,7 @@ positional:
   price_range_max: 5000
   rebalance_day: "Friday"
   scan_frequency: "weekly"
+
+telegram:
+  token: ""
+  chat_id: ""
