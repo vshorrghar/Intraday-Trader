@@ -16,11 +16,29 @@
 - neha: -INR 401.53 (was showing -INR 81, charges hidden)
 - neha-live: TOTP failed, no trades
 
-### F&O Status
-- All 3 paper profiles ran F&O
-- Zero strategies selected — confluence score = 36 (need 50+ hedged, 75+ naked)
-- Root cause: no IV/spot history → quant defaults to neutral
-- LLM correctly rejected with garbage inputs
+### F&O Status (updated late night May 13)
+- BREAKTHROUGH: First F&O paper trades ever placed — 4 IRON_CONDORs in smoke test
+- Three structural fixes landed (commit pending push):
+  1. Hedged confluence 60→20 (paper observation phase, will auto-tighten)
+  2. IV+spot persistence wired into run_fno.py Phase 8 (1 row/day, was missing)
+  3. F&O paper confidence 7→6 for vishal+neha only (vishal-live/neha-live stay at 8)
+- Cold-start clock starts now: by ~early June (day 21) IVP/VRP become real
+- vishal.db now has 4 rows in fno_strategies + 3 rows in fno_iv_history
+
+### NEW BUGS FOUND tonight (visible only because trades flowed):
+- Bug L: fno_strategies.legs_json does NOT include expiry_date field
+  - Monitor.py tries datetime.strptime('','%Y-%m-%d') and fails on all 12 legs
+  - Result: tradingsymbol build fails, P&L falls back to fake near-zero values
+  - Fix scope: insert path serialization (ensure leg.expiry_date in JSON)
+- Bug M: Force exit doesn't place broker exit orders when symbol build fails
+  - Status flips to FORCE_EXITED in DB but no actual exit order attempted
+  - Linked to Bug L — fix L first
+- Bug N: Vega exposure alert -22219 vs limit 2000 — misfires from bad leg reads
+  - Linked to Bug L
+
+### Watch May 14 9:20 AM cron
+- vishal F&O paper will likely place strategies again (gates loose)
+- Same Bugs L/M/N will repeat — that's expected, fix planned for May 14
 
 ### Bugs Fixed Today (6 total)
 1. Bug H — NSE tick size rounding (commit 8bbfd4d)

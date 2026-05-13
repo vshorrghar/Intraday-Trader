@@ -96,7 +96,7 @@ QUANTITATIVE SIGNALS (from Quant Edge Engine):
 - Confluence Score Range: {min_confluence}-{max_confluence}
 
 RULES:
-- ONLY recommend strategies where confluence score >= 45 for hedged (IRON_CONDOR, BULL_PUT_SPREAD, BEAR_CALL_SPREAD), >= 60 for non-hedged directional, >= 75 for naked selling
+- ONLY recommend strategies where confluence score >= 20 for hedged (IRON_CONDOR, BULL_PUT_SPREAD, BEAR_CALL_SPREAD), >= 60 for non-hedged directional, >= 75 for naked selling
 - Stop loss for premium selling: exit when combined premium moves 1.5x against collected premium
 - No SHORT_STRANGLE or SHORT_STRADDLE entries after 2:00 PM IST
 - No DIRECTIONAL buys after 1:00 PM IST
@@ -505,7 +505,7 @@ class FnO_Strategy_Engine:
             gex_gravity=signals.gex_gravity_center,
             vrp=signals.vrp,
             vrp_signal=signals.vrp_signal,
-            min_confluence=45,
+            min_confluence=20,
             max_confluence=100,
             max_lots=self.config.max_lots_per_trade,
             max_positions=self.config.max_positions,
@@ -702,8 +702,8 @@ class FnO_Strategy_Engine:
         elif not is_hedged and confluence < 60:
             logger.warning("Confluence %.1f < 60 for %s", confluence, strategy_type)
             return None
-        elif is_hedged and confluence < 45:
-            logger.warning("Confluence %.1f < 45 for hedged %s", confluence, strategy_type)
+        elif is_hedged and confluence < 20:
+            logger.warning("Confluence %.1f < 20 for hedged %s", confluence, strategy_type)
             return None
 
         # Build legs

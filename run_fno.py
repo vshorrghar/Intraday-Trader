@@ -255,6 +255,38 @@ def main() -> None:
                 for idx, s in quant_signals.items()
             }),
         )
+
+        # ── Persist today's ATM IV + spot for future IVP/VRP ──
+        # Idempotent: skip if today's row already exists for the index.
+        # Errors swallowed inside DB layer (try/except in insert_fno_*).
+        try:
+            import math as _math
+            today_str = datetime.now(IST).strftime("%Y-%m-%d")
+            for index, chain in chains.items():
+                atm_iv = Quant_Edge_Engine._get_atm_iv(chain)
+                spot = chain.spot_price
+
+                existing_iv = db.get_fno_iv_history(index, days=1)
+                if existing_iv and existing_iv[0].get("date") == today_str:
+                    logger.info("IV history already recorded for %s on %s — skipping", index, today_str)
+                else:
+                    db.insert_fno_iv_history(today_str, index, float(atm_iv), float(spot))
+                    logger.info("Recorded IV history: %s atm_iv=%.2f spot=%.2f", index, atm_iv, spot)
+
+                existing_spot = db.get_fno_spot_history(index, days=2)
+                if existing_spot and existing_spot[0].get("date") == today_str:
+                    logger.info("Spot history already recorded for %s on %s — skipping", index, today_str)
+                else:
+                    log_return = 0.0
+                    if existing_spot:
+                        prev_close = existing_spot[0].get("close_price") or 0.0
+                        if prev_close > 0:
+                            log_return = _math.log(spot / prev_close)
+                    db.insert_fno_spot_history(today_str, index, float(spot), float(log_return))
+                    logger.info("Recorded spot history: %s close=%.2f log_ret=%.6f", index, spot, log_return)
+        except Exception as exc:
+            logger.error("IV/spot history persistence failed (non-fatal): %s", exc)
+
         phase_log("Quant Edge Engine", "DONE")
     except Exception as exc:
         phase_log("Quant Edge Engine", "FAIL")
