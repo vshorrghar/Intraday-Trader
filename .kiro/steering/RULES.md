@@ -25,12 +25,12 @@
 | Positional | To build | 1-6 months | CNC delivery |
 
 **Profiles**:
-| Profile | Type | Capital | Status |
-|---------|------|---------|--------|
-| vishal-live | Real money, intraday | INR 10,000 | LIVE |
-| neha-live | Real money, intraday + paper FnO | INR 10,000 config, INR 0 funded | Setup phase |
-| vishal | Paper trading | INR 3,00,000 | Active |
-| neha | Paper trading | INR 3,00,000 | Active |
+| Profile | Type | Capital | Runs on EC2 | Status |
+|---------|------|---------|-------------|--------|
+| vishal-live | Real money, intraday | INR 10,000 | OLD (13.206.144.6) | LIVE |
+| neha-live | Real money, intraday | INR 10,000 funded | NEW (13.202.63.223) | LIVE since 2026-05-14 |
+| vishal | Paper trading | INR 3,00,000 | OLD | Active |
+| neha | Paper trading | INR 3,00,000 | OLD | Active |
 
 **Profit target (aspirational)**: INR 20,000-30,000 per day combined.
 
@@ -204,6 +204,46 @@ grep "^server|^pool" /etc/chrony.conf sudo systemctl restart chronyd sudo chrony
 3. Check Dhan PIN
 4. Check Dhan API rate limiting (3 attempts then locked briefly)
 
+### Rule 20: Multi-EC2 Architecture (since 2026-05-14)
+
+Project now runs on TWO EC2 instances due to Dhan one-IP-per-account constraint.
+
+OLD EC2 (13.206.144.6) runs:
+- vishal-live (real money intraday)
+- vishal (paper intraday)
+- neha (paper intraday)
+- All F&O paper crons
+- Dashboard S3 sync (every hour)
+- Sanity check, EOD reports
+
+NEW EC2 (13.202.63.223) runs:
+- neha-live (real money intraday) ONLY
+- No dashboard sync (avoids S3 race)
+- No F&O
+- No paper profiles
+
+Rules for multi-EC2 work:
+1. Profile yamls are gitignored. config/profiles/*.yaml contains TOTP/PIN. NEVER in git. Manually patched on each EC2 separately.
+2. All git commits + pushes from OLD EC2 only. Rule 1 still applies. NEW EC2 receives code via git pull.
+3. Code edits made on OLD EC2, pushed to GitHub, NEW EC2 pulls. Profile yamls excepted (manual sync per Rule 20.1).
+4. Cron isolation enforced. NEW EC2 cron contains ONLY neha-live entries. Verify before any AMI re-clone.
+5. Time sync independent. Both EC2s run chrony separately. Rule 19 applies to both.
+6. AWS profile vishal-admin works on both. Credentials cloned via AMI. Same Account ID 176767908884.
+
+When NEW EC2 needs code update:
+  cd ~/dev-sandbox && git pull
+  Profile yaml changes: apply heredoc patch manually on NEW EC2 separately.
+
+Failure modes to watch:
+- EIP detached from NEW EC2 -> orders fail with DH-905 Invalid IP
+- vishal-admin credentials expire on NEW EC2 (AMI was cloned at point in time)
+- Cron file replaced via crontab edit -> could re-introduce removed entries
+
+Dashboard architecture issue (deferred):
+Both EC2s writing to one S3 bucket creates race on shared files (history.json, latest.json). Currently NEW EC2 does not sync. Neha dashboard data lives locally on NEW EC2. Fix later via per-profile S3 prefixes, or one EC2 pulls others data via SSH then syncs once.
+
+---
+
 ---
 
 ## SECTION 3: PROJECT DIRECTORY STRUCTURE
@@ -236,10 +276,12 @@ grep "^server|^pool" /etc/chrony.conf sudo systemctl restart chronyd sudo chrony
 
 | Item | Value |
 |------|-------|
-| EC2 Instance ID | i-0256713c061011a5f |
-| EC2 Type | t3.medium |
-| EC2 Public IP | 13.206.144.6 |
-| EC2 Region | ap-south-1 (Mumbai) |
+| EC2 Instance ID (OLD — vishal+paper) | i-0256713c061011a5f |
+| EC2 Public IP (OLD) | 13.206.144.6 |
+| EC2 Instance ID (NEW — neha-live only) | i-0233c705c9104383e |
+| EC2 Public IP (NEW) | 13.202.63.223 |
+| EC2 Type (both) | t3.medium |
+| EC2 Region (both) | ap-south-1 (Mumbai) |
 | EC2 IAM Role | EpoxyChronicleInstanceRole (not used, vishal-admin profile used instead) |
 | SSH Key | ~/Downloads/wealth-builder-pro.pem |
 | SSH User | ec2-user |
@@ -252,7 +294,9 @@ grep "^server|^pool" /etc/chrony.conf sudo systemctl restart chronyd sudo chrony
 | CloudFront URL | https://d2q1cy3ph7jbd0.cloudfront.net |
 | GitHub Repo | https://github.com/vshorrghar/Intraday-Trader.git |
 | Broker | Dhan REST API v2 |
-| Dhan Whitelisted IP | 13.206.144.6 |
+| Dhan Whitelisted IP (vishal account) | 13.206.144.6 |
+| Dhan Whitelisted IP (neha account) | 13.202.63.223 |
+| Dhan IP rule | Each account requires unique IP (one IP cannot be on two accounts) |
 | Time sync | chrony with AWS server 169.254.169.123 |
 
 ### Dashboard URLs

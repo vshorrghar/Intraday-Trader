@@ -1,11 +1,96 @@
 # STATE.md — Current Project State
 
-**Last Updated**: 2026-05-13, late night
+**Last Updated**: 2026-05-14, ~05:30 IST (overnight session)
 **Update Protocol**: Replace TODAY section at end of each session.
 
 ---
 
-## TODAY (2026-05-13) — END OF DAY
+## TODAY (2026-05-14) — OVERNIGHT SESSION SUMMARY
+
+### Major architectural change: neha-live moved to second EC2
+
+**Reason**: Dhan enforces IP whitelist per account. `13.206.144.6` is whitelisted on vishal's Dhan. Dhan refused to whitelist same IP on neha's account ("IP in use" error). Two accounts cannot share one IP for order placement.
+
+**Solution**: Cloned EC2 via AMI → launched second instance for neha-live only.
+
+| | OLD EC2 | NEW EC2 |
+|---|---|---|
+| IP | 13.206.144.6 | **13.202.63.223** |
+| Instance ID | i-0256713c061011a5f | **i-0233c705c9104383e** |
+| AMI used | source | ami-0bcad2c34474f8080 |
+| EIP allocation | (existing) | eipalloc-0209566bfde3a903b |
+| Profiles fired by cron | vishal, neha (paper), vishal-live, paper FnO for all | **ONLY neha-live intraday** |
+| Dashboard S3 sync | ✓ (continues here) | ✗ (disabled to avoid race) |
+| Time sync | ✓ chrony active | ✓ chrony active (cloned) |
+| Code | latest commit a8ef5b5 | latest (cloned at AMI time) |
+
+### Verification done tonight (NEW EC2)
+- ✅ TOTP auth: succeeded for neha (NEHA SAXENA, ID 1111523334)
+- ✅ Dhan funds API: HTTP 200, available_balance ₹10,000, IP whitelist proven working
+- ✅ Cron stripped to ONLY neha-live entries (9:28 AM + 12:03 PM IST)
+- ✅ Stale session file deleted
+- ✅ Imports clean
+
+### neha-live profile thresholds aligned with vishal-live
+| Field | Before | After |
+|---|---|---|
+| intraday min_confidence_score | 8 | **7** |
+| intraday vix_threshold | 16 | **18** |
+| intraday price_range_min | (missing) | 100 |
+| intraday price_range_max | (missing) | 2000 |
+| fno daily_loss_limit | 3000 | 5000 |
+| fno vix_threshold | 16 | 18 |
+
+Capital limits unchanged: ₹10K daily, ₹4K/trade, ₹600 daily loss, max 2 trades/day.
+
+Profile yamls are gitignored (contain TOTP/PIN). Patch applied manually on BOTH EC2s.
+
+### F&O fixes pushed earlier this session (commits)
+- `5be64f5` — F&O hedged confluence 60→45 (since updated to 20 in subsequent commit)
+- `94ba876` — F&O paper observation phase: confluence 20, confidence 7→6 (vishal/neha), IV+spot persistence wired
+- `a8ef5b5` — Fix Bug L: legs_json includes expiry_date + lot_size
+
+### F&O breakthroughs + new bugs
+- 🎯 First F&O paper trades EVER placed: 4 IRON_CONDORs in vishal smoke test (synthetic data)
+- 🐛 Bug L fixed: legs_json now includes expiry_date + lot_size
+- 🐛 Bug O surfaced: Vega exposure -18654 on iron condor (hedged should be near-zero) — alert spams every 30s
+- 🐛 Bug Q: duplicate `return` statement at fno/monitor.py:79-80
+- 🐛 Bug R: duplicate docstring at fno/monitor.py:184-185
+- 🐛 Bug S: paper P&L is fully simulated (random walk + theta math), no relation to real market
+- 🐛 Bug T: live mode `_compute_current_premium` returns entry_premium (no P&L change ever)
+- 🐛 Bug X: `_compute_strategy_greeks` returns stored values, never refreshes (root of Bug O)
+- 🐛 Bug Y: paper P&L confirmed 100% synthetic
+- 🐛 Bug Z: P&L cap uses entry_premium not max_profit (wrong for sold strategies)
+- 🐛 Bug AA: paper exits don't release used_margin
+- 🐛 Bug BB: hardcoded lot_size=50 fallback (NIFTY=75, BANKNIFTY=15, FINNIFTY=40)
+- 🐛 Bug CC: Greeks summed including just-closed strategies
+- 🐛 Bug DD: F&O paper mode uses fake option chain (`demo=True` default in run_fno.py:205) — strategy validation invalid
+
+### Dhan API findings (verified tonight)
+- Auth (TOTP login) works without IP whitelist
+- Order placement REQUIRES IP whitelist (DH-905 'Invalid IP' otherwise)
+- Token rate limit: once per 2 minutes per account
+- Production code caches token in `config/.broker_session_.json` (no re-auth per cron)
+- ₹499/month Data API subscription: NOT needed for intraday (uses NSE free); NOT verified for option chain (test was inconclusive due to rate limit)
+
+### Tomorrow at 9:28 AM IST — neha demo expectation
+- NEW EC2 cron fires `run_intraday.py --profile neha-live --live`
+- Auth succeeds (verified tonight)
+- Scanner pulls Nifty 500 from NSE
+- LLM picks (confidence ≥7), R:R ≥2 validation
+- If selected → REAL BUY order in neha's Dhan account
+- Neha sees order in her Dhan app (THAT is the demo)
+- Monitor 5-min cycles, exit on target/SL/force-exit at 15:15 IST
+- Max possible loss: ₹600 (hard cap)
+
+### Tomorrow morning checklist
+1. SSH NEW EC2 `13.202.63.223`, verify hostname + time sync
+2. 9:28 AM IST: `tail -f logs/intraday_neha-live_$(date +%Y-%m-%d).log`
+3. Have neha's Dhan app open alongside
+
+---
+
+## YESTERDAY (2026-05-13) — END OF DAY
 
 ### Real Money P&L
 - vishal-live: HINDZINC LONG -INR 28.30 net (gross -INR 24.75, charges INR 3.55)
