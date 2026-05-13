@@ -92,6 +92,8 @@ class Paper_Trade_Engine:
                     "transaction_type": leg.transaction_type,
                     "num_lots": leg.num_lots,
                     "entry_price": leg.entry_price,
+                    "expiry_date": leg.expiry_date,
+                    "lot_size": leg.lot_size,
                 }
                 for leg in strategy.legs
             ]),
