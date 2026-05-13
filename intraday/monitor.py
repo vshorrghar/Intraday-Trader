@@ -421,43 +421,33 @@ class Position_Monitor:
         direction = self._trade_direction(trade)
         sl_hit = (direction == "LONG" and current <= sl) or (direction == "SHORT" and current >= sl)
         if sl_hit:
-            pnl = self._calc_pnl(trade, current)
+            # Bug J + naked-position fix: place broker exit FIRST, get real fill price
+            exit_side = "BUY" if direction == "SHORT" else "SELL"
+            actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, current)
+            pnl = self._calc_pnl(trade, actual_exit_price)
             trade["pnl"] = round(pnl, 2)
-            trade["exit_price"] = current
+            trade["exit_price"] = actual_exit_price
             trade["status"] = PositionState.STOPPED_OUT.value
             self._update_db(trade, PositionState.STOPPED_OUT)
             if self.risk_manager:
                 self.risk_manager.record_trade_closed(pnl)
-            logger.info("🛑 %s STOPPED OUT @ ₹%.2f | P&L: ₹%.2f [%s]", trade["tradingsymbol"], current, pnl, direction)
+            logger.info("🛑 %s STOPPED OUT @ ₹%.2f | P&L: ₹%.2f [%s] fill=%s", trade["tradingsymbol"], actual_exit_price, pnl, direction, fill_status)
             return
 
         # --- Target hit (direction-aware) ---
         target_hit = (direction == "LONG" and current >= target) or (direction == "SHORT" and current <= target)
         if target_hit:
-            pnl = self._calc_pnl(trade, current)
+            # Bug J/K fix: place broker exit FIRST, get real fill price
+            exit_side = "BUY" if direction == "SHORT" else "SELL"
+            actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, current)
+            pnl = self._calc_pnl(trade, actual_exit_price)
             trade["pnl"] = round(pnl, 2)
-            trade["exit_price"] = current
+            trade["exit_price"] = actual_exit_price
             trade["status"] = PositionState.CLOSED.value
             self._update_db(trade, PositionState.CLOSED)
             if self.risk_manager:
                 self.risk_manager.record_trade_closed(pnl)
-            logger.info("🎯 %s TARGET HIT @ ₹%.2f | P&L: ₹%.2f [%s]", trade["tradingsymbol"], current, pnl, direction)
-            if self.broker:
-                # Exit order is OPPOSITE of entry: LONG→SELL, SHORT→BUY
-                exit_side = "BUY" if direction == "SHORT" else "SELL"
-                try:
-                    self.broker.place_order(
-                        symbol=trade["tradingsymbol"],
-                        exchange="NSE",
-                        transaction_type=exit_side,
-                        order_type="MARKET",
-                        product_type="INTRADAY",
-                        quantity=trade["quantity"],
-                        price=0.0,
-                    )
-                    logger.info("✅ %s target exit order placed at broker (%s)", trade["tradingsymbol"], exit_side)
-                except Exception as e:
-                    logger.error("❌ %s target exit broker order failed: %s", trade["tradingsymbol"], e)
+            logger.info("🎯 %s TARGET HIT @ ₹%.2f | P&L: ₹%.2f [%s] fill=%s", trade["tradingsymbol"], actual_exit_price, pnl, direction, fill_status)
             return
 
         # --- Partial profit booking (only if not already partially booked) ---
@@ -485,59 +475,61 @@ class Position_Monitor:
             if self.db:
                 self._audit("SL_ADJUST", {"symbol": trade["tradingsymbol"], "old_sl": sl, "new_sl": new_sl})
 
+    def _place_exit_and_get_fill_price(self, trade: dict, exit_side: str, fallback_price: float) -> tuple[float, str]:
+        """Place exit MARKET order and poll for actual fill price.
+
+        Returns (actual_exit_price, status_label). On any failure, returns
+        (fallback_price, "fallback"). Used by SL hit, target hit, and force exit
+        to avoid logging P&L based on stale cached prices (Bug J fix).
+        """
+        import time
+        if not self.broker:
+            return fallback_price, "no_broker"
+        try:
+            result = self.broker.place_order(
+                symbol=trade["tradingsymbol"],
+                exchange="NSE",
+                transaction_type=exit_side,
+                order_type="MARKET",
+                product_type="INTRADAY",
+                quantity=trade["quantity"],
+            )
+            order_id = result.get("broker_order_id", "") if isinstance(result, dict) else ""
+            logger.info("✅ %s exit order placed (%s) order_id=%s", trade["tradingsymbol"], exit_side, order_id)
+            if not order_id or not hasattr(self.broker, "get_order_list"):
+                return fallback_price, "no_poll"
+            for _ in range(5):
+                time.sleep(2)
+                try:
+                    orders = self.broker.get_order_list()
+                    for o in orders:
+                        if str(o.get("orderId", "")) == str(order_id):
+                            if o.get("orderStatus") == "TRADED":
+                                avg_price = float(o.get("averageTradedPrice", 0) or 0)
+                                if avg_price > 0:
+                                    logger.info("📊 %s exit FILLED @ ₹%.2f", trade["tradingsymbol"], avg_price)
+                                    return avg_price, "filled"
+                except Exception as e:
+                    logger.warning("Exit fill poll failed: %s", e)
+                    break
+            return fallback_price, "timeout"
+        except Exception as e:
+            logger.error("❌ %s exit broker order failed: %s", trade["tradingsymbol"], e)
+            return fallback_price, "order_failed"
+
     def _force_exit_all(self) -> None:
         """Force-exit all open positions (direction-aware).
 
         Bug J/K fix: Place broker order FIRST, wait for fill, then log P&L
-        using actual fill price (not stale cached price).
+        using actual fill price (not stale cached price). Uses shared helper.
         """
-        import time
         for trade in self._active_trades:
             if trade["status"] not in (PositionState.OPEN.value, PositionState.PARTIAL_BOOKED.value):
                 continue
             direction = self._trade_direction(trade)
-            # Exit order is OPPOSITE of entry: LONG→SELL, SHORT→BUY
             exit_side = "BUY" if direction == "SHORT" else "SELL"
             cached_price = trade.get("current_price", trade["entry_price"])
-            actual_exit_price = cached_price  # fallback if broker fill not available
-
-            if self.broker:
-                try:
-                    result = self.broker.place_order(
-                        symbol=trade["tradingsymbol"],
-                        exchange="NSE",
-                        transaction_type=exit_side,
-                        order_type="MARKET",
-                        product_type="INTRADAY",
-                        quantity=trade["quantity"],
-                    )
-                    exit_order_id = result.get("broker_order_id", "") if isinstance(result, dict) else ""
-                    logger.info("✅ %s force exit order placed at broker (%s) order_id=%s", trade["tradingsymbol"], exit_side, exit_order_id)
-
-                    # Poll for fill up to 10s (2s intervals) — Bug J fix
-                    if exit_order_id and hasattr(self.broker, "get_order_list"):
-                        for _ in range(5):
-                            time.sleep(2)
-                            try:
-                                orders = self.broker.get_order_list()
-                                for o in orders:
-                                    if str(o.get("orderId", "")) == str(exit_order_id):
-                                        if o.get("orderStatus") == "TRADED":
-                                            avg_price = float(o.get("averageTradedPrice", 0) or 0)
-                                            if avg_price > 0:
-                                                actual_exit_price = avg_price
-                                                logger.info("📊 %s force exit FILLED @ ₹%.2f", trade["tradingsymbol"], actual_exit_price)
-                                            break
-                                else:
-                                    continue
-                                break
-                            except Exception as e:
-                                logger.warning("Force exit fill poll failed: %s", e)
-                                break
-                except Exception as e:
-                    logger.error("❌ %s force exit broker order failed: %s", trade["tradingsymbol"], e)
-
-            # Now compute P&L using ACTUAL fill price (not stale cache)
+            actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, cached_price)
             pnl = self._calc_pnl(trade, actual_exit_price)
             trade["pnl"] = round((trade.get("pnl", 0) or 0) + pnl, 2)
             trade["exit_price"] = actual_exit_price
@@ -545,7 +537,7 @@ class Position_Monitor:
             self._update_db(trade, PositionState.FORCE_EXITED)
             if self.risk_manager:
                 self.risk_manager.record_trade_closed(pnl)
-            logger.info("⏰ %s FORCE EXITED @ ₹%.2f | P&L: ₹%.2f [%s]", trade["tradingsymbol"], actual_exit_price, trade["pnl"], direction)
+            logger.info("⏰ %s FORCE EXITED @ ₹%.2f | P&L: ₹%.2f [%s] fill=%s", trade["tradingsymbol"], actual_exit_price, trade["pnl"], direction, fill_status)
 
     def _calc_unrealized_pnl(self, trade: dict) -> float:
         """Direction-aware unrealized P&L."""
