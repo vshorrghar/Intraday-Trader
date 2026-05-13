@@ -189,6 +189,10 @@ class Order_Executor:
         else:
             sl_limit_price = round(trade.stop_loss_price + 0.50, 2)
 
+        # NSE tick size = 0.05. Dhan rejects non-tick prices (omsErrorCode 16283).
+        sl_limit_price = round(round(sl_limit_price / 0.05) * 0.05, 2)
+        sl_trigger_price = round(round(trade.stop_loss_price / 0.05) * 0.05, 2)
+
         sl_result = self.broker.place_order(
             symbol=trade.tradingsymbol,
             exchange="NSE",
@@ -197,7 +201,7 @@ class Order_Executor:
             product_type="INTRADAY",
             quantity=filled_qty,
             price=sl_limit_price,
-            trigger_price=trade.stop_loss_price,
+            trigger_price=sl_trigger_price,
         )
         sl_order_id = sl_result.get("broker_order_id", "")
 
