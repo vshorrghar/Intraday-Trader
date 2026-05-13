@@ -486,36 +486,66 @@ class Position_Monitor:
                 self._audit("SL_ADJUST", {"symbol": trade["tradingsymbol"], "old_sl": sl, "new_sl": new_sl})
 
     def _force_exit_all(self) -> None:
-        """Force-exit all open positions (direction-aware)."""
+        """Force-exit all open positions (direction-aware).
+
+        Bug J/K fix: Place broker order FIRST, wait for fill, then log P&L
+        using actual fill price (not stale cached price).
+        """
+        import time
         for trade in self._active_trades:
             if trade["status"] not in (PositionState.OPEN.value, PositionState.PARTIAL_BOOKED.value):
                 continue
-            current = trade.get("current_price", trade["entry_price"])
             direction = self._trade_direction(trade)
-            pnl = self._calc_pnl(trade, current)
-            trade["pnl"] = round((trade.get("pnl", 0) or 0) + pnl, 2)
-            trade["exit_price"] = current
-            trade["status"] = PositionState.FORCE_EXITED.value
-            self._update_db(trade, PositionState.FORCE_EXITED)
-            if self.risk_manager:
-                self.risk_manager.record_trade_closed(pnl)
-            logger.info("⏰ %s FORCE EXITED @ ₹%.2f | P&L: ₹%.2f [%s]", trade["tradingsymbol"], current, trade["pnl"], direction)
+            # Exit order is OPPOSITE of entry: LONG→SELL, SHORT→BUY
+            exit_side = "BUY" if direction == "SHORT" else "SELL"
+            cached_price = trade.get("current_price", trade["entry_price"])
+            actual_exit_price = cached_price  # fallback if broker fill not available
+
             if self.broker:
-                # Exit order is OPPOSITE of entry: LONG→SELL, SHORT→BUY
-                exit_side = "BUY" if direction == "SHORT" else "SELL"
                 try:
-                    self.broker.place_order(
+                    result = self.broker.place_order(
                         symbol=trade["tradingsymbol"],
                         exchange="NSE",
                         transaction_type=exit_side,
                         order_type="MARKET",
                         product_type="INTRADAY",
                         quantity=trade["quantity"],
-                        price=0.0,
                     )
-                    logger.info("✅ %s force exit order placed at broker (%s)", trade["tradingsymbol"], exit_side)
+                    exit_order_id = result.get("broker_order_id", "") if isinstance(result, dict) else ""
+                    logger.info("✅ %s force exit order placed at broker (%s) order_id=%s", trade["tradingsymbol"], exit_side, exit_order_id)
+
+                    # Poll for fill up to 10s (2s intervals) — Bug J fix
+                    if exit_order_id and hasattr(self.broker, "get_order_list"):
+                        for _ in range(5):
+                            time.sleep(2)
+                            try:
+                                orders = self.broker.get_order_list()
+                                for o in orders:
+                                    if str(o.get("orderId", "")) == str(exit_order_id):
+                                        if o.get("orderStatus") == "TRADED":
+                                            avg_price = float(o.get("averageTradedPrice", 0) or 0)
+                                            if avg_price > 0:
+                                                actual_exit_price = avg_price
+                                                logger.info("📊 %s force exit FILLED @ ₹%.2f", trade["tradingsymbol"], actual_exit_price)
+                                            break
+                                else:
+                                    continue
+                                break
+                            except Exception as e:
+                                logger.warning("Force exit fill poll failed: %s", e)
+                                break
                 except Exception as e:
                     logger.error("❌ %s force exit broker order failed: %s", trade["tradingsymbol"], e)
+
+            # Now compute P&L using ACTUAL fill price (not stale cache)
+            pnl = self._calc_pnl(trade, actual_exit_price)
+            trade["pnl"] = round((trade.get("pnl", 0) or 0) + pnl, 2)
+            trade["exit_price"] = actual_exit_price
+            trade["status"] = PositionState.FORCE_EXITED.value
+            self._update_db(trade, PositionState.FORCE_EXITED)
+            if self.risk_manager:
+                self.risk_manager.record_trade_closed(pnl)
+            logger.info("⏰ %s FORCE EXITED @ ₹%.2f | P&L: ₹%.2f [%s]", trade["tradingsymbol"], actual_exit_price, trade["pnl"], direction)
 
     def _calc_unrealized_pnl(self, trade: dict) -> float:
         """Direction-aware unrealized P&L."""
