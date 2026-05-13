@@ -184,3 +184,46 @@ cd ~/kiro/websites/intraday-trader && git pull origin main
   1. python3 heredoc reads file, asserts OLD in src, replaces, writes
   2. grep -A 2 marker file.py
   3. python import test to confirm no syntax error
+
+
+## Project Directory Structure
+
+### EC2 (where ALL edits + commits + pushes happen)
+```
+~/dev-sandbox/                    project root
+~/dev-sandbox/.kiro/steering/     steering files (this doc)
+~/dev-sandbox/intraday/           intraday module (live trading)
+~/dev-sandbox/fno/                F&O module (paper)
+~/dev-sandbox/swing/              swing module (TO BUILD)
+~/dev-sandbox/positional/         positional module (TO BUILD)
+~/dev-sandbox/fetchers/           NSE/Dhan/news/fundamentals
+~/dev-sandbox/database/           per-profile SQLite DBs
+~/dev-sandbox/config/profiles/    profile yamls (vishal-live, neha-live, etc.)
+~/dev-sandbox/logs/               daily logs (intraday__.log)
+~/dev-sandbox/dashboard/          dashboard JSON + HTML for S3
+~/dev-sandbox/scripts/            sync, sanity, eod, etc.
+~/dev-sandbox/.venv/              Python venv (use .venv/bin/python)
+~/dev-sandbox/cache/              market data cache (gitignored)
+```
+
+### Mac (READ-ONLY — git pull only)
+```
+~/kiro/websites/intraday-trader/  same project, mirror via git pull
+```
+
+### Git Flow (Rule 1 enforcement)
+```
+Edit on EC2  →  git add/commit/push from EC2  →  GitHub  →  Mac git pull
+```
+
+### Critical Path Mappings
+- Steering file (this doc): `~/dev-sandbox/.kiro/steering/trading-app-rules.md`
+- Live profile config: `~/dev-sandbox/config/profiles/vishal-live.yaml`
+- Live trading log: `~/dev-sandbox/logs/intraday_vishal-live_.log`
+- Live profile DB: `~/dev-sandbox/database/vishal-live.db`
+- Python interpreter: `~/dev-sandbox/.venv/bin/python` (NOT system python)
+
+### Never Confuse
+- Mac path `~/kiro/websites/intraday-trader/` = read-only mirror
+- EC2 path `~/dev-sandbox/` = source of truth, all edits here
+- Commands telling you to `cd ~/dev-sandbox` MUST be run on EC2 (via SSH)
