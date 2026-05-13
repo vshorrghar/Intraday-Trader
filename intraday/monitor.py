@@ -424,14 +424,21 @@ class Position_Monitor:
             # Bug J + naked-position fix: place broker exit FIRST, get real fill price
             exit_side = "BUY" if direction == "SHORT" else "SELL"
             actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, current)
-            pnl = self._calc_pnl(trade, actual_exit_price)
-            trade["pnl"] = round(pnl, 2)
+            gross_pnl = self._calc_pnl(trade, actual_exit_price)
+            # Bug D fix: subtract real Dhan charges from gross
+            buy_p = trade["entry_price"] if direction == "LONG" else actual_exit_price
+            sell_p = actual_exit_price if direction == "LONG" else trade["entry_price"]
+            charges = self._calculate_dhan_charges(buy_p, sell_p, int(trade["quantity"]))
+            net_pnl = gross_pnl - charges
+            trade["gross_pnl"] = round(gross_pnl, 2)
+            trade["charges"] = round(charges, 2)
+            trade["pnl"] = round(net_pnl, 2)
             trade["exit_price"] = actual_exit_price
             trade["status"] = PositionState.STOPPED_OUT.value
             self._update_db(trade, PositionState.STOPPED_OUT)
             if self.risk_manager:
-                self.risk_manager.record_trade_closed(pnl)
-            logger.info("🛑 %s STOPPED OUT @ ₹%.2f | P&L: ₹%.2f [%s] fill=%s", trade["tradingsymbol"], actual_exit_price, pnl, direction, fill_status)
+                self.risk_manager.record_trade_closed(net_pnl)
+            logger.info("🛑 %s STOPPED OUT @ ₹%.2f | gross ₹%.2f charges ₹%.2f net ₹%.2f [%s] fill=%s", trade["tradingsymbol"], actual_exit_price, gross_pnl, charges, net_pnl, direction, fill_status)
             return
 
         # --- Target hit (direction-aware) ---
@@ -440,14 +447,21 @@ class Position_Monitor:
             # Bug J/K fix: place broker exit FIRST, get real fill price
             exit_side = "BUY" if direction == "SHORT" else "SELL"
             actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, current)
-            pnl = self._calc_pnl(trade, actual_exit_price)
-            trade["pnl"] = round(pnl, 2)
+            gross_pnl = self._calc_pnl(trade, actual_exit_price)
+            # Bug D fix: subtract real Dhan charges from gross
+            buy_p = trade["entry_price"] if direction == "LONG" else actual_exit_price
+            sell_p = actual_exit_price if direction == "LONG" else trade["entry_price"]
+            charges = self._calculate_dhan_charges(buy_p, sell_p, int(trade["quantity"]))
+            net_pnl = gross_pnl - charges
+            trade["gross_pnl"] = round(gross_pnl, 2)
+            trade["charges"] = round(charges, 2)
+            trade["pnl"] = round(net_pnl, 2)
             trade["exit_price"] = actual_exit_price
             trade["status"] = PositionState.CLOSED.value
             self._update_db(trade, PositionState.CLOSED)
             if self.risk_manager:
-                self.risk_manager.record_trade_closed(pnl)
-            logger.info("🎯 %s TARGET HIT @ ₹%.2f | P&L: ₹%.2f [%s] fill=%s", trade["tradingsymbol"], actual_exit_price, pnl, direction, fill_status)
+                self.risk_manager.record_trade_closed(net_pnl)
+            logger.info("🎯 %s TARGET HIT @ ₹%.2f | gross ₹%.2f charges ₹%.2f net ₹%.2f [%s] fill=%s", trade["tradingsymbol"], actual_exit_price, gross_pnl, charges, net_pnl, direction, fill_status)
             return
 
         # --- Partial profit booking (only if not already partially booked) ---
@@ -530,14 +544,21 @@ class Position_Monitor:
             exit_side = "BUY" if direction == "SHORT" else "SELL"
             cached_price = trade.get("current_price", trade["entry_price"])
             actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, cached_price)
-            pnl = self._calc_pnl(trade, actual_exit_price)
-            trade["pnl"] = round((trade.get("pnl", 0) or 0) + pnl, 2)
+            gross_pnl = self._calc_pnl(trade, actual_exit_price)
+            # Bug D fix: subtract real Dhan charges from gross
+            buy_p = trade["entry_price"] if direction == "LONG" else actual_exit_price
+            sell_p = actual_exit_price if direction == "LONG" else trade["entry_price"]
+            charges = self._calculate_dhan_charges(buy_p, sell_p, int(trade["quantity"]))
+            net_pnl = gross_pnl - charges
+            trade["gross_pnl"] = round((trade.get("gross_pnl", 0) or 0) + gross_pnl, 2)
+            trade["charges"] = round((trade.get("charges", 0) or 0) + charges, 2)
+            trade["pnl"] = round((trade.get("pnl", 0) or 0) + net_pnl, 2)
             trade["exit_price"] = actual_exit_price
             trade["status"] = PositionState.FORCE_EXITED.value
             self._update_db(trade, PositionState.FORCE_EXITED)
             if self.risk_manager:
-                self.risk_manager.record_trade_closed(pnl)
-            logger.info("⏰ %s FORCE EXITED @ ₹%.2f | P&L: ₹%.2f [%s] fill=%s", trade["tradingsymbol"], actual_exit_price, trade["pnl"], direction, fill_status)
+                self.risk_manager.record_trade_closed(net_pnl)
+            logger.info("⏰ %s FORCE EXITED @ ₹%.2f | gross ₹%.2f charges ₹%.2f net ₹%.2f [%s] fill=%s", trade["tradingsymbol"], actual_exit_price, gross_pnl, charges, net_pnl, direction, fill_status)
 
     def _calc_unrealized_pnl(self, trade: dict) -> float:
         """Direction-aware unrealized P&L."""

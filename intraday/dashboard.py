@@ -73,15 +73,22 @@ def write_dashboard_json(
     loss_cap_pct = (realized_loss / daily_loss_cap * 100) if daily_loss_cap > 0 else 0
 
     trade_list = []
+    closed_states = {"STOPPED_OUT", "TARGET_HIT", "FORCE_EXITED", "CLOSED", "PARTIAL_BOOKED"}
     for t in merged_trades:
+        # For closed trades, show actual exit_price; for open trades, show current_price
+        is_closed = t.get("status", "") in closed_states
+        display_exit = t.get("exit_price") if is_closed and t.get("exit_price") else t.get("current_price", t.get("entry_price", 0))
         trade_list.append({
             "tradingsymbol": t.get("tradingsymbol", ""),
             "entry_price": t.get("entry_price", 0),
-            "current_price": t.get("current_price", t.get("entry_price", 0)),
+            "current_price": display_exit,
+            "exit_price": t.get("exit_price"),
             "target_price": t.get("target_price", 0),
             "stop_loss_price": t.get("stop_loss_price", 0),
             "quantity": t.get("quantity", 0),
-            "pnl": t.get("pnl", 0),
+            "pnl": round(t.get("pnl", 0) or 0, 2),
+            "gross_pnl": round(t.get("gross_pnl", t.get("pnl", 0) or 0), 2),
+            "charges": round(t.get("charges", 0) or 0, 2),
             "status": t.get("status", ""),
             "strategy_type": t.get("strategy_type", ""),
             "confidence_score": t.get("confidence_score", 0),
