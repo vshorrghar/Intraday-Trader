@@ -169,3 +169,18 @@ cd ~/kiro/websites/intraday-trader && git pull origin main
 - Always check NSE holiday calendar before assuming missing logs = bug
 - If today is a market holiday — no trades will run, no logs will exist
 - This is correct behavior not a bug
+
+
+## Rule 11: Code Edits Use Heredoc, Never Interactive Editors
+- NEVER use nano, vim, or any interactive editor in instructions
+- ALWAYS use Python heredoc (PYEOF) for file edits on EC2
+- Pattern: read file with Path.read_text(), use string replace, verify with grep
+- Use triple-quoted Python strings for OLD and NEW blocks
+- Always check OLD exists before replace
+- Check NEW not already present so the patch is idempotent
+- Why: scriptable, repeatable, no typo risk, works cleanly over SSH
+- Always follow with grep verification and import test (Rule 5)
+- Example flow:
+  1. python3 heredoc reads file, asserts OLD in src, replaces, writes
+  2. grep -A 2 marker file.py
+  3. python import test to confirm no syntax error
