@@ -71,9 +71,9 @@ Give prompt to Kiro when ready.
 ### Critical — Real Money Impact
 | ID | Description | File | Status |
 |----|-------------|------|--------|
-| EE | Bedrock Opus timeout at 9:26 AM market open | llm/bedrock_client.py | OPEN |
-| FF | NSE gainers/losers returns 0 every call | fetchers/nse_market_movers.py | OPEN |
-| GG | Live P&L stays Rs.0 in monitor all day | intraday/monitor.py | OPEN |
+| EE | Bedrock Opus timeout at 9:26 AM market open | llm/bedrock_client.py | FIXED 23a0261 |
+| FF | NSE gainers/losers returns 0 every call | fetchers/nse_market_movers.py | FIXED 23a0261 |
+| GG | Live P&L stays Rs.0 in monitor all day | intraday/monitor.py | PARTIAL FIX 23a0261 |
 | HH | 0 orders placed after sizing (12:03 PM) | intraday/executor.py | OPEN |
 
 ### High
@@ -87,7 +87,7 @@ Give prompt to Kiro when ready.
 ### Medium
 | ID | Description | Status |
 |----|-------------|--------|
-| WAR-ROOM | War Room tab label missing in dashboard | OPEN |
+| WAR-ROOM | War Room tab label missing in dashboard | FIXED 23a0261 |
 | E | Telegram alerts not wired | OPEN |
 | G | Dhan credentials rotation needed | OPEN |
 | I | AWS keys rotation needed | OPEN |
