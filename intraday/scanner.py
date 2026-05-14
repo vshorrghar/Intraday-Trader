@@ -285,6 +285,7 @@ class Pre_Market_Scanner:
             min_volume=500_000,
             top_n_long=15,
             top_n_short=15,
+            ranked_sectors=ranked_sectors,
         )
 
         # --- Fallback to gainers/losers/active if Nifty500 failed ---
@@ -323,6 +324,7 @@ def _fetch_nifty500_candidates(
     min_volume: int = 500_000,
     top_n_long: int = 15,
     top_n_short: int = 15,
+    ranked_sectors: list = None,
 ) -> list[dict]:
     """Fetch Nifty 500 stocks and return top long + short candidates.
 
@@ -424,6 +426,27 @@ def _fetch_nifty500_candidates(
         if is_fno:
             long_score += 1
 
+        # Signal 6: Sector rotation bonus (0-5 pts)
+        sector_rank = None
+        sector_chg = 0
+        for i, s in enumerate(ranked_sectors or [], 1):
+            s_name = s.get('name', '').upper()
+            ind_prefix = industry.upper()[:6]
+            if ind_prefix and (s_name.startswith(ind_prefix) or ind_prefix in s_name):
+                sector_rank = i
+                sector_chg = s.get('change_pct', 0)
+                break
+        if sector_rank:
+            if sector_rank <= 3:
+                long_score += 3  # leading sector
+            elif sector_rank <= 5:
+                long_score += 2
+            elif sector_rank <= 8:
+                long_score += 1
+            # Outperforming sector = relative strength
+            if change_pct > sector_chg + 2.0:
+                long_score += 2
+
         # Fade detector — penalize only stocks falling from day high
         # NOT stocks that are simply up a lot
         # Strong stocks at day high stay strong all day
@@ -437,6 +460,27 @@ def _fetch_nifty500_candidates(
             long_score -= 3  # gap fade — opened high, now selling
         if gap_pct > 3.0 and change_from_open < 0.5:
             long_score -= 2  # gap exhaustion — no follow through
+
+        # Trap detector
+        if gap_pct > 5.0 and sector_chg < 0:
+            long_score -= 5  # gap with no sector support = trap
+        if near_52w_high < 1.0 and change_pct > 8.0:
+            long_score -= 2  # buying climax risk at 52w high
+
+        # Time-aware multiplier — early entries get more credit
+        from datetime import datetime, timezone, timedelta
+        _ist = timezone(timedelta(hours=5, minutes=30))
+        _now = datetime.now(_ist)
+        hrs_since_open = max(0, (_now.hour - 9) + (_now.minute - 15) / 60.0)
+        if hrs_since_open < 1.0:
+            time_multiplier = 1.5
+        elif hrs_since_open < 2.5:
+            time_multiplier = 1.0
+        elif hrs_since_open < 4.0:
+            time_multiplier = 0.7
+        else:
+            time_multiplier = 0.4
+        long_score = int(long_score * time_multiplier)
 
         # Short score — mirror logic for shorts
         short_score = 0
