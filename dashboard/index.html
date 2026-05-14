@@ -361,6 +361,39 @@ tr:nth-child(even) td { background:#1a2035; }
   </div>
 </div>
 
+<!-- ===== WAR ROOM TAB ===== -->
+<div class="tab-content" id="tab-warroom">
+  <div class="container">
+    <div class="card">
+      <h2>📈 Top 10 Movers Today</h2>
+      <div id="wr-top-movers">
+        <p class="neutral">Loading top performers...</p>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🎯 Scanner Accuracy</h2>
+      <div id="wr-accuracy" style="text-align:center;padding:20px;">
+        <span class="neutral">—</span>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📄 Steering Docs</h2>
+      <div id="wr-loading" style="text-align:center;padding:20px;">Loading docs...</div>
+      <div id="wr-error" style="display:none;color:#f87171;text-align:center;padding:20px;"></div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+        <button class="nav-tab wr-btn active" onclick="wrSwitch(strategy)">Strategy</button>
+        <button class="nav-tab wr-btn" onclick="wrSwitch(learning)">Learning</button>
+        <button class="nav-tab wr-btn" onclick="wrSwitch(state)">State</button>
+        <button class="nav-tab wr-btn" onclick="wrSwitch(rules)">Rules</button>
+      </div>
+      <div class="wr-panel active" id="wr-strategy"><pre id="wr-body-strategy" style="white-space:pre-wrap;font-size:12px;color:#c8d0e0;max-height:400px;overflow-y:auto;"></pre><div id="wr-meta-strategy" class="neutral" style="font-size:11px;margin-top:8px;"></div></div>
+      <div class="wr-panel" id="wr-learning" style="display:none;"><pre id="wr-body-learning" style="white-space:pre-wrap;font-size:12px;color:#c8d0e0;max-height:400px;overflow-y:auto;"></pre><div id="wr-meta-learning" class="neutral" style="font-size:11px;margin-top:8px;"></div></div>
+      <div class="wr-panel" id="wr-state" style="display:none;"><pre id="wr-body-state" style="white-space:pre-wrap;font-size:12px;color:#c8d0e0;max-height:400px;overflow-y:auto;"></pre><div id="wr-meta-state" class="neutral" style="font-size:11px;margin-top:8px;"></div></div>
+      <div class="wr-panel" id="wr-rules" style="display:none;"><pre id="wr-body-rules" style="white-space:pre-wrap;font-size:12px;color:#c8d0e0;max-height:400px;overflow-y:auto;"></pre><div id="wr-meta-rules" class="neutral" style="font-size:11px;margin-top:8px;"></div></div>
+    </div>
+  </div>
+</div>
+
 </div><!-- end #app -->
 
 <!-- Login Modal -->
@@ -880,8 +913,29 @@ function wrSwitch(key){
   document.querySelectorAll('.wr-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('onclick').indexOf(key)!==-1);});
   document.querySelectorAll('.wr-panel').forEach(function(el){el.classList.toggle('active',el.id==='wr-'+key);});
 }
+function loadTopMovers(){
+  fetch("api/top_performers.json?t="+Date.now())
+    .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+    .then(function(d){
+      var el=document.getElementById("wr-top-movers");
+      var acc=document.getElementById("wr-accuracy");
+      if(!d.top_10||!d.top_10.length){el.innerHTML="<p class="neutral">No data yet</p>";return;}
+      var html="<table style="width:100%;font-size:12px;"><tr><th>#</th><th>Symbol</th><th>Gain%</th><th>From Open</th><th>Volume</th><th>Sector</th><th>Picked?</th></tr>";
+      d.top_10.forEach(function(s){
+        var cls=s.we_picked?"positive":"negative";
+        var pick=s.we_picked?"✅ YES":"❌";
+        html+="<tr><td>"+s.rank+"</td><td><b>"+s.symbol+"</b></td><td class="positive">+"+s.gain_pct.toFixed(2)+"%</td><td>+"+s.change_from_open.toFixed(2)+"%</td><td>"+(s.volume/1000000).toFixed(1)+"M</td><td>"+s.sector.slice(0,15)+"</td><td class=""+cls+"">"+pick+"</td></tr>";
+      });
+      html+="</table>";
+      html+="<p style="margin-top:12px;font-size:12px;color:#8892a4;">VIX: "+d.vix.toFixed(2)+" | Mood: "+d.market_mood+" | Our picks: "+(d.our_picks_today.join(", ")||"None")+"</p>";
+      el.innerHTML=html;
+      acc.innerHTML="<span style="font-size:28px;font-weight:700;" class=""+(d.overlap>0?"positive":"negative")+"">"+d.overlap+"/10</span><br><span class="neutral">"+d.miss_rate+"</span>";
+    })
+    .catch(function(e){document.getElementById("wr-top-movers").innerHTML="<p class="neutral">"+e.message+"</p>";});
+}
 function wrLoad(){
   if(wrLoaded)return;
+  loadTopMovers();
   var lg=document.getElementById('wr-loading');
   var er=document.getElementById('wr-error');
   fetch('api/docs.json?t='+Date.now())

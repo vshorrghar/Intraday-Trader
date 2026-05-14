@@ -1,0 +1,179 @@
+{
+  "date": "2026-05-14",
+  "vix": 18.61,
+  "market_mood": "BULLISH",
+  "top_10": [
+    {
+      "rank": 1,
+      "symbol": "SAREGAMA",
+      "gain_pct": 15.15,
+      "change_from_open": 13.14,
+      "volume": 38733636,
+      "sector": "Media & Entertainment",
+      "we_picked": false
+    },
+    {
+      "rank": 2,
+      "symbol": "NLCINDIA",
+      "gain_pct": 14.61,
+      "change_from_open": 7.27,
+      "volume": 81913146,
+      "sector": "Power Generation",
+      "we_picked": false
+    },
+    {
+      "rank": 3,
+      "symbol": "CAPLIPOINT",
+      "gain_pct": 9.89,
+      "change_from_open": 9.46,
+      "volume": 2271123,
+      "sector": "Pharmaceuticals",
+      "we_picked": false
+    },
+    {
+      "rank": 4,
+      "symbol": "ADANIENT",
+      "gain_pct": 8.85,
+      "change_from_open": 7.47,
+      "volume": 9539233,
+      "sector": "Trading - Minerals",
+      "we_picked": false
+    },
+    {
+      "rank": 5,
+      "symbol": "CIPLA",
+      "gain_pct": 8.09,
+      "change_from_open": 5.34,
+      "volume": 9166941,
+      "sector": "Pharmaceuticals",
+      "we_picked": false
+    },
+    {
+      "rank": 6,
+      "symbol": "GODREJIND",
+      "gain_pct": 7.62,
+      "change_from_open": 6.39,
+      "volume": 6636358,
+      "sector": "Diversified",
+      "we_picked": false
+    },
+    {
+      "rank": 7,
+      "symbol": "TATACOMM",
+      "gain_pct": 7.07,
+      "change_from_open": 6.04,
+      "volume": 1323852,
+      "sector": "Telecom - Cellular & Fixed line services",
+      "we_picked": false
+    },
+    {
+      "rank": 8,
+      "symbol": "ENGINERSIN",
+      "gain_pct": 6.15,
+      "change_from_open": 5.71,
+      "volume": 9962606,
+      "sector": "Civil Construction",
+      "we_picked": false
+    },
+    {
+      "rank": 9,
+      "symbol": "BERGEPAINT",
+      "gain_pct": 6.15,
+      "change_from_open": 4.65,
+      "volume": 4289866,
+      "sector": "Paints",
+      "we_picked": false
+    },
+    {
+      "rank": 10,
+      "symbol": "AIIL",
+      "gain_pct": 5.96,
+      "change_from_open": 4.43,
+      "volume": 633860,
+      "sector": "Non Banking Financial Company (NBFC)",
+      "we_picked": false
+    }
+  ],
+  "our_picks_today": [
+    "VEDL",
+    "ADANIPOWER",
+    "VEDL",
+    "BHARTIARTL",
+    "VEDL",
+    "ADANIPOWER"
+  ],
+  "overlap": 0,
+  "miss_rate": "10/10 missed today",
+  "history": [
+    {
+      "date": "2026-05-14",
+      "rank": 1,
+      "symbol": "SAREGAMA",
+      "gain_pct": 15.15,
+      "was_picked_by_us": 0
+    },
+    {
+      "date": "2026-05-14",
+      "rank": 2,
+      "symbol": "NLCINDIA",
+      "gain_pct": 14.61,
+      "was_picked_by_us": 0
+    },
+    {
+      "date": "2026-05-14",
+      "rank": 3,
+      "symbol": "CAPLIPOINT",
+      "gain_pct": 9.89,
+      "was_picked_by_us": 0
+    },
+    {
+      "date": "2026-05-14",
+      "rank": 4,
+      "symbol": "ADANIENT",
+      "gain_pct": 8.85,
+      "was_picked_by_us": 0
+    },
+    {
+      "date": "2026-05-14",
+      "rank": 5,
+      "symbol": "CIPLA",
+      "gain_pct": 8.09,
+      "was_picked_by_us": 0
+    },
+    {
+      "date": "2026-05-14",
+      "rank": 6,
+      "symbol": "GODREJIND",
+      "gain_pct": 7.62,
+      "was_picked_by_us": 0
+    },
+    {
+      "date": "2026-05-14",
+      "rank": 7,
+      "symbol": "TATACOMM",
+      "gain_pct": 7.07,
+      "was_picked_by_us": 0
+    },
+    {
+      "date": "2026-05-14",
+      "rank": 8,
+      "symbol": "ENGINERSIN",
+      "gain_pct": 6.15,
+      "was_picked_by_us": 0
+    },
+    {
+      "date": "2026-05-14",
+      "rank": 9,
+      "symbol": "BERGEPAINT",
+      "gain_pct": 6.15,
+      "was_picked_by_us": 0
+    },
+    {
+      "date": "2026-05-14",
+      "rank": 10,
+      "symbol": "AIIL",
+      "gain_pct": 5.96,
+      "was_picked_by_us": 0
+    }
+  ]
+}
