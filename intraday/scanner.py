@@ -377,41 +377,92 @@ def _fetch_nifty500_candidates(
         day_range = (day_high - day_low) / prev_close * 100 if prev_close > 0 else 0
         high_volatility = day_range > 5 or abs(gap_pct) > 8
 
-        # Long score — higher is better long candidate
+        # RS-FIRST Scoring Model — momentum continuation over volume
+        # Signal 1: Intraday continuation (0-5 pts) — MOST IMPORTANT
         long_score = 0
-        if change_pct > 0:
+        if change_from_open > 4.0:
+            long_score += 5
+        elif change_from_open > 2.0:
+            long_score += 4
+        elif change_from_open > 1.0:
+            long_score += 3
+        elif change_from_open > 0.5:
             long_score += 2
-        if gap_pct > 0.5:
+        elif change_from_open > 0.0:
             long_score += 1
-        if volume > 2_000_000:
-            long_score += 2
-        if volume > 5_000_000:
-            long_score += 1
-        if change_from_open > 0:
-            long_score += 1
-        if near_52w_high < 10:
-            long_score += 1
-        if is_fno:
-            long_score += 1
-        if high_volatility:
-            long_score -= 3
 
-        # Short score — higher is better short candidate
-        short_score = 0
-        if change_pct < 0:
-            short_score += 2
-        if gap_pct < -0.5:
-            short_score += 1
-        if volume > 2_000_000:
-            short_score += 2
+        # Signal 2: Momentum strength (0-4 pts)
+        if change_pct > 5.0:
+            long_score += 4
+        elif change_pct > 3.0:
+            long_score += 3
+        elif change_pct > 2.0:
+            long_score += 2
+        elif change_pct > 1.0:
+            long_score += 1
+
+        # Signal 3: Price near day high (0-2 pts)
+        pct_from_high = ((day_high - ltp) / day_high * 100) if day_high > 0 else 99
+        if pct_from_high < 0.5:
+            long_score += 2
+        elif pct_from_high < 1.5:
+            long_score += 1
+
+        # Signal 4: Volume confirmation (0-2 pts) — confirms only
         if volume > 5_000_000:
+            long_score += 2
+        elif volume > 2_000_000:
+            long_score += 1
+
+        # Signal 5: FNO liquidity bonus (0-1 pt)
+        if is_fno:
+            long_score += 1
+
+        # Penalties — chasing and gap fades
+        if change_from_open > 8.0:
+            long_score -= 4  # chasing
+        elif change_from_open > 6.0:
+            long_score -= 2  # likely chasing
+        if gap_pct > 2.0 and change_from_open < 0:
+            long_score -= 3  # gap fade — opened high, now selling
+        if gap_pct > 3.0 and change_from_open < 0.5:
+            long_score -= 2  # gap exhaustion — no follow through
+
+        # Short score — mirror logic for shorts
+        short_score = 0
+        if change_from_open < -4.0:
+            short_score += 5
+        elif change_from_open < -2.0:
+            short_score += 4
+        elif change_from_open < -1.0:
+            short_score += 3
+        elif change_from_open < -0.5:
+            short_score += 2
+        elif change_from_open < 0.0:
             short_score += 1
-        if change_from_open < 0:
+        if change_pct < -5.0:
+            short_score += 4
+        elif change_pct < -3.0:
+            short_score += 3
+        elif change_pct < -2.0:
+            short_score += 2
+        elif change_pct < -1.0:
             short_score += 1
-        if near_52w_low < 10:
+        pct_from_low = ((ltp - day_low) / day_low * 100) if day_low > 0 else 99
+        if pct_from_low < 0.5:
+            short_score += 2
+        elif pct_from_low < 1.5:
+            short_score += 1
+        if volume > 5_000_000:
+            short_score += 2
+        elif volume > 2_000_000:
             short_score += 1
         if is_fno:
             short_score += 1
+        if change_from_open < -8.0:
+            short_score -= 4
+        elif change_from_open < -6.0:
+            short_score -= 2
         if high_volatility:
             short_score -= 3
 

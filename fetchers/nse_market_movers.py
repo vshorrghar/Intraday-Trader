@@ -69,10 +69,24 @@ def fetch_top_gainers(session=None) -> list[MarketMover]:
         if isinstance(data, list):
             items = data
         elif isinstance(data, dict):
-            for key, val in data.items():
-                if isinstance(val, list) and len(val) > 0:
-                    items = val
-                    break
+            # Try NIFTY or allSec first, then any key with data list
+            for preferred in ["NIFTY", "allSec", "FOSec"]:
+                if preferred in data:
+                    val = data[preferred]
+                    if isinstance(val, dict) and "data" in val:
+                        items = val["data"]
+                        break
+                    elif isinstance(val, list):
+                        items = val
+                        break
+            if not items:
+                for key, val in data.items():
+                    if isinstance(val, dict) and "data" in val and isinstance(val["data"], list) and len(val["data"]) > 0:
+                        items = val["data"]
+                        break
+                    elif isinstance(val, list) and len(val) > 0:
+                        items = val
+                        break
         for item in items[:20]:
             if not isinstance(item, dict):
                 continue
@@ -106,10 +120,24 @@ def fetch_top_losers(session=None) -> list[MarketMover]:
         if isinstance(data, list):
             items = data
         elif isinstance(data, dict):
-            for key, val in data.items():
-                if isinstance(val, list) and len(val) > 0:
-                    items = val
-                    break
+            # Try NIFTY or allSec first, then any key with data list
+            for preferred in ["NIFTY", "allSec", "FOSec"]:
+                if preferred in data:
+                    val = data[preferred]
+                    if isinstance(val, dict) and "data" in val:
+                        items = val["data"]
+                        break
+                    elif isinstance(val, list):
+                        items = val
+                        break
+            if not items:
+                for key, val in data.items():
+                    if isinstance(val, dict) and "data" in val and isinstance(val["data"], list) and len(val["data"]) > 0:
+                        items = val["data"]
+                        break
+                    elif isinstance(val, list) and len(val) > 0:
+                        items = val
+                        break
         for item in items[:20]:
             if not isinstance(item, dict):
                 continue

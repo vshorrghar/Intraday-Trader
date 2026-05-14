@@ -397,10 +397,23 @@ class Position_Monitor:
                         t["charges"] = charges
                         t["current_price"] = sell_avg if sell_avg else t["entry_price"]
                     else:
-                        # Position still open — just update LTP
+                        # Position still open — try broker LTP first
                         ltp = (p.get("ltp") or p.get("last_traded_price") or
                                p.get("lastTradedPrice") or p.get("sell_avg") or p.get("sellAvg"))
-                        t["current_price"] = ltp if ltp else t["entry_price"]
+                        if ltp:
+                            t["current_price"] = float(ltp)
+                        else:
+                            # Broker has no LTP — fetch from NSE
+                            try:
+                                from fetchers.nse_market_movers import _get_nse_session
+                                nse = _get_nse_session()
+                                r = nse.get(f"https://www.nseindia.com/api/quote-equity?symbol={sym}", timeout=10)
+                                if r.status_code == 200:
+                                    nse_ltp = r.json().get("priceInfo", {}).get("lastPrice")
+                                    if nse_ltp:
+                                        t["current_price"] = float(nse_ltp)
+                            except Exception:
+                                pass  # keep previous current_price
         except Exception as exc:
             logger.error("Failed to fetch positions: %s — will retry", exc)
 

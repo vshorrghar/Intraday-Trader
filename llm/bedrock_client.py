@@ -31,10 +31,15 @@ class BedrockClient:
             model_id: Bedrock model identifier (e.g. 'anthropic.claude-3-sonnet-20240229-v1:0').
         """
         self.model_id = model_id
+        from botocore.config import Config as BotoConfig
         self.client = boto3.client(
             "bedrock-runtime",
             region_name=region,
-            config=boto3.session.Config(read_timeout=300, connect_timeout=10),
+            config=BotoConfig(
+                read_timeout=60,
+                connect_timeout=10,
+                retries={"max_attempts": 1}
+            ),
         )
 
     def invoke(self, system_prompt: str, user_prompt: str) -> dict:
