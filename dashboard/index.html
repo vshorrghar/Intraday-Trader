@@ -520,7 +520,7 @@ function activate(name) {
 function switchTab(tab) {
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.querySelectorAll('.tab-content').forEach(el => el.classList.toggle('active', el.id === 'tab-'+tab));
-  if (tab === 'docs') loadDocs();
+  if(tab==='warroom') wrLoad();
 }
 
 // ===== DATA LOADING =====
@@ -873,43 +873,27 @@ init();
 </body>
 </html>
 
-// ===== DOCS TAB =====
-let docsLoaded = false;
-
-function switchDoc(fname) {
-  document.querySelectorAll('.docs-tab-btn').forEach(b => {
-    b.classList.toggle('active', b.getAttribute('onclick').includes(fname));
-  });
-  document.querySelectorAll('.docs-content').forEach(el => {
-    el.classList.toggle('active', el.id === 'docs-' + fname);
-  });
+var wrLoaded=false;
+var wrMap={strategy:'STRATEGY.md',learning:'LEARNING.md',state:'STATE.md',rules:'RULES.md'};
+function wrSwitch(key){
+  document.querySelectorAll('.wr-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('onclick').indexOf(key)!==-1);});
+  document.querySelectorAll('.wr-panel').forEach(function(el){el.classList.toggle('active',el.id==='wr-'+key);});
 }
-
-function loadDocs() {
-  if (docsLoaded) return;
-  const loading = document.getElementById('docs-loading');
-  const errDiv  = document.getElementById('docs-error');
-
-  fetch('api/docs.json?t=' + Date.now())
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(data => {
-      docsLoaded = true;
-      loading.style.display = 'none';
-      ['STRATEGY.md','LEARNING.md','STATE.md','RULES.md'].forEach(fname => {
-        const doc = data[fname];
-        if (!doc) return;
-        const bodyEl = document.getElementById('body-' + fname);
-        const metaEl = document.getElementById('meta-' + fname);
-        if (bodyEl) bodyEl.textContent = doc.content;
-        if (metaEl) {
-          const lines = doc.content.split('\n').length;
-          metaEl.textContent = fname + ' — ' + lines + ' lines';
-        }
+function wrLoad(){
+  if(wrLoaded)return;
+  var lg=document.getElementById('wr-loading');
+  var er=document.getElementById('wr-error');
+  fetch('api/docs.json?t='+Date.now())
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+    .then(function(data){
+      wrLoaded=true;lg.style.display='none';
+      Object.keys(wrMap).forEach(function(key){
+        var doc=data[wrMap[key]];if(!doc)return;
+        var b=document.getElementById('wr-body-'+key);
+        var m=document.getElementById('wr-meta-'+key);
+        if(b)b.textContent=doc.content;
+        if(m)m.textContent=wrMap[key]+' lines';
       });
     })
-    .catch(err => {
-      loading.style.display = 'none';
-      errDiv.style.display = 'block';
-      errDiv.textContent = 'Error: ' + err.message;
-    });
+    .catch(function(err){lg.style.display='none';er.style.display='block';er.textContent='Error: '+err.message;});
 }
