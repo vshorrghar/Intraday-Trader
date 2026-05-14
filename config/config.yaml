@@ -125,3 +125,4 @@ positional:
 telegram:
   token: ""
   chat_id: ""
+  enabled: false

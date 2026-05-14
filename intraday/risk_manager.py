@@ -46,25 +46,24 @@ class Risk_Manager:
                "effective_max_trades": int,
                "reason": str}``
         """
-        threshold = self.config.vix_threshold
-        if threshold <= 0:
-            return {"action": "NORMAL", "effective_max_trades": self.config.max_trades_per_day, "reason": ""}
-
-        if vix_value > 1.5 * threshold:
-            reason = f"VIX {vix_value:.2f} > 1.5× threshold ({1.5 * threshold:.1f}) — skipping session"
+        # VIX-based session control (fixed levels, not profile-relative)
+        # > 25: market too volatile, skip entirely
+        # > 22: elevated, reduce to 1 trade max
+        # <= 22: normal, use profile max_trades
+        if vix_value > 25:
+            reason = f"VIX {vix_value:.2f} > 25 — market too volatile, skipping session"
             logger.warning(reason)
             return {"action": "SKIP", "effective_max_trades": 0, "reason": reason}
 
-        if vix_value > threshold:
-            halved = self.config.max_trades_per_day // 2
-            reason = f"VIX {vix_value:.2f} > threshold ({threshold:.1f}) — reducing max trades to {halved}"
+        if vix_value > 22:
+            reason = f"VIX {vix_value:.2f} > 22 — elevated volatility, reducing to 1 trade"
             logger.warning(reason)
-            return {"action": "REDUCE", "effective_max_trades": halved, "reason": reason}
+            return {"action": "REDUCE", "effective_max_trades": 1, "reason": reason}
 
         return {
             "action": "NORMAL",
             "effective_max_trades": self.config.max_trades_per_day,
-            "reason": f"VIX {vix_value:.2f} within normal range",
+            "reason": f"VIX {vix_value:.2f} <= 22, normal trading",
         }
 
     # ------------------------------------------------------------------
@@ -133,9 +132,21 @@ class Risk_Manager:
             trade_capital = qty * trade.entry_price
             capital_allocated += trade_capital
 
-            risk = trade.entry_price - trade.stop_loss_price
-            rr = (trade.target_price - trade.entry_price) / risk if risk > 0 else 0
+            # Direction-aware R:R calculation
+            is_short = trade.target_price < trade.entry_price
+            if is_short:
+                risk = trade.stop_loss_price - trade.entry_price
+                reward = trade.entry_price - trade.target_price
+            else:
+                risk = trade.entry_price - trade.stop_loss_price
+                reward = trade.target_price - trade.entry_price
+            rr = reward / risk if risk > 0 else 0.0
             trade.risk_reward_ratio = round(rr, 2)
+
+            # Reject trades with bad R:R
+            if rr < 2.0:
+                logger.warning("Skipping %s — R:R %.1f < 2.0 (direction=%s)", trade.nse_symbol, rr, "SHORT" if is_short else "LONG")
+                continue
 
             sized.append(trade)
             logger.info(
