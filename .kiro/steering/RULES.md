@@ -292,6 +292,12 @@ Both EC2s writing to one S3 bucket creates race on shared files (history.json, l
 | S3 Bucket | dev-sandbox-dashboard-176767908884 (PRIVATE) |
 | CloudFront Distribution | E3NXP6TCRJKVX1 |
 | CloudFront URL | https://d2q1cy3ph7jbd0.cloudfront.net |
+| Onboarding S3 Bucket | intraday-onboarding-176767908884 |
+| Onboarding CloudFront ID | E1V3MJSHBAA4SM |
+| Onboarding URL | https://d1pt3c87z185fv.cloudfront.net |
+| Onboarding S3 Bucket | intraday-onboarding-176767908884 |
+| Onboarding CloudFront ID | E1V3MJSHBAA4SM |
+| Onboarding URL | https://d1pt3c87z185fv.cloudfront.net |
 | GitHub Repo | https://github.com/vshorrghar/Intraday-Trader.git |
 | Broker | Dhan REST API v2 |
 | Dhan Whitelisted IP (vishal account) | 13.206.144.6 |
@@ -317,29 +323,29 @@ Passwords: SHA-256 hashed in dashboard/api/passwords.json. vishal/vishal-live sh
 ### vishal-live (REAL MONEY)
 | Setting | Value |
 |---------|-------|
-| daily_capital_limit | INR 10,000 |
-| per_trade_max_capital | INR 4,000 |
-| max_trades_per_day | 2 |
-| daily_loss_limit | INR 600 |
-| min_confidence_score | 7 (was 8 till May 11) |
-| vix_threshold | 18 (was 16 till May 11) |
+| daily_capital_limit | INR 15,000 (raised from 10K on May 14) |
+| per_trade_max_capital | INR 4,500 (raised from 4K on May 14) |
+| max_trades_per_day | 3 (raised from 2 on May 14) |
+| daily_loss_limit | INR 900 (raised from 600 on May 14) |
+| min_confidence_score | 7 |
+| vix_threshold | 20 (raised from 18 on May 14) |
 
-### neha-live (REAL MONEY, INR 0 funded)
+### neha-live (REAL MONEY, INR 10,000 funded)
 | Setting | Value |
 |---------|-------|
 | daily_capital_limit | INR 10,000 |
 | per_trade_max_capital | INR 4,000 |
-| max_trades_per_day | 2 |
-| daily_loss_limit | INR 600 |
+| max_trades_per_day | 3 (raised from 2 on May 14) |
+| daily_loss_limit | INR 900 (raised from 600 on May 14) |
 | min_confidence_score | 8 |
-| vix_threshold | 16 |
+| vix_threshold | 20 (raised from 16 on May 14) |
 
 ### vishal (PAPER)
 | Setting | Value |
 |---------|-------|
 | daily_capital_limit | INR 3,00,000 |
-| per_trade_max_capital | INR 60,000 |
-| max_trades_per_day | 5 |
+| per_trade_max_capital | INR 50,000 (was 60K, lowered May 14) |
+| max_trades_per_day | 6 (raised from 5 on May 14) |
 | daily_loss_limit | INR 9,000 |
 | min_confidence_score | 7 |
 | vix_threshold | 18 |
@@ -369,11 +375,12 @@ Same as vishal paper.
 | Min confidence (vishal-live) | 7 | vishal-live.yaml |
 | Min confidence (neha-live) | 8 | neha-live.yaml |
 | Min R:R | 2.0 | selector.py |
-| VIX threshold (vishal-live) | 18 | vishal-live.yaml |
-| VIX threshold (neha-live) | 16 | neha-live.yaml |
+| VIX threshold (vishal-live) | 20 | vishal-live.yaml |
+| VIX threshold (neha-live) | 20 | neha-live.yaml |
 | VIX threshold (paper intraday) | 18 | profile yaml |
 | VIX threshold (FnO) | 22 | profile yaml |
-| VIX skip multiplier | 1.5x threshold | risk_manager.py |
+| VIX SKIP level (fixed) | > 25 | risk_manager.py |
+| VIX REDUCE level (fixed) | > 22 reduce to 1 trade | risk_manager.py |
 
 ### Volume & Volatility
 | Rule | Value |
@@ -401,6 +408,28 @@ Same as vishal paper.
 - Gate 2: Loss > 50% of daily limit -> SKIP
 - Gate 3: Breadth gate REMOVED May 12
 
+### Scanner Scoring (RS-First v3, since May 14)
+Located in intraday/scanner.py. Replaces volume-dominated v1.
+
+Signal 1: Intraday continuation (change_from_open) — 0-5 pts
+Signal 2: Momentum strength (change_pct) — 0-8 pts (boosted from 0-4)
+Signal 3: Price near day high — 0-2 pts
+Signal 4: Volume confirmation — 0-2 pts (confirms only, doesn't lead)
+Signal 5: FNO liquidity bonus — 0-1 pt
+Signal 6: Sector rotation bonus — 0-5 pts (top 3 sector +3, outperforming sector +2)
+
+Penalties:
+- Fade detector: -3 if fell >3% from day high, -1 if >1.5% (replaces old chasing penalty)
+- Trap detector: -5 gap with no sector support, -2 buying climax at 52w high
+
+Time multiplier (applied to final score):
+- First hour (9:30-10:30): 1.5x — best entries
+- Sweet spot (10:30-11:45): 1.0x
+- Caution (11:45-13:15): 0.7x
+- Late session (after 13:15): 0.4x
+
+See STRATEGY.md for full evolution log.
+
 ### F&O Specific
 - Naked selling time block: After 14:00 IST
 - Directional buy time block: After 13:00 IST
@@ -408,20 +437,30 @@ Same as vishal paper.
 - Hedged strategy confluence min: 50
 - Paper history required: 2 weeks before naked selling
 
-### Cron Schedule (current)
-Intraday — VISHAL paper
-55 3 * * 1-5 run_daily.sh --profile vishal (9:25 AM IST) 30 6 * * 1-5 run_daily.sh --profile vishal (12:00 PM IST) 0 8 * * 1-5 run_daily.sh --profile vishal (1:30 PM IST)
-Intraday — NEHA paper
-57 3 * * 1-5 run_daily.sh --profile neha (9:27 AM) 32 6 * * 1-5 run_daily.sh --profile neha (12:02 PM) 2 8 * * 1-5 run_daily.sh --profile neha (1:32 PM)
-Intraday — VISHAL-LIVE real
-56 3 * * 1-5 run_daily.sh --profile vishal-live --live (9:26 AM) 31 6 * * 1-5 run_daily.sh --profile vishal-live --live (12:01 PM)
-1:31 PM session DISABLED — too risky for real money
-Intraday — NEHA-LIVE real (INR 0 funded)
-58 3 * * 1-5 run_intraday.py --profile neha-live --live (9:28 AM) 33 6 * * 1-5 run_intraday.py --profile neha-live --live (12:03 PM)
-F&O paper (all profiles)
-50 3 * * 1-5 run_fno_daily.sh --profile vishal (9:20 AM) 52 3 * * 1-5 run_fno_daily.sh --profile neha (9:22 AM) 54 3 * * 1-5 run_fno_daily.sh --profile vishal-live (9:24 AM, paper)
-Dashboard sync
-0 3-10 * * 1-5 hourly S3 sync + CloudFront invalidation
+### Cron Schedule (updated 2026-05-14 — continuous scanning)
+
+OLD EC2 (13.206.144.6) — runs vishal-live + paper profiles + F&O:
+Continuous intraday scanning every 15 min, 9:30 AM - 1:00 PM IST (4:00-7:30 UTC)
+*/15 4-7 * * 1-5 cd ~/dev-sandbox && bash run_daily.sh --profile vishal-live --live >> logs/cron_vishal_live.log 2>&1 */15 4-7 * * 1-5 cd ~/dev-sandbox && bash run_daily.sh --profile vishal >> logs/cron_vishal.log 2>&1 */15 4-7 * * 1-5 cd ~/dev-sandbox && bash run_daily.sh --profile neha >> logs/cron_neha.log 2>&1
+
+F&O paper (all profiles, single run at market open)
+50 3 * * 1-5 run_fno_daily.sh --profile vishal (9:20 AM) 52 3 * * 1-5 run_fno_daily.sh --profile neha (9:22 AM) 54 3 * * 1-5 run_fno_daily.sh --profile vishal-live (9:24 AM, paper mode)
+
+Top performers capture (3:35 PM IST = 10:05 UTC, 20 min after close)
+5 10 * * 1-5 cd ~/dev-sandbox && .venv/bin/python3 scripts/capture_top_performers.py >> logs/top_performers.log 2>&1
+
+Dashboard sync + CloudFront invalidation (hourly 9 AM - 5 PM IST)
+0 3-10 * * 1-5 (S3 sync + CloudFront invalidation)
+
+NEW EC2 (13.202.63.223) — runs neha-live ONLY:
+Continuous neha-live scanning every 15 min
+*/15 4-7 * * 1-5 cd ~/dev-sandbox && export AWS_PROFILE=vishal-admin && .venv/bin/python3 run_intraday.py --profile neha-live --live >> logs/cron_neha_live.log 2>&1
+
+Why continuous (every 15 min):
+- Catches mid-session breakouts
+- Idempotent (run_daily.sh checks for active positions, skips if max trades hit)
+- Late session gates prevent revenge trading after 11 AM IST
+- Real money trade limits enforce max 3/day even with continuous attempts
 ---
 
 ## SECTION 7: ARCHITECTURE OVERVIEW
@@ -464,10 +503,10 @@ Cron: weekly Monday 4 PM IST.
 |--------|-------|--------|
 | fetchers/ | dhan_api.py, nse_fetcher.py, nse_market_movers.py | Active |
 | fetchers/news_fetcher.py | News sentiment per stock | TO BUILD |
-| fetchers/options_fetcher.py | PCR, OI per stock | TO BUILD |
+| fetchers/options_fetcher.py | NSE option chain, ATM strike, IV percentile | ACTIVE (since May 14) |
 | fetchers/fundamentals_fetcher.py | P/E, P/B, ROE for positional | TO BUILD |
-| database/ | db_manager.py (SQLite per-profile) | Active, needs swing+positional tables |
-| alerts/ | telegram.py | Module exists, NOT WIRED yet |
+| database/ | db_manager.py (SQLite per-profile) + daily_top_performers table | Active |
+| alerts/ | telegram.py | Config-aware, ready (set token in config.yaml to activate) |
 | backtest/ | EMPTY | TO BUILD |
 
 ### Orchestrators
@@ -485,6 +524,9 @@ Cron: weekly Monday 4 PM IST.
 | scripts/enable_ssh.sh | Re-enables SSH when Mac IP changes | Active |
 | scripts/sanity_check.sh | 9-layer health check (--local works) | Active |
 | scripts/eod_summary.sh | EOD trade summary | Active |
+| scripts/capture_top_performers.py | Daily top 20 NSE movers + why_missed reasons | Active (since May 14) |
+| scripts/sync_top_performers.py | Sync top performers to dashboard JSON | Active (since May 14) |
+| scripts/sync_docs.py | Sync steering docs to dashboard War Room tab | Active |
 
 ---
 

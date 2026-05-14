@@ -1,56 +1,71 @@
 # STATE.md — Current Project State
 
-**Last Updated**: 2026-05-14, ~15:30 IST (end of trading day)
+**Last Updated**: 2026-05-14, ~22:00 IST (end of session, 7 commits today)
 **Update Protocol**: Replace TODAY section at end of each session.
 
 ---
 
-## TODAY (2026-05-14) — FULL DAY SUMMARY
+## TODAY (2026-05-14) — MASSIVE UPGRADE SESSION
 
-### Real Money Trades
-| Profile | Stock | Entry | Result | P&L |
-|---------|-------|-------|--------|-----|
-| neha-live | SAIL x19 @ Rs.206.42 | 9:31 AM | Closed (SL/force exit) | -Rs.63 approx |
-| vishal-live | VEDL x10 @ Rs.334.30 | 10:57 AM manual | Closed | TBD (DB query failed) |
-| neha-live noon | BHARTIARTL sized | 12:03 PM | 0 orders placed (Bug HH) | Rs.0 |
+### Session Outcome
+7 commits, 30+ file changes. Scanner completely rewritten (RS-First v3).
+Capital limits raised. Continuous scanning enabled. Top 20 capture live.
+War Room dashboard tab live. Telegram module ready (needs token).
 
-### Why vishal-live Missed 9:26 AM Cron
-- Bedrock Opus 4.7 timed out — 25 min hang (03:56 to 04:21 UTC)
-- Root cause: Peak Bedrock congestion at market open
-- Mid-morning same model responded in 4 min 18 sec
-- Fix needed: 60s timeout on boto3 client (not done yet)
+### Commits Today (newest first)
+8fe6d03 — Sector rotation + time multiplier + trap detector (Scanner v3) 6ef8ab5 — Fade detector + reward huge winners (Scanner v2) 25361a5 — Top 20 movers + why_missed reasons in War Room cf80098 — Fix War Room JS (was rendering as text outside script block) ddac03e — War Room Top Movers tab with scanner accuracy 308e8b5 — Continuous scan + top10 capture + VIX + Telegram + SHORT RR + options 23a0261 — Bedrock 60s timeout + NSE gainers fix + live PnL + RS-first scanner
 
-### Key Discovery Today — Scanner Picks Wrong Stocks
-Real market at 11 AM showed:
-- NLCINDIA  +17.36% from_open +9.84%  — scanner missed
-- GODREJIND +12.90% from_open +11.62% — scanner missed
-- CIPLA      +6.52% from_open +3.82%  — scanner missed
-- VEDL       +2.66% from_open +0.90%  — THIS is what we picked
-Root cause: Volume-dominated scoring. VEDL wins on 38M volume daily.
-Fix: RS-first scoring rewrite — PARTIALLY APPLIED (see below)
+### Real Money Trades This Week
+| Date | Profile | Stock | Direction | Net P&L |
+|------|---------|-------|-----------|---------|
+| May 12 | vishal-live | ONGC | LONG | -Rs.53.80 |
+| May 12 | vishal-live | WIPRO | SHORT | -Rs.20.00 |
+| May 13 | vishal-live | HINDZINC | LONG | -Rs.28.30 |
+| May 14 | vishal-live | VEDL x10 @ 334.30 | LONG | TBD (manual run) |
+| May 14 | neha-live | SAIL x19 @ 206.42 | LONG | -Rs.63 approx |
 
-### Scanner RS-First Scoring — Status Unknown
-- Patch attempted but SyntaxError on final line (nested quotes issue)
-- Need to verify: is "RS-FIRST SCORING" in scanner.py or not?
-- Check command: grep "RS-FIRST" intraday/scanner.py
+**Cumulative real money P&L**: ~-Rs.165 over 4 closed trades + 1 TBD
 
-### What We Built Today
-- STRATEGY.md created (.kiro/steering/STRATEGY.md)
-- LEARNING.md created (.kiro/steering/LEARNING.md)
-- War Room tab added to dashboard (tab works, label may be missing)
-- sync_docs.py created (syncs steering docs to dashboard API)
-- docs.json synced to S3
-- Onboarding website Kiro prompt written (complete, ready to use)
-- Multi-EC2 architecture confirmed live
+### Why Today's Real Money Picks Were Bad (Pre-Fix Scanner)
+Real top movers May 14 that we missed:
+- SAREGAMA +15.15% (at day high) — scanner penalized as "chasing"
+- NLCINDIA +14.61% — chasing penalty -2
+- CIPLA +8.09% (at day high) — scored lower than top 15
+- ADANIENT +8.85% — chasing penalty -2
 
-### Onboarding Website — Ready For Kiro
-Complete prompt written for 7-page Hindi onboarding site.
-Dark futuristic theme. Separate S3 + CloudFront from trading dashboard.
-Give prompt to Kiro when ready.
+What scanner picked instead: VEDL +4.99% (won on volume 77M).
+
+**Root cause**: Volume-dominated scoring + chasing penalty killed real winners.
+**Fix**: 7 separate scanner improvements committed today (see Scanner Evolution).
 
 ---
 
-## LIVE STATUS (2026-05-14, 15:30 IST)
+## SCANNER EVOLUTION (today's changes)
+
+### v1 (pre-May 14) — REPLACED
+Volume-first scoring. VEDL won every day on 38M volume daily.
+
+### v2 (commit 6ef8ab5) — Mid-day
+- Removed chasing penalty (-4 if change_from_open > 8%)
+- Added fade detector (-3 if fell >3% from day high)
+- Boosted momentum: +15% = 8pts (was max 4pts)
+
+### v3 (commit 8fe6d03) — End of day, LIVE TOMORROW
+- Sector rotation bonus (top 3 sector +3, outperforming sector +2)
+- Time-aware multiplier (first hour 1.5x, late session 0.4x)
+- Trap detector (gap with no sector support, buying climax)
+
+### Expected Tomorrow Scoring (validation test)
+With 1.5x first-hour multiplier:
+- SAREGAMA-type (+15%, at high, top sector): (5+8+2+2+1+3) x 1.5 = **31**
+- CIPLA-type (+8%, at high, pharma top 5): (5+5+2+2+1+2) x 1.5 = **25**
+- VEDL-type (+5%, at high, mid sector): (3+4+2+2+1+1) x 1.5 = **19**
+
+Real gems should now beat slow movers by 30-60%.
+
+---
+
+## LIVE STATUS (2026-05-14, 22:00 IST)
 
 ### Both EC2s Running
 | EC2 | IP | Profiles | Status |
@@ -58,92 +73,125 @@ Give prompt to Kiro when ready.
 | OLD | 13.206.144.6 | vishal-live, vishal, neha paper, F&O | Running |
 | NEW | 13.202.63.223 | neha-live only | Running |
 
-### Today Crons Fired
-- 9:26 AM vishal-live: FAILED (Bedrock timeout 25 min)
-- 9:28 AM neha-live: SUCCESS (SAIL trade placed)
-- 10:57 AM vishal-live: MANUAL RUN (VEDL placed)
-- 12:03 PM neha-live: PARTIAL (sized but 0 orders — Bug HH)
+### Continuous Scanning Active
+Both EC2s now run `*/15 4-7 * * 1-5` cron — scans every 15 min from 9:30 AM to 1:00 PM IST.
+Late session gates (after 11 AM) prevent revenge trading.
+
+### New Capital Limits (effective tomorrow 9:30 AM)
+| Profile | Capital | Max Trades | Loss Limit | VIX Threshold |
+|---------|---------|------------|------------|---------------|
+| vishal-live | Rs.15,000 (was 10K) | 3 (was 2) | Rs.900 (was 600) | 20 (was 18) |
+| neha-live | Rs.10,000 | 3 (was 2) | Rs.900 (was 600) | 20 (was 16) |
+| vishal paper | Rs.3,00,000 | 6 (was 5) | Rs.9,000 | 18 |
+| neha paper | Rs.3,00,000 | 6 (was 5) | Rs.9,000 | 18 |
+
+### VIX Logic (NEW)
+- VIX > 25 → SKIP entire session
+- VIX > 22 → reduce to 1 trade max
+- VIX <= 22 → normal trading per profile max
 
 ---
 
-## ACTIVE BUGS (priority order)
+## FIXED TODAY (priority order)
 
-### Critical — Real Money Impact
-| ID | Description | File | Status |
-|----|-------------|------|--------|
-| EE | Bedrock Opus timeout at 9:26 AM market open | llm/bedrock_client.py | FIXED 23a0261 |
-| FF | NSE gainers/losers returns 0 every call | fetchers/nse_market_movers.py | FIXED 23a0261 |
-| GG | Live P&L stays Rs.0 in monitor all day | intraday/monitor.py | PARTIAL FIX 23a0261 |
-| HH | 0 orders placed after sizing (12:03 PM) | intraday/executor.py | OPEN |
+### Critical
+| ID | Description | Commit | Status |
+|----|-------------|--------|--------|
+| EE | Bedrock Opus timeout 25 min at 9:26 AM | 23a0261 | FIXED — 60s read_timeout |
+| FF | NSE gainers returns 0 every call | 23a0261 | FIXED — returns 20 now |
+| GG | Live P&L stays Rs.0 in monitor | 23a0261 | FIXED — fetches NSE LTP fallback |
+| SHORT-RR | SHORT R:R calculated as 0.0 | 308e8b5 | FIXED — direction-aware |
+| WAR-ROOM | War Room tab missing/broken | ddac03e + cf80098 | FIXED — Top 20 + why_missed |
+| SCANNER | RS-first not properly applied | 23a0261 | FIXED — verified grep |
 
-### High
-| ID | Description | File | Status |
+### Built Today
+| Feature | Description |
+|---------|-------------|
+| Continuous scanning | */15 min on both EC2s |
+| Top 20 capture | scripts/capture_top_performers.py — runs 3:35 PM IST |
+| Why missed reasons | Scanner accuracy tracking with diagnostics |
+| Telegram module | Config-aware, 5 functions ready |
+| Options fetcher | NSE option chain, ATM strike, IV percentile |
+| Scanner v3 | Sector rotation + time multiplier + trap detector + huge winner rewards |
+| daily_top_performers table | Added to all 5 profile DBs with why_missed column |
+
+---
+
+## OPEN BUGS / PENDING WORK
+
+### High Priority
+| ID | Description | File | Impact |
 |----|-------------|------|--------|
-| SCANNER | RS-first scoring patch status unknown | intraday/scanner.py | VERIFY |
-| SHORT-RR | SHORT R:R calculated 0.0 in risk_manager | intraday/risk_manager.py | OPEN |
-| L | F&O legs_json missing expiry_date | fno/strategy_engine.py | OPEN |
-| T | F&O live P&L never changes | fno/monitor.py | OPEN |
+| HH | 0 orders placed at 12:03 PM neha-live (May 14) | intraday/executor.py | Real money — orders not placed despite sizing OK |
+| TELEGRAM-WIRE | Module ready but not called from monitor.py/executor.py | alerts/telegram.py | Phone alerts blocked |
+| SL-TIMING | SL placed before BUY confirmed fill | intraday/executor.py | Could fail on limit orders |
 
 ### Medium
-| ID | Description | Status |
-|----|-------------|--------|
-| WAR-ROOM | War Room tab label missing in dashboard | FIXED 23a0261 |
-| E | Telegram alerts not wired | OPEN |
-| G | Dhan credentials rotation needed | OPEN |
-| I | AWS keys rotation needed | OPEN |
+| ID | Description | File |
+|----|-------------|------|
+| L | F&O legs_json missing expiry_date | fno/strategy_engine.py |
+| T | F&O live P&L never updates | fno/monitor.py |
+| G | Dhan credentials rotation needed | profile yamls |
+| I | AWS keys rotation needed | ~/.aws/credentials |
+
+### Low / Future
+- Backtest engine (replay 30 days through new scanner)
+- News fetcher (per-stock sentiment)
+- Fundamentals fetcher (positional module prep)
+- Swing module
+- Positional module
+- Per-profile S3 prefixes (NEW EC2 dashboard sync)
 
 ---
 
-## REAL TRADES TO DATE
+## TOMORROW MORNING CHECKLIST (2026-05-15, Friday)
 
-### vishal-live
-| Date | Stock | Direction | Net P&L |
-|------|-------|-----------|---------|
-| May 12 | ONGC | LONG | -Rs.53.80 |
-| May 12 | WIPRO | SHORT | -Rs.20.00 |
-| May 13 | HINDZINC | LONG | -Rs.28.30 |
-| May 14 | VEDL | LONG | TBD |
+### Pre-Market (before 9:15 AM IST)
+1. SSH to OLD EC2 — verify time sync: `timedatectl`
+2. SSH to NEW EC2 — verify time sync: `timedatectl`
+3. Check git in sync: `git log --oneline -3` on both EC2s
 
-### neha-live
-| Date | Stock | Direction | Net P&L |
-|------|-------|-----------|---------|
-| May 14 | SAIL | LONG | -Rs.63 approx |
+### Market Open Validation (9:30 AM IST)
+1. Watch live: `tail -f ~/dev-sandbox/logs/intraday_vishal-live_2026-05-15.log`
+2. Confirm Bedrock responds in time (not 25 min timeout)
+3. Note which stocks scanner picks
+4. Compare to NSE top gainers — does scanner now catch SAREGAMA-type movers?
 
-### Cumulative Real Money P&L
-vishal-live: approximately -Rs.102 (May 12+13, May 14 TBD)
-neha-live: -Rs.63
+### Mid-Session (11:00 AM IST)
+1. Check War Room tab: https://d2q1cy3ph7jbd0.cloudfront.net?profile=vishal-live
+2. Note scanner accuracy — did we catch any real winners?
+3. Check if continuous scanning placed multiple trades (max 3 limit)
+
+### EOD (3:35 PM IST)
+1. Top performers capture cron should run automatically
+2. Verify: `cat ~/dev-sandbox/logs/top_performers.log`
+3. Check accuracy: was today's scanner v3 better than yesterday's v1?
+
+### Watch For
+- Bedrock timeout regression (should NOT happen with 60s timeout)
+- VIX > 22 → only 1 trade (test the new fixed thresholds)
+- Late session gate triggers after 11 AM
+- Continuous cron firing every 15 min as expected
 
 ---
 
-## WHAT KIRO NEEDS TO DO (one at a time)
+## DASHBOARD STATUS
 
-### Task 1: Verify Scanner Patch
-SSH ec2-user@13.206.144.6 key ~/Downloads/wealth-builder-pro.pem
-Run: grep "RS-FIRST" ~/dev-sandbox/intraday/scanner.py
-If found: scoring is done, report back
-If not found: full scoring replacement needed (see STRATEGY.md)
+### Live Tabs
+- Overview, Intraday, F&O, Swing, Positional, **War Room** (with Top Movers sub-tab)
 
-### Task 2: Fix Bug HH (after Task 1 confirmed)
-Find why 0 orders placed after sizing at 12:03 PM
-grep -E "Placed|max_trades|limit|skip|gate" ~/dev-sandbox/logs/intraday_neha-live_2026-05-14.log | tail -20
-Report cause before fixing
+### War Room Tab Shows
+- Top 20 movers today (SAREGAMA, NLCINDIA, CIPLA, ...)
+- Green check if we picked, red X if missed
+- Why missed reason for each (chasing penalty, sector miss, etc.)
+- Scanner accuracy: X/20 caught
+- VIX, market mood, our picks today
+- 30-day history
 
-### Task 3: Fix Bug FF (after Task 2 done)
-Test NSE gainers API response structure
-Fix fetch_top_gainers() in fetchers/nse_market_movers.py
-
-### Task 4: Add Bedrock Timeout (after Task 3 done)
-Add 60s read_timeout to boto3 client in llm/bedrock_client.py
-
-### Task 5: Fix War Room Label (after Task 4 done)
-grep -n "warroom" ~/dev-sandbox/dashboard/index.html
-Ensure button text reads: >🧠 War Room
-Deploy to S3 after fix
-
-### Commit Only After ALL Tasks Verified
-git add intraday/scanner.py intraday/executor.py fetchers/nse_market_movers.py llm/bedrock_client.py dashboard/index.html
-git commit -m "RS-first scanner + Bug FF + Bug HH + Bedrock timeout + War Room label"
-git push
+### URLs
+- Main: https://d2q1cy3ph7jbd0.cloudfront.net
+- vishal-live: https://d2q1cy3ph7jbd0.cloudfront.net?profile=vishal-live
+- neha-live: https://d2q1cy3ph7jbd0.cloudfront.net?profile=neha-live
 
 ---
 
@@ -157,15 +205,26 @@ git push
 | GitHub | https://github.com/vshorrghar/Intraday-Trader.git |
 | Bedrock Model | Claude Opus 4.7 (us.anthropic.claude-opus-4-7) |
 | AWS Profile | vishal-admin |
+| Latest commit | 8fe6d03 |
 
 ---
 
-## TOMORROW MORNING CHECKLIST (2026-05-15)
+## CAPITAL SCALING REMINDER
 
-1. SSH OLD EC2 — verify scanner RS-first patch applied
-2. SSH NEW EC2 — verify time sync (timedatectl)
-3. 9:26 AM: tail -f logs/intraday_vishal-live_2026-05-15.log
-4. 9:28 AM: tail -f logs/intraday_neha-live_2026-05-15.log (on NEW EC2)
-5. Watch: do CIPLA/HINDALCO type stocks appear in candidates now?
-6. Watch: does Bedrock respond in time or timeout again?
-7. Have Dhan apps open for both vishal + neha
+We are in **Phase 1**: Rs.10K-15K live capital.
+
+Phase 2 unlocks at: 50 profitable trades on real money.
+Current: ~5 real money trades, 4 losing (-Rs.165 cumulative).
+
+**Don't scale capital until win rate proves on the new scanner.**
+Wait for at least 20 trades on RS-First v3 before evaluating.
+
+---
+
+## HOW TO RESUME ANY CHAT
+
+Paste RULES.md + STATE.md (this file) + your question.
+
+Any AI that lectures without reading both docs is wasting your time.
+
+End of STATE.md

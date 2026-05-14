@@ -64,6 +64,103 @@ Cumulative all real money: approximately -Rs.165
 
 ---
 
+### May 14 — Evening Overhaul (7 commits, scanner fully rewritten)
+
+#### What We Built (after market close)
+Worked from 4 PM to 10 PM. Shipped 7 commits.
+Scanner went from v1 (volume-dominated) to v3 (multi-signal momentum).
+
+#### Money (no trading after market close — building only)
+No trades placed. Building day, not trading day.
+
+#### Commits Shipped
+1. Bedrock 60s timeout (fixes 25-min hang at market open)
+2. NSE gainers API fix (was returning 0, now returns 20)
+3. Live P&L fallback (fetches NSE LTP when broker has none)
+4. SHORT R:R direction-aware (was always 0.0, now correct)
+5. Top 20 capture daily (with why-missed reasons)
+6. War Room dashboard tab (live with scanner accuracy)
+7. Scanner v2 + v3 (fade detector + sector rotation + time multiplier + trap detector)
+
+#### What We Learned
+
+1. Volume is confirmation, not signal
+   VEDL had 38M volume daily — won every day on volume.
+   But +2.66% with high volume on flat day is not the trade.
+   +15% on lower volume IS the trade.
+   Volume confirms a real move; it doesn't predict winners.
+
+2. Penalizing "chasing" was killing real winners
+   SAREGAMA at +13% from open got -4 chasing penalty.
+   These are exactly the stocks we want — strength stays strong.
+   Real chasing trap is pump-and-fade, not high gain.
+   New rule: only penalize stocks falling FROM day high, not stocks AT day high.
+
+3. Time of day matters more than expected
+   Same setup at 9:30 AM has 5h 45min before force exit.
+   Same setup at 12:30 PM has 3h 14min — too tight for 4% target.
+   Brokerage eats short trades. Earlier = better expected return.
+   Time multiplier: 1.5x first hour, 0.4x late session.
+
+4. Sector rotation is half the trade
+   Pharma stock in pharma sector +3% leading the market = strong.
+   Same pharma stock when pharma sector is -1% = relative strength.
+   Stock-only scoring missed this. Now sector rotation = 0-5 pts.
+
+5. You can't fix what you don't measure
+   We had no idea how many real winners we missed daily.
+   Built top-20 capture to make this visible.
+   30 days from now we'll have 600 data points to analyze.
+   Without ground truth, scanner improvements are guesswork.
+
+6. Direction-aware math or you bleed money on shorts
+   Old code: risk = entry - stop_loss (LONG-only).
+   For SHORT, this is negative, R:R = 0, sizing broke.
+   Any formula that treats LONG/SHORT same will silently break.
+
+7. Continuous scanning catches what fixed times miss
+   Old: scan at 9:25 / 12:00 / 13:30 — 3 chances per day.
+   New: scan every 15 min — catches mid-session breakouts.
+   Late-session gates prevent revenge trading.
+   Profile max-trades caps overtrading.
+
+#### Decisions Made
+- Raise vishal-live capital Rs.10K -> Rs.15K (more room for new scanner)
+- Raise max trades 2 -> 3 per day per live profile
+- Raise daily loss limit Rs.600 -> Rs.900
+- VIX threshold raised 18 -> 20 (less skipping when scanner is better)
+- Telegram module ready — set token and activate later
+
+#### What This Means For Tomorrow
+If scanner v3 works:
+- Should pick SAREGAMA/CIPLA-type stocks (skipped by v1)
+- Should skip VEDL-type slow stocks unless they're the best of the day
+- Win rate may DROP short term (50-55% vs 60%) — bigger swings
+- Average winner should grow 4-6% (vs 1.5% today)
+- Net effect: higher P&L per winning day
+
+If scanner v3 fails:
+- We have data via top-20 capture to see exactly what it missed
+- Why-missed reasons in War Room tab will tell us what to fix next
+
+#### What We Are NOT Doing Tomorrow
+- Not adding more scanner changes
+- Not enabling Telegram alerts (need to validate scanner first)
+- Not increasing capital beyond Rs.15K
+- Not panicking if first day has a loss
+- Not changing anything mid-session
+
+#### Honest Self-Assessment End Of Day
+- 7 commits is a lot in one day. Risk of subtle bugs.
+- All imports tested and pass.
+- All changes are direction-improvements based on real May 14 data.
+- But this is theory until tomorrow's market opens.
+- Real money only on vishal-live and neha-live — Rs.25K total exposure.
+- Worst case: lose Rs.1,800 (Rs.900 each profile) — survivable.
+- Best case: catch one SAREGAMA-type winner = Rs.1,500-2,500 profit.
+
+---
+
 ### May 13
 
 #### Money
