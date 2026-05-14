@@ -391,8 +391,14 @@ def _fetch_nifty500_candidates(
         elif change_from_open > 0.0:
             long_score += 1
 
-        # Signal 2: Momentum strength (0-4 pts)
-        if change_pct > 5.0:
+        # Signal 2: Momentum strength (0-8 pts) — reward true winners
+        if change_pct > 15.0:
+            long_score += 8  # rare massive winner
+        elif change_pct > 10.0:
+            long_score += 6  # huge winner
+        elif change_pct > 7.0:
+            long_score += 5  # strong winner
+        elif change_pct > 5.0:
             long_score += 4
         elif change_pct > 3.0:
             long_score += 3
@@ -418,11 +424,15 @@ def _fetch_nifty500_candidates(
         if is_fno:
             long_score += 1
 
-        # Penalties — chasing and gap fades
-        if change_from_open > 8.0:
-            long_score -= 4  # chasing
-        elif change_from_open > 6.0:
-            long_score -= 2  # likely chasing
+        # Fade detector — penalize only stocks falling from day high
+        # NOT stocks that are simply up a lot
+        # Strong stocks at day high stay strong all day
+        fade_pct = ((day_high - ltp) / day_high * 100) if day_high > 0 else 0
+        if fade_pct > 3.0:
+            long_score -= 3  # significant fade from high
+        elif fade_pct > 1.5:
+            long_score -= 1  # mild pullback from high
+        # No penalty for stocks at/near day high regardless of gain
         if gap_pct > 2.0 and change_from_open < 0:
             long_score -= 3  # gap fade — opened high, now selling
         if gap_pct > 3.0 and change_from_open < 0.5:
@@ -440,7 +450,13 @@ def _fetch_nifty500_candidates(
             short_score += 2
         elif change_from_open < 0.0:
             short_score += 1
-        if change_pct < -5.0:
+        if change_pct < -15.0:
+            short_score += 8  # rare massive drop
+        elif change_pct < -10.0:
+            short_score += 6  # huge drop
+        elif change_pct < -7.0:
+            short_score += 5  # strong drop
+        elif change_pct < -5.0:
             short_score += 4
         elif change_pct < -3.0:
             short_score += 3
@@ -459,10 +475,12 @@ def _fetch_nifty500_candidates(
             short_score += 1
         if is_fno:
             short_score += 1
-        if change_from_open < -8.0:
-            short_score -= 4
-        elif change_from_open < -6.0:
-            short_score -= 2
+        # Fade detector for shorts — penalize stocks bouncing from day low
+        fade_from_low = ((ltp - day_low) / day_low * 100) if day_low > 0 else 0
+        if fade_from_low > 3.0:
+            short_score -= 3  # bouncing from low
+        elif fade_from_low > 1.5:
+            short_score -= 1  # mild bounce
         if high_volatility:
             short_score -= 3
 
