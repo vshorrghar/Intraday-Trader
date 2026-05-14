@@ -90,6 +90,44 @@ Profile yamls are gitignored (contain TOTP/PIN). Patch applied manually on BOTH 
 
 ---
 
+
+## LIVE STATUS (2026-05-14, ~10:30 IST)
+
+### neha-live: REAL TRADE PLACED ✅
+- 9:31:26 IST: BUY SAIL × 19 @ ₹206.74 (filled at avg ₹206.42)
+- SL SELL × 19 @ ₹202.50 (PENDING in Dhan order book)
+- Order IDs: 321260514129001 (BUY TRADED), 321260514129201 (SELL PENDING)
+- Margin used: ₹785, Available: ₹9,179.85, SOD: ₹10,000
+- Unrealized P&L per Dhan API: -₹34.77 (slight loss)
+- Force exit: 15:15 IST
+- Demo working on her real Dhan account
+
+### vishal-live: NO TRADE (Bedrock timeout)
+- 9:26:01 cron fired, auth OK
+- LLM call took 25 min, timed out
+- Random Bedrock latency at 9:25-9:27 window
+- Same model worked fine at 9:28 (neha-live)
+
+### vishal (paper): 2 trades
+- VEDL stopped out: gross +₹162, charges ₹42, net +₹119.52
+- ADANIPOWER still open at last check
+
+### neha (paper): NO TRADE
+- Same Bedrock timeout as vishal-live (cron fired 9:27)
+
+### NEW BUGS LOGGED
+- **Bug EE**: Bedrock LLM 25-min timeouts during 9:25-9:27 window. Random per call. claude-opus-4-7 endpoint observed in logs. Need to verify model ID didn't change vs yesterday's working Sonnet.
+- **Bug FF**: NSE scanner top gainers/losers fetch fails (returns 0). Most-active fallback rescued neha-live but pre-filter ran on partial data for others.
+- **Bug GG**: Live mode unrealized P&L stays ₹0.00 in monitor log while Dhan API shows real P&L. Bug T from audit confirmed — `_compute_current_premium` doesn't fetch live prices in live mode.
+
+### Open positions to monitor
+- neha-live: SAIL × 19 (real money) — until target/SL/15:15
+- vishal: ADANIPOWER × 181 (paper)
+
+### Today's commits (so far)
+- 5be64f5, 94ba876, a8ef5b5 (overnight F&O fixes)
+- 646d406 (steering update — multi-EC2)
+
 ## YESTERDAY (2026-05-13) — END OF DAY
 
 ### Real Money P&L
