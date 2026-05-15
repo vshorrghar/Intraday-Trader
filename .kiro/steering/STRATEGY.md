@@ -156,6 +156,42 @@ Sync: scripts/sync_top_performers.py (runs after capture)
 
 ## EVOLUTION LOG (newest first)
 
+### v3.1 — 2026-05-15 (POST-V3 BUGFIX)
+Commits: a9df59b, 68e910c, a0ec15e
+
+Bugs found from Day 1 of scanner v3 in production:
+
+**Bug 1: Scanner only saw 169/500 stocks**
+- 500K volume filter was too aggressive at 9:30 AM (volume hadn't built yet)
+- Fix: momentum-aware filter. Pass if change_pct >= 4% AND volume >= 100K
+- File: intraday/scanner.py
+- Effect: TDPOWERSYS-type early breakouts now reach scanner
+
+**Bug 2: NSE losers API endpoint dead**
+- ?index=losers returned "Missing index or key." error
+- Found losers in gainers response under SecLwr20 key
+- Fix: fetch_top_losers() now calls gainers endpoint, extracts SecLwr20
+- File: fetchers/nse_market_movers.py
+- Effect: SHORT candidates restored (was 0 for unknown duration)
+
+**Bug 3: Limit orders don't fill on fast movers**
+- SAREGAMA +7% surge: limit at LTP didn't fill in 10s, cancelled
+- Fix: +0.3% buffer on entry limit (LONG: 1.003x, SHORT: 0.997x)
+- Tick aligned to NSE Rs.0.05 (round * 20 / 20)
+- MARKET fallback after 10s timeout if confidence_score >= 8
+- File: intraday/executor.py
+- Effect: Fast movers fill or fall back to MARKET on conf>=8 picks
+
+Validation expected Monday May 18:
+- Scanner output: "Nifty500 scan: 250+ total" (was 169)
+- Losers fetched: count > 0
+- Fast mover fills: "buffered" or "MARKET retry" log lines
+
+Risks:
+- Buffer adds 0.3% slippage tax on all trades (~Rs.7K/year estimated)
+- MARKET fallback could fill +1-2% above LTP, but bounded by SL
+- Bug 1 may add low-quality momentum candidates
+
 ### v3 — 2026-05-14 (END OF DAY) — LIVE TOMORROW
 Commits: 23a0261, 308e8b5, ddac03e, cf80098, 25361a5, 6ef8ab5, 8fe6d03
 

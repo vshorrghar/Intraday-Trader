@@ -161,6 +161,98 @@ If scanner v3 fails:
 
 ---
 
+### May 15 — Day 1 Of Scanner v3 + Bugfix Session
+
+#### Money
+| Profile | Stock | P&L |
+|---------|-------|-----|
+| vishal-live | INFY x4 @ 1124.10 | TBD (still open at session end) |
+| vishal-live | HDFCBANK x5 @ 779.90 | TBD (still open at session end) |
+| vishal-live | SAREGAMA x10 @ 411.90 | NEVER FILLED — 10s timeout |
+
+Cumulative all real money: still ~-Rs.165 (no closed trades today)
+
+#### What The Market Did Today
+- TDPOWERSYS ran +8.75% on Rs.397 Cr value — we never even saw it
+- SAREGAMA spiked +7.11% — scanner v3 caught it (good!) but order didn't fill
+- INFY and HDFCBANK gave normal day trades — both still open at end of session
+- NIFTY IT and Media sectors led — scanner v3 sector rotation working
+
+#### What We Learned
+
+1. Scanner universe was silently truncated to 169/500 stocks
+   500K volume filter rejects stocks at 9:30 AM that haven't built volume yet.
+   By end of day 239 stocks pass. At market open only 169 do.
+   We were scoring 1/3 of our intended universe and didn't know.
+   Fix: momentum-aware filter. If stock is up 4%+ with 100K+ volume, pass anyway.
+
+2. NSE APIs change silently
+   The ?index=losers endpoint stopped working at some point.
+   Returned a string error instead of data, so our code accepted "0 losers" as valid.
+   Half our scanning (SHORT candidates) was effectively broken for weeks.
+   Lesson: log and alert on "fetched 0 of expected ~20" responses.
+
+3. 10-second fill timeout kills high-momentum entries
+   SAREGAMA was the perfect scanner v3 catch — confidence 8, R:R 2.2.
+   But the stock was moving so fast the limit order at Rs.411.90 sat unfilled.
+   We cancelled after 10s. Stock continued to Rs.428+.
+   We picked the right stock and got nothing.
+   Fix: +0.3% buffer on limit, MARKET fallback for confidence 8+ on fast movers.
+
+4. Building diagnostic tools pays off Day 1
+   The top performers cron we built yesterday wasn't due to fire yet.
+   But the diagnostic scripts we built (NSE API testing, scanner inspection) 
+   let us find all 4 bugs in one session.
+   Without those tools we would have been guessing for weeks.
+
+5. Real money exposes bugs that paper trading hides
+   Paper trading doesn't care if a limit order fills in 10s — it simulates fills.
+   Real money cares. SAREGAMA fill failure was invisible on paper.
+   Lesson: real money is the only true validation.
+
+6. SL bounds the risk of every "aggressive" fix
+   I (the AI) was initially scared to add MARKET fallback — slippage risk!
+   User pushed back: every trade has SL. Worst case is bounded.
+   The fix went in. Lesson: trader mindset > coder mindset on bounded-risk decisions.
+
+#### Decisions Made
+- Approved all 3 bug fixes for live deployment Monday
+- Buffer 0.3% applied to ALL limits (slippage tax accepted)
+- MARKET fallback gated by confidence >= 8 only
+- Did NOT change capital limits or daily loss caps
+- STATE.md updated, May 14 archived to HISTORY.md
+
+#### What Monday May 18 Will Tell Us
+If fixes work:
+- Scanner shows 250+ stocks (not 169)
+- SHORT picks appear again
+- Fast movers like SAREGAMA fill on first attempt or via MARKET fallback
+- Win rate may not change immediately — small sample
+- More candidates = more LLM picks = more shots at winners
+
+If fixes fail:
+- Bug 1 may flood scanner with low-quality momentum stocks
+- LLM may pick worse setups due to noisier candidate list
+- Buffer may cause more R:R rejections (less likely but possible)
+- MARKET fallback may fill at terrible prices on volatile stocks
+
+#### Honest Self-Assessment End Of Day
+- Found and fixed 3 real bugs from one day of production data
+- Each fix is targeted and reversible
+- Committed and pushed clean (4 commits today)
+- Both EC2s synced
+- STATE.md and HISTORY.md properly maintained
+- BUT: All 3 fixes are theory until Monday market opens
+- Real risk: Rs.25K live capital across 2 profiles
+- Worst case Monday: Rs.1,800 loss (Rs.900 each profile)
+- Best case Monday: Catch one TDPOWERSYS-type winner = Rs.1,500-3,000 profit
+
+#### Next Decisions Pending
+- Should LEARNING.md and STRATEGY.md updates happen automatically per session? (Yes — going forward.)
+- Should we add monitoring for "fetched 0 of expected" anomalies?
+- After Monday data, evaluate if buffer 0.3% is right number
+
+
 ### May 13
 
 #### Money
