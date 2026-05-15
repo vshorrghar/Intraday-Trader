@@ -472,3 +472,187 @@ class FnO_Position_Monitor:
         """Check if a state transition is valid."""
         allowed = VALID_TRANSITIONS.get(current, set())
         return target in allowed
+
+
+# ═══════════════════════════════════════════════════════════════
+# Mark-to-Market Update (Bug T fix)
+# ═══════════════════════════════════════════════════════════════
+
+def update_all_open_strategies(profile: str) -> dict:
+    """Update P&L for all open F&O strategies using real option prices.
+
+    Args:
+        profile: profile name ('vishal', 'neha', 'vishal-live')
+
+    Returns:
+        dict with {updated, skipped, errors, total_pnl}
+    """
+    import sqlite3
+    import json
+    import yaml
+    import logging
+    from pathlib import Path
+    from fno.pnl_calculator import compute_strategy_pnl, update_strategy_pnl_in_db
+    from fno.option_chain_cache import fetch_option_chain_with_cache
+
+    logger = logging.getLogger(__name__)
+    db_path = f"database/{profile}.db"
+
+    if not Path(db_path).exists():
+        return {"error": f"DB not found: {db_path}"}
+
+    # Get broker for option chain fetching
+    broker = None
+    try:
+        profile_path = f"config/profiles/{profile}.yaml"
+        if Path(profile_path).exists():
+            with open(profile_path) as pf:
+                profile_cfg = yaml.safe_load(pf)
+            dhan_cfg = profile_cfg.get("dhan", {})
+            if dhan_cfg.get("client_id"):
+                from intraday.auth_server import authenticate_broker
+                broker = authenticate_broker("dhan", dhan_cfg, dry_run=False)
+    except Exception as e:
+        logger.warning("Could not auth broker for %s: %s — skipping MTM", profile, e)
+        return {"error": f"Auth failed: {e}", "updated": 0}
+
+    if not broker:
+        return {"error": "No broker available for price fetch", "updated": 0}
+
+    # Create chain fetcher callable
+    def get_chain(index, expiry):
+        return fetch_option_chain_with_cache(broker, index, expiry)
+
+    # Find open strategies
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+    strategies = con.execute(
+        "SELECT * FROM fno_strategies WHERE status IN ('OPEN', 'PENDING')"
+    ).fetchall()
+    con.close()
+
+    updated = 0
+    skipped = 0
+    errors = 0
+    total_pnl = 0.0
+
+    for strat in strategies:
+        sid = strat["id"]
+        try:
+            result = compute_strategy_pnl(db_path, sid, get_chain)
+            if result["all_legs_priced"]:
+                update_strategy_pnl_in_db(db_path, sid, result["legs_pnl"])
+                total_pnl += result["total_pnl"]
+                updated += 1
+
+                # Check exit conditions
+                _check_exit_triggers(db_path, strat, result)
+            else:
+                skipped += 1
+                logger.debug("Strategy %d: not all legs priced, skipping", sid)
+        except Exception as e:
+            errors += 1
+            logger.warning("Strategy %d MTM error: %s", sid, e)
+
+    # Update dashboard
+    try:
+        _update_fno_dashboard(profile, db_path)
+    except Exception as e:
+        logger.warning("Dashboard update failed for %s: %s", profile, e)
+
+    return {"updated": updated, "skipped": skipped, "errors": errors, "total_pnl": round(total_pnl, 2)}
+
+
+def _check_exit_triggers(db_path: str, strat, pnl_result: dict) -> None:
+    """Check if strategy should be exited based on P&L conditions."""
+    import sqlite3
+    import logging
+    from datetime import datetime, timezone, timedelta
+
+    logger = logging.getLogger(__name__)
+    IST = timezone(timedelta(hours=5, minutes=30))
+
+    strategy_type = strat["strategy_type"]
+    net_premium = abs(float(strat["net_premium"] or 0))
+    max_profit = float(strat["max_profit"] or net_premium)
+    max_loss = float(strat["max_loss"] or net_premium * 2)
+    current_pnl = pnl_result["total_pnl"]
+
+    exit_reason = None
+
+    # Exit rules per strategy type
+    if strategy_type in ("IRON_CONDOR", "SHORT_STRANGLE"):
+        if current_pnl >= max_profit * 0.5:
+            exit_reason = f"Profit target: {current_pnl:.0f} >= 50% of max ({max_profit*0.5:.0f})"
+        elif current_pnl <= -max_profit * 1.5:
+            exit_reason = f"Loss limit: {current_pnl:.0f} exceeds 1.5x max profit"
+
+    elif strategy_type == "SHORT_STRADDLE":
+        if current_pnl >= net_premium * 0.3:
+            exit_reason = f"30% credit captured: {current_pnl:.0f}"
+        elif current_pnl <= -net_premium * 2:
+            exit_reason = f"Loss 2x credit: {current_pnl:.0f}"
+
+    elif strategy_type in ("BULL_PUT_SPREAD", "BEAR_CALL_SPREAD"):
+        if current_pnl >= net_premium * 0.7:
+            exit_reason = f"70% credit captured: {current_pnl:.0f}"
+        elif current_pnl <= -max_loss:
+            exit_reason = f"Max loss hit: {current_pnl:.0f}"
+
+    elif strategy_type.startswith("DIRECTIONAL"):
+        if current_pnl >= net_premium * 0.5:
+            exit_reason = f"50% gain trail: {current_pnl:.0f}"
+        elif current_pnl <= -net_premium * 0.3:
+            exit_reason = f"30% premium loss: {current_pnl:.0f}"
+
+    if exit_reason:
+        logger.info("EXIT TRIGGER strategy %d (%s): %s", strat["id"], strategy_type, exit_reason)
+        con = sqlite3.connect(db_path)
+        now = datetime.now(IST).isoformat()
+        con.execute(
+            "UPDATE fno_strategies SET status='CLOSED', exit_time=?, realized_pnl=? WHERE id=?",
+            (now, current_pnl, strat["id"])
+        )
+        con.execute(
+            "UPDATE fno_trades SET status='CLOSED', pnl=? WHERE strategy_id=? AND status != 'CLOSED'",
+            (current_pnl, strat["id"])
+        )
+        con.commit()
+        con.close()
+
+
+def _update_fno_dashboard(profile: str, db_path: str) -> None:
+    """Update F&O dashboard JSON after MTM update."""
+    import sqlite3
+    import json
+    from pathlib import Path
+
+    dashboard_dir = Path(f"dashboard/api/{profile}")
+    dashboard_dir.mkdir(parents=True, exist_ok=True)
+
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+
+    # Get today's strategies
+    from datetime import datetime, timezone, timedelta
+    IST = timezone(timedelta(hours=5, minutes=30))
+    today = datetime.now(IST).strftime("%Y-%m-%d")
+
+    strategies = con.execute(
+        "SELECT * FROM fno_strategies WHERE trade_date=? ORDER BY id", (today,)
+    ).fetchall()
+
+    total_pnl = sum(float(s["realized_pnl"] or 0) for s in strategies)
+
+    output = {
+        "date": today,
+        "mode": "PAPER",
+        "total_pnl": round(total_pnl, 2),
+        "strategies_count": len(strategies),
+        "strategies": [dict(s) for s in strategies],
+    }
+
+    with open(dashboard_dir / "fno_latest.json", "w") as f:
+        json.dump(output, f, indent=2, default=str)
+
+    con.close()
