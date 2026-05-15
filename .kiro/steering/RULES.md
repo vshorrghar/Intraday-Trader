@@ -234,6 +234,13 @@ When NEW EC2 needs code update:
   cd ~/dev-sandbox && git pull
   Profile yaml changes: apply heredoc patch manually on NEW EC2 separately.
 
+Rule 20.7: After ANY push from OLD EC2, immediately remind user to pull on NEW EC2.
+This applies to code, steering docs, configs — anything tracked in git.
+AI assistant must surface this reminder automatically without being asked.
+Format: "✅ Pushed to GitHub. ⚠️ Now sync NEW EC2: cd ~/dev-sandbox && git pull"
+No exceptions. Even for one-line doc commits.
+Reason: NEW EC2 reading stale STATE.md/RULES.md leads to wrong real-money decisions Monday morning.
+
 Failure modes to watch:
 - EIP detached from NEW EC2 -> orders fail with DH-905 Invalid IP
 - vishal-admin credentials expire on NEW EC2 (AMI was cloned at point in time)
