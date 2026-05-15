@@ -234,12 +234,15 @@ class Risk_Manager:
 
             # Restore trades placed and capital used from today's trade records
             trades = self.db.get_trades_for_date(today)
-            # Only count trades that actually executed — not OPEN stubs or CANCELLED test runs
-            COUNTED_STATUSES = {"STOPPED_OUT", "TARGET_HIT", "FORCE_EXITED", "CLOSED", "PARTIAL_BOOKED"}
+            # Count any BUY trade that was actually placed on broker (live or already closed)
+            # Exclude only: never-filled PENDING stubs, rejected, cancelled, failed
+            # Bug 5 fix (2026-05-15): old logic excluded OPEN positions, so continuous scanning
+            # bypassed max_trades_per_day limit. Trades only counted AFTER they closed.
+            EXCLUDED_STATUSES = {"REJECTED", "CANCELLED", "FAILED", "ABANDONED", "PENDING"}
             buy_trades = [
                 t for t in trades
                 if t.get("action", "").upper() == "BUY"
-                and t.get("status", "").upper() in COUNTED_STATUSES
+                and t.get("status", "").upper() not in EXCLUDED_STATUSES
             ]
             self._trades_placed_today = len(buy_trades)
             self._capital_used_today = sum(
