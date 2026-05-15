@@ -140,6 +140,13 @@ class Order_Executor:
         sl_side = "SELL" if entry_side == "BUY" else "BUY"
 
         # --- Place ENTRY order (BUY for long, SELL for short) ---
+        # Buffer: +0.3% for BUY (willing to pay slightly more for fill)
+        #         -0.3% for SELL (willing to accept slightly less for fill)
+        # Tick-aligned to NSE ₹0.05 tick size
+        if entry_side == "BUY":
+            buffered_price = round(trade.entry_price * 1.003 * 20) / 20
+        else:
+            buffered_price = round(trade.entry_price * 0.997 * 20) / 20
         buy_result = self.broker.place_order(
             symbol=trade.tradingsymbol,
             exchange="NSE",
@@ -147,7 +154,7 @@ class Order_Executor:
             order_type="LIMIT",
             product_type="INTRADAY",
             quantity=trade.quantity,
-            price=trade.entry_price,
+            price=buffered_price,
         )
 
         buy_order_id = buy_result.get("broker_order_id", "")
@@ -159,15 +166,35 @@ class Order_Executor:
         filled_qty = self._wait_for_fill(buy_order_id, trade.quantity, timeout=10)
 
         if filled_qty == 0:
-            # Entry did not fill — cancel and abort (no SL placed)
+            # Entry did not fill — cancel LIMIT order
             try:
                 self.broker.cancel_order(buy_order_id)
             except Exception as e:
                 logger.warning("cancel_order failed for %s: %s", buy_order_id, e)
-            logger.warning(
-                "%s %s (order %s) did not fill in 10s — cancelled, no SL placed",
-                entry_side, trade.nse_symbol, buy_order_id,
-            )
+
+            # MARKET fallback for high-confidence picks (conf >= 8)
+            if trade.confidence_score >= 8:
+                logger.info("Retrying %s with MARKET order (conf %d)", trade.nse_symbol, trade.confidence_score)
+                market_result = self.broker.place_order(
+                    symbol=trade.tradingsymbol,
+                    exchange="NSE",
+                    transaction_type=entry_side,
+                    order_type="MARKET",
+                    product_type="INTRADAY",
+                    quantity=trade.quantity,
+                    price=0,
+                )
+                buy_order_id = market_result.get("broker_order_id", "")
+                if buy_order_id:
+                    filled_qty = self._wait_for_fill(buy_order_id, trade.quantity, timeout=5)
+                    if filled_qty > 0:
+                        logger.info("MARKET retry filled %d shares for %s", filled_qty, trade.nse_symbol)
+
+            if filled_qty == 0:
+                logger.warning(
+                    "%s %s (order %s) did not fill — all attempts exhausted, no SL placed",
+                    entry_side, trade.nse_symbol, buy_order_id,
+                )
             return None
 
         if filled_qty < trade.quantity:
