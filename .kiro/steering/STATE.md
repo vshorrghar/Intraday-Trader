@@ -5,15 +5,17 @@
 
 ---
 
-## TODAY (2026-05-14) — MASSIVE UPGRADE SESSION
+## TODAY (2026-05-15) — POST-V3 LAUNCH BUGFIX SESSION
 
 ### Session Outcome
-7 commits, 30+ file changes. Scanner completely rewritten (RS-First v3).
-Capital limits raised. Continuous scanning enabled. Top 20 capture live.
-War Room dashboard tab live. Telegram module ready (needs token).
+3 commits today. Diagnosed and fixed 4 bugs found from Day 1 of scanner v3 in production.
+Bugs were: scanner universe truncated, NSE losers API dead, fast movers don't fill, top performers cron missing.
+1 was not actually a bug (cron just hadn't fired yet).
 
 ### Commits Today (newest first)
-8fe6d03 — Sector rotation + time multiplier + trap detector (Scanner v3) 6ef8ab5 — Fade detector + reward huge winners (Scanner v2) 25361a5 — Top 20 movers + why_missed reasons in War Room cf80098 — Fix War Room JS (was rendering as text outside script block) ddac03e — War Room Top Movers tab with scanner accuracy 308e8b5 — Continuous scan + top10 capture + VIX + Telegram + SHORT RR + options 23a0261 — Bedrock 60s timeout + NSE gainers fix + live PnL + RS-first scanner
+a0ec15e — fix: buffered limit (+0.3% tick-aligned) + MARKET fallback for conf>=8 fast movers (Bug 3)
+68e910c — fix: NSE losers endpoint dead — use SecLwr20 from gainers response (Bug 2)
+a9df59b — fix: momentum-aware volume filter — pass big movers (>=4%) with 100K+ volume (Bug 1)
 
 ### Real Money Trades This Week
 | Date | Profile | Stock | Direction | Net P&L |
@@ -21,22 +23,71 @@ War Room dashboard tab live. Telegram module ready (needs token).
 | May 12 | vishal-live | ONGC | LONG | -Rs.53.80 |
 | May 12 | vishal-live | WIPRO | SHORT | -Rs.20.00 |
 | May 13 | vishal-live | HINDZINC | LONG | -Rs.28.30 |
-| May 14 | vishal-live | VEDL x10 @ 334.30 | LONG | TBD (manual run) |
+| May 14 | vishal-live | VEDL x10 @ 334.30 | LONG | TBD |
 | May 14 | neha-live | SAIL x19 @ 206.42 | LONG | -Rs.63 approx |
+| May 15 | vishal-live | INFY x4 @ 1124.10 | LONG | TBD (still open at session end) |
+| May 15 | vishal-live | HDFCBANK x5 @ 779.90 | LONG | TBD (still open at session end) |
+| May 15 | vishal-live | SAREGAMA x10 @ 411.90 | LONG | NEVER FILLED — 10s timeout |
 
-**Cumulative real money P&L**: ~-Rs.165 over 4 closed trades + 1 TBD
+**Cumulative real money P&L**: ~-Rs.165 over closed trades + several pending
 
-### Why Today's Real Money Picks Were Bad (Pre-Fix Scanner)
-Real top movers May 14 that we missed:
-- SAREGAMA +15.15% (at day high) — scanner penalized as "chasing"
-- NLCINDIA +14.61% — chasing penalty -2
-- CIPLA +8.09% (at day high) — scored lower than top 15
-- ADANIENT +8.85% — chasing penalty -2
+### Bugs Found and Fixed Today
 
-What scanner picked instead: VEDL +4.99% (won on volume 77M).
+**Bug 1 (CRITICAL): Scanner only saw 169 stocks instead of 500**
+- Root cause: 500K volume filter rejected stocks at 9:30 AM that hadn't built volume yet
+- Diagnostic: NSE returned 501 stocks. 209 failed volume filter at scan time.
+- Fix: Added momentum bypass — if change_pct >= 4% AND volume >= 100K, pass anyway
+- Result: TDPOWERSYS-type early breakouts will now reach scanner
 
-**Root cause**: Volume-dominated scoring + chasing penalty killed real winners.
-**Fix**: 7 separate scanner improvements committed today (see Scanner Evolution).
+**Bug 2 (HIGH): NSE losers API dead**
+- Root cause: ?index=losers endpoint returns "Missing index or key." error
+- Diagnostic: Tested 4 alternative endpoints, all dead. Found losers under SecLwr20 in gainers response.
+- Fix: fetch_top_losers() now calls gainers endpoint and extracts SecLwr20 (20 items confirmed)
+- Result: SHORT candidates restored
+
+**Bug 3 (HIGH): Limit orders don't fill on fast movers**
+- Root cause: SAREGAMA +7% surging, limit at LTP didn't fill in 10s, cancelled
+- Fix:
+  * +0.3% buffer on entry limit (LONG: 1.003x, SHORT: 0.997x)
+  * NSE tick alignment to ₹0.05 (round * 20 / 20)
+  * MARKET fallback after 10s timeout if confidence_score >= 8
+- Result: Fast movers like SAREGAMA should fill or fall back to MARKET on high-confidence picks
+
+**Bug 4 (NOT A BUG): Top performers cron missing**
+- Reason: Cron was added today, scheduled for 3:35 PM IST. Hadn't fired yet at diagnostic time.
+- Status: Resolved without code change
+
+### Validation Plan for Tomorrow Morning (May 16)
+
+Pre-market (before 9:15 AM IST):
+1. SSH OLD EC2: timedatectl (verify time sync)
+2. SSH NEW EC2: timedatectl (verify time sync)
+3. Both EC2s git log: should show a0ec15e or later as latest
+
+Market open (9:30 AM IST = 4:00 UTC):
+1. Watch live: tail -f logs/intraday_vishal-live_2026-05-16.log
+2. Look for "Nifty500 scan: 250+ total" (was 169)
+3. Look for losers fetched count > 0
+4. If fast mover picked, look for "buffered" or "MARKET retry" in logs
+
+EOD (3:35 PM IST):
+1. Top performers cron should fire automatically
+2. Check: cat logs/top_performers.log
+3. Check War Room dashboard for scanner accuracy %
+
+### Bug 3 Real Money Risk Assessment
+- Buffer +0.3% adds slippage tax on every trade
+  * On HDFCBANK at ₹779.90: ₹2.34/share = ₹11.70 per 5-share trade
+- MARKET fallback could fill at +1-2% above LTP on fast movers
+  * Worst case bounded by SL: max ~₹150-200 loss per failed fast mover
+- Mitigations: Only conf>=8 gets MARKET fallback. SL exists on every trade.
+- Net assessment: Acceptable. Missing winners is a certain cost; bad fills are bounded by SL.
+
+### Open Questions for Tomorrow
+1. Will Bug 1 fix actually catch TDPOWERSYS-type stocks at 10:30 AM with 200-400K volume?
+2. Will Bug 3 buffered limit fill on fast movers at 0.3% above LTP?
+3. Will MARKET fallback ever trigger? On which type of stock?
+4. Will scanner accuracy on War Room improve after these fixes?
 
 ---
 
