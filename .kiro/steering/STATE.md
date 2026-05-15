@@ -57,6 +57,16 @@ a9df59b — fix: momentum-aware volume filter — pass big movers (>=4%) with 10
 - Reason: Cron was added today, scheduled for 3:35 PM IST. Hadn't fired yet at diagnostic time.
 - Status: Resolved without code change
 
+**Bug 5 (CRITICAL — DISCOVERED EOD): max_trades_per_day not enforced during the day**
+- Root cause: _restore_daily_state in risk_manager.py only counted trades with CLOSED statuses (STOPPED_OUT, TARGET_HIT, FORCE_EXITED, CLOSED, PARTIAL_BOOKED). OPEN positions weren't counted.
+- Effect: During continuous scanning (every 15 min), every scan saw "0 trades placed today" because trades were still OPEN. Counter never advanced. Daily limit bypassed.
+- Real cost today: vishal-live placed 7 trades (limit was 3). Doubled down on INFY 4 times, HDFCBANK 2 times. Lost Rs.223.
+- Diagnostic: Simulated new logic on today's DB — would have blocked all trades after 11:00 AM, saving approx Rs.220 of today's loss.
+- Fix: Inverted logic. Now counts ALL BUY trades except those with status REJECTED/CANCELLED/FAILED/ABANDONED/PENDING. OPEN positions count toward limit.
+- File: intraday/risk_manager.py
+- Same bug also exists in neha-live but neha got lucky picks (SAREGAMA winners) so didn't notice
+- Validation needed Monday: confirm trade counter increments correctly across continuous scans
+
 ### Validation Plan for Tomorrow Morning (May 16)
 
 Pre-market (before 9:15 AM IST):
