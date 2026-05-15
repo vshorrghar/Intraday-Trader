@@ -109,10 +109,11 @@ def fetch_top_gainers(session=None) -> list[MarketMover]:
 
 
 def fetch_top_losers(session=None) -> list[MarketMover]:
-    """Fetch Nifty 500 top losers from NSE."""
+    """Fetch Nifty 500 top losers from NSE (via gainers endpoint SecLwr20 key)."""
     s = session or _get_nse_session()
     try:
-        r = s.get(f"{NSE_BASE}/api/live-analysis-variations?index=losers", timeout=15)
+        # NSE removed ?index=losers endpoint. Losers are in gainers response under SecLwr20
+        r = s.get(f"{NSE_BASE}/api/live-analysis-variations?index=gainers", timeout=15)
         r.raise_for_status()
         data = r.json()
         movers = []
@@ -121,7 +122,8 @@ def fetch_top_losers(session=None) -> list[MarketMover]:
             items = data
         elif isinstance(data, dict):
             # Try NIFTY or allSec first, then any key with data list
-            for preferred in ["NIFTY", "allSec", "FOSec"]:
+            # Losers are in SecLwr20 key of gainers response
+            for preferred in ["SecLwr20", "allSec"]:
                 if preferred in data:
                     val = data[preferred]
                     if isinstance(val, dict) and "data" in val:
