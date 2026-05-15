@@ -367,8 +367,12 @@ def _fetch_nifty500_candidates(
         # Basic filters
         if ltp < price_min or ltp > price_max:
             continue
+        # Momentum-aware volume filter:
+        # Pass if volume >= 500K (standard liquidity)
+        # OR pass if big mover (>=4%) with at least 100K volume
         if volume < min_volume:
-            continue
+            if not (abs(change_pct) >= 4.0 and volume >= 100_000):
+                continue
         if prev_close <= 0 or open_price <= 0:
             continue
 
