@@ -507,7 +507,7 @@ async function submitLogin() {
   const profile = S.pendingProfile;
 
   // vishal and vishal-live share same password
-  const checkName = (profile === 'vishal-live') ? 'vishal' : profile;
+  const checkName = (profile === 'vishal-live') ? 'vishal' : (profile === 'neha-live') ? 'neha' : profile;
   const expected = S.passwords && S.passwords[checkName];
 
   if (hash === expected) {
