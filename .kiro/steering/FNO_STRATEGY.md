@@ -2,7 +2,7 @@
 
 Comprehensive F&O strategy documentation. Cross-reference GLOSSARY.md for term definitions.
 
-Status as of 2026-05-15: F&O paper code exists but does not track real prices or P&L. Bug T (live P&L never changes) is open. All paper trades currently have null P&L. Not production-ready.
+Status as of 2026-05-15 EVENING: Bug T FIXED (commit 6b8de75). F&O paper now uses real Dhan option chain prices via 5-min cache, mark-to-market every 30 min, exit triggers per strategy. Validation BLOCKED until Monday May 18 market open (Dhan optionchain API 9:15-3:30 IST only). 84 pre-fix synthetic trades cleaned up. Paper trading ready for real validation Monday.
 
 This document defines what F&O should look like, what gaps exist, and the path to real money deployment.
 
@@ -291,13 +291,13 @@ Component A: Option Chain Fetcher (already exists)
 - File: fetchers/options_fetcher.py (built May 14)
 - Status: Working but not used by monitor.py
 
-Component B: Mark-to-Market Calculator (NEEDS BUILDING)
+Component B: Mark-to-Market Calculator (BUILT — fno/pnl_calculator.py)
 For each open position, fetch current premium for each leg, compute P&L.
 
-Component C: Update Loop (NEEDS BUILDING)
+Component C: Update Loop (BUILT — update_all_open_strategies in monitor.py + cron */30)
 Cron entry every 30 min during market.
 
-Component D: Exit Trigger (NEEDS BUILDING)
+Component D: Exit Trigger (BUILT — per-strategy logic in update_all_open_strategies)
 After P&L update, check exit conditions per strategy.
 
 ### 7.3 Estimated Work
@@ -316,6 +316,28 @@ We can finally answer:
 - Average profit per strategy?
 
 ---
+
+
+
+### 7.5 Bug T Fix Validation Status (2026-05-15 EOD)
+
+What got built:
+- fno/option_chain_cache.py — 5-min TTL cache, 2s rate limit, graceful failure
+- fno/pnl_calculator.py — pure P&L logic, callable data source pattern
+- fno/monitor.py — update_all_open_strategies() with exit triggers
+- DB schema: current_price column added to fno_trades (all 4 DBs)
+- Cron: */30 4-9 * * 1-5 every 30 min during market hours
+
+What needs Monday validation:
+- Dhan optionchain API works during market hours (9:15-3:30 IST)
+- Real strike prices populate fno_trades.entry_price on F&O cron
+- MTM cron updates fno_trades.current_price every 30 min
+- Exit triggers fire correctly per strategy type
+- Phase F-1 (30+ Iron Condor paper trades) can begin
+
+If Dhan optionchain still 401 Monday:
+- Fallback plan: build NSE bhavcopy fetcher (end-of-day data only)
+- Means MTM updates daily not 30-min (less granular but works)
 
 ## 8. ROAD TO REAL F&O MONEY
 

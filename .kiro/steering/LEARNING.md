@@ -161,6 +161,97 @@ If scanner v3 fails:
 
 ---
 
+### May 15 — Evening: F&O Bug T + Bug 6 + Bug 5 Discovery (5+ hour session)
+
+#### Money (no new trades after market — building only)
+- vishal-live: still showing INFY + HDFCBANK open from earlier (Bug 5 cost ~Rs.220)
+- No additional real-money exposure
+
+#### What We Built (after market close)
+1. F&O real-price paper trading (Bug T fix)
+   - option_chain_cache.py with 5-min TTL
+   - pnl_calculator.py with callable data source pattern
+   - update_all_open_strategies in monitor.py
+   - Exit triggers per strategy type
+   - Cron */30 during market hours
+2. neha-live S3 sync (Bug 6 fix)
+   - DB sync from NEW EC2 to S3 every 15 min
+   - Dashboard JSON sync from NEW EC2 to S3 every 15 min
+3. 4 new steering docs: BUSINESS_DOC, TECHNICAL_DOC, GLOSSARY, FNO_STRATEGY
+4. Cleaned up 84 stale F&O trades (pre-fix synthetic data)
+
+#### Critical Discovery: Bug 5
+After Kiro built F&O fixes, EOD review revealed vishal-live placed 7 trades today.
+Limit was 3. Lost ~Rs.223 from doubled-down INFY (4x) and HDFCBANK (2x).
+
+Root cause: risk_manager only counted CLOSED trades. OPEN positions were not counted.
+Continuous scanning every 15 min saw fresh slate every cycle.
+
+Lesson: When you change architecture (single-scan -> continuous), you MUST audit every counter and gate. We added continuous scanning May 14 but did not re-audit risk_manager. The bug existed for 2 days before being noticed because Mon-Wed only had 1-2 trades anyway.
+
+#### Lessons From This Session
+1. Real money exposes architectural assumptions
+   - Continuous scanning was always going to expose state-tracking bugs
+   - Paper trading would have eventually shown it but slower
+
+2. F&O paper without real prices is worthless data
+   - 84 trades from May 14 are unusable
+   - We had to throw them away
+   - Should have built real-price tracking BEFORE running paper trades
+   - Lesson for future modules: validate measurement infrastructure first
+
+3. Dhan optionchain only works during market hours
+   - Could not validate Bug T fix tonight
+   - Code is right but unverified until Monday
+   - Acceptable risk because it is paper money, but stressful
+
+4. Multi-EC2 architecture creates data visibility problems
+   - Bug 6 was about seeing neha-live from OLD EC2
+   - Solution: S3 as shared state
+   - This pattern will scale to more accounts later
+
+5. Steering docs need to grow with complexity
+   - Started with 3 (RULES, STATE, HISTORY)
+   - Now 9 docs
+   - Each AI session can pick relevant ones for context
+   - GLOSSARY especially helps avoid term drift
+
+#### Decisions Made
+- Approved all 3 Kiro bug fixes (Bugs 1, 2, 3) at session start
+- Approved Bug T architecture (real Dhan prices, callable pattern, 5-min cache)
+- Approved Bug 6 architecture (NEW EC2 pushes to S3, OLD reads)
+- Approved Bug 5 fix (count all non-rejected/cancelled BUYs)
+- Did NOT change any capital limits or daily loss caps
+- Did NOT push to NEW EC2 yet (Monday morning task)
+
+#### What Monday May 18 Will Tell Us
+If everything works:
+- Bug 5: vishal-live max 3 trades, even with continuous scan attempts
+- Bug T: F&O strategies have real entry prices, MTM updates every 30 min
+- Bug 6: neha-live data visible in War Room from OLD EC2
+
+If something fails:
+- Bug 5: legitimate trades blocked falsely (would see "Daily limit reached" too early)
+- Bug T: Dhan optionchain returns 401 even during market hours (need NSE bhavcopy fallback)
+- Bug 6: S3 sync race or stale data displayed
+
+#### Honest Self-Assessment
+- 5+ commits over the day, complex architecture changes
+- All imports clean, all heredoc patches verified
+- Real money exposure today: ~Rs.220 lost to Bug 5 BEFORE we discovered it
+- Going-forward exposure: bounded by Rs.900/day per profile (loss limit)
+- F&O remains paper-only (zero real money)
+- Worst case Monday: Rs.1800 loss across both live profiles (each hits limit)
+- Best case: Bug 5 saves us money by enforcing limit, F&O shows real numbers
+
+#### Next Decisions Pending
+- Should dashboard neha-live tab be priority next session?
+- Should we wire Telegram BEFORE more F&O work (phone alerts on real money)?
+- After Monday F&O data: evaluate if Iron Condor strategies actually work
+- After 7 days clean data: decide on F&O live deployment timeline
+
+---
+
 ### May 15 — Day 1 Of Scanner v3 + Bugfix Session
 
 #### Money

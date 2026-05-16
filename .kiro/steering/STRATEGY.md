@@ -156,6 +156,41 @@ Sync: scripts/sync_top_performers.py (runs after capture)
 
 ## EVOLUTION LOG (newest first)
 
+### v3.2 — 2026-05-15 (BUG 5 + BUG T + STREAM 3)
+Commits: a9df59b, 68e910c, a0ec15e, 6b8de75
+
+**Bug 5 (CRITICAL — discovered EOD)**: max_trades_per_day not enforced
+- _restore_daily_state in risk_manager.py only counted CLOSED status trades
+- Continuous scan every 15 min saw "0 trades placed today" — counter never incremented
+- Real cost today: vishal-live placed 7 trades (limit 3). Lost ~Rs.223.
+- Fix: Inverted logic — counts all BUY except REJECTED/CANCELLED/FAILED/ABANDONED/PENDING
+- File: intraday/risk_manager.py
+- Status: needs Monday validation
+
+**Bug T (FIXED)**: F&O paper P&L now uses real Dhan option chain prices
+- New: fno/option_chain_cache.py (5-min TTL, 2s rate limit, graceful failure)
+- New: fno/pnl_calculator.py (pure logic, callable data source)
+- Modified: fno/monitor.py (update_all_open_strategies + exit triggers)
+- DB: added current_price column, marked 84 stale trades CLOSED
+- Cron: */30 4-9 * * 1-5 mark-to-market every 30 min during market hours
+- Validation blocked until Monday market open (Dhan API 9:15-3:30 IST only)
+
+**Bug 6 (FIXED)**: neha-live data invisible from OLD EC2
+- NEW EC2: scripts/sync_neha_live_db.sh -> s3://.../db-sync/neha-live.db
+- NEW EC2: scripts/sync_neha_live_dashboard.sh -> s3://.../api/neha-live/
+- OLD EC2 hourly sync excludes db-sync/* (preserves NEW EC2 data)
+- Both crons */15 4-10 * * 1-5
+
+Validation expected Monday May 18:
+- Bug 5: trade counter should increment correctly across continuous scans
+- Bug T: F&O strategies show real entry prices, MTM updates in fno_pnl_update.log
+- Bug 6: neha-live data accessible from OLD EC2 dashboard reads
+
+Risks:
+- Bug 5 fix may falsely block legitimate trades (low risk — verified logic)
+- Bug T relies on Dhan optionchain — fallback to NSE bhavcopy if API stays 401
+- F&O exit triggers untested in production — may fire prematurely
+
 ### v3.1 — 2026-05-15 (POST-V3 BUGFIX)
 Commits: a9df59b, 68e910c, a0ec15e
 

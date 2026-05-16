@@ -253,6 +253,43 @@ Both EC2s writing to one S3 bucket creates race on shared files (history.json, l
 
 ---
 
+
+### Rule 21: Steering Doc Reading Order (since 2026-05-15)
+
+Project now has 9 steering docs. AI assistants should read in this order based on task:
+
+For trading code changes:
+1. RULES.md (this file)
+2. STATE.md (current state)
+3. STRATEGY.md (scanner/executor logic + active bugs)
+4. GLOSSARY.md (term definitions)
+
+For F&O work specifically:
+5. FNO_STRATEGY.md (playbook + Bug T status)
+6. TECHNICAL_DOC.md (DB schemas + cron)
+
+For business/scaling decisions:
+7. BUSINESS_DOC.md (capital phases)
+8. LEARNING.md (daily journal + patterns)
+
+For historical context:
+9. HISTORY.md (archived state)
+
+Minimum context for new AI session: RULES + STATE + STRATEGY.
+
+For F&O-specific session: above + FNO_STRATEGY + GLOSSARY.
+
+For business decisions: above + BUSINESS_DOC + LEARNING.
+
+Total docs at .kiro/steering/: RULES, STATE, HISTORY, STRATEGY, LEARNING, GLOSSARY, BUSINESS_DOC, TECHNICAL_DOC, FNO_STRATEGY.
+
+If a doc is updated during a session, the AI assistant must:
+1. Note the change in commit message
+2. Surface it in next session pickup
+3. Not silently skip it
+
+---
+
 ## SECTION 3: PROJECT DIRECTORY STRUCTURE
 
 ### EC2 (where ALL edits + commits + pushes happen)

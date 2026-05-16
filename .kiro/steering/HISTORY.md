@@ -38,3 +38,41 @@ What scanner picked instead: VEDL +4.99% (won on volume 77M).
 
 **Root cause**: Volume-dominated scoring + chasing penalty killed real winners.
 **Fix**: 7 separate scanner improvements committed today (see Scanner Evolution).
+
+
+---
+
+## ARCHIVED FROM 2026-05-15 — TRIPLE-STREAM SESSION
+
+### Session Outcome
+8 commits across 3 work streams:
+- Stream 1: Scanner v3 bugfixes (Bugs 1, 2, 3)
+- Stream 2: F&O Bug T fix — real Dhan price MTM
+- Stream 3: Bug 6 — neha-live S3 sync
+- Stream 4: 4 new steering docs
+
+### Commits
+- 6b8de75 — feat: Bug T fix
+- 5d79c29 — docs: add FNO_STRATEGY.md
+- 3f3fdbe — docs: add BUSINESS_DOC + TECHNICAL_DOC + GLOSSARY
+- 7777382 — feat: live_status + eod_summary + Bug 5 status fix + Bug 6
+- abb236e — fix: Bug 6 sync neha-live.db OLD<->NEW via S3
+- a0ec15e — fix: Bug 3 buffered limit + MARKET fallback
+- 68e910c — fix: Bug 2 NSE losers SecLwr20
+- a9df59b — fix: Bug 1 momentum-aware filter
+
+### Critical Discovery EOD
+Bug 5: max_trades_per_day not enforced during continuous scanning.
+vishal-live placed 7 trades vs limit 3. Lost ~Rs.223.
+Fixed in code, needs Monday validation.
+
+### F&O Status Change
+Before: 84 paper trades with synthetic P&L (unusable).
+After: Real Dhan price infrastructure built, 84 stale trades cleaned, ready for Monday validation.
+
+### Real Money Outcome
+Cumulative: ~-Rs.165 closed + Bug 5 cost ~Rs.220 today.
+Open EOD: INFY, HDFCBANK on vishal-live.
+
+### Steering Docs
+Grew from 3 (RULES, STATE, HISTORY) to 9 docs total.

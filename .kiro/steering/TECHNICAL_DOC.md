@@ -225,6 +225,9 @@ Bug 2 (FIXED): NSE losers API endpoint dead. Fix: Use SecLwr20 from gainers resp
 Bug 3 (FIXED): Limit orders failed on fast movers in 10s. Fix: 0.3% buffer + MARKET fallback for conf >= 8.
 
 Bug 4: NOT a bug. Top performers cron just hadn't run yet.
+Bug 5 (FIXED): max_trades_per_day not enforced during continuous scanning. _restore_daily_state only counted CLOSED trades. Real cost ~Rs.223 today. Fix: counts all non-rejected/cancelled BUYs. File: intraday/risk_manager.py. Needs Monday validation.
+Bug T (FIXED): F&O paper P&L was synthetic theta-decay. Now uses real Dhan option chain via fno/option_chain_cache.py + fno/pnl_calculator.py. Cron */30 4-9 * * 1-5 mark-to-market every 30 min. 84 stale trades cleaned up. Validation Monday May 18.
+Bug 6 (FIXED): neha-live data only on NEW EC2. Solution: NEW EC2 syncs DB + dashboard JSON to S3 every 15 min. OLD EC2 dashboard reads from S3.
 
 Bug 5 (FIXED): max_trades_per_day not enforced. _restore_daily_state only counted CLOSED trades. Fix: count any non-rejected/cancelled BUY.
 
