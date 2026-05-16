@@ -159,6 +159,7 @@ tr:nth-child(even) td { background:#1a2035; }
     <button class="profile-btn" data-profile="vishal-live" onclick="selectProfile('vishal-live')">vishal-live <span class="badge badge-live">LIVE</span></button>
     <button class="profile-btn" data-profile="vishal" onclick="selectProfile('vishal')">vishal <span class="badge badge-paper">PAPER</span></button>
     <button class="profile-btn" data-profile="neha" onclick="selectProfile('neha')">neha <span class="badge badge-paper">PAPER</span></button>
+    <button class="profile-btn" data-profile="neha-live" onclick="selectProfile('neha-live')">neha-live <span class="badge badge-live">LIVE</span></button>
   </div>
   <div class="topbar-right">
     <span class="clock" id="ist-clock">--:--:-- IST</span>
@@ -340,11 +341,8 @@ tr:nth-child(even) td { background:#1a2035; }
 <!-- ===== SWING TAB ===== -->
 <div class="tab-content" id="tab-swing">
   <div class="container">
-    <div class="card placeholder-card">
-      <div class="icon">📈</div>
-      <h2>Swing Trading</h2>
-      <p>Hold period: 2–15 days. Scans daily after 3:30 PM IST.</p>
-      <p style="margin-top:8px;color:#4a5568;font-size:12px;">Target 8% | Stop Loss 4% | R:R 2:1</p>
+    <div class="card"><h2>📈 Swing Trading (2-15 days)</h2>
+      <div id="swing-content"><p class="neutral">Loading swing data...</p></div>
     </div>
   </div>
 </div>
@@ -352,11 +350,8 @@ tr:nth-child(even) td { background:#1a2035; }
 <!-- ===== POSITIONAL TAB ===== -->
 <div class="tab-content" id="tab-positional">
   <div class="container">
-    <div class="card placeholder-card">
-      <div class="icon">🏦</div>
-      <h2>Positional Trading</h2>
-      <p>Hold period: 4–12 weeks. Scans weekly on Friday after 3:30 PM IST.</p>
-      <p style="margin-top:8px;color:#4a5568;font-size:12px;">Target 20% | Stop Loss 8% | R:R 2.5:1</p>
+    <div class="card"><h2>🏦 Positional Trading (4-12 weeks)</h2>
+      <div id="positional-content"><p class="neutral">Loading positional data...</p></div>
     </div>
   </div>
 </div>
@@ -434,7 +429,8 @@ const S = {
   defaults: {
     'vishal-live': { intraday: 10000, fno: 0, account: 10000 },
     'vishal': { intraday: 60000, fno: 60000, account: 300000 },
-    'neha': { intraday: 60000, fno: 60000, account: 300000 }
+    'neha': { intraday: 60000, fno: 60000, account: 300000 },
+    'neha-live': { intraday: 10000, fno: 0, account: 10000 }
   },
   passwords: null,
   pendingProfile: null
@@ -521,6 +517,10 @@ async function submitLogin() {
       S.unlocked['vishal'] = true;
       S.unlocked['vishal-live'] = true;
     }
+    if (profile === 'neha' || profile === 'neha-live') {
+      S.unlocked['neha'] = true;
+      S.unlocked['neha-live'] = true;
+    }
     document.getElementById('login-modal').classList.remove('show');
     activate(profile);
   } else {
@@ -555,6 +555,8 @@ function switchTab(tab) {
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.querySelectorAll('.tab-content').forEach(el => el.classList.toggle('active', el.id === 'tab-'+tab));
   if(tab==='warroom') wrLoad();
+  if(tab==='swing') loadSwingData();
+  if(tab==='positional') loadPositionalData();
 }
 
 // ===== DATA LOADING =====
@@ -906,6 +908,40 @@ var wrLoaded=0;
 function wrSwitch(k){document.querySelectorAll('.wr-panel').forEach(function(e){e.style.display=e.id==='wr-'+k?'block':'none';});}
 function loadTopMovers(){fetch('api/top_performers.json').then(function(r){return r.json()}).then(function(d){var e=document.getElementById('wr-top-movers');var acc=document.getElementById('wr-accuracy');var items=d.top_20||d.top_10||[];if(!items.length){e.innerHTML='No data';return}var h='<table style="width:100%;font-size:11px;"><tr><th>#</th><th>Symbol</th><th>Gain%</th><th>Open%</th><th>Vol</th><th>Picked</th><th>Why Missed</th></tr>';items.forEach(function(s){var cls=s.we_picked?'positive':'negative';var pick=s.we_picked?'YES':'no';var why=s.why_missed||'';h+='<tr><td>'+s.rank+'</td><td><b>'+s.symbol+'</b></td><td class="positive">+'+s.gain_pct.toFixed(1)+'%</td><td>+'+s.change_from_open.toFixed(1)+'%</td><td>'+(s.volume/1000000).toFixed(1)+'M</td><td class="'+cls+'">'+pick+'</td><td style="color:#8892a4;font-size:10px;">'+why+'</td></tr>'});h+='</table><p style="margin-top:10px;font-size:11px;color:#8892a4;">VIX: '+d.vix.toFixed(2)+' | '+d.market_mood+' | Picks: '+(d.our_picks_today.join(', ')||'None')+'</p>';e.innerHTML=h;acc.innerHTML='<span style="font-size:28px;font-weight:700;" class="'+(d.overlap>2?'positive':'negative')+'">'+d.overlap+'/20</span><br><span style="color:#8892a4;">'+d.miss_rate+'</span>'}).catch(function(err){document.getElementById('wr-top-movers').innerHTML='Error: '+err.message})}
 function wrLoad(){if(wrLoaded)return;wrLoaded=1;loadTopMovers();var l=document.getElementById('wr-loading');if(l)l.style.display='none'}
+
+// ===== SWING + POSITIONAL LOADERS =====
+function loadSwingData(){
+  fetch('api/swing_latest.json?t='+Date.now()).then(function(r){return r.json()}).then(function(d){
+    var el=document.getElementById('swing-content');
+    if(!el)return;
+    var pos=d.open_positions||[];
+    if(!pos.length){el.innerHTML='<p class="neutral">No open swing positions. Next scan: 3:35 PM IST daily.</p>';return;}
+    var h='<table style="width:100%;font-size:12px;"><tr><th>Symbol</th><th>Entry</th><th>Current</th><th>Target</th><th>SL</th><th>Days</th><th>P&L</th><th>Strategy</th></tr>';
+    pos.forEach(function(p){
+      var pnl=((p.current_price-p.entry_price)*p.quantity).toFixed(0);
+      var cls=pnl>=0?'positive':'negative';
+      h+='<tr><td><b>'+p.symbol+'</b></td><td>'+p.entry_price.toFixed(1)+'</td><td>'+p.current_price.toFixed(1)+'</td><td>'+p.target_price.toFixed(1)+'</td><td>'+p.stop_loss_price.toFixed(1)+'</td><td>'+p.days_held+'</td><td class="'+cls+'">'+pnl+'</td><td>'+p.strategy_type+'</td></tr>';
+    });
+    h+='</table><p style="margin-top:8px;font-size:11px;color:#8892a4;">Capital: '+d.capital+' | Mode: '+d.mode+'</p>';
+    el.innerHTML=h;
+  }).catch(function(){document.getElementById('swing-content').innerHTML='<p class="neutral">Swing data unavailable</p>';});
+}
+function loadPositionalData(){
+  fetch('api/positional_latest.json?t='+Date.now()).then(function(r){return r.json()}).then(function(d){
+    var el=document.getElementById('positional-content');
+    if(!el)return;
+    var pos=d.open_positions||[];
+    if(!pos.length){el.innerHTML='<p class="neutral">No open positional trades. Next scan: Friday 3:35 PM IST.</p>';return;}
+    var h='<table style="width:100%;font-size:12px;"><tr><th>Symbol</th><th>Entry</th><th>Current</th><th>Target</th><th>SL</th><th>Weeks</th><th>P&L</th><th>Strategy</th></tr>';
+    pos.forEach(function(p){
+      var pnl=((p.current_price-p.entry_price)*p.quantity).toFixed(0);
+      var cls=pnl>=0?'positive':'negative';
+      h+='<tr><td><b>'+p.symbol+'</b></td><td>'+p.entry_price.toFixed(1)+'</td><td>'+(p.current_price||p.entry_price).toFixed(1)+'</td><td>'+p.target_price.toFixed(1)+'</td><td>'+p.stop_loss_price.toFixed(1)+'</td><td>'+(p.weeks_held||0)+'</td><td class="'+cls+'">'+pnl+'</td><td>'+p.strategy_type+'</td></tr>';
+    });
+    h+='</table>';
+    el.innerHTML=h;
+  }).catch(function(){document.getElementById('positional-content').innerHTML='<p class="neutral">Positional data unavailable</p>';});
+}
 init();
 </script>
 </body>
