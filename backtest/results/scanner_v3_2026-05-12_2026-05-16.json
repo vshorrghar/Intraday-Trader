@@ -1,0 +1,540 @@
+{
+  "from_date": "2026-05-12",
+  "to_date": "2026-05-16",
+  "trading_days": 4,
+  "universe_size": 5,
+  "avg_hit_rate_pct": 75.0,
+  "best_day": "2026-05-15",
+  "worst_day": "2026-05-12",
+  "daily_results": [
+    {
+      "picks": {
+        "date": "2026-05-12",
+        "picks_long": [
+          {
+            "symbol": "HDFCBANK",
+            "long_score": 7,
+            "short_score": 3,
+            "change_pct": -1.3,
+            "change_from_open": -0.04,
+            "gap_pct": -1.26,
+            "volume_30min": 2975428,
+            "ltp_at_930": 756.3,
+            "eod_close": 755.4,
+            "eod_change_pct": -1.42
+          },
+          {
+            "symbol": "RELIANCE",
+            "long_score": 6,
+            "short_score": 3,
+            "change_pct": -0.19,
+            "change_from_open": -0.66,
+            "gap_pct": 0.48,
+            "volume_30min": 2519335,
+            "ltp_at_930": 1382.8,
+            "eod_close": 1366.5,
+            "eod_change_pct": -1.36
+          },
+          {
+            "symbol": "ICICIBANK",
+            "long_score": 6,
+            "short_score": 3,
+            "change_pct": -1.33,
+            "change_from_open": -0.43,
+            "gap_pct": -0.9,
+            "volume_30min": 1637000,
+            "ltp_at_930": 1250.6,
+            "eod_close": 1244.5,
+            "eod_change_pct": -1.81
+          },
+          {
+            "symbol": "TCS",
+            "long_score": 3,
+            "short_score": 10,
+            "change_pct": -3.15,
+            "change_from_open": -2.5,
+            "gap_pct": -0.67,
+            "volume_30min": 658431,
+            "ltp_at_930": 2315.7,
+            "eod_close": 2303.0,
+            "eod_change_pct": -3.68
+          },
+          {
+            "symbol": "INFY",
+            "long_score": 3,
+            "short_score": 9,
+            "change_pct": -3.15,
+            "change_from_open": -1.99,
+            "gap_pct": -1.19,
+            "volume_30min": 1795345,
+            "ltp_at_930": 1138.9,
+            "eod_close": 1139.7,
+            "eod_change_pct": -3.09
+          }
+        ],
+        "picks_short": [
+          {
+            "symbol": "TCS",
+            "long_score": 3,
+            "short_score": 10,
+            "change_pct": -3.15,
+            "change_from_open": -2.5,
+            "gap_pct": -0.67,
+            "volume_30min": 658431,
+            "ltp_at_930": 2315.7,
+            "eod_close": 2303.0,
+            "eod_change_pct": -3.68
+          },
+          {
+            "symbol": "INFY",
+            "long_score": 3,
+            "short_score": 9,
+            "change_pct": -3.15,
+            "change_from_open": -1.99,
+            "gap_pct": -1.19,
+            "volume_30min": 1795345,
+            "ltp_at_930": 1138.9,
+            "eod_close": 1139.7,
+            "eod_change_pct": -3.09
+          },
+          {
+            "symbol": "HDFCBANK",
+            "long_score": 7,
+            "short_score": 3,
+            "change_pct": -1.3,
+            "change_from_open": -0.04,
+            "gap_pct": -1.26,
+            "volume_30min": 2975428,
+            "ltp_at_930": 756.3,
+            "eod_close": 755.4,
+            "eod_change_pct": -1.42
+          },
+          {
+            "symbol": "RELIANCE",
+            "long_score": 6,
+            "short_score": 3,
+            "change_pct": -0.19,
+            "change_from_open": -0.66,
+            "gap_pct": 0.48,
+            "volume_30min": 2519335,
+            "ltp_at_930": 1382.8,
+            "eod_close": 1366.5,
+            "eod_change_pct": -1.36
+          },
+          {
+            "symbol": "ICICIBANK",
+            "long_score": 6,
+            "short_score": 3,
+            "change_pct": -1.33,
+            "change_from_open": -0.43,
+            "gap_pct": -0.9,
+            "volume_30min": 1637000,
+            "ltp_at_930": 1250.6,
+            "eod_close": 1244.5,
+            "eod_change_pct": -1.81
+          }
+        ],
+        "total_universe_scanned": 5
+      },
+      "comparison": {
+        "date": "2026-05-12",
+        "our_picks": [
+          "HDFCBANK",
+          "RELIANCE",
+          "ICICIBANK",
+          "TCS",
+          "INFY"
+        ],
+        "actual_top_5": [
+          "RELIANCE",
+          "RELIANCE",
+          "HDFCBANK",
+          "HDFCBANK",
+          "ICICIBANK"
+        ],
+        "overlap_count": 3,
+        "hit_rate_pct": 60.0,
+        "missed_top_5": []
+      }
+    },
+    {
+      "picks": {
+        "date": "2026-05-13",
+        "picks_long": [
+          {
+            "symbol": "TCS",
+            "long_score": 7,
+            "short_score": 1,
+            "change_pct": -0.19,
+            "change_from_open": -0.32,
+            "gap_pct": 0.13,
+            "volume_30min": 284316,
+            "ltp_at_930": 2298.6,
+            "eod_close": 2274.0,
+            "eod_change_pct": -1.26
+          },
+          {
+            "symbol": "INFY",
+            "long_score": 6,
+            "short_score": 1,
+            "change_pct": -0.6,
+            "change_from_open": -0.33,
+            "gap_pct": -0.27,
+            "volume_30min": 665261,
+            "ltp_at_930": 1132.9,
+            "eod_close": 1123.4,
+            "eod_change_pct": -1.43
+          },
+          {
+            "symbol": "HDFCBANK",
+            "long_score": 6,
+            "short_score": 1,
+            "change_pct": -0.69,
+            "change_from_open": -0.24,
+            "gap_pct": -0.45,
+            "volume_30min": 2580201,
+            "ltp_at_930": 750.2,
+            "eod_close": 749.25,
+            "eod_change_pct": -0.81
+          },
+          {
+            "symbol": "RELIANCE",
+            "long_score": 6,
+            "short_score": 1,
+            "change_pct": -0.7,
+            "change_from_open": -0.32,
+            "gap_pct": -0.37,
+            "volume_30min": 948218,
+            "ltp_at_930": 1357.0,
+            "eod_close": 1361.9,
+            "eod_change_pct": -0.34
+          },
+          {
+            "symbol": "ICICIBANK",
+            "long_score": 6,
+            "short_score": 1,
+            "change_pct": -0.8,
+            "change_from_open": -0.31,
+            "gap_pct": -0.5,
+            "volume_30min": 1340273,
+            "ltp_at_930": 1234.5,
+            "eod_close": 1235.3,
+            "eod_change_pct": -0.74
+          }
+        ],
+        "picks_short": [
+          {
+            "symbol": "TCS",
+            "long_score": 7,
+            "short_score": 1,
+            "change_pct": -0.19,
+            "change_from_open": -0.32,
+            "gap_pct": 0.13,
+            "volume_30min": 284316,
+            "ltp_at_930": 2298.6,
+            "eod_close": 2274.0,
+            "eod_change_pct": -1.26
+          },
+          {
+            "symbol": "INFY",
+            "long_score": 6,
+            "short_score": 1,
+            "change_pct": -0.6,
+            "change_from_open": -0.33,
+            "gap_pct": -0.27,
+            "volume_30min": 665261,
+            "ltp_at_930": 1132.9,
+            "eod_close": 1123.4,
+            "eod_change_pct": -1.43
+          },
+          {
+            "symbol": "HDFCBANK",
+            "long_score": 6,
+            "short_score": 1,
+            "change_pct": -0.69,
+            "change_from_open": -0.24,
+            "gap_pct": -0.45,
+            "volume_30min": 2580201,
+            "ltp_at_930": 750.2,
+            "eod_close": 749.25,
+            "eod_change_pct": -0.81
+          },
+          {
+            "symbol": "RELIANCE",
+            "long_score": 6,
+            "short_score": 1,
+            "change_pct": -0.7,
+            "change_from_open": -0.32,
+            "gap_pct": -0.37,
+            "volume_30min": 948218,
+            "ltp_at_930": 1357.0,
+            "eod_close": 1361.9,
+            "eod_change_pct": -0.34
+          },
+          {
+            "symbol": "ICICIBANK",
+            "long_score": 6,
+            "short_score": 1,
+            "change_pct": -0.8,
+            "change_from_open": -0.31,
+            "gap_pct": -0.5,
+            "volume_30min": 1340273,
+            "ltp_at_930": 1234.5,
+            "eod_close": 1235.3,
+            "eod_change_pct": -0.74
+          }
+        ],
+        "total_universe_scanned": 5
+      },
+      "comparison": {
+        "date": "2026-05-13",
+        "our_picks": [
+          "TCS",
+          "INFY",
+          "HDFCBANK",
+          "RELIANCE",
+          "ICICIBANK"
+        ],
+        "actual_top_5": [
+          "RELIANCE",
+          "RELIANCE",
+          "ICICIBANK",
+          "ICICIBANK",
+          "HDFCBANK"
+        ],
+        "overlap_count": 3,
+        "hit_rate_pct": 60.0,
+        "missed_top_5": []
+      }
+    },
+    {
+      "picks": {
+        "date": "2026-05-14",
+        "picks_long": [
+          {
+            "symbol": "ICICIBANK",
+            "long_score": 12,
+            "short_score": 0,
+            "change_pct": 1.06,
+            "change_from_open": 0.75,
+            "gap_pct": 0.31,
+            "volume_30min": 486914,
+            "ltp_at_930": 1248.4,
+            "eod_close": 1248.7,
+            "eod_change_pct": 1.08
+          },
+          {
+            "symbol": "HDFCBANK",
+            "long_score": 9,
+            "short_score": 0,
+            "change_pct": 0.65,
+            "change_from_open": 0.41,
+            "gap_pct": 0.23,
+            "volume_30min": 2097655,
+            "ltp_at_930": 754.1,
+            "eod_close": 770.1,
+            "eod_change_pct": 2.78
+          },
+          {
+            "symbol": "RELIANCE",
+            "long_score": 9,
+            "short_score": 0,
+            "change_pct": 0.45,
+            "change_from_open": 0.21,
+            "gap_pct": 0.24,
+            "volume_30min": 670101,
+            "ltp_at_930": 1368.0,
+            "eod_close": 1368.5,
+            "eod_change_pct": 0.48
+          },
+          {
+            "symbol": "TCS",
+            "long_score": 7,
+            "short_score": 1,
+            "change_pct": -0.83,
+            "change_from_open": -0.44,
+            "gap_pct": -0.4,
+            "volume_30min": 761588,
+            "ltp_at_930": 2255.1,
+            "eod_close": 2249.9,
+            "eod_change_pct": -1.06
+          },
+          {
+            "symbol": "INFY",
+            "long_score": 6,
+            "short_score": 3,
+            "change_pct": -0.9,
+            "change_from_open": -0.58,
+            "gap_pct": -0.32,
+            "volume_30min": 1258403,
+            "ltp_at_930": 1113.3,
+            "eod_close": 1094.5,
+            "eod_change_pct": -2.57
+          }
+        ],
+        "picks_short": [
+          {
+            "symbol": "INFY",
+            "long_score": 6,
+            "short_score": 3,
+            "change_pct": -0.9,
+            "change_from_open": -0.58,
+            "gap_pct": -0.32,
+            "volume_30min": 1258403,
+            "ltp_at_930": 1113.3,
+            "eod_close": 1094.5,
+            "eod_change_pct": -2.57
+          },
+          {
+            "symbol": "TCS",
+            "long_score": 7,
+            "short_score": 1,
+            "change_pct": -0.83,
+            "change_from_open": -0.44,
+            "gap_pct": -0.4,
+            "volume_30min": 761588,
+            "ltp_at_930": 2255.1,
+            "eod_close": 2249.9,
+            "eod_change_pct": -1.06
+          }
+        ],
+        "total_universe_scanned": 5
+      },
+      "comparison": {
+        "date": "2026-05-14",
+        "our_picks": [
+          "ICICIBANK",
+          "HDFCBANK",
+          "RELIANCE",
+          "TCS",
+          "INFY"
+        ],
+        "actual_top_5": [
+          "HDFCBANK",
+          "ICICIBANK",
+          "RELIANCE",
+          "TCS",
+          "TCS"
+        ],
+        "overlap_count": 4,
+        "hit_rate_pct": 80.0,
+        "missed_top_5": []
+      }
+    },
+    {
+      "picks": {
+        "date": "2026-05-15",
+        "picks_long": [
+          {
+            "symbol": "INFY",
+            "long_score": 18,
+            "short_score": 0,
+            "change_pct": 3.24,
+            "change_from_open": 2.54,
+            "gap_pct": 0.69,
+            "volume_30min": 1896366,
+            "ltp_at_930": 1130.0,
+            "eod_close": 1116.0,
+            "eod_change_pct": 1.96
+          },
+          {
+            "symbol": "TCS",
+            "long_score": 16,
+            "short_score": 0,
+            "change_pct": 2.21,
+            "change_from_open": 2.12,
+            "gap_pct": 0.09,
+            "volume_30min": 594209,
+            "ltp_at_930": 2299.7,
+            "eod_close": 2267.0,
+            "eod_change_pct": 0.76
+          },
+          {
+            "symbol": "HDFCBANK",
+            "long_score": 13,
+            "short_score": 0,
+            "change_pct": 1.46,
+            "change_from_open": 1.08,
+            "gap_pct": 0.38,
+            "volume_30min": 2589898,
+            "ltp_at_930": 781.35,
+            "eod_close": 770.0,
+            "eod_change_pct": -0.01
+          },
+          {
+            "symbol": "ICICIBANK",
+            "long_score": 7,
+            "short_score": 0,
+            "change_pct": -0.09,
+            "change_from_open": 0.08,
+            "gap_pct": -0.17,
+            "volume_30min": 910012,
+            "ltp_at_930": 1247.6,
+            "eod_close": 1247.9,
+            "eod_change_pct": -0.06
+          },
+          {
+            "symbol": "RELIANCE",
+            "long_score": 6,
+            "short_score": 3,
+            "change_pct": -1.32,
+            "change_from_open": -0.46,
+            "gap_pct": -0.85,
+            "volume_30min": 2042020,
+            "ltp_at_930": 1350.5,
+            "eod_close": 1339.0,
+            "eod_change_pct": -2.16
+          }
+        ],
+        "picks_short": [
+          {
+            "symbol": "RELIANCE",
+            "long_score": 6,
+            "short_score": 3,
+            "change_pct": -1.32,
+            "change_from_open": -0.46,
+            "gap_pct": -0.85,
+            "volume_30min": 2042020,
+            "ltp_at_930": 1350.5,
+            "eod_close": 1339.0,
+            "eod_change_pct": -2.16
+          }
+        ],
+        "total_universe_scanned": 5
+      },
+      "comparison": {
+        "date": "2026-05-15",
+        "our_picks": [
+          "INFY",
+          "TCS",
+          "HDFCBANK",
+          "ICICIBANK",
+          "RELIANCE"
+        ],
+        "actual_top_5": [
+          "INFY",
+          "TCS",
+          "HDFCBANK",
+          "ICICIBANK",
+          "RELIANCE"
+        ],
+        "overlap_count": 5,
+        "hit_rate_pct": 100.0,
+        "missed_top_5": []
+      }
+    }
+  ],
+  "signals_replicated": [
+    "intraday_continuation",
+    "momentum_strength",
+    "near_day_high",
+    "volume_confirmation",
+    "fno_bonus",
+    "time_multiplier",
+    "fade_detector"
+  ],
+  "signals_omitted": [
+    "sector_rotation",
+    "52w_high_low"
+  ]
+}

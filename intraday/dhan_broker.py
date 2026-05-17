@@ -64,9 +64,14 @@ class DhanBrokerClient(BrokerClient):
     # ------------------------------------------------------------------
 
     def _headers(self) -> dict[str, str]:
-        """Return common request headers including the access token."""
+        """Return common request headers including the access token + client-id.
+
+        Note: client-id is REQUIRED by Dhan optionchain endpoint per official docs.
+        Other endpoints (orders, positions) accept it without harm.
+        """
         return {
             "access-token": self.access_token,
+            "client-id": self.client_id,
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
@@ -473,70 +478,93 @@ class DhanBrokerClient(BrokerClient):
     # Option Chain
     # ------------------------------------------------------------------
 
-    def get_option_chain(self, index: str) -> dict:
-        """Fetch live option chain from Dhan API.
+    def get_option_chain(self, index: str, expiry: str = "") -> dict:
+        """Fetch live option chain from Dhan API per official v2 spec.
 
-        Uses Dhan's ``/v2/optionchain`` endpoint.  Returns raw JSON with
-        strikes, OI, IV, LTP, bid/ask for all expiries.
+        Endpoint: POST /v2/optionchain
+        Payload: {"UnderlyingScrip": , "UnderlyingSeg": "IDX_I", "Expiry": "YYYY-MM-DD"}
+        Headers: access-token + client-id (both required)
 
         Parameters
         ----------
         index : str
-            Index name — ``"NIFTY"``, ``"BANKNIFTY"``, or ``"FINNIFTY"``.
+            "NIFTY", "BANKNIFTY", or "FINNIFTY".
+        expiry : str
+            Expiry "YYYY-MM-DD". If empty, fetches expirylist and uses nearest.
 
         Returns
         -------
-        dict
-            Raw option chain data from Dhan.
+        dict with keys: index, spot_price, expiry_date, strikes (flat list).
         """
-        # Dhan security IDs for index options
-        SECURITY_IDS = {
-            "NIFTY": "26000",
-            "BANKNIFTY": "26009",
-            "FINNIFTY": "26037",
+        # Per Dhan v2 docs: NIFTY=13, BANKNIFTY=25, FINNIFTY=27 (UnderlyingScrip ints, not 26000-series)
+        SCRIP_IDS = {
+            "NIFTY": 13,
+            "BANKNIFTY": 25,
+            "FINNIFTY": 27,
         }
 
-        sec_id = SECURITY_IDS.get(index.upper())
-        if not sec_id:
+        scrip_id = SCRIP_IDS.get(index.upper())
+        if scrip_id is None:
             raise ValueError(f"Unknown index '{index}' for Dhan option chain")
 
-        logger.info("Dhan get_option_chain: %s (securityId=%s)", index, sec_id)
+        # Step 1: get nearest expiry if not provided
+        if not expiry:
+            try:
+                exp_resp = self._session.post(
+                    f"{BASE_URL}/optionchain/expirylist",
+                    json={"UnderlyingScrip": scrip_id, "UnderlyingSeg": "IDX_I"},
+                    headers=self._headers(),
+                    timeout=10,
+                )
+                if exp_resp.status_code == 200:
+                    exp_data = exp_resp.json()
+                    expiries = exp_data.get("data", [])
+                    if expiries:
+                        expiry = expiries[0]
+                        logger.info("Dhan expirylist: nearest=%s (total=%d)", expiry, len(expiries))
+                else:
+                    logger.warning("Dhan expirylist HTTP %s: %s", exp_resp.status_code, exp_resp.text[:200])
+            except Exception as e:
+                logger.warning("Dhan expirylist fetch failed: %s", e)
 
-        # Dhan option chain endpoint
+        if not expiry:
+            logger.error("Dhan optionchain: no expiry available for %s", index)
+            return {"index": index, "spot_price": 0.0, "expiry_date": "", "strikes": []}
+
+        logger.info("Dhan get_option_chain: %s (scrip=%d, expiry=%s)", index, scrip_id, expiry)
+
+        # Step 2: fetch the actual chain
         payload = {
-            "Data": {
-                "Seg": "I",
-                "Sid": sec_id,
-                "Exp": 0,  # 0 = current expiry, 1 = next expiry
-            }
+            "UnderlyingScrip": scrip_id,
+            "UnderlyingSeg": "IDX_I",
+            "Expiry": expiry,
         }
 
         resp = self._session.post(
             f"{BASE_URL}/optionchain",
             json=payload,
             headers=self._headers(),
+            timeout=15,
         )
 
         if resp.status_code != 200:
-            # Fallback: try the v2 marketfeed endpoint
             logger.warning(
-                "Dhan optionchain returned HTTP %s — trying marketfeed fallback",
-                resp.status_code,
+                "Dhan optionchain HTTP %s for %s: %s",
+                resp.status_code, index, resp.text[:300]
             )
-            return self._get_option_chain_via_marketfeed(index, sec_id)
+            return {"index": index, "spot_price": 0.0, "expiry_date": expiry, "strikes": []}
 
         try:
             data = resp.json()
         except ValueError:
-            raise RuntimeError(f"Dhan option chain: invalid JSON for {index}")
+            logger.error("Dhan optionchain: invalid JSON for %s", index)
+            return {"index": index, "spot_price": 0.0, "expiry_date": expiry, "strikes": []}
 
-        if not data or data.get("status") == "failure":
-            raise RuntimeError(
-                f"Dhan option chain failed for {index}: {data.get('remarks', 'unknown error')}"
-            )
+        if not data or data.get("status") != "success":
+            logger.warning("Dhan optionchain status=%s for %s", data.get("status"), index)
+            return {"index": index, "spot_price": 0.0, "expiry_date": expiry, "strikes": []}
 
-        # Normalize to standard format
-        return self._normalize_option_chain(index, data)
+        return self._normalize_option_chain_v2(index, expiry, data)
 
     def _get_option_chain_via_marketfeed(self, index: str, sec_id: str) -> dict:
         """Fallback: fetch option chain via Dhan market feed API."""
@@ -552,6 +580,56 @@ class DhanBrokerClient(BrokerClient):
             )
 
         return resp.json()
+
+    @staticmethod
+    def _normalize_option_chain_v2(index: str, expiry: str, raw: dict) -> dict:
+        """Parse Dhan v2 optionchain response into pnl_calculator's expected format.
+
+        Dhan v2 returns:
+          {"data": {"last_price": 25642.8,
+                    "oc": {"25650.000000": {"ce": {...}, "pe": {...}}, ...}},
+           "status": "success"}
+
+        Returns:
+          {"index": str, "spot_price": float, "expiry_date": str,
+           "strikes": [{"strike_price": ..., "option_type": "CE"|"PE",
+                        "ltp": ..., "bid_price": ..., "ask_price": ...,
+                        "open_interest": ..., "volume": ..., "iv": ...}, ...]}
+        """
+        data = raw.get("data", {})
+        spot = float(data.get("last_price", 0) or 0)
+        oc = data.get("oc", {}) or {}
+
+        strikes = []
+        for strike_str, leg_pair in oc.items():
+            try:
+                strike_price = float(strike_str)
+            except (TypeError, ValueError):
+                continue
+
+            for opt_type_lower in ("ce", "pe"):
+                leg = leg_pair.get(opt_type_lower)
+                if not leg:
+                    continue
+                strikes.append({
+                    "strike_price": strike_price,
+                    "option_type": opt_type_lower.upper(),
+                    "expiry_date": expiry,
+                    "ltp": float(leg.get("last_price", 0) or 0),
+                    "bid_price": float(leg.get("top_bid_price", 0) or 0),
+                    "ask_price": float(leg.get("top_ask_price", 0) or 0),
+                    "open_interest": int(leg.get("oi", 0) or 0),
+                    "oi_change": int((leg.get("oi", 0) or 0) - (leg.get("previous_oi", 0) or 0)),
+                    "volume": int(leg.get("volume", 0) or 0),
+                    "iv": float(leg.get("implied_volatility", 0) or 0),
+                })
+
+        return {
+            "index": index,
+            "spot_price": spot,
+            "expiry_date": expiry,
+            "strikes": strikes,
+        }
 
     @staticmethod
     def _normalize_option_chain(index: str, raw: dict) -> dict:
@@ -630,3 +708,66 @@ class DhanBrokerClient(BrokerClient):
             "spot_price": spot_price,
             "strikes": strikes,
         }
+
+    # ------------------------------------------------------------------
+    # Historical OHLC (Data API — requires subscription)
+    # ------------------------------------------------------------------
+
+    def get_historical_ohlc(
+        self,
+        security_id: str,
+        exchange_segment: str,
+        instrument: str,
+        interval: str,
+        from_date: str,
+        to_date: str,
+    ) -> dict | None:
+        """Fetch historical OHLC candles from Dhan /v2/charts/intraday.
+
+        Parameters
+        ----------
+        security_id : str
+            Dhan security ID (e.g. "11536" for TCS).
+        exchange_segment : str
+            "NSE_EQ", "BSE_EQ", "NSE_FNO", etc.
+        instrument : str
+            "EQUITY", "FUTIDX", "OPTIDX", etc.
+        interval : str
+            Candle interval: "1", "5", "15", "25", "60".
+        from_date : str
+            Start date "YYYY-MM-DD".
+        to_date : str
+            End date "YYYY-MM-DD".
+
+        Returns
+        -------
+        dict | None
+            Dict with keys: open, high, low, close, volume, timestamp
+            (each is a list). Returns None on failure.
+        """
+        url = f"{BASE_URL}/charts/intraday"
+        payload = {
+            "securityId": security_id,
+            "exchangeSegment": exchange_segment,
+            "instrument": instrument,
+            "interval": interval,
+            "fromDate": from_date,
+            "toDate": to_date,
+        }
+        try:
+            resp = self._session.post(
+                url, headers=self._headers(), json=payload, timeout=15,
+            )
+            if resp.status_code == 200:
+                data = resp.json()
+                if isinstance(data, dict) and "open" in data:
+                    return data
+                logger.warning("Dhan historical OHLC: unexpected response structure")
+                return None
+            else:
+                logger.warning("Dhan historical OHLC HTTP %s for %s", resp.status_code, security_id)
+                return None
+        except Exception as e:
+            logger.error("Dhan historical OHLC error for %s: %s", security_id, e)
+            return None
+
