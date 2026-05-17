@@ -171,8 +171,10 @@ class FnO_Position_Monitor:
         ]
 
         count = 0
+        positions = self._fetch_positions()
         for strat in open_strategies:
-            self._execute_exit(strat["id"], "FORCE_EXITED", 0, now)
+            current_premium = self._compute_current_premium(strat, positions)
+            self._execute_exit(strat["id"], "FORCE_EXITED", current_premium, now)
             count += 1
             self.db.insert_audit_log(
                 "FNO_EXIT",

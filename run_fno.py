@@ -192,6 +192,20 @@ def main() -> None:
         db.close()
         sys.exit(1)
 
+    # ── Phase 5b: Auth real broker for option chain (paper needs real prices) ──
+    chain_broker = broker  # Live mode: same broker
+    if is_paper:
+        try:
+            chain_broker = authenticate_broker(
+                broker_name=config.broker,
+                broker_config=broker_config,
+                dry_run=False,  # Real auth for option chain reads
+            )
+            logger.info("Paper mode: authenticated real broker for option chain fetch")
+        except Exception as exc:
+            logger.warning("Paper mode: real broker auth failed (%s) — will use demo chains", exc)
+            chain_broker = None
+
     # ── Phase 6: Fetch option chains ──
     phase_log("Option Chain Fetch", "START")
     try:
@@ -202,7 +216,7 @@ def main() -> None:
 
         for index in config.allowed_indices:
             snapshots = fetcher.fetch_option_chain(
-                index, broker_client=broker, demo=(config.mode == "paper"),
+                index, broker_client=chain_broker, demo=(chain_broker is None),
             )
             if snapshots:
                 chains[index] = snapshots[0]  # Current expiry
