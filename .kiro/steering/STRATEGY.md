@@ -295,41 +295,57 @@ VEDL +2.66% picked because 38M raw volume.
 
 ---
 
-## ACTIVE BUGS
+## ACTIVE BUGS (as of 2026-05-15)
 
-### Critical
-| ID | File | Description | Fix Approach |
-|----|------|-------------|-------------|
-| EE | llm/bedrock_client.py | Opus times out at 9:26 AM | Add Config(read_timeout=60) to boto3 client |
-| FF | fetchers/nse_market_movers.py | gainers/losers returns 0 | Check actual API response keys, fix parser |
-| GG | intraday/monitor.py | Live P&L stays Rs.0 | Fetch live LTP from NSE in _compute_current_premium |
-| HH | intraday/executor.py | 0 orders placed after sizing | Check max_trades gate logic |
+### Critical (need Monday validation)
+| ID | File | Status |
+|----|------|--------|
+| 5 | intraday/risk_manager.py | FIXED — counts all non-rejected/cancelled BUYs as trades. Validate Monday. |
+| T | fno/monitor.py + pnl_calculator.py | FIXED — real Dhan option chain prices. Validate Monday market hours. |
+| HH | intraday/executor.py | OPEN — 0 orders placed at 12:03 PM neha-live May 14, root cause unknown |
 
 ### High
 | ID | File | Description |
 |----|------|-------------|
-| SCANNER | intraday/scanner.py | RS-first patch UNVERIFIED |
-| SHORT-RR | intraday/risk_manager.py | SHORT R:R = 0.0 in sizing |
-| L | fno/strategy_engine.py | legs_json missing expiry_date |
-| T | fno/monitor.py | Live P&L never changes |
+| TELEGRAM-WIRE | alerts/telegram.py | Module ready, not called from monitor/executor |
+| SL-TIMING | intraday/executor.py | SL placed before BUY confirmed fill |
+| L | fno/strategy_engine.py | legs_json expiry_date partial fix |
+| DASHBOARD-NEHA-LIVE | dashboard/index.html | neha-live tab missing in UI nav |
+
+### Recently Fixed (2026-05-14 to 2026-05-15)
+| ID | Commit | Description |
+|----|--------|-------------|
+| EE | 23a0261 | Bedrock 60s read_timeout |
+| FF | 23a0261, 68e910c | NSE gainers + losers (SecLwr20) |
+| GG | 23a0261 | Live P&L NSE LTP fallback |
+| SHORT-RR | 23a0261 | Direction-aware R:R math |
+| SCANNER | 6ef8ab5, 8fe6d03 | RS-First v3 scoring verified live |
+| 1 | a9df59b | Momentum-aware volume filter |
+| 2 | 68e910c | NSE losers SecLwr20 |
+| 3 | a0ec15e | Buffered limit + MARKET fallback |
+| 6 | abb236e, 7777382 | neha-live S3 sync |
 
 ---
 
-## NEXT TO BUILD (priority order)
+## NEXT TO BUILD (priority order, as of 2026-05-15)
+
+### Monday May 18 — Validation Day
+1. Verify Bug 5 (max_trades_per_day) holds under continuous scan
+2. Verify Bug T (F&O real prices) — option chain HTTP 200 during market hours
+3. Verify Bug 6 (neha-live S3 sync) — data visible from OLD EC2 dashboard
+4. Verify Bugs 1, 2, 3 (scanner v3.1) on live market data
 
 ### This Week
-1. Verify + finish RS-first scanner scoring
-2. Fix Bug HH (0 orders placed)
-3. Fix Bug FF (NSE gainers 0)
-4. Fix Bug GG (live P&L = 0)
-5. Add Bedrock 60s timeout
-6. Continuous scanning every 15 min (9:30-13:00)
+1. Fix Bug HH (0 orders placed) — root cause investigation
+2. Wire Telegram alerts (TELEGRAM-WIRE) — phone notifications on real money
+3. Fix dashboard neha-live tab (UI nav)
+4. Fix SL-TIMING (wait for BUY fill before placing SL)
 
 ### Next Week
 1. Swing module foundation
-2. Telegram alerts wired
-3. Backtest framework start
-4. Pre-market intelligence (SGX Nifty, FII data at 8:30 AM)
+2. Backtest framework start
+3. Pre-market intelligence (SGX Nifty, FII data at 8:30 AM)
+4. Evaluate F&O strategies after 7 days clean MTM data
 
 ### This Month
 1. Positional module

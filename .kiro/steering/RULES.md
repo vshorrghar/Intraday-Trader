@@ -490,15 +490,24 @@ Continuous intraday scanning every 15 min, 9:30 AM - 1:00 PM IST (4:00-7:30 UTC)
 F&O paper (all profiles, single run at market open)
 50 3 * * 1-5 run_fno_daily.sh --profile vishal (9:20 AM) 52 3 * * 1-5 run_fno_daily.sh --profile neha (9:22 AM) 54 3 * * 1-5 run_fno_daily.sh --profile vishal-live (9:24 AM, paper mode)
 
+F&O mark-to-market every 30 min during market hours (NEW 2026-05-15)
+*/30 4-9 * * 1-5 update_all_open_strategies for vishal-live, vishal, neha >> logs/fno_pnl_update.log 2>&1
+
 Top performers capture (3:35 PM IST = 10:05 UTC, 20 min after close)
 5 10 * * 1-5 cd ~/dev-sandbox && .venv/bin/python3 scripts/capture_top_performers.py >> logs/top_performers.log 2>&1
 
 Dashboard sync + CloudFront invalidation (hourly 9 AM - 5 PM IST)
-0 3-10 * * 1-5 (S3 sync + CloudFront invalidation)
+0 3-10 * * 1-5 (S3 sync, --exclude "db-sync/*" to preserve NEW EC2 DB)
 
 NEW EC2 (13.202.63.223) — runs neha-live ONLY:
 Continuous neha-live scanning every 15 min
 */15 4-7 * * 1-5 cd ~/dev-sandbox && export AWS_PROFILE=vishal-admin && .venv/bin/python3 run_intraday.py --profile neha-live --live >> logs/cron_neha_live.log 2>&1
+
+neha-live DB sync to S3 every 15 min (NEW 2026-05-15)
+*/15 4-10 * * 1-5 bash scripts/sync_neha_live_db.sh
+
+neha-live dashboard JSON sync to S3 every 15 min (NEW 2026-05-15)
+*/15 4-10 * * 1-5 bash scripts/sync_neha_live_dashboard.sh
 
 Why continuous (every 15 min):
 - Catches mid-session breakouts
