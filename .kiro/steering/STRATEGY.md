@@ -156,6 +156,61 @@ Sync: scripts/sync_top_performers.py (runs after capture)
 
 ## EVOLUTION LOG (newest first)
 
+### v3.4 — 2026-05-17 evening (DATA API LIVE + BACKTEST FOUNDATION)
+Commit: 562030d
+
+Tonight's session unlocked two major capabilities:
+
+**1. Dhan Data API subscription active (Rs.499/month)**
+For client_id 1110941563 (vishal, vishal-live profiles).
+NOT covered: client_id 1111523334 (neha, neha-live).
+
+Unlocks:
+- Real option chain reads (option_chain endpoint, 470 strikes with Greeks/IV/OI)
+- Historical OHLC API (/v2/charts/intraday) — minute candles for any equity
+- Live Market Feed (WebSocket) — not yet wired
+- Bulk market quotes — not yet wired
+
+**2. Backtest engine v0.1**
+
+intraday/dhan_broker.py: added get_historical_ohlc() method per Dhan v2 spec.
+Verified: 750 5-min candles for TCS over 11 trading days, real OHLC data.
+
+backtest/data_loader.py:
+- load_nifty50_universe() — 50 hardcoded symbol→securityId mappings
+- fetch_and_cache_historical() — 200ms rate-limited, JSON cache per symbol/range
+- Cache: cache/historical/{symbol}_{interval}min_{from}_{to}.json
+
+backtest/scanner_replay.py:
+- replay_scanner_for_date() — uses first 3 candles (9:15-9:30 AM) as scan snapshot
+- _score_stock_at_930() — replicates 7 of 9 scanner v3 signals
+- compare_picks_to_actuals() — falls back to self-comparison if DB top performers empty
+- run_backtest() — date range loop, JSON output
+
+**HONEST LIMITATIONS of v0.1:**
+
+Signals replicated (7):
+- Intraday continuation
+- Momentum strength (vs prev close)
+- Price near day high
+- Volume confirmation (extrapolated 3-candle to full day)
+- FNO bonus (hardcoded Nifty 50 list)
+- Time multiplier (fixed 1.5x for 9:30 AM)
+- Fade detector
+
+Signals OMITTED:
+- Sector rotation bonus (needs sector index data, not in OHLC)
+- 52-week high/low (needs daily candles, current data is intraday)
+
+First test run: 5 stocks, 4 days. Reported 75% hit rate but **the comparison was self-referential** (fell back to ranking same 5 stocks by their own EOD performance). Real validation needs 50+ stock universe.
+
+### Next Steps For Backtest v0.2
+1. Run with full Nifty 50 universe (50 stocks)
+2. Populate daily_top_performers table for past 30 days OR fetch from Dhan
+3. Add sector data fetcher to enable Signal 6
+4. Add daily OHLC fetcher to enable 52w signals
+5. Validate scanner accuracy on real comparison set
+
 ### v3.3 — 2026-05-17 (BUG T SUB-BUGS)
 Commits: 2584676 (May 16), 4867ef0 (May 17)
 

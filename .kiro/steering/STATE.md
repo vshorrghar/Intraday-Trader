@@ -1,11 +1,94 @@
 # STATE.md — Current Project State
 
-**Last Updated**: 2026-05-17, ~15:00 IST (post-Bug-T-subbugs fix)
+**Last Updated**: 2026-05-17, ~01:00 IST May 18 (~20:30 CET May 17, post-Data-API session)
 **Update Protocol**: Replace TODAY section at end of each session.
 
 ---
 
-## TODAY (2026-05-17) — BUG T SUB-BUGS + NEHA-LIVE PASSWORD
+## TODAY (2026-05-17 evening) — DATA API LIVE + BACKTEST ENGINE v0.1
+
+### Session Outcome
+- Discovered Dhan optionchain code had 3 spec bugs (client-id header, securityId, payload format)
+- Patched all 3 per official Dhan v2 docs
+- Discovered root cause of HTTP 401: Data API not subscribed (paid add-on Rs.499/month)
+- F&O segment activated on Dhan account (client_id 1110941563)
+- Data API subscribed Rs.499/month — pre-flight test confirmed 470 strikes returning real data
+- Built backtest engine v0.1 (data loader + scanner replay) using Dhan historical OHLC API
+- Verified F&O Monday cron path end-to-end (auth + chain fetch + MTM)
+
+### Commits Today (newest first)
+- 562030d — feat: backtest engine v0.1 — Dhan historical OHLC + scanner replay
+- b714f1d — docs: capture Bug T sub-bugs (T-1/T-2/T-3) + neha-live password fix
+- 4ada2c4 — docs: sync STRATEGY active bugs + RULES cron schedule
+- 4867ef0 — fix: Bug T-1/T-2/T-3 sub-bugs (cron, paper auth, force_exit)
+- 2584676 — fix: neha-live password + login mapping
+
+### What Was Built
+**intraday/dhan_broker.py:**
+- `get_historical_ohlc()` method — Dhan /v2/charts/intraday endpoint
+- Verified: 750 candles for TCS over 11 trading days
+
+**backtest/ (NEW MODULE):**
+- `data_loader.py` — fetch + cache historical OHLC (200ms rate limit, 5-min/1-min/15-min/60-min candles)
+- `scanner_replay.py` — replay scanner v3 scoring on past data using 9:30 AM snapshot
+- `results/` — JSON output per backtest run
+- Nifty 50 universe hardcoded (50 symbol→securityId mappings)
+
+### Backtest v0.1 — HONEST SCOPE LIMITATIONS
+First test run: 5 stocks (TCS, INFY, HDFCBANK, RELIANCE, ICICIBANK), 4 trading days
+Result reported by Kiro: "75% avg hit rate"
+
+**Reality check on the 75% number:**
+- Test universe was only 5 stocks
+- "Hit rate" comparison fell back to comparing scanner picks vs EOD performers OF THE SAME 5 STOCKS
+- daily_top_performers DB lookup failed (table empty for those dates)
+- With 5 stocks picking 5 longs, overlap with top performers is trivial
+- **Do NOT quote 75% as scanner accuracy. It's noise on a small universe.**
+
+**What backtest CAN tell us right now:**
+- Code path works end-to-end (auth → fetch → score → compare → save)
+- Historical data structure is correct
+- Scoring logic loads without errors
+
+**What backtest CANNOT tell us yet:**
+- Real scanner accuracy (need 50+ stock universe)
+- Sector rotation impact (signal omitted — needs sector indices)
+- 52w high/low impact (signal omitted — needs daily candles)
+- Time-of-day variations (hardcoded 1.5x multiplier)
+
+### Bug T Status — CODE FIXED + DATA API LIVE
+- 6b8de75 (May 15) — original Bug T fix
+- 4867ef0 (May 17) — sub-bugs T-1, T-2, T-3
+- Tonight — Dhan v2 spec compliance (client-id, UnderlyingScrip ints, expirylist, response parsing)
+- Pre-flight test verified: NIFTY chain returns 470 strikes with spot=23643.5 even off-hours
+- Monday F&O paper WILL use real Dhan option chain prices
+
+### Data API Subscription Coverage
+| Profiles | client_id | Data API |
+|----------|-----------|----------|
+| vishal + vishal-live | 1110941563 | ✅ Subscribed Rs.499/mo |
+| neha + neha-live | 1111523334 | ❌ NOT subscribed |
+
+Decision pending: separate subscription for neha account (Rs.499/mo more) OR accept synthetic data on neha profiles.
+
+### F&O Monday Verification (no code changes, just verification)
+- Auth path: ✅ DhanBrokerClient instantiates correctly
+- Option chain: ✅ 470 strikes returned with real spot price
+- MTM run: ✅ executes (0 updated = correct, no open strategies after May 15 cleanup)
+- Crontab entries verified:
+  - 50 3 * * 1-5 — vishal F&O daily (9:20 AM IST)
+  - 52 3 * * 1-5 — neha F&O daily (9:22 AM IST)
+  - 54 3 * * 1-5 — vishal-live F&O daily paper (9:24 AM IST)
+  - */30 4-9 * * 1-5 — F&O MTM updates every 30 min
+
+### Caveat: scripts/fno_mtm_run.py standalone fails
+Running `python scripts/fno_mtm_run.py` directly fails with `ModuleNotFoundError: No module named 'fno'`.
+The cron wrapper `scripts/fno_mtm_update.sh` does `cd ~/dev-sandbox` first, so cron will work.
+Just don't run the .py file directly without cd to project root.
+
+---
+
+## PREVIOUS SESSION (2026-05-17) — BUG T SUB-BUGS + NEHA-LIVE PASSWORD
 
 ### Session Outcome
 - Bug T fix from May 15 had 3 sub-bugs found by Kiro on May 16-17

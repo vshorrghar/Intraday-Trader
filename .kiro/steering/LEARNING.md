@@ -161,6 +161,93 @@ If scanner v3 fails:
 
 ---
 
+### May 17 evening — Data API + Backtest Foundation (5-hour Sunday session)
+
+#### Money
+No new trades placed (Sunday — markets closed).
+
+#### What We Built
+1. Discovered + fixed 3 Dhan optionchain spec bugs (client-id header, securityId 26000→13, payload schema)
+2. Subscribed Dhan Data API Rs.499/month for vishal account
+3. Activated F&O segment on Dhan account
+4. Added get_historical_ohlc() method to DhanBrokerClient
+5. Built backtest module: data_loader + scanner_replay
+6. Verified F&O Monday cron path end-to-end
+7. First backtest test run: 5 stocks, 4 days
+
+#### What We Learned
+
+1. Data is paywall, not just code
+   We spent weeks debugging "why doesn't F&O paper work?" The answer was simple: Dhan optionchain endpoint requires Rs.499/month Data API subscription. No amount of code fixing changes this.
+   Lesson: when an external API returns 401, FIRST check if it's a subscription issue, not a spec issue. Would have saved Bug T saga days of confusion.
+
+2. AI assistants are optimistic about their own work
+   Kiro reported "75% hit rate" for backtest v0.1. Actual reading of the code shows the comparison fell back to self-referential ranking when DB top performers table was empty. The number is noise, not signal.
+   Lesson: when AI quotes a metric, read the comparison logic. Numbers without methodology are theatre.
+
+3. Foundation > polish
+   v0.1 backtest has limitations (no sector data, omitted 52w signals, small universe). But the code path works end-to-end. Next iterations can add signals incrementally.
+   Lesson: ship the foundation, document gaps honestly, iterate. Don't wait for perfect v1.0.
+
+4. Data API enables much more than F&O
+   ₹499/month was framed as "F&O cost." Actually unlocks:
+   - Backtest engine (validate scanner changes before live)
+   - Faster intraday LTP (replace flaky NSE)
+   - Future: WebSocket real-time monitor
+   - Future: bulk quotes for scanner reliability
+   Real cost-per-capability is much lower than F&O-only framing suggested.
+
+5. Multi-account API tier complications
+   vishal/vishal-live share one Dhan account → Data API covered.
+   neha/neha-live separate Dhan account → NOT covered.
+   Lesson: account-level subscriptions don't propagate. If we want neha profiles to have real data too, need separate Rs.499/mo OR refactor to use vishal account for data fetching only (allowed since data is read-only).
+
+6. Sunday-night cron verification matters
+   F&O Monday verification today caught one issue: fno_mtm_run.py can't be run standalone. Caught now, not at 9:24 AM Monday.
+   Lesson: dry-run cron paths Sunday before they fire Monday.
+
+#### Decisions Made
+- Subscribed Dhan Data API Rs.499/month (vishal account only)
+- Did NOT subscribe for neha account (defer until intraday profitable for both)
+- Did NOT enable any real-money F&O code path
+- Did NOT modify scanner.py / executor.py / monitor.py / risk_manager.py
+- Built backtest as separate module to avoid touching live trading code
+- Accepted Kiro's 75% hit rate as theatre; documented limitations honestly
+
+#### What Monday May 18 Will Tell Us
+**Critical real-money tests:**
+- Bug 5 (max_trades_per_day) holds under continuous scan
+- Scanner v3.1 (Bugs 1, 2, 3) on first full live week
+- Real money intraday outcome
+
+**F&O paper observation (no real money, free learning):**
+- F&O cron at 9:24 AM places strategies with REAL Dhan option prices for first time
+- MTM cron updates every 30 min with real LTP
+- First time we'll see legitimate strategy P&L numbers, not synthetic
+
+**What we are NOT testing Monday:**
+- Backtest accuracy (small universe, broken comparison)
+- Telegram alerts (not wired)
+- Dhan trade reconciliation (not built)
+- Super order migration (not done)
+
+#### Honest Self-Assessment
+- 6 commits today, real infrastructure shipped
+- Real money exposure unchanged: ~Rs.25K live, capped at Rs.1,800 max daily loss
+- Data API subscription: Rs.499/month recurring cost. Justified IF intraday profitable + backtest extended + F&O eventually live.
+- Risk Monday: Bug 5 has never been live-tested. Scanner v3.1 has 1 day of live data.
+- Backtest engine: foundation only. Don't trust 75% number. Run with bigger universe before quoting any accuracy stats.
+
+#### Next Session (Tuesday or next weekend)
+Priority order:
+1. Update backtest to full Nifty 50 universe (50 not 5)
+2. Populate daily_top_performers from Dhan historical (not relying on capture cron alone)
+3. Wire Telegram alerts (real-money safety priority)
+4. Build Dhan trade reconciliation script
+5. Decide on neha account Data API subscription based on Monday outcome
+
+---
+
 ### May 16-17 — Bug T Sub-Bugs Discovered + Fixed
 
 #### Money
