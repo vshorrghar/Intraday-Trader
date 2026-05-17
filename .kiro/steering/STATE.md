@@ -1,11 +1,41 @@
 # STATE.md — Current Project State
 
-**Last Updated**: 2026-05-15, ~23:00 IST (end of triple-stream session)
+**Last Updated**: 2026-05-17, ~15:00 IST (post-Bug-T-subbugs fix)
 **Update Protocol**: Replace TODAY section at end of each session.
 
 ---
 
-## TODAY (2026-05-15) — TRIPLE-STREAM SESSION
+## TODAY (2026-05-17) — BUG T SUB-BUGS + NEHA-LIVE PASSWORD
+
+### Session Outcome
+- Bug T fix from May 15 had 3 sub-bugs found by Kiro on May 16-17
+- T-1: MTM cron replaced broken one-liner with scripts/fno_mtm_run.py
+- T-2: Paper mode now auths real Dhan broker for option chain fetch
+- T-3: force_exit_all computes current_premium instead of passing 0
+- neha-live dashboard password + login mapping fixed
+- Pillar docs synced (STRATEGY active bugs + RULES cron schedule)
+
+### Commits Today (newest first)
+- 4ada2c4 — docs: sync STRATEGY active bugs + RULES cron schedule
+- 4867ef0 — fix: Bug T-1/T-2/T-3 sub-bugs (May 17, 14:55 IST)
+- 2584676 — fix: neha-live password + login mapping (May 16, 21:38 IST)
+
+### Bug T Status — NOW PROPERLY FIXED
+Original Bug T fix on May 15 (commit 6b8de75) had 3 holes:
+- T-1: cron one-liner broken — wrapper script created
+- T-2: paper mode skipped Dhan auth — option chain returned nothing
+- T-3: force_exit passed current_premium=0 — synthetic P&L on exits
+
+All 3 patched in commit 4867ef0. Now needs full Monday May 18 validation.
+
+### Pillar Doc Sync (commit 4ada2c4)
+- STRATEGY.md: ACTIVE BUGS table updated (removed EE/FF/GG/SHORT-RR/SCANNER as fixed; added Recently Fixed log)
+- STRATEGY.md: NEXT TO BUILD updated (Monday validation list, current week tasks)
+- RULES.md: Section 6 cron schedule now includes F&O MTM + neha-live S3 syncs
+
+---
+
+## PREVIOUS SESSION (2026-05-15) — TRIPLE-STREAM SESSION
 
 ### Session Outcome
 - Stream 1: Scanner v3 bugfixes (Bugs 1, 2, 3 from Day 1 production)

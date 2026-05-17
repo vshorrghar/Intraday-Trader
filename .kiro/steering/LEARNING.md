@@ -161,6 +161,94 @@ If scanner v3 fails:
 
 ---
 
+### May 16-17 — Bug T Sub-Bugs Discovered + Fixed
+
+#### Money
+No new trades placed (weekend Saturday + Sunday — markets closed).
+
+#### What Happened
+After Friday May 15 Bug T fix shipped, Kiro reviewed the code over the weekend
+and found three sub-bugs that defeated the original fix:
+
+T-1: MTM cron was a broken one-liner
+- We embedded Python inside a shell -c string in the cron entry
+- Worked when run manually, broke under cron's env
+- Result: MTM cron silently did nothing
+- Fix: proper script scripts/fno_mtm_run.py + wrapper sh
+
+T-2: Paper mode never authed Dhan
+- run_fno.py only called Dhan auth when --live flag was set
+- Paper mode used DryRunBrokerClient
+- option_chain_cache needed real Dhan client to fetch chains
+- Result: every paper option chain request returned None silently
+- Fix: paper mode now auths real Dhan (read-only calls only)
+
+T-3: force_exit passed zero premium
+- force_exit_all (called at expiry day 3 PM) logged P&L with current_premium=0
+- This is the most important exit path for short premium strategies
+- Defeated entire Bug T fix on exits
+- Fix: compute current_premium from option chain before recording
+
+Plus side fix Saturday May 16:
+- neha-live dashboard password was missing from passwords.json
+- index.html mapping for neha-live was broken
+- Created proper separate password for neha-live
+
+#### What We Learned
+1. A "fix" isn't fixed until end-to-end runs prove it
+   We thought Bug T was done Friday night.
+   Three holes in the fix would have shown synthetic P&L Monday again.
+   Lesson: every fix needs a validation path that exercises the full code path.
+   Cron-driven fixes especially — running the script manually != cron context.
+
+2. Cron context bites
+   Inline shell -c with Python embedded is fragile.
+   Cron env, Python path, working directory all differ from interactive shell.
+   Always: write a script file, test it as cron-context (env -i), then schedule.
+
+3. Paper mode drifting from live mode is dangerous
+   Paper skipped Dhan auth as "optimization" — broke the data infrastructure.
+   When paper and live diverge, paper data becomes worthless.
+   Lesson: paper mode should differ from live ONLY at the order placement step.
+   Everything else (auth, data fetch, monitoring) must be identical.
+
+4. Audit ALL exit paths, not just one
+   T-3 only addresses force_exit_all.
+   Other exit paths (target hit, SL hit, manual close) may still have similar bugs.
+   Lesson: when fixing P&L on exits, grep for every place P&L is recorded.
+
+5. Weekend code review caught what Friday rush missed
+   Friday session was 5+ hours, multiple streams. Tunnel vision.
+   Saturday/Sunday calm review found 3 holes.
+   Lesson: high-stakes fixes deserve next-day review before Monday opens.
+
+#### Decisions Made
+- All 4 commits accepted into main (3 Kiro + 1 doc sync)
+- No capital changes
+- Pillar docs synced to reflect new reality
+- Monday validation now covers Bug T-1, T-2, T-3 in addition to original Bug T
+
+#### What Monday May 18 Will Tell Us
+If Bug T sub-bugs really fixed:
+- logs/fno_pnl_update.log shows entries every 30 min during market
+- fno_trades.current_price column populated with real values
+- Force exits log non-zero P&L
+- neha-live dashboard accessible from CloudFront
+
+If still broken:
+- T-1 fail mode: fno_pnl_update.log empty
+- T-2 fail mode: option_chain cache files missing or empty
+- T-3 fail mode: expiry-day exit P&L = 0 again
+- Each is independently observable, easy to diagnose
+
+#### Honest Self-Assessment
+- Friday's fix wasn't actually fixed. Caught it in time.
+- Real money exposure unchanged (F&O is paper).
+- Pillar docs are now genuinely current (not just claiming to be).
+- Bug T saga shows: complex fixes need post-session review.
+
+---
+
 ### May 15 — Evening: F&O Bug T + Bug 6 + Bug 5 Discovery (5+ hour session)
 
 #### Money (no new trades after market — building only)

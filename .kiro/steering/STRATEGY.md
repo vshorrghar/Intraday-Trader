@@ -156,6 +156,44 @@ Sync: scripts/sync_top_performers.py (runs after capture)
 
 ## EVOLUTION LOG (newest first)
 
+### v3.3 — 2026-05-17 (BUG T SUB-BUGS)
+Commits: 2584676 (May 16), 4867ef0 (May 17)
+
+After May 15 Bug T fix shipped, Kiro found 3 sub-bugs that defeated the original fix:
+
+T-1: MTM cron one-liner broken
+- Inline shell -c with embedded Python failed under cron environment
+- Replaced with scripts/fno_mtm_run.py (proper Python entry)
+- Wrapper scripts/fno_mtm_update.sh handles env + logging
+- Cron now points to wrapper script
+
+T-2: Paper mode skipped Dhan auth
+- run_fno.py paper mode never called auth -> option_chain_cache had no client
+- All option chain fetches returned None silently
+- Fix: paper mode now auths real Dhan broker (read-only API calls)
+- Real money trades still gated by --live flag
+
+T-3: force_exit_all passed current_premium=0
+- Force exit at expiry day 3 PM logged P&L using zero premium
+- Defeated entire Bug T fix on the most important exit path
+- Fix: compute current_premium from option chain BEFORE recording exit P&L
+
+Side fix (commit 2584676):
+- neha-live didn't have dashboard login entry in passwords.json
+- index.html mapping for neha-live was broken
+- Now: neha and neha-live separate passwords, vishal/vishal-live shared
+
+Validation expected Monday May 18:
+- F&O strategies show real entry prices in DB
+- MTM cron runs every 30 min and updates current_price column
+- Force exits at expiry log real P&L not zero
+- neha-live dashboard accessible at ?profile=neha-live
+
+Risks:
+- Paper mode now hitting Dhan API for option chain — uses 1 API call/30min/profile
+- If Dhan rate-limits, fallback to NSE bhavcopy still not built
+- T-3 fix only addresses force_exit_all; other exit paths may still pass 0
+
 ### v3.2 — 2026-05-15 (BUG 5 + BUG T + STREAM 3)
 Commits: a9df59b, 68e910c, a0ec15e, 6b8de75
 
@@ -301,7 +339,7 @@ VEDL +2.66% picked because 38M raw volume.
 | ID | File | Status |
 |----|------|--------|
 | 5 | intraday/risk_manager.py | FIXED — counts all non-rejected/cancelled BUYs as trades. Validate Monday. |
-| T | fno/monitor.py + pnl_calculator.py | FIXED — real Dhan option chain prices. Validate Monday market hours. |
+| T | fno/monitor.py + pnl_calculator.py + run_fno.py + scripts/fno_mtm_run.py | FIXED in 6b8de75 + 4867ef0 (T-1/T-2/T-3 sub-bugs). Validate Monday market hours. |
 | HH | intraday/executor.py | OPEN — 0 orders placed at 12:03 PM neha-live May 14, root cause unknown |
 
 ### High
