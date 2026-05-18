@@ -27,6 +27,7 @@ class Risk_Manager:
         self._capital_used_today: float = 0.0
         self._realized_loss_today: float = 0.0
         self._trades_placed_today: int = 0
+        self._symbols_traded_today: set = set()
 
         # Restore from DB if available
         if db is not None:
@@ -105,6 +106,15 @@ class Risk_Manager:
         capital_allocated = 0.0
 
         for trade in trades:
+            # Same-symbol re-entry block: prevent re-picking already-traded stock
+            sym_upper = (trade.tradingsymbol or "").upper()
+            if sym_upper and sym_upper in self._symbols_traded_today:
+                logger.warning(
+                    "Skipping %s — already traded today (same-symbol re-entry block)",
+                    trade.nse_symbol,
+                )
+                continue
+
             if trade.entry_price <= 0:
                 continue
 
@@ -149,6 +159,7 @@ class Risk_Manager:
                 continue
 
             sized.append(trade)
+            self._symbols_traded_today.add(sym_upper)
             logger.info(
                 "Sized %s: %d shares × ₹%.2f = ₹%.0f (conf %d, R:R %.1f)",
                 trade.nse_symbol, qty, trade.entry_price, trade_capital,
@@ -238,16 +249,23 @@ class Risk_Manager:
             # Exclude only: never-filled PENDING stubs, rejected, cancelled, failed
             # Bug 5 fix (2026-05-15): old logic excluded OPEN positions, so continuous scanning
             # bypassed max_trades_per_day limit. Trades only counted AFTER they closed.
+            # Bug 5b fix (2026-05-18): SHORT entries have action=SELL, were
+            # invisible to old BUY-only filter. Every intraday_trades row is
+            # one entry trade (LONG=BUY, SHORT=SELL). Count both directions.
             EXCLUDED_STATUSES = {"REJECTED", "CANCELLED", "FAILED", "ABANDONED", "PENDING"}
-            buy_trades = [
+            entry_trades = [
                 t for t in trades
-                if t.get("action", "").upper() == "BUY"
-                and t.get("status", "").upper() not in EXCLUDED_STATUSES
+                if t.get("status", "").upper() not in EXCLUDED_STATUSES
             ]
-            self._trades_placed_today = len(buy_trades)
+            self._trades_placed_today = len(entry_trades)
+            self._symbols_traded_today = {
+                t.get("tradingsymbol", "").upper()
+                for t in entry_trades
+                if t.get("tradingsymbol")
+            }
             self._capital_used_today = sum(
                 float(t.get("price", 0)) * int(t.get("quantity", 0))
-                for t in buy_trades
+                for t in entry_trades
             )
 
             logger.info(
