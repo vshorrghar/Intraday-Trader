@@ -651,3 +651,112 @@ Today we lost Rs.165 real money.
 But we identified WHY the scanner picks wrong stocks.
 And we know exactly how to fix it.
 That knowledge is worth more than Rs.165.
+
+---
+
+### May 18 — Duplicate Order Bug Discovered (Hardest Day Yet)
+
+#### Money
+| Account | DB said | Dhan actual | Reality |
+|---------|---------|-------------|---------|
+| vishal-live | +Rs.14 | -Rs.248 | DB off by 17x |
+| neha-live | -Rs.66 | -Rs.469.50 | DB off by 7x |
+| Combined | -Rs.52 | -Rs.717.52 | DB hid 14x of real loss |
+
+Cumulative real money lost since May 12 (5 trading days): ~Rs.1,200-1,500.
+Roughly 5% of combined Rs.29K capital in 5 days.
+Annual run rate if continued: 50%+ losses.
+
+#### What Happened (technical)
+
+System places EACH trade 2-4 times instead of once. Pattern:
+- TATASTEEL on vishal-live: DB shows 21 qty, Dhan shows 84 qty (4x)
+- BANDHAN on neha: DB 21 qty, Dhan 42 qty (2x)
+- ETERNAL on vishal-live: 38 qty traded but ZERO record in DB (phantom)
+- TECHM was the only stock where qty matched (1x)
+
+This is not Bug 5 (which was about trade count limit). This is per-order duplication.
+Some path in code submits the same order to Dhan multiple times, with our DB only
+recording one of them. Result: position size is multiple of what we think, P&L is
+multiple of what DB shows, daily loss limit can be silently breached if positions
+are large.
+
+#### How I Found It
+
+Neha sent screenshot from her Dhan app showing -Rs.469.50 across 5 positions.
+My DB queries said -Rs.66 across 6 trades. 7x discrepancy.
+
+I initially defended the DB number ("you only lost Rs.66, system worked").
+She pushed back. I pulled real data from Dhan /v2/positions API directly.
+Truth was Rs.469.50, not Rs.66. Real positions had double-quadruple quantity.
+
+If neha hadn't pushed back, I would have told her "system worked, you lost Rs.66."
+That would have been wrong. She was right to question it.
+
+#### What I Got Wrong This Session
+
+1. Trusted DB without verifying against broker source of truth.
+   For real money decisions, broker API > our DB. Always.
+
+2. Got stuck in fix-by-shortcut mode when tired.
+   Used sed regex on crontab without verifying state. Broke crontab.
+   Then used Python regex on top of that. Made it worse.
+   User asked "why not just comment?" — that was the right answer.
+
+3. Skipped backup verification.
+   Made backup of empty crontab, didn't check `wc -l` was non-zero.
+   Then tried to restore from empty backup later.
+
+4. Wrote off committed setup_cron.sh as "from old project" without reading carefully.
+   User pushed back: "we should have it on github no?"
+   They were right. Used `git grep` and `git log -p` and found canonical schedule
+   in steering docs all along.
+
+5. Repeatedly told user to "go to sleep" / "fix tomorrow" without listening
+   when they said it was 1pm CET and they had full day.
+   Stopped pushing my schedule preference once they made direction clear.
+
+#### What User Got Right
+
+1. Pushed back on "neha only lost Rs.66" → led to discovering real Rs.469 + duplicate bug
+2. Pushed back on "delete crontab line" → suggested commenting (better engineering)
+3. Pushed back on "we'll reconstruct from memory" → found canonical schedule in git
+4. Stayed calm when crontab was wiped — didn't catastrophize, didn't panic
+5. Made clear direction: vishal-live LIVE, neha-live STOP, fix bug — no waffle
+
+#### Decisions Made
+
+1. neha-live trading STOPPED indefinitely (user direction)
+2. vishal-live continues LIVE (user direction)
+3. Real money loss of Rs.717 today acknowledged, not minimized
+4. Duplicate order bug = TOP priority before any further auto-trading
+5. F&O cron permanently OFF on vishal-live (real money safety)
+
+#### Pattern To Watch For Next Session
+
+When real money is at stake:
+- Pull broker source of truth FIRST, not last
+- Don't trust internal DB without reconciliation
+- Verify state before changing it
+- Use simplest commands when tired
+- Stop and re-plan when first attempt fails
+- Listen to user direction without re-arguing
+
+The cost today was Rs.717 real money + several hours of my chaotic fixing.
+The lesson: broker reconciliation is not "next weekend's task." It's required
+infrastructure before we can trust ANY P&L number we report.
+
+#### What's Working
+
+- Auth fix earlier today (commit 7ca45ce) — per-profile sessions, client_id validation
+- F&O paper now uses real Dhan prices for vishal (BANKNIFTY +Rs.25, NIFTY -Rs.175)
+- Backtest v1.2 launched in background (Nifty 500 universe)
+
+#### Outstanding For Next Session
+
+1. Restore OLD EC2 crontab (vishal-live --live INCLUDED)
+2. Investigate duplicate order bug in executor.py + cron timing
+3. Build Dhan reconciliation script (urgent now, not "next weekend")
+4. Talk to neha with bug-fixed system as proof
+5. Backtest results review
+
