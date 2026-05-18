@@ -51,6 +51,19 @@ def get_profile_name() -> str:
     return DEFAULT_PROFILE
 
 
+def set_profile_name(profile: str) -> None:
+    """Set active profile via USER_PROFILE env var.
+
+    Subsequent get_profile_name() calls will return this value
+    (unless --profile CLI arg is also set, which takes precedence).
+    """
+    import os
+    if profile:
+        os.environ["USER_PROFILE"] = profile.strip().lower()
+
+
+
+
 def get_config_path(profile: str | None = None) -> str:
     """Return the config file path for the given profile.
 
@@ -89,14 +102,14 @@ def get_session_file(profile: str | None = None) -> Path:
     """Return a profile-specific session file path.
 
     Each user gets their own broker session file so tokens don't collide.
+    Every profile gets a suffixed file (no default-profile special case)
+    to prevent cross-profile session contamination.
     """
     if profile is None:
         profile = get_profile_name()
 
     profile = profile.lower()
 
-    if profile == DEFAULT_PROFILE:
-        return Path("config/.broker_session.json")
     return Path(f"config/.broker_session_{profile}.json")
 
 

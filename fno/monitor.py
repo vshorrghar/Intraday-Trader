@@ -513,7 +513,7 @@ def update_all_open_strategies(profile: str) -> dict:
             dhan_cfg = profile_cfg.get("dhan", {})
             if dhan_cfg.get("client_id"):
                 from intraday.auth_server import authenticate_broker
-                broker = authenticate_broker("dhan", dhan_cfg, dry_run=False)
+                broker = authenticate_broker("dhan", dhan_cfg, dry_run=False, profile=profile)
     except Exception as e:
         logger.warning("Could not auth broker for %s: %s — skipping MTM", profile, e)
         return {"error": f"Auth failed: {e}", "updated": 0}

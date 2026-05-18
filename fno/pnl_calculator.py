@@ -38,6 +38,18 @@ def get_current_premium(
     for item in strikes:
         if not isinstance(item, dict):
             continue
+        # Match flat structure from Dhan v2 normalize: {strike_price, option_type, ltp}
+        item_strike = item.get("strike_price", item.get("strikePrice", item.get("strike", 0)))
+        item_opt_type = item.get("option_type", "")
+        if abs(float(item_strike) - strike) < 0.01 and item_opt_type == option_type:
+            ltp = item.get("ltp", item.get("lastPrice", 0))
+            if ltp and float(ltp) > 0:
+                return float(ltp)
+
+    # Legacy nested format fallback (in case some chain source returns nested)
+    for item in strikes:
+        if not isinstance(item, dict):
+            continue
         item_strike = item.get("strikePrice", item.get("strike", 0))
         if abs(float(item_strike) - strike) < 0.01:
             opt_data = item.get(option_type, {})

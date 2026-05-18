@@ -169,8 +169,12 @@ class DryRunBrokerClient(BrokerClient):
 # Session file helpers
 # ---------------------------------------------------------------------------
 
-def _load_session(broker_name: str) -> Optional[dict]:
-    """Load a same-day session from disk, or return ``None``."""
+def _load_session(broker_name: str, expected_client_id: str = "") -> Optional[dict]:
+    """Load a same-day session from disk, or return ``None``.
+
+    If expected_client_id is provided, validates that cached session matches
+    (prevents cross-account session reuse).
+    """
     session_file = _get_session_file()
     if not session_file.exists():
         return None
@@ -187,7 +191,16 @@ def _load_session(broker_name: str) -> Optional[dict]:
         and data.get("date") == today
         and data.get("access_token")
     ):
-        # Check session age — reject if older than 6 hours
+        # NEW: validate client_id match — prevents cross-account token reuse
+        cached_client_id = str(data.get("client_id", ""))
+        if expected_client_id and cached_client_id and cached_client_id != str(expected_client_id):
+            logger.info(
+                "Session client_id mismatch (cached=%s, expected=%s) — re-authenticating",
+                cached_client_id, expected_client_id,
+            )
+            return None
+
+        # Check session age — reject if older than 3.5 hours
         saved_at = data.get("saved_at")
         if saved_at:
             from datetime import datetime
@@ -195,7 +208,8 @@ def _load_session(broker_name: str) -> Optional[dict]:
             if age_hours > 3.5:
                 logger.info("Session too old (%.1f hours) — re-authenticating", age_hours)
                 return None
-        logger.info("Reusing same-day session for %s (date=%s)", broker_name, today)
+        logger.info("Reusing same-day session for %s (client_id=%s, date=%s)",
+                    broker_name, cached_client_id or "?", today)
         return data
 
     logger.info("Session file exists but is stale or for a different broker")
@@ -442,6 +456,7 @@ def authenticate_broker(
     broker_name: str,
     broker_config: dict,
     dry_run: bool = True,
+    profile: Optional[str] = None,
 ) -> BrokerClient:
     """Authenticate with the selected broker and return a ready ``BrokerClient``.
 
@@ -449,6 +464,10 @@ def authenticate_broker(
         broker_name: ``"dhan"`` or ``"zerodha"``.
         broker_config: The broker-specific config section from config.yaml.
         dry_run: If ``True``, skip auth and return a ``DryRunBrokerClient``.
+        profile: Optional profile name (e.g. "vishal", "neha"). When provided,
+                 sets profile context so session is saved/loaded from
+                 .broker_session_.json instead of default file.
+                 Backward compatible — None preserves existing behavior.
 
     Returns:
         A concrete ``BrokerClient`` instance with a valid access token set.
@@ -465,8 +484,18 @@ def authenticate_broker(
 
     name = broker_name.strip().lower()
 
-    # --- Check for existing same-day session ---
-    session = _load_session(name)
+    # --- Set profile context for session file path resolution ---
+    if profile:
+        try:
+            from config.profile import set_profile_name
+            set_profile_name(profile)
+            logger.debug("Auth using profile context: %s", profile)
+        except (ImportError, AttributeError):
+            logger.debug("set_profile_name not available — using default session file")
+
+    # --- Check for existing same-day session (validates client_id) ---
+    expected_client_id = str(broker_config.get("client_id", ""))
+    session = _load_session(name, expected_client_id=expected_client_id)
     if session:
         access_token = session["access_token"]
         config_with_token = {**broker_config, "access_token": access_token}
