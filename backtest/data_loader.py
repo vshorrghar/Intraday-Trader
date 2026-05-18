@@ -252,3 +252,87 @@ def fetch_universe_for_dates(
 
     print(f"Done: {cached_count} cached + {fetched_count} fetched = {len(results)} total")
     return results
+
+
+def load_nifty500_universe(min_volume_check: bool = False) -> dict[str, str]:
+    """Load Nifty 500-equivalent universe from nse_security_ids.json.
+    
+    Filters to liquid NSE_EQ common stocks, excluding:
+    - Bonds (numeric prefixes like '656MH32', '94SFL28')
+    - Mutual fund units (often have 'MF' or specific patterns)
+    - ETFs (typically end with 'BEES' or 'ETF')
+    - Government securities ('GS' suffix patterns)
+    - Stocks with security_id < 100 (often non-equity)
+    
+    Returns ~400-500 tradeable equities matching scanner.py universe.
+    """
+    import json
+    import re
+    
+    with open("config/nse_security_ids.json") as f:
+        all_symbols = json.load(f)
+    
+    # Filter rules — keep only proper equity tickers
+    EXCLUDE_PATTERNS = [
+        r'^\d',                    # Starts with digit (bonds: 656MH32)
+        r'GS\d{4}$',               # Government securities (GS2033)
+        r'BEES$',                  # ETFs (NIFTYBEES, BANKBEES)
+        r'IETF$',                  # ETFs
+        r'GOLD$',                  # Gold ETFs
+        r'LIQUID$',                # Liquid funds
+        r'^N\d',                   # N-prefixed (often debt)
+    ]
+    
+    # Excluded suffixes/keywords
+    EXCLUDE_KEYWORDS = ['ETF', 'BEES', 'LIQUID', 'GILT', 'GSEC']
+    
+    universe = {}
+    for symbol, sec_id in all_symbols.items():
+        # Skip if any exclusion pattern matches
+        if any(re.search(pat, symbol) for pat in EXCLUDE_PATTERNS):
+            continue
+        if any(kw in symbol.upper() for kw in EXCLUDE_KEYWORDS):
+            continue
+        
+        # Keep alphabetic-only symbols (most equities)
+        if not symbol.replace('-', '').replace('&', '').isalpha():
+            continue
+        
+        # Sanity: security_id should be reasonable (ID <= 6000 covers most liquid equities)
+        try:
+            sid_int = int(sec_id)
+            if sid_int < 7 or sid_int > 6000:
+                continue
+        except (ValueError, TypeError):
+            continue
+        
+        universe[symbol] = str(sec_id)
+    
+    # Explicitly add known reference stocks that may have IDs > 6000
+    # These are confirmed Nifty 500 constituents with higher Dhan IDs
+    REFERENCE_STOCKS = {
+        "SAREGAMA": "4892", "NLCINDIA": "8585", "TDPOWERSYS": "25178",
+        "CIPLA": "694", "GODREJIND": "10925", "VEDL": "3063",
+        "HINDZINC": "1424", "SAIL": "2963", "TCS": "11536",
+        "INFY": "1594", "HDFCBANK": "1333", "RELIANCE": "2885",
+        "ICICIBANK": "4963", "BHARTIARTL": "10604", "MARUTI": "10999",
+        "ASIANPAINT": "236", "BAJFINANCE": "317", "HCLTECH": "7229",
+        "WIPRO": "3787", "SBIN": "3045", "AXISBANK": "5900",
+        "KOTAKBANK": "1922", "LT": "11483", "TITAN": "3506",
+        "SUNPHARMA": "3351", "NTPC": "11630", "ONGC": "2475",
+        "TATAMOTORS": "3456", "TATASTEEL": "3499", "TECHM": "13538",
+        "ADANIENT": "25", "ADANIPORTS": "15083", "APOLLOHOSP": "157",
+        "BAJAJ-AUTO": "16669", "BAJAJFINSV": "16675", "BEL": "383",
+        "BPCL": "526", "BRITANNIA": "547", "COALINDIA": "20374",
+        "DRREDDY": "881", "EICHERMOT": "910", "GRASIM": "1232",
+        "HDFCLIFE": "467", "HEROMOTOCO": "1348", "HINDALCO": "1363",
+        "HINDUNILVR": "1394", "ITC": "1660", "INDUSINDBK": "5258",
+        "JSWSTEEL": "11723", "NESTLEIND": "17963", "POWERGRID": "14977",
+        "SBILIFE": "21808", "TATACONSUM": "3432", "ULTRACEMCO": "11532",
+        "SHRIRAMFIN": "4306", "TRENT": "1964",
+    }
+    for sym, sid in REFERENCE_STOCKS.items():
+        if sym not in universe:
+            universe[sym] = sid
+
+    return universe

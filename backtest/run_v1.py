@@ -24,7 +24,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from backtest.day_stratifier import stratify_past_days
-from backtest.data_loader import load_nifty50_universe, fetch_universe_for_dates
+from backtest.data_loader import load_nifty500_universe, fetch_universe_for_dates
 from backtest.trade_simulator import simulate_day
 
 IST = timezone(timedelta(hours=5, minutes=30))
@@ -74,7 +74,7 @@ def run_backtest():
 
     # Step 3: Load universe
     print("[3/5] Loading Nifty 50 universe...")
-    universe = load_nifty50_universe()
+    universe = load_nifty500_universe()
     print(f"  ✓ {len(universe)} stocks loaded")
 
     # Step 4: Fetch 1-min OHLC

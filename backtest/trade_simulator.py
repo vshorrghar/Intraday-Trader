@@ -1,10 +1,11 @@
 """Backtest trade simulator — simulates intraday trade execution on 1-min candles.
 
-Core engine for backtest v1. Replays scanner v3 scoring, picks top 5 stocks,
-simulates entry/exit on 1-min OHLC data with realistic charges.
+Core engine for backtest v1.1. Uses REAL LLM calls via Bedrock (cached).
+Entry/exit simulated on 1-min OHLC data with realistic charges.
 
-Assumption: LLM picks approximated by scanner v3 top-5 scores.
-Real LLM integration in v1.1.
+Documented limitations:
+- sectors=[] (historical sector index data not available)
+- VIX estimated from NIFTY 60-min day_range for target_date
 """
 
 import json
@@ -102,8 +103,11 @@ def simulate_trade_execution(
     if not candles or len(candles) < 10:
         return None
 
-    # Determine direction
-    direction = "LONG" if pick["long_score"] >= pick["short_score"] else "SHORT"
+    # Determine direction — use LLM-provided direction if available, else score-based
+    if "direction" in pick:
+        direction = pick["direction"]
+    else:
+        direction = "LONG" if pick.get("long_score", 0) >= pick.get("short_score", 0) else "SHORT"
 
     # Find 9:30 AM candle (approximately candle index 15 for 1-min from 9:15)
     # 9:15 = candle 0, 9:30 = candle 15
@@ -117,18 +121,22 @@ def simulate_trade_execution(
     if entry_candle_idx is None or entry_candle_idx >= len(candles) - 5:
         return None
 
-    # Entry price with buffer
+    # Entry/SL/Target: use LLM-provided prices if available, else compute from candle
     entry_candle = candles[entry_candle_idx]
-    raw_entry = entry_candle["open"]
-
-    if direction == "LONG":
-        entry_price = round(raw_entry * 1.003, 2)
-        sl_price = round(entry_price * 0.982, 2)
-        target_price = round(entry_price * 1.036, 2)
+    if pick.get("entry_price") and pick.get("target_price") and pick.get("stop_loss_price"):
+        entry_price = pick["entry_price"]
+        target_price = pick["target_price"]
+        sl_price = pick["stop_loss_price"]
     else:
-        entry_price = round(raw_entry * 0.997, 2)
-        sl_price = round(entry_price * 1.018, 2)
-        target_price = round(entry_price * 0.964, 2)
+        raw_entry = entry_candle["open"]
+        if direction == "LONG":
+            entry_price = round(raw_entry * 1.003, 2)
+            sl_price = round(entry_price * 0.982, 2)
+            target_price = round(entry_price * 1.036, 2)
+        else:
+            entry_price = round(raw_entry * 0.997, 2)
+            sl_price = round(entry_price * 1.018, 2)
+            target_price = round(entry_price * 0.964, 2)
 
     # Position sizing
     per_trade_cap = profile_config.get("per_trade_max_capital", 50000)
@@ -206,9 +214,10 @@ def simulate_trade_execution(
         "net_pnl": net_pnl,
         "exit_reason": exit_reason,
         "exit_time": exit_time,
-        "long_score": pick["long_score"],
-        "short_score": pick["short_score"],
-        "change_pct_at_930": pick["change_pct"],
+        "long_score": pick.get("long_score", 0),
+        "short_score": pick.get("short_score", 0),
+        "change_pct_at_930": pick.get("change_pct", 0),
+        "confidence_score": pick.get("confidence_score", 0),
     }
 
 
@@ -217,52 +226,34 @@ def simulate_day(
     profile: str,
     universe: dict[str, str],
     historical_data: dict[str, dict],
+    bedrock_client=None,
 ) -> dict:
-    """Full day simulation for one profile.
+    """Full day simulation for one profile using REAL LLM picks.
 
-    Reads profile config, applies VIX gate, scores stocks,
-    picks top 5 by long_score, simulates trades with daily_loss_limit.
+    Uses backtest/llm_replay.py for real Bedrock calls (cached).
+    Applies VIX gate, confidence threshold, R:R check, max_trades, daily_loss_limit.
 
-    Assumption: LLM picks approximated by scanner v3 top-5 scores.
-    Real LLM integration in v1.1.
-
-    Parameters
-    ----------
-    target_date : str
-        'YYYY-MM-DD'
-    profile : str
-        Profile name (e.g., 'vishal', 'vishal-live')
-    universe : dict
-        {symbol: security_id}
-    historical_data : dict
-        {symbol: ohlc_dict}
-
-    Returns
-    -------
-    dict with day summary: date, profile, trades, total_pnl, etc.
+    Documented limitations:
+    - sectors=[] (historical sector index data not available)
+    - VIX estimated from NIFTY day_range
     """
-    # Load profile config
-    profile_path = Path(f"config/profiles/{profile}.yaml")
-    if not profile_path.exists():
-        return {"date": target_date, "profile": profile, "error": f"Profile not found: {profile_path}"}
+    from backtest.llm_replay import load_profile_config, build_market_context_for_date as build_llm_context, call_llm_for_picks
 
-    with open(profile_path) as f:
-        config = yaml.safe_load(f)
+    # Load profile config using same loader as run_intraday.py
+    intra_config, app_config = load_profile_config(profile)
 
-    intraday_cfg = config.get("intraday", {})
-    max_trades = intraday_cfg.get("max_trades_per_day", 5)
-    daily_loss_limit = intraday_cfg.get("daily_loss_limit", 9000)
-    vix_threshold = intraday_cfg.get("vix_threshold", 18)
+    max_trades = intra_config.max_trades_per_day
+    daily_loss_limit = intra_config.daily_loss_limit
+    vix_threshold = intra_config.vix_threshold
+    min_confidence = intra_config.min_confidence_score
+    per_trade_max = intra_config.per_trade_max_capital
 
-    # Build market context
-    context = build_market_context_for_date(target_date, historical_data, universe)
+    # Build market context from historical data
+    context = build_llm_context(target_date, historical_data)
+    vix_value = context["vix_value"]
 
-    # VIX gate: estimate VIX from NIFTY day range
-    # If average stock range > 2%, assume VIX > 22 (skip or reduce)
-    estimated_vix_high = context["nifty_range_pct"] > 2.0
-    vix_skip = context["nifty_range_pct"] > 3.0  # Extreme — skip entirely
-
-    if vix_skip:
+    # VIX gate
+    if vix_value > vix_threshold:
         return {
             "date": target_date,
             "profile": profile,
@@ -273,40 +264,85 @@ def simulate_day(
             "trades_placed": 0,
             "winners": 0,
             "losers": 0,
-            "skipped_reason": "VIX_SKIP (estimated range > 3%)",
-            "universe_scanned": context["universe_scanned"],
+            "win_rate_pct": 0,
+            "skipped_reason": f"VIX_GATE_SKIP (VIX={vix_value} > threshold={vix_threshold})",
+            "vix_value": vix_value,
+            "candidates_count": len(context["candidates"]),
         }
 
-    # Reduce max trades if high volatility
-    if estimated_vix_high:
-        max_trades = min(max_trades, 2)
+    # Get LLM picks (real Bedrock call, cached)
+    if not bedrock_client:
+        from llm.bedrock_client import BedrockClient
+        bedrock_client = BedrockClient(
+            region=app_config.bedrock_region,
+            model_id=app_config.bedrock_model_id,
+        )
 
-    # Score and pick top 5 by long_score (approximating LLM picks)
-    scored = context["scored_stocks"]
-    top_picks = sorted(
-        [s for s in scored if s["long_score"] >= 3],
-        key=lambda x: x["long_score"],
-        reverse=True,
-    )[:5]
+    picks = call_llm_for_picks(
+        target_date=target_date,
+        profile=profile,
+        market_context=context,
+        config=intra_config,
+        bedrock_client=bedrock_client,
+    )
 
-    # Simulate trades with daily loss limit
+    # Filter picks by confidence and R:R
+    valid_picks = []
+    filtered_reasons = []
+    for p in picks:
+        conf = p.get("confidence_score", 0)
+        if conf < min_confidence:
+            filtered_reasons.append(f"{p['symbol']}: conf={conf} < {min_confidence}")
+            continue
+
+        entry = p.get("entry_price", 0)
+        target = p.get("target_price", 0)
+        sl = p.get("stop_loss_price", 0)
+        direction = p.get("direction", "LONG")
+
+        if direction == "LONG" and entry > 0 and sl > 0:
+            rr = (target - entry) / (entry - sl) if entry > sl else 0
+        elif direction == "SHORT" and entry > 0 and sl > 0:
+            rr = (entry - target) / (sl - entry) if sl > entry else 0
+        else:
+            rr = 0
+
+        if rr < 1.99:  # Accept R:R >= 2.0 (floating point safe)
+            filtered_reasons.append(f"{p['symbol']}: R:R={rr:.1f} < 2.0")
+            continue
+
+        valid_picks.append(p)
+
+    # Simulate trades with max_trades and daily_loss_limit
     trades = []
     cumulative_loss = 0.0
+    intraday_cfg = {
+        "per_trade_max_capital": per_trade_max,
+        "daily_loss_limit": daily_loss_limit,
+    }
 
-    for pick in top_picks:
-        # Check max trades
+    for pick in valid_picks:
         if len(trades) >= max_trades:
             break
-
-        # Check daily loss limit
         if abs(cumulative_loss) >= daily_loss_limit:
             break
 
-        symbol_data = historical_data.get(pick["symbol"])
+        symbol = pick["symbol"]
+        symbol_data = historical_data.get(symbol)
         if not symbol_data:
             continue
 
-        result = simulate_trade_execution(pick, symbol_data, target_date, intraday_cfg)
+        # Build pick dict compatible with simulate_trade_execution
+        sim_pick = {
+            "symbol": symbol,
+            "direction": pick.get("direction", "LONG"),
+            "entry_price": pick.get("entry_price", 0),
+            "target_price": pick.get("target_price", 0),
+            "stop_loss_price": pick.get("stop_loss_price", 0),
+            "confidence_score": pick.get("confidence_score", 0),
+        }
+
+        result = simulate_trade_execution(sim_pick, symbol_data, target_date, intraday_cfg)
         if result:
             trades.append(result)
             if result["net_pnl"] < 0:
@@ -330,8 +366,10 @@ def simulate_day(
         "winners": winners,
         "losers": losers,
         "win_rate_pct": round(winners / len(trades) * 100, 1) if trades else 0,
-        "universe_scanned": context["universe_scanned"],
+        "vix_value": vix_value,
+        "candidates_count": len(context["candidates"]),
+        "llm_picks_count": len(picks),
+        "filtered_picks": filtered_reasons,
         "max_trades_allowed": max_trades,
-        "vix_reduced": estimated_vix_high,
-        "assumption": "LLM picks approximated by scanner v3 top-5 scores. Real LLM integration in v1.1.",
     }
+
