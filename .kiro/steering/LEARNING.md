@@ -760,3 +760,28 @@ infrastructure before we can trust ANY P&L number we report.
 4. Talk to neha with bug-fixed system as proof
 5. Backtest results review
 
+
+---
+
+### May 19 — Context Automation Workflow Decided
+
+#### Decisions
+1. Rule 22: SSM web console command format
+2. Rule 23: Session capture protocol
+3. Rule 24: Bedrock cannot auto-fetch external files
+4. CONTEXT.md = bundle of all 5 steering docs, rebuilt via git post-commit hook
+5. Workflow: paste CONTEXT.md at chat start, capture-heredoc at chat end
+6. Future option: dump chat to /tmp/session_chat.txt + Kiro ingestion
+
+#### What I (the AI) got wrong
+- Suggested CloudFront URL solution claiming I could fetch it (cannot)
+- Over-engineered first proposals (KB, Lambda) before acknowledging chat-channel limits
+- Took 4-5 exchanges to land on simple answer
+
+#### Action items
+- [ ] Run validate_tomorrow.sh at market hours
+- [ ] Decide on dashboard P&L source (live Dhan vs DB)
+- [ ] Verify Rules 22/23/24 followed in next AI session
+
+#### No money moved today
+Pure architecture session. Real money status unchanged from May 18 EOD.

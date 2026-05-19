@@ -695,3 +695,31 @@ Paste RULES.md (this file) + STATE.md + your question.
 Any AI that lectures without reading both docs is wasting your time.
 
 End of RULES.md
+
+### Rule 22: Command Format For SSM Web Console
+User runs commands via AWS SSM Session Manager browser console, NOT local SSH from Mac.
+Two browser tabs always open: EC2-OLD (vishal-live + paper) and EC2-NEW (neha-live).
+- EC2-OLD = 13.206.144.6 = vishal-live + vishal/neha paper + F&O
+- EC2-NEW = 13.202.63.223 = neha-live (currently STOPPED as of May 18)
+Commands prefixed [EC2-OLD] or [EC2-NEW]. Always start with `sudo su - ec2-user` then `cd ~/dev-sandbox`.
+No SSH boilerplate, no SCP — write files via heredoc directly on EC2.
+No [MAC] commands unless explicitly asked.
+
+### Rule 23: Session Capture Protocol
+At end of any chat with material decisions, user types "capture session".
+AI must:
+1. Read entire chat
+2. Segregate content into 5 buckets: RULES / STATE / STRATEGY / LEARNING / GLOSSARY
+3. Generate ONE heredoc command block updating all relevant docs + CONTEXT.md
+4. Include git add + commit + push
+5. Remind user to pull on EC2-NEW
+6. Idempotency required — re-running same capture must not duplicate
+Alternative workflow: user dumps chat to /tmp/session_chat.txt on EC2 and asks Kiro to ingest.
+
+### Rule 24: Bedrock Chat Cannot Auto-Read External Files
+AI in Bedrock browser console cannot fetch URLs, S3 objects, or GitHub.
+Context must be pasted by user at start of each new chat.
+Single-file CONTEXT.md (concatenation of all 5 steering docs) is canonical paste source.
+CONTEXT.md auto-rebuilds via git post-commit hook after any steering edit.
+Location: .kiro/steering/CONTEXT.md
+
