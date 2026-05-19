@@ -785,3 +785,112 @@ infrastructure before we can trust ANY P&L number we report.
 
 #### No money moved today
 Pure architecture session. Real money status unchanged from May 18 EOD.
+
+---
+
+### May 19 EOD — The Indent Bug That Cost Us a Week
+
+#### Money
+
+| Source | Today's P&L (mid-session) |
+|--------|---------------------------|
+| Dhan app reality | +Rs.105.61 |
+| Realized today | -Rs.98.19 (COHANCE+IOC) |
+| Open unrealized | +Rs.203.80 |
+
+Cumulative real money May 12-19: ~-Rs.1100 to -Rs.1500 (Dhan truth).
+
+#### What we discovered
+
+INFY today exhibited the bug pattern in textbook form:
+09:30 AM cron picks INFY conf=8.
+LIMIT order at Rs.1194.05 → REJECTED (Dhan tick size error 16283).
+Code falls into MARKET retry path (gated by confidence >= 8).
+MARKET BUY x3 fills successfully on Dhan.
+Then code returns None.
+SL not placed. DB row not written.
+
+10:30 AM cron picks INFY again (same-symbol block has no DB row to see).
+Same flow. 2 more shares filled on Dhan. No SL. No DB.
+
+10:45 AM cron picks INFY a third time.
+This time LIMIT fills first try (no MARKET retry).
+DB row written (id=26, qty=2). SL placed for these 2 shares.
+
+Result: 7 shares LONG on Dhan. 1 row in DB (qty=2). SL covers 2 of 7.
+5 shares had ZERO stop loss protection from 09:30 to 15:15.
+
+#### Root cause — single indent
+
+intraday/executor.py line 198. return None at 12 spaces, should have been 16.
+Four spaces. Hidden in plain sight.
+
+#### How we found it
+
+Three things had to happen in sequence:
+1. Paid Dhan Data API Rs.499/mo (May 17). Without it, no real-time order endpoint.
+2. Kiro built sync_dhan_live.py today. Wrote dashboard/api/vishal-live/dhan_live.json.
+3. User noticed Dhan app +Rs.112 vs our DB different. Asked the right question.
+
+Without all three, the bug would have hidden indefinitely.
+
+#### What this single bug explains
+
+| Symptom | Date | Real cause |
+|---------|------|------------|
+| TATASTEEL 4x duplication | May 18 | MARKET retry fired 3 extra times |
+| BANDHAN/MOTHERSON/CANBK 2x | May 18 | Same |
+| ETERNAL phantom 38 shares | May 18 | MARKET retry, no DB record at all |
+| INFY 3.5x today | May 19 | Same |
+| Bug 5b counter failures | May 18 | DB rows missing, counter reads DB |
+| Same-symbol block failures | May 18-19 | DB has no rows, block sees nothing |
+| DB-vs-Dhan P&L drift 14x | May 18 | Half of trades never wrote to DB |
+| 5 shares unprotected today | May 19 | SL placement code never reached |
+
+ONE indent. EIGHT visible symptoms.
+
+#### What I (the AI) got right
+
+1. Pushed back on "approve freshness_seconds first" — caught Kiro burying lede
+2. Insisted on SL coverage check before fix (capital safety > code correctness)
+3. Read Kiro's diagnosis carefully and verified the indent claim
+4. Refused to rush fix during last 15 min of trading
+
+#### What I got wrong
+
+1. Initial Finding 1 was wrong about exit fills not being recorded
+2. Suggested manual SL on Dhan app at 3:00 PM — would have wasted 13% of window
+3. Approved wrong investigation path initially (DB schema mismatch)
+
+#### What user got right
+
+1. Asked the right framing question ("what did we do differently?")
+2. Pushed back when Kiro tried to add freshness_seconds before fixing bug
+3. Stayed calm with 5 unprotected shares — let force exit work
+4. Explicitly said "stop worrying about INFY, focus on bug"
+
+#### Lessons that will compound
+
+1. Indent bugs hide behind functional code. cat -A required for serious debugging.
+2. Real-time broker truth is non-negotiable. Rs.499/month Data API just paid for itself.
+3. Validation scripts have bugs too. validate_tomorrow.sh gave false PASS today.
+4. One bug can wear seven faces. Looking deeper would have saved a week.
+5. AI must read raw broker data, not just our DB.
+6. Phase fixes by capital risk, not code complexity.
+
+#### Action items for tomorrow
+
+- [ ] Verify a2e5d66 at HEAD on both EC2s before 9:30 AM IST
+- [ ] Run validate_tomorrow.sh at morning/midday/EOD checkpoints
+- [ ] Pull dhan_live.json EOD, verify DB matches Dhan within Rs.5
+- [ ] Fix validate_tomorrow.sh comparison logic (gave false PASS today)
+
+#### What we're NOT doing tomorrow
+
+- Not adding freshness_seconds yet
+- Not building dashboard tabs
+- Not building Telegram bot
+- Not re-enabling neha-live cron
+- Not increasing capital
+- Letting the fix prove itself for 3 days
+

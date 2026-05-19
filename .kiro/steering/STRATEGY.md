@@ -156,6 +156,45 @@ Sync: scripts/sync_top_performers.py (runs after capture)
 
 ## EVOLUTION LOG (newest first)
 
+### v3.5 — 2026-05-19 (THE INDENT BUG — ROOT CAUSE FOUND)
+Commit: a2e5d66
+
+The bug that wore seven faces. One indent fix in `intraday/executor.py` line 198
+resolves all of these previously-thought-distinct issues:
+
+- TATASTEEL 4x duplication (May 18)
+- BANDHAN/MOTHERSON/CANBK 2x (May 18)
+- ETERNAL phantom trade (May 18)
+- INFY 3.5x today (May 19)
+- Bug 5b counter false failures
+- Same-symbol block bypass
+- DB-vs-Dhan P&L 14x drift
+- 5 of 7 INFY shares unprotected by SL today
+
+**The bug**:
+Line 198 had `return None` at 12-space indent.
+This made it a sibling of `if filled_qty == 0:` instead of a child.
+Function returned None unconditionally after MARKET retry block.
+
+**The flow** (when LIMIT rejected → MARKET retry succeeds):
+- Before fix: place LIMIT → reject → place MARKET → fill → return None.
+  No SL. No DB write. No monitor handoff.
+- After fix: place LIMIT → reject → place MARKET → fill → place SL → DB write → monitor.
+
+**Why it hid for so long**:
+- LIMIT first-try fills worked correctly (no MARKET retry needed)
+- DryRun broker can't simulate real Dhan tick-size rejections
+- MARKET retry only fires on confidence >= 8 setups
+- Bug only visible by comparing Dhan API output vs our DB
+
+**How we found it**:
+1. Subscribed Dhan Data API Rs.499/mo (May 17)
+2. Built scripts/sync_dhan_live.py (May 19 morning) — pulled real-time orders
+3. Compared dhan_live.json vs intraday_trades — saw missing rows
+4. Read executor.py with cat -A — spotted indent mismatch
+
+
+
 ### v3.4 — 2026-05-17 evening (DATA API LIVE + BACKTEST FOUNDATION)
 Commit: 562030d
 

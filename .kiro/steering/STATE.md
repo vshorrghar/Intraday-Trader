@@ -5,168 +5,107 @@
 
 ---
 
-## TODAY (2026-05-18) — DUPLICATE ORDER BUG DISCOVERED + CRONTAB ACCIDENTALLY WIPED
+**Last Updated**: 2026-05-19 EOD - duplicate order ROOT CAUSE FOUND + FIXED
+**Update Protocol**: Replace TODAY section at end of each session.
 
-### Critical Real Money Reality Check
+---
 
-Real losses today verified via Dhan API (NOT our DB — they disagree massively):
-- vishal-live: -Rs.248.02 across 5 positions (DB said +Rs.14, off by 17x)
-- neha-live: -Rs.469.50 across 5 positions (DB said -Rs.66, off by 7x)
-- Combined real loss today: -Rs.717.52
+## TODAY (2026-05-19) - DUPLICATE ORDER BUG ROOT CAUSE FOUND + FIXED
 
-Cumulative real loss estimate (5 trading days, May 12-18):
-- ~Rs.1,200-1,500 across both live accounts
-- ~5% of combined Rs.29K capital in 5 days
-- DB-reported cumulative was -Rs.50 (massive understatement)
+### THE FIX - Commit a2e5d66
 
-### CRITICAL BUG: Duplicate Order Submission (NEW, undiagnosed)
+One-line indent fix in intraday/executor.py line 198.
 
-Evidence from Dhan API positions (truth source):
-| Stock | Our DB qty | Dhan actual qty | Multiplier |
-|-------|-----------|-----------------|------------|
-| TATASTEEL (vishal) | 21 (1 trade) | 84 | 4x |
-| ETERNAL (vishal) | NOT IN DB | 38 | phantom trade |
-| BANDHAN (neha) | 21 | 42 | 2x |
-| MOTHERSON (neha) | 31 | 62 | 2x |
-| CANBK (vishal) | 25 | 50 | 2x |
-| SBIN (both) | 4/4 | 8 | 2x |
-| TECHM (both) | matched | matched | 1x (only working case) |
+Before: return None at 12-space indent (sibling of if filled_qty == 0)
+After: return None at 16-space indent (child of if filled_qty == 0)
 
-Pattern: System places EACH trade 2-4 times instead of once.
-Some trades placed without DB record (phantom).
-Different from Bug 5 (which is about trade count). This is per-order duplication.
+The function was returning None unconditionally after MARKET retry block,
+regardless of whether the retry succeeded.
 
-Bug 5 also failed today (separate, recurring issue):
-- vishal-live: 5 trades placed (limit was 3)
-- neha-live: 6 trades placed (limit was 3)
+### Root Cause (hidden for weeks)
 
-Daily loss limit (Rs.900) DID hold today — only by luck since trades were small.
-If trades had been Rs.15K each, Rs.5K-10K daily loss possible.
+When LIMIT order rejected (tick size error 16283) AND confidence >= 8:
+- Code retries with MARKET order
+- MARKET retry succeeds, fills on Dhan
+- BUT function returns None immediately after retry
+- SL order never placed
+- DB row never written
+- Trailing SL monitor never starts
 
-### Decisions Made This Session
+### Today's Evidence (INFY trifecta)
 
-1. neha-live trading STOPPED (paused indefinitely until duplicate bug fixed)
-2. vishal-live continues LIVE (user direction — his money, his decision)
-3. F&O cron on vishal-live remains DISABLED (real money safety)
-4. Duplicate order bug = TOP PRIORITY before any further trading
+| Time | Action | Filled on Dhan | Recorded in DB | SL Placed |
+|------|--------|----------------|----------------|-----------|
+| 09:30:21 | INFY MARKET retry | 3 shares | NO | NO |
+| 10:30:22 | INFY MARKET retry | 2 shares | NO | NO |
+| 10:45:17 | INFY LIMIT (filled first try) | 2 shares | YES (id=26) | YES (qty=2) |
 
-### Crontab Status — REQUIRES RESTORATION
+Net result on Dhan: 7 INFY shares LONG.
+Net result in our DB: 1 row, qty=2.
+SL coverage: 2 of 7 shares (5 unprotected).
 
-OLD EC2 crontab: WIPED (accidentally during sed/python edit attempts this session)
-NEW EC2 crontab: WIPED (same reason)
+### What This Single Bug Explains
 
-Backup at /tmp/crontab_backup_20260518.txt is EMPTY (created after wipe).
+- May 18 TATASTEEL 4x duplication - MARKET retry fired 3 extra times
+- May 18 BANDHAN, MOTHERSON, CANBK 2x - same pattern
+- May 18 ETERNAL phantom - MARKET retry filled, no DB record
+- May 19 INFY 3.5x - same pattern, three sessions
+- Bug 5b counter failures - counter reads from DB, but DB rows missing
+- Same-symbol block failures - block reads from DB, no rows to see
+- DB-vs-Dhan P&L drift (14x off May 18) - half of trades not in our DB
 
-Source of truth for restoration:
-- .kiro/steering/STATE.md "Active Crons OLD EC2" section
-- .kiro/steering/RULES.md Section 6
-- docs/MASTER_RESUME.md cron table
+ONE INDENT. SEVEN VISIBLE BUGS.
 
-OLD EC2 crontab to restore (next session, before market open):
-*/15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal-live --live >> logs/cron_vishal_live.log 2>&1 */15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal >> logs/cron_vishal.log 2>&1 */15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile neha >> logs/cron_neha.log 2>&1 50 3 * * 1-5 /home/ec2-user/dev-sandbox/run_fno_daily.sh --profile vishal 52 3 * * 1-5 /home/ec2-user/dev-sandbox/run_fno_daily.sh --profile neha /30 4-9 * * 1-5 /home/ec2-user/dev-sandbox/scripts/fno_mtm_update.sh 5 10 * * 1-5 cd /home/ec2-user/dev-sandbox && .venv/bin/python3 scripts/capture_top_performers.py >> logs/top_performers.log 2>&1 0 3-10 * * 1-5 cd /home/ec2-user/dev-sandbox && aws s3 sync dashboard/ s3://dev-sandbox-dashboard-176767908884/ --exclude "db-sync/" >> logs/s3_sync.log 2>&1
+### Today's Real Money P&L (Dhan truth)
 
-(8 active entries — vishal-live F&O DISABLED permanently)
+Per dhan_live.json @ 14:32 IST:
+- INFY: 7 shares LONG @ Rs.1192.73 (unrealized -Rs.10 mid-session)
+- COHANCE: 9 shares SHORT - unrealized +Rs.250
+- ADANIGREEN: 1 share LONG @ Rs.1423 (unrealized -Rs.36, phantom trade)
+- IOC: closed +Rs.5.76 realized
+- Total at 14:32 IST: +Rs.105.61
+- Daily realized loss: -Rs.98.19
 
-NEW EC2 crontab: leave EMPTY (neha-live stopped, no DB to sync)
+### Tomorrow Morning Validation
 
-### Auth Architecture Fix (commit 7ca45ce — committed earlier today, GOOD)
-
-Different from duplicate order bug — already fixed and pushed:
-- Per-profile session files (.broker_session_.json)
-- client_id validation in session reuse
-- pnl_calculator reads Dhan v2 flat strikes structure
-- scripts/fno_mtm_run.py sys.path fix
-- vishal-live F&O cron disabled in crontab (was: 54 3 * * 1-5)
-
-DON'T REDO. Different bug from duplicate order issue.
-
-### F&O Paper Status (today's first real-data run)
-
-vishal F&O paper used REAL Dhan option chain prices for first time:
-- 2 IRON_CONDOR strategies placed (NIFTY, BANKNIFTY)
-- Real entry prices, real MTM
-- vishal NIFTY -Rs.175 mid-session, BANKNIFTY +Rs.25
-
-neha F&O cannot price (no Data API on neha account):
-- 3 IRON_CONDOR strategies placed but unpriced
-- Need shared-broker pattern OR separate Data API subscription
-
-### Backtest v1.2 Status
-
-Commit bb71fdb — backtest v1.2 infrastructure committed and pushed
-Process started: PID 145982 on OLD EC2 (background nohup)
-Universe: 670 stocks (Nifty 500 equivalent), all 17 reference stocks present
-8 stratified days
-
-Should have completed during this session — check via:
-bash scripts/check_backtest.sh ls cache/backtest_llm/ | wc -l ls -lt backtest/results/backtest_v1_*.json | head -3
-
-### Next Session Priorities (strict order)
-
-1. **Verify backtest v1.2 completed** — what's in cache/backtest_llm/, what result JSON exists
-2. **Restore OLD EC2 crontab** from text above (vishal-live --live INCLUDED per user direction)
-3. **Verify NEW EC2 crontab is empty** (neha-live stopped)
-4. **Pull full Dhan order history for today** to investigate duplicate order bug:
-   - Endpoint: GET https://api.dhan.co/v2/orders
-   - Sort by exchangeTime
-   - Look for same symbol+action within seconds = duplicates
-5. **Find duplication source** in:
-   - intraday/executor.py (order placement)
-   - run_daily.sh (cron wrapper, lock files, possible double-invocation)
-   - intraday/risk_manager.py (Bug 5 trade counter)
-6. **Fix duplicate order bug**
-7. **Validate fix on vishal paper** for 1-2 days BEFORE re-enabling vishal-live cron
-8. **Then talk to neha** with the bug-fixed system as proof
-9. **Backtest v1.2 results review** (lower priority than bug)
-
-### Files To Investigate
-
-- intraday/executor.py — does it submit entry order twice somewhere?
-- run_daily.sh — does it have lock file? does cron fire 2x?
-- intraday/risk_manager.py — Bug 5 trade counter logic
-- /var/log/cron — proves cron firing rate (any duplicate fires?)
-- logs/cron_vishal_live.log — see actual cron invocation timestamps
-
-### Don't Touch (already working)
-
-- intraday/auth_server.py
-- config/profile.py
-- fno/pnl_calculator.py
-- fno/monitor.py
-- scripts/fno_mtm_run.py
-
-### Session Anti-Patterns To Avoid
-
-- Don't trust our DB pnl numbers — verify against Dhan API for real money
-- Don't suggest sed/python regex for crontab edits — use simple cat + crontab
-- Don't skip backup verification — always check `wc -l backup_file`
-- Always pull broker source of truth for real-money decisions
-- Stop work when tired and offer "tomorrow" rather than push through with shortcuts
+Required before 9:30 AM IST cron fires:
+1. git log --oneline -3 shows a2e5d66 at HEAD on BOTH EC2s
+2. Line 198 of executor.py shows 16-space indent
+3. EC2-NEW pulled the fix
+4. validate_tomorrow.sh runs morning checkpoint
 
 ### Real Money Trading Status (END OF DAY)
 
 | Profile | Status | Reason |
 |---------|--------|--------|
-| vishal-live | LIVE (user direction) | His decision, his money, but cron currently empty |
-| neha-live | STOPPED | Duplicate order bug + neha complaining |
-| vishal paper | active | DryRun broker, safe even with bugs |
-| neha paper | active | DryRun broker, safe even with bugs |
+| vishal-live | LIVE (cron active) | Bug fixed for tomorrow |
+| neha-live | STOPPED | Decision pending |
+| vishal paper | active | DryRun broker |
+| neha paper | active | DryRun broker |
 
-Cron status (must restore before market open):
-- OLD EC2: empty (was wiped during session)
-- NEW EC2: empty (was wiped during session)
+### Next Session Priorities
 
-### Real Money Cumulative (best estimate, this week)
+1. Verify cron fires correctly Wednesday morning with patched code
+2. Run validate_tomorrow.sh at 9:35 / 11:00 / 15:30 IST
+3. EOD Wednesday: pull dhan_live.json, verify DB matches
+4. If 5/5 PASS for 3 days: consider re-enabling neha-live cron
+5. Then build dashboard improvements (Kiro)
+6. Then build Telegram bot
 
-May 12-18 across both live accounts:
-- DB-reported cumulative: -Rs.50 to -Rs.165 (varies by query)
-- Dhan-actual estimate: -Rs.1,200 to -Rs.1,500
-- Charges burden: ~Rs.50-70 per round-trip on small trades
-- Today alone (May 18): -Rs.717 actual vs -Rs.52 DB
+### Don't Touch (working)
+
+- intraday/executor.py (just fixed)
+- intraday/auth_server.py (May 18 fix)
+- config/profile.py (May 18 fix)
+- fno/pnl_calculator.py (May 18 fix)
+- scripts/fno_mtm_run.py (May 18 fix)
+- scripts/sync_dhan_live.py (built today)
+- scripts/check_dhan_orders.py (validation diagnostic)
+- scripts/validate_tomorrow.sh (validation orchestrator)
 
 ---
 
-## PREVIOUS SESSION (2026-05-17 evening) — DATA API LIVE + BACKTEST ENGINE v0.1
+## PREVIOUS SESSION (2026-05-19 morning) - CONTEXT AUTOMATION + SSM WORKFLOW DECIDED
 
 
 ### Session Outcome
