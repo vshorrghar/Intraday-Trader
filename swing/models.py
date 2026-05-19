@@ -1,63 +1,77 @@
-"""Data models for swing trading."""
-
-from __future__ import annotations
+"""
+Swing module data models.
+"""
 
 from dataclasses import dataclass, field
-from datetime import date
+from enum import Enum
+
+
+class SwingPositionState(Enum):
+    PENDING = "PENDING"
+    OPEN = "OPEN"
+    PARTIAL_BOOKED_TRAILING = "PARTIAL_BOOKED_TRAILING"
+    CLOSED = "CLOSED"
+    STOPPED_OUT = "STOPPED_OUT"
+    TIME_STOP_EXIT = "TIME_STOP_EXIT"
+    MANUAL_EXIT = "MANUAL_EXIT"
+    REVIEW_PENDING = "REVIEW_PENDING"
+    TARGET_HIT = "TARGET_HIT"
+    REJECTED = "REJECTED"
+    CANCELLED = "CANCELLED"
+    FAILED = "FAILED"
+
+
+@dataclass
+class SwingTradeSetup:
+    stock_name: str
+    tradingsymbol: str
+    nse_symbol: str
+    entry_price: float
+    target_price: float
+    stop_loss_price: float
+    quantity: int
+    confidence_score: int
+    rationale: str
+    holding_days_estimate: int
+    thesis_invalidation: str
+    sector: str = ""
+    transaction_type: str = "BUY"  # LONG only for v0.1
+    strategy_type: str = "PULLBACK"
 
 
 @dataclass
 class SwingConfig:
-    """Configuration for swing trading."""
-
+    """Swing trading configuration loaded from profile YAML."""
+    swing_capital_limit: float = 50000.0
+    swing_per_trade_max: float = 5000.0
+    swing_max_open_positions: int = 5
+    swing_daily_loss_limit: float = 1000.0
+    swing_weekly_loss_limit_pct: float = 5.0
+    sector_concentration_max: int = 2
+    swing_min_score: int = 8
+    swing_min_confidence: int = 7  # 8 for --live mode
+    swing_min_confidence_live: int = 8
+    swing_min_rr: float = 2.0
+    swing_max_holding_days: int = 30  # smart time stop kicks in earlier
     broker: str = "dhan"
-    daily_capital_limit: float = 100_000.0
-    per_trade_max_capital: float = 30_000.0
-    max_open_positions: int = 5
-    min_confidence_score: int = 6
-    max_hold_days: int = 15
-    target_pct: float = 8.0        # 8% target
-    stop_loss_pct: float = 4.0     # 4% stop loss (R:R = 2:1)
-    trailing_sl_trigger_pct: float = 5.0  # Trail after 5% gain
-    price_range_min: float = 50.0
-    price_range_max: float = 5000.0
-    scan_time: str = "15:30"       # Scan after market close
-    monitor_time: str = "09:30"    # Check positions after open
+    profile: str = ""
 
-
-@dataclass
-class SwingSetup:
-    """A swing trade candidate selected by LLM."""
-
-    nse_symbol: str
-    stock_name: str
-    entry_price: float
-    target_price: float
-    stop_loss_price: float
-    confidence_score: int
-    strategy_type: str  # BREAKOUT, PULLBACK, REVERSAL, MOMENTUM
-    rationale: str
-    expected_hold_days: int = 5
-    risk_reward_ratio: float = 2.0
-    sector: str = ""
-
-
-@dataclass
-class SwingPosition:
-    """An active swing position."""
-
-    id: int = 0
-    nse_symbol: str = ""
-    entry_price: float = 0.0
-    entry_date: str = ""
-    target_price: float = 0.0
-    stop_loss_price: float = 0.0
-    current_price: float = 0.0
-    quantity: int = 0
-    status: str = "OPEN"  # OPEN, CLOSED, STOPPED_OUT, EXPIRED
-    pnl: float = 0.0
-    exit_price: float = 0.0
-    exit_date: str = ""
-    strategy_type: str = ""
-    confidence_score: int = 0
-    days_held: int = 0
+    @classmethod
+    def from_yaml(cls, profile_data: dict, profile_name: str = "") -> "SwingConfig":
+        """Load SwingConfig from profile YAML swing section."""
+        swing_cfg = profile_data.get("swing", {})
+        return cls(
+            swing_capital_limit=float(swing_cfg.get("swing_capital_limit", 50000)),
+            swing_per_trade_max=float(swing_cfg.get("swing_per_trade_max", 5000)),
+            swing_max_open_positions=int(swing_cfg.get("swing_max_open_positions", 5)),
+            swing_daily_loss_limit=float(swing_cfg.get("swing_daily_loss_limit", 1000)),
+            swing_weekly_loss_limit_pct=float(swing_cfg.get("swing_weekly_loss_limit_pct", 5.0)),
+            sector_concentration_max=int(swing_cfg.get("sector_concentration_max", 2)),
+            swing_min_score=int(swing_cfg.get("swing_min_score", 8)),
+            swing_min_confidence=int(swing_cfg.get("swing_min_confidence", 7)),
+            swing_min_confidence_live=int(swing_cfg.get("swing_min_confidence_live", 8)),
+            swing_min_rr=float(swing_cfg.get("swing_min_rr", 2.0)),
+            swing_max_holding_days=int(swing_cfg.get("swing_max_holding_days", 30)),
+            broker=profile_data.get("broker", "dhan"),
+            profile=profile_name,
+        )
