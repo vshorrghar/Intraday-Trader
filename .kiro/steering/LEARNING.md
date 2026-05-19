@@ -894,3 +894,196 @@ ONE indent. EIGHT visible symptoms.
 - Not increasing capital
 - Letting the fix prove itself for 3 days
 
+
+---
+
+### May 20 — User Observation: Pharma Sector Consistently Missed
+
+#### Pattern noticed
+User watching Dhan app saw Apollo Hospitals, Dr Reddy's Laboratories, and
+Cipla showing up "doing well" multiple times last week. Our scanner never
+picked any of them.
+
+#### Sample data (May 20 morning, from Dhan app)
+- Apollo Hospitals: +0.07% (Rs.5.50 on Rs.8026)
+- Dr Reddy's Laboratories: +0.30% (Rs.4.00 on Rs.1335)
+- Cipla: -1.15% today but trending up over 5 days
+- Hero Motocorp: +1.02%
+
+#### Why scanner misses these
+Per RS-First v3 scoring (intraday/scanner.py):
+- Signal 2 (momentum): requires >1% same-day move to score
+- Signal 4 (volume): Apollo trades 500K-1M (borderline for our 2M threshold)
+- Signal 6 (sector rotation): pharma rarely leads day-by-day rankings
+
+Apollo +0.07% scores ~2-3 points. Top candidates today (e.g., INFY) score 14+.
+Working as designed — our scanner targets intraday momentum, not slow trends.
+
+#### The real lesson — strategy bias
+
+Our intraday scanner is correctly biased toward:
+- Strong same-day momentum (>2%)
+- High volume confirmation (>2M daily)
+- Sector leadership of the day
+
+This means we systematically miss:
+- Stocks moving 0.3% per day for 5 days (compounds to +1.5%)
+- Defensive sectors (pharma, FMCG) when they outperform without spikes
+- Slow-grinding uptrends without volume catalysts
+
+#### Why this is NOT a bug to fix now
+
+1. Charges (~Rs.50 round-trip) eat small intraday moves. Need >1% same-day
+   for intraday to be profitable after charges.
+2. Force-exit at 15:15 IST means we can't wait for moves to develop.
+3. Lowering momentum threshold would also catch sideways noise.
+4. Pharma/FMCG/defensive sectors are SWING trades by design, not intraday.
+
+#### Right answer — build swing module
+
+Swing module is "TO BUILD" per STATE.md.
+
+Swing-specific scanner should target:
+- Stocks trending up >0.5% per day for 5-10 day windows
+- Lower volume threshold (defensive stocks have less volume)
+- Sector relative strength (pharma vs Nifty, FMCG vs Nifty)
+- Hold time 5-15 days, not intraday
+- Wider stops (3-5% vs intraday 1.8-2%)
+- Wider targets (5-10% vs intraday 3.6%)
+
+#### Decisions
+
+1. NO changes to intraday scanner (it's working as designed)
+2. Add to next-session priorities: design swing scanner for defensive sectors
+3. Swing module build sequence:
+   - Define swing-specific scoring (different from intraday RS-First v3)
+   - Build paper module with daily cron at 4 PM IST
+   - Validate 30 days on paper before any real money
+   - Pharma/FMCG/healthcare sectors are first universe to target
+
+#### Compounding insight
+
+User watches the actual market and notices what we miss. This is valuable
+signal. Future pattern: weekly capture session for "what user noticed that
+scanner missed" — informs strategy improvements.
+
+
+---
+
+### May 19 EOD — Bugs Multiply, Dashboard Phase 1 Lands, Telegram Goes Live
+
+#### Money
+
+| Source | Today's P&L |
+|--------|-------------|
+| Dhan API truth | +Rs.85.16 |
+| Our DB | -Rs.129.97 |
+| Drift | Rs.215 |
+
+System lied about its own performance. Made money, claims loss.
+
+#### Three bugs found today
+
+After yesterday's indent fix shipped, today proved fix only worked
+for ONE of two code paths. Three new bugs discovered:
+
+1. MARKET retry path skips SL+DB write (different from yesterday's path)
+2. Cross-process token sharing causes 2+ hour blind monitoring
+3. Force exit logs synthetic success on Dhan API failures
+
+5 INFY shares had no stop loss for entire afternoon. Pure luck market
+didn't crash. Daily loss limit Rs.500 held only because moves were small.
+
+#### Capital plan committed
+
+User: Rs.1L/month income target by June 20 from Rs.5L own savings.
+Probability assessment: 25% best-case, 60% modest income, 15% loss.
+Staged scaling: 15K -> 50K -> 2L -> 5L over 32 days.
+Hard gate: any day with DB-vs-Dhan drift > Rs.5 pauses scaling.
+
+#### Dashboard Phase 1 — Kiro shipped despite tooling pain
+
+Kiro spent 30 minutes fighting SSH heredoc + base64 corruption issues
+that yesterday's danish-eq session didn't have (different SSH context).
+Eventually used SCP for one file, succeeded. 7 files committed in 96c8770.
+
+Two new pages live on CloudFront:
+- /v2/universe.html (4-tier Indian equity universe)
+- /v2/risk.html (profile config + capital scaling)
+
+Old dashboard at root URL untouched and still working.
+
+#### Telegram bot — activated in <10 minutes
+
+User created bot via @BotFather, sent token.
+I fetched chat_id from getUpdates, wrote config, started bot.
+Tested /ping immediately, got Pong. Working as background process.
+
+NOT yet wired:
+- Trade alerts (Phase 4)
+- P&L alerts (Phase 4)
+- Daily summary (Phase 4)
+
+Phase 1 scope was just /ping, /status, /help. All working.
+
+#### What I (the AI) got right today
+
+1. Detected indent fix was partial within 30 min of cron firing
+2. Pulled real Dhan API truth via dhan_live.json instead of trusting DB
+3. Found Bug 2 by examining log timeline (cross-session token issue)
+4. Found Bug 3 by reading exact log lines that "succeeded" after error
+5. Refused to deploy Rs.5L capital despite urgency
+6. Insisted on staged scaling Rs.15K -> Rs.50K -> Rs.2L -> Rs.5L
+7. Pushed back on adding F&O / swing real money during 32-day window
+8. Required real money source confirmation (own savings, not loans)
+9. Honest 25% probability assessment
+
+#### What I got wrong today
+
+1. Initial claim "indent fix worked" was wrong — should have read fuller code
+2. Suggested manual SL on Dhan app at 3:00 PM IST when force exit was 15 min away
+3. Spent time on F&O P&L when intraday bugs were primary
+4. Almost missed Bug 2 (cross-process token) — only found by examining details
+
+#### What user got right today
+
+1. Clear deadline: Jun 20, Rs.1L/month, Rs.5L deployable
+2. Clear capital source: own savings, not loans
+3. Pushed back on "postpone F&O fix" — caused proper investigation
+4. Said "stop creating plans, fix bugs" when I was over-planning
+5. Confirmed staged scaling willingness
+6. Created Telegram bot smoothly without confusion
+7. Flagged old dashboard P&L issue immediately when noticed
+
+#### Lessons that compound
+
+1. One indent fix doesn't fix all paths. Same root can exist in 2-3 places.
+2. Always pull broker truth first. DB lies. Dhan API doesn't.
+3. Process leak across crons is real. Long-running monitors hold stale auth.
+4. Logs that say "OK" can lie. Always cross-check with Dhan API.
+5. Capital plan is a constraint, not a deadline. Don't let urgency override safety.
+6. SCP works when SSH heredoc fights you. Use right tool.
+7. Telegram bot setup takes 10 min when token + chat_id known.
+
+#### Action items for tomorrow
+
+- [ ] Read place_orders() function to find Bug 1 second path
+- [ ] Propose one-block patch (no refactor)
+- [ ] Test on paper before deploying
+- [ ] If clean: validate one day before any capital change
+- [ ] Decide: fix old dashboard P&L source (DB -> Dhan API)
+- [ ] Don't add F&O work tomorrow
+
+#### Honest assessment
+
+The 32-day plan started with bugs everywhere. But the truth source
+(Dhan API) and dashboard infrastructure (Phase 1) and alert pipeline
+(Telegram) all working today.
+
+Bugs are findable. Real money capital intact. Daily loss bounded.
+If Bug 1 fix lands tomorrow + 3 days clean validation, scaling
+plan still hits Jun 20 within probability bounds.
+
+Bigger risk: undiscovered bug at Rs.5L scale costing Rs.10K-50K.
+Mitigation: every scale step needs 5 days clean before next.
+

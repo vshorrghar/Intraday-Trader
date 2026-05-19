@@ -156,6 +156,36 @@ Sync: scripts/sync_top_performers.py (runs after capture)
 
 ## EVOLUTION LOG (newest first)
 
+### v3.5.1 — 2026-05-19 EOD (BUGS + INFRASTRUCTURE)
+Commit: 96c8770 (dashboard + telegram skeleton)
+No code commits for trading bugs (deferred to tomorrow).
+
+Indent fix from a2e5d66 verified at 16-space indent in code.
+But MARKET retry STILL bypasses SL+DB in production.
+
+Conclusion: SECOND code path exists with same bug pattern.
+Need to read place_orders() function to find it tomorrow.
+
+Three new bugs documented in LEARNING.md May 19 EOD entry:
+- MARKET retry second path (Bug 1, critical)
+- Cross-process token sharing (Bug 2)
+- Force exit lies on failure (Bug 3)
+
+Real money exposure today bounded by:
+- Daily loss limit Rs.500 (held)
+- Available capital Rs.13,632 (intact)
+- 5 INFY + 1 ADANIGREEN unprotected shares were lucky
+
+Tomorrow: read place_orders() structure, find second path, patch.
+
+Infrastructure shipped today (commit 96c8770):
+- Dashboard v2 Phase 1: design system + Universe + Risk tabs
+- Telegram bot skeleton active (PID 204601 background process)
+
+Capital plan agreed: Rs.5L deployment over 32 days, Rs.1L/month target.
+
+
+
 ### v3.5 — 2026-05-19 (THE INDENT BUG — ROOT CAUSE FOUND)
 Commit: a2e5d66
 

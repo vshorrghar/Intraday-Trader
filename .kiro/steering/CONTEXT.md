@@ -1,4 +1,4 @@
-# PROJECT CONTEXT (auto-generated 2026-05-19 09:54 IST)
+# PROJECT CONTEXT (auto-generated 2026-05-19 13:19 IST)
 
 Paste this entire file into new Bedrock chat for full project context.
 
@@ -742,168 +742,188 @@ Location: .kiro/steering/CONTEXT.md
 
 ---
 
-## TODAY (2026-05-18) — DUPLICATE ORDER BUG DISCOVERED + CRONTAB ACCIDENTALLY WIPED
-
-### Critical Real Money Reality Check
-
-Real losses today verified via Dhan API (NOT our DB — they disagree massively):
-- vishal-live: -Rs.248.02 across 5 positions (DB said +Rs.14, off by 17x)
-- neha-live: -Rs.469.50 across 5 positions (DB said -Rs.66, off by 7x)
-- Combined real loss today: -Rs.717.52
-
-Cumulative real loss estimate (5 trading days, May 12-18):
-- ~Rs.1,200-1,500 across both live accounts
-- ~5% of combined Rs.29K capital in 5 days
-- DB-reported cumulative was -Rs.50 (massive understatement)
-
-### CRITICAL BUG: Duplicate Order Submission (NEW, undiagnosed)
-
-Evidence from Dhan API positions (truth source):
-| Stock | Our DB qty | Dhan actual qty | Multiplier |
-|-------|-----------|-----------------|------------|
-| TATASTEEL (vishal) | 21 (1 trade) | 84 | 4x |
-| ETERNAL (vishal) | NOT IN DB | 38 | phantom trade |
-| BANDHAN (neha) | 21 | 42 | 2x |
-| MOTHERSON (neha) | 31 | 62 | 2x |
-| CANBK (vishal) | 25 | 50 | 2x |
-| SBIN (both) | 4/4 | 8 | 2x |
-| TECHM (both) | matched | matched | 1x (only working case) |
-
-Pattern: System places EACH trade 2-4 times instead of once.
-Some trades placed without DB record (phantom).
-Different from Bug 5 (which is about trade count). This is per-order duplication.
-
-Bug 5 also failed today (separate, recurring issue):
-- vishal-live: 5 trades placed (limit was 3)
-- neha-live: 6 trades placed (limit was 3)
-
-Daily loss limit (Rs.900) DID hold today — only by luck since trades were small.
-If trades had been Rs.15K each, Rs.5K-10K daily loss possible.
-
-### Decisions Made This Session
-
-1. neha-live trading STOPPED (paused indefinitely until duplicate bug fixed)
-2. vishal-live continues LIVE (user direction — his money, his decision)
-3. F&O cron on vishal-live remains DISABLED (real money safety)
-4. Duplicate order bug = TOP PRIORITY before any further trading
-
-### Crontab Status — REQUIRES RESTORATION
-
-OLD EC2 crontab: WIPED (accidentally during sed/python edit attempts this session)
-NEW EC2 crontab: WIPED (same reason)
-
-Backup at /tmp/crontab_backup_20260518.txt is EMPTY (created after wipe).
-
-Source of truth for restoration:
-- .kiro/steering/STATE.md "Active Crons OLD EC2" section
-- .kiro/steering/RULES.md Section 6
-- docs/MASTER_RESUME.md cron table
-
-OLD EC2 crontab to restore (next session, before market open):
-*/15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal-live --live >> logs/cron_vishal_live.log 2>&1 */15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal >> logs/cron_vishal.log 2>&1 */15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile neha >> logs/cron_neha.log 2>&1 50 3 * * 1-5 /home/ec2-user/dev-sandbox/run_fno_daily.sh --profile vishal 52 3 * * 1-5 /home/ec2-user/dev-sandbox/run_fno_daily.sh --profile neha /30 4-9 * * 1-5 /home/ec2-user/dev-sandbox/scripts/fno_mtm_update.sh 5 10 * * 1-5 cd /home/ec2-user/dev-sandbox && .venv/bin/python3 scripts/capture_top_performers.py >> logs/top_performers.log 2>&1 0 3-10 * * 1-5 cd /home/ec2-user/dev-sandbox && aws s3 sync dashboard/ s3://dev-sandbox-dashboard-176767908884/ --exclude "db-sync/" >> logs/s3_sync.log 2>&1
-
-(8 active entries — vishal-live F&O DISABLED permanently)
-
-NEW EC2 crontab: leave EMPTY (neha-live stopped, no DB to sync)
-
-### Auth Architecture Fix (commit 7ca45ce — committed earlier today, GOOD)
-
-Different from duplicate order bug — already fixed and pushed:
-- Per-profile session files (.broker_session_.json)
-- client_id validation in session reuse
-- pnl_calculator reads Dhan v2 flat strikes structure
-- scripts/fno_mtm_run.py sys.path fix
-- vishal-live F&O cron disabled in crontab (was: 54 3 * * 1-5)
-
-DON'T REDO. Different bug from duplicate order issue.
-
-### F&O Paper Status (today's first real-data run)
-
-vishal F&O paper used REAL Dhan option chain prices for first time:
-- 2 IRON_CONDOR strategies placed (NIFTY, BANKNIFTY)
-- Real entry prices, real MTM
-- vishal NIFTY -Rs.175 mid-session, BANKNIFTY +Rs.25
-
-neha F&O cannot price (no Data API on neha account):
-- 3 IRON_CONDOR strategies placed but unpriced
-- Need shared-broker pattern OR separate Data API subscription
-
-### Backtest v1.2 Status
-
-Commit bb71fdb — backtest v1.2 infrastructure committed and pushed
-Process started: PID 145982 on OLD EC2 (background nohup)
-Universe: 670 stocks (Nifty 500 equivalent), all 17 reference stocks present
-8 stratified days
-
-Should have completed during this session — check via:
-bash scripts/check_backtest.sh ls cache/backtest_llm/ | wc -l ls -lt backtest/results/backtest_v1_*.json | head -3
-
-### Next Session Priorities (strict order)
-
-1. **Verify backtest v1.2 completed** — what's in cache/backtest_llm/, what result JSON exists
-2. **Restore OLD EC2 crontab** from text above (vishal-live --live INCLUDED per user direction)
-3. **Verify NEW EC2 crontab is empty** (neha-live stopped)
-4. **Pull full Dhan order history for today** to investigate duplicate order bug:
-   - Endpoint: GET https://api.dhan.co/v2/orders
-   - Sort by exchangeTime
-   - Look for same symbol+action within seconds = duplicates
-5. **Find duplication source** in:
-   - intraday/executor.py (order placement)
-   - run_daily.sh (cron wrapper, lock files, possible double-invocation)
-   - intraday/risk_manager.py (Bug 5 trade counter)
-6. **Fix duplicate order bug**
-7. **Validate fix on vishal paper** for 1-2 days BEFORE re-enabling vishal-live cron
-8. **Then talk to neha** with the bug-fixed system as proof
-9. **Backtest v1.2 results review** (lower priority than bug)
-
-### Files To Investigate
-
-- intraday/executor.py — does it submit entry order twice somewhere?
-- run_daily.sh — does it have lock file? does cron fire 2x?
-- intraday/risk_manager.py — Bug 5 trade counter logic
-- /var/log/cron — proves cron firing rate (any duplicate fires?)
-- logs/cron_vishal_live.log — see actual cron invocation timestamps
-
-### Don't Touch (already working)
-
-- intraday/auth_server.py
-- config/profile.py
-- fno/pnl_calculator.py
-- fno/monitor.py
-- scripts/fno_mtm_run.py
-
-### Session Anti-Patterns To Avoid
-
-- Don't trust our DB pnl numbers — verify against Dhan API for real money
-- Don't suggest sed/python regex for crontab edits — use simple cat + crontab
-- Don't skip backup verification — always check `wc -l backup_file`
-- Always pull broker source of truth for real-money decisions
-- Stop work when tired and offer "tomorrow" rather than push through with shortcuts
-
-### Real Money Trading Status (END OF DAY)
-
-| Profile | Status | Reason |
-|---------|--------|--------|
-| vishal-live | LIVE (user direction) | His decision, his money, but cron currently empty |
-| neha-live | STOPPED | Duplicate order bug + neha complaining |
-| vishal paper | active | DryRun broker, safe even with bugs |
-| neha paper | active | DryRun broker, safe even with bugs |
-
-Cron status (must restore before market open):
-- OLD EC2: empty (was wiped during session)
-- NEW EC2: empty (was wiped during session)
-
-### Real Money Cumulative (best estimate, this week)
-
-May 12-18 across both live accounts:
-- DB-reported cumulative: -Rs.50 to -Rs.165 (varies by query)
-- Dhan-actual estimate: -Rs.1,200 to -Rs.1,500
-- Charges burden: ~Rs.50-70 per round-trip on small trades
-- Today alone (May 18): -Rs.717 actual vs -Rs.52 DB
+**Last Updated**: 2026-05-19 EOD - duplicate order ROOT CAUSE FOUND + FIXED
+**Update Protocol**: Replace TODAY section at end of each session.
 
 ---
 
-## PREVIOUS SESSION (2026-05-17 evening) — DATA API LIVE + BACKTEST ENGINE v0.1
+**Last Updated**: 2026-05-19 EOD — bugs found + dashboard Phase 1 shipped + Telegram live
+**Update Protocol**: Replace TODAY section at end of each session.
+
+---
+
+## TODAY (2026-05-19 EOD) — 3 BUGS + PHASE 1 DASHBOARD + TELEGRAM ACTIVE
+
+### Real Money Today (vishal-live)
+
+- Dhan API truth P&L: +Rs.85.16
+- Our DB-reported P&L: -Rs.129.97 (WRONG by Rs.215)
+- Available balance EOD: Rs.13,632.80
+- 3 trades executed (IOC, COHANCE, INFY)
+- Daily loss limit Rs.500 NOT breached
+- All positions auto-squared by Dhan at 15:30 IST
+
+### Dashboard Phase 1 — SHIPPED (commit 96c8770)
+
+7 files committed by Kiro:
+- dashboard/v2/css/design.css (color palette, typography, spacing)
+- dashboard/v2/css/components.css (cards, pills, badges)
+- dashboard/v2/components/header.html (template fragment)
+- dashboard/v2/universe.html (4-tier Indian universe with staleness timestamps)
+- dashboard/v2/risk.html (profile config + risk gates + capital scaling)
+- alerts/telegram_bot.py (skeleton: /ping, /status only)
+- config/telegram.yaml.example (template, no secrets)
+
+Live URLs verified working:
+- https://d2q1cy3ph7jbd0.cloudfront.net (old dashboard, still 200)
+- https://d2q1cy3ph7jbd0.cloudfront.net/v2/universe.html (200)
+- https://d2q1cy3ph7jbd0.cloudfront.net/v2/risk.html (200)
+
+### Telegram Bot — ACTIVE (running on EC2-OLD)
+
+- Bot username: created via @BotFather
+- Token: stored in config/telegram.yaml (gitignored)
+- Allowed chat_id: 5422811137 (vishal)
+- Process PID: 204601 (background, started today)
+- Tested: /ping returned Pong successfully
+- Available: /ping, /status, /help
+- NOT WIRED: trade alerts, P&L alerts (Phase 4)
+
+### Three Bugs Discovered Today (NOT fixed)
+
+#### Bug 1 (CRITICAL): MARKET retry skips SL placement + DB write
+- Yesterday's commit a2e5d66 (return None indent) is in code at correct indent
+- BUT logs show MARKET retry STILL bypasses SL+DB after fill
+- Pattern: 04:00:23 "MARKET retry filled 3 INFY" -> immediately "BUY IOC" (next stock)
+- 5 INFY shares + 1 ADANIGREEN share unprotected all day
+- There is a SECOND code path the indent fix didn't reach
+- Need to read place_orders() function to find it
+
+#### Bug 2: Cross-process token sharing
+- Cron session 05 auth'd Dhan at 05:00 (PID 185464)
+- Cron session 07 detected stale 3.7-hour session, re-authed
+- But OLD monitor process kept running with OLD invalid token
+- get_positions returned HTTP 400 from 07:30 to 09:45 (2+ hours)
+- INFY position monitoring blind for entire afternoon
+
+#### Bug 3: Force exit logs success on failed order
+- Code: place_order returned HTTP 400 'Invalid Token'
+- Same flow logged "OK INFY exit order placed"
+- Recorded synthetic P&L -Rs.13.93
+- Reality: Dhan auto-square-off closed position
+- Our system told a lie
+
+### Capital Plan Agreed Today
+
+User goal: Rs.1 lakh/month income by June 20 (32 days from today).
+Capital source: Rs.5 lakh own savings (confirmed not loan).
+
+Math:
+- Rs.5L × 0.9% daily = Rs.4,500/day = Rs.1L/month (achievable)
+- Requires 60%+ win rate (unproven yet — bugs hide truth)
+
+Staged deployment plan agreed:
+- Days 1-5 (May 20-24): Fix bugs, validate clean DB-vs-Dhan
+- Days 6-15 (May 27-Jun 6): Scale Rs.15K → Rs.50K → Rs.2L
+- Days 16-25 (Jun 8-19): Scale to Rs.5L
+- Day 26+ (Jun 20+): Income phase, Rs.5L deployed
+
+Honest probability estimate:
+- 25% chance hit Rs.1L/month by Jun 20
+- 35% chance hit Rs.50-80K/month
+- 25% chance hit Rs.20-40K/month
+- 15% chance net loss for the month
+
+Strict gate: NO scale up if any day shows DB-vs-Dhan drift > Rs.5.
+
+### F&O Findings (paper, deferred)
+
+vishal F&O paper today:
+- Strategy 15 NIFTY: P&L Rs.413.75 (correct)
+- Strategy 16 BANKNIFTY: P&L Rs.92,025 (FAKE — max possible was Rs.216)
+- Strategy 17 FINNIFTY: P&L Rs.10 (force exit lost real prices)
+
+Root cause: BANKNIFTY current_price has garbage values (5849, 11972).
+Same Bug T resurrection (third or fourth time).
+Deferred — not blocking real money.
+
+neha F&O: HTTP 401 confirmed (no Data API on neha account, by design).
+
+### Validation Script Status
+
+CHECK 1 PASS — Cron fired correctly
+CHECK 2 PASS — No 5-second duplicates on Dhan
+CHECK 3 PASS — Trade counter at 3 (correct)
+CHECK 4 PASS — Same-symbol block working
+CHECK 5 FAIL — DB-vs-Dhan: 7 mismatches (Bug 1 effect)
+
+### What's Working
+
+- Indent fix yesterday DID work for ONE path (verified in code)
+- Auth fix per-profile sessions still working
+- Same-symbol block functional when DB has rows
+- Trade counter holds at 3/3
+- Dashboard Phase 1 v2 ready for Phase 2 wiring
+- Telegram bot active, ready for Phase 4 alert wiring
+- Dhan API truth source (sync_dhan_live.py) reliable
+- Real money capital intact
+
+### What's Broken
+
+- Bug 1: MARKET retry second code path (real money unprotected)
+- Bug 2: Cross-process token contamination (causes Bug 3)
+- Bug 3: Force exit lies on failed orders
+- F&O P&L calculation (paper-only, deferred)
+- Dashboard old version P&L wrong (DB-derived, fixable in Phase 2)
+- Validate_tomorrow.sh false-positives on Check 5 (compares wrong fields)
+
+### Tomorrow's Priority (one bug at a time, no plan jumps)
+
+1. Read place_orders() function structure
+2. Find Bug 1 second path
+3. Propose one-block patch
+4. User approves
+5. Apply to executor.py
+6. Test on paper for one day
+7. THEN consider scaling capital
+
+Decision pending tomorrow:
+- Old dashboard P&L fix (read from dhan_live.json instead of DB)
+  → Safe display-only fix
+  → Can be done without lifting intraday freeze
+
+### Don't Touch (working)
+
+- intraday/executor.py line 198 (yesterday fix correct)
+- intraday/auth_server.py
+- config/profile.py
+- scripts/sync_dhan_live.py
+- alerts/telegram_bot.py (active, leave running)
+- dashboard/v2/* (Phase 1 done)
+
+### Cron Status
+
+OLD EC2: vishal-live LIVE + paper + F&O all running
+NEW EC2: empty (neha-live STOPPED)
+
+### Today's Session Architecture
+
+Three parallel tracks worked:
+1. Trading: bug discovery + capital plan (vishal + Claude)
+2. Dashboard Phase 1: Kiro fresh session (succeeded after SCP workaround)
+3. Telegram bot: setup + activation
+
+All three tracks landed in single commit 96c8770.
+
+### Cumulative Real Money May 12-19
+
+- Total real-money trades closed: ~6
+- Real cumulative P&L (Dhan truth): -Rs.700 to -Rs.1,500 estimate
+- Charges burden: Rs.50-70 per round-trip on small positions
+
+---
+
+## PREVIOUS SESSION (2026-05-19 morning) — EXECUTOR.PY INDENT FIX (a2e5d66)
 
 
 ### Session Outcome
@@ -1450,6 +1470,36 @@ Sync: scripts/sync_top_performers.py (runs after capture)
 ---
 
 ## EVOLUTION LOG (newest first)
+
+### v3.5.1 — 2026-05-19 EOD (BUGS + INFRASTRUCTURE)
+Commit: 96c8770 (dashboard + telegram skeleton)
+No code commits for trading bugs (deferred to tomorrow).
+
+Indent fix from a2e5d66 verified at 16-space indent in code.
+But MARKET retry STILL bypasses SL+DB in production.
+
+Conclusion: SECOND code path exists with same bug pattern.
+Need to read place_orders() function to find it tomorrow.
+
+Three new bugs documented in LEARNING.md May 19 EOD entry:
+- MARKET retry second path (Bug 1, critical)
+- Cross-process token sharing (Bug 2)
+- Force exit lies on failure (Bug 3)
+
+Real money exposure today bounded by:
+- Daily loss limit Rs.500 (held)
+- Available capital Rs.13,632 (intact)
+- 5 INFY + 1 ADANIGREEN unprotected shares were lucky
+
+Tomorrow: read place_orders() structure, find second path, patch.
+
+Infrastructure shipped today (commit 96c8770):
+- Dashboard v2 Phase 1: design system + Universe + Risk tabs
+- Telegram bot skeleton active (PID 204601 background process)
+
+Capital plan agreed: Rs.5L deployment over 32 days, Rs.1L/month target.
+
+
 
 ### v3.5 — 2026-05-19 (THE INDENT BUG — ROOT CAUSE FOUND)
 Commit: a2e5d66
@@ -2710,6 +2760,199 @@ ONE indent. EIGHT visible symptoms.
 - Not re-enabling neha-live cron
 - Not increasing capital
 - Letting the fix prove itself for 3 days
+
+
+---
+
+### May 20 — User Observation: Pharma Sector Consistently Missed
+
+#### Pattern noticed
+User watching Dhan app saw Apollo Hospitals, Dr Reddy's Laboratories, and
+Cipla showing up "doing well" multiple times last week. Our scanner never
+picked any of them.
+
+#### Sample data (May 20 morning, from Dhan app)
+- Apollo Hospitals: +0.07% (Rs.5.50 on Rs.8026)
+- Dr Reddy's Laboratories: +0.30% (Rs.4.00 on Rs.1335)
+- Cipla: -1.15% today but trending up over 5 days
+- Hero Motocorp: +1.02%
+
+#### Why scanner misses these
+Per RS-First v3 scoring (intraday/scanner.py):
+- Signal 2 (momentum): requires >1% same-day move to score
+- Signal 4 (volume): Apollo trades 500K-1M (borderline for our 2M threshold)
+- Signal 6 (sector rotation): pharma rarely leads day-by-day rankings
+
+Apollo +0.07% scores ~2-3 points. Top candidates today (e.g., INFY) score 14+.
+Working as designed — our scanner targets intraday momentum, not slow trends.
+
+#### The real lesson — strategy bias
+
+Our intraday scanner is correctly biased toward:
+- Strong same-day momentum (>2%)
+- High volume confirmation (>2M daily)
+- Sector leadership of the day
+
+This means we systematically miss:
+- Stocks moving 0.3% per day for 5 days (compounds to +1.5%)
+- Defensive sectors (pharma, FMCG) when they outperform without spikes
+- Slow-grinding uptrends without volume catalysts
+
+#### Why this is NOT a bug to fix now
+
+1. Charges (~Rs.50 round-trip) eat small intraday moves. Need >1% same-day
+   for intraday to be profitable after charges.
+2. Force-exit at 15:15 IST means we can't wait for moves to develop.
+3. Lowering momentum threshold would also catch sideways noise.
+4. Pharma/FMCG/defensive sectors are SWING trades by design, not intraday.
+
+#### Right answer — build swing module
+
+Swing module is "TO BUILD" per STATE.md.
+
+Swing-specific scanner should target:
+- Stocks trending up >0.5% per day for 5-10 day windows
+- Lower volume threshold (defensive stocks have less volume)
+- Sector relative strength (pharma vs Nifty, FMCG vs Nifty)
+- Hold time 5-15 days, not intraday
+- Wider stops (3-5% vs intraday 1.8-2%)
+- Wider targets (5-10% vs intraday 3.6%)
+
+#### Decisions
+
+1. NO changes to intraday scanner (it's working as designed)
+2. Add to next-session priorities: design swing scanner for defensive sectors
+3. Swing module build sequence:
+   - Define swing-specific scoring (different from intraday RS-First v3)
+   - Build paper module with daily cron at 4 PM IST
+   - Validate 30 days on paper before any real money
+   - Pharma/FMCG/healthcare sectors are first universe to target
+
+#### Compounding insight
+
+User watches the actual market and notices what we miss. This is valuable
+signal. Future pattern: weekly capture session for "what user noticed that
+scanner missed" — informs strategy improvements.
+
+
+---
+
+### May 19 EOD — Bugs Multiply, Dashboard Phase 1 Lands, Telegram Goes Live
+
+#### Money
+
+| Source | Today's P&L |
+|--------|-------------|
+| Dhan API truth | +Rs.85.16 |
+| Our DB | -Rs.129.97 |
+| Drift | Rs.215 |
+
+System lied about its own performance. Made money, claims loss.
+
+#### Three bugs found today
+
+After yesterday's indent fix shipped, today proved fix only worked
+for ONE of two code paths. Three new bugs discovered:
+
+1. MARKET retry path skips SL+DB write (different from yesterday's path)
+2. Cross-process token sharing causes 2+ hour blind monitoring
+3. Force exit logs synthetic success on Dhan API failures
+
+5 INFY shares had no stop loss for entire afternoon. Pure luck market
+didn't crash. Daily loss limit Rs.500 held only because moves were small.
+
+#### Capital plan committed
+
+User: Rs.1L/month income target by June 20 from Rs.5L own savings.
+Probability assessment: 25% best-case, 60% modest income, 15% loss.
+Staged scaling: 15K -> 50K -> 2L -> 5L over 32 days.
+Hard gate: any day with DB-vs-Dhan drift > Rs.5 pauses scaling.
+
+#### Dashboard Phase 1 — Kiro shipped despite tooling pain
+
+Kiro spent 30 minutes fighting SSH heredoc + base64 corruption issues
+that yesterday's danish-eq session didn't have (different SSH context).
+Eventually used SCP for one file, succeeded. 7 files committed in 96c8770.
+
+Two new pages live on CloudFront:
+- /v2/universe.html (4-tier Indian equity universe)
+- /v2/risk.html (profile config + capital scaling)
+
+Old dashboard at root URL untouched and still working.
+
+#### Telegram bot — activated in <10 minutes
+
+User created bot via @BotFather, sent token.
+I fetched chat_id from getUpdates, wrote config, started bot.
+Tested /ping immediately, got Pong. Working as background process.
+
+NOT yet wired:
+- Trade alerts (Phase 4)
+- P&L alerts (Phase 4)
+- Daily summary (Phase 4)
+
+Phase 1 scope was just /ping, /status, /help. All working.
+
+#### What I (the AI) got right today
+
+1. Detected indent fix was partial within 30 min of cron firing
+2. Pulled real Dhan API truth via dhan_live.json instead of trusting DB
+3. Found Bug 2 by examining log timeline (cross-session token issue)
+4. Found Bug 3 by reading exact log lines that "succeeded" after error
+5. Refused to deploy Rs.5L capital despite urgency
+6. Insisted on staged scaling Rs.15K -> Rs.50K -> Rs.2L -> Rs.5L
+7. Pushed back on adding F&O / swing real money during 32-day window
+8. Required real money source confirmation (own savings, not loans)
+9. Honest 25% probability assessment
+
+#### What I got wrong today
+
+1. Initial claim "indent fix worked" was wrong — should have read fuller code
+2. Suggested manual SL on Dhan app at 3:00 PM IST when force exit was 15 min away
+3. Spent time on F&O P&L when intraday bugs were primary
+4. Almost missed Bug 2 (cross-process token) — only found by examining details
+
+#### What user got right today
+
+1. Clear deadline: Jun 20, Rs.1L/month, Rs.5L deployable
+2. Clear capital source: own savings, not loans
+3. Pushed back on "postpone F&O fix" — caused proper investigation
+4. Said "stop creating plans, fix bugs" when I was over-planning
+5. Confirmed staged scaling willingness
+6. Created Telegram bot smoothly without confusion
+7. Flagged old dashboard P&L issue immediately when noticed
+
+#### Lessons that compound
+
+1. One indent fix doesn't fix all paths. Same root can exist in 2-3 places.
+2. Always pull broker truth first. DB lies. Dhan API doesn't.
+3. Process leak across crons is real. Long-running monitors hold stale auth.
+4. Logs that say "OK" can lie. Always cross-check with Dhan API.
+5. Capital plan is a constraint, not a deadline. Don't let urgency override safety.
+6. SCP works when SSH heredoc fights you. Use right tool.
+7. Telegram bot setup takes 10 min when token + chat_id known.
+
+#### Action items for tomorrow
+
+- [ ] Read place_orders() function to find Bug 1 second path
+- [ ] Propose one-block patch (no refactor)
+- [ ] Test on paper before deploying
+- [ ] If clean: validate one day before any capital change
+- [ ] Decide: fix old dashboard P&L source (DB -> Dhan API)
+- [ ] Don't add F&O work tomorrow
+
+#### Honest assessment
+
+The 32-day plan started with bugs everywhere. But the truth source
+(Dhan API) and dashboard infrastructure (Phase 1) and alert pipeline
+(Telegram) all working today.
+
+Bugs are findable. Real money capital intact. Daily loss bounded.
+If Bug 1 fix lands tomorrow + 3 days clean validation, scaling
+plan still hits Jun 20 within probability bounds.
+
+Bigger risk: undiscovered bug at Rs.5L scale costing Rs.10K-50K.
+Mitigation: every scale step needs 5 days clean before next.
 
 
 ================================================================

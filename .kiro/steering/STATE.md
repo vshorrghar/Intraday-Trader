@@ -10,102 +10,183 @@
 
 ---
 
-## TODAY (2026-05-19) - DUPLICATE ORDER BUG ROOT CAUSE FOUND + FIXED
-
-### THE FIX - Commit a2e5d66
-
-One-line indent fix in intraday/executor.py line 198.
-
-Before: return None at 12-space indent (sibling of if filled_qty == 0)
-After: return None at 16-space indent (child of if filled_qty == 0)
-
-The function was returning None unconditionally after MARKET retry block,
-regardless of whether the retry succeeded.
-
-### Root Cause (hidden for weeks)
-
-When LIMIT order rejected (tick size error 16283) AND confidence >= 8:
-- Code retries with MARKET order
-- MARKET retry succeeds, fills on Dhan
-- BUT function returns None immediately after retry
-- SL order never placed
-- DB row never written
-- Trailing SL monitor never starts
-
-### Today's Evidence (INFY trifecta)
-
-| Time | Action | Filled on Dhan | Recorded in DB | SL Placed |
-|------|--------|----------------|----------------|-----------|
-| 09:30:21 | INFY MARKET retry | 3 shares | NO | NO |
-| 10:30:22 | INFY MARKET retry | 2 shares | NO | NO |
-| 10:45:17 | INFY LIMIT (filled first try) | 2 shares | YES (id=26) | YES (qty=2) |
-
-Net result on Dhan: 7 INFY shares LONG.
-Net result in our DB: 1 row, qty=2.
-SL coverage: 2 of 7 shares (5 unprotected).
-
-### What This Single Bug Explains
-
-- May 18 TATASTEEL 4x duplication - MARKET retry fired 3 extra times
-- May 18 BANDHAN, MOTHERSON, CANBK 2x - same pattern
-- May 18 ETERNAL phantom - MARKET retry filled, no DB record
-- May 19 INFY 3.5x - same pattern, three sessions
-- Bug 5b counter failures - counter reads from DB, but DB rows missing
-- Same-symbol block failures - block reads from DB, no rows to see
-- DB-vs-Dhan P&L drift (14x off May 18) - half of trades not in our DB
-
-ONE INDENT. SEVEN VISIBLE BUGS.
-
-### Today's Real Money P&L (Dhan truth)
-
-Per dhan_live.json @ 14:32 IST:
-- INFY: 7 shares LONG @ Rs.1192.73 (unrealized -Rs.10 mid-session)
-- COHANCE: 9 shares SHORT - unrealized +Rs.250
-- ADANIGREEN: 1 share LONG @ Rs.1423 (unrealized -Rs.36, phantom trade)
-- IOC: closed +Rs.5.76 realized
-- Total at 14:32 IST: +Rs.105.61
-- Daily realized loss: -Rs.98.19
-
-### Tomorrow Morning Validation
-
-Required before 9:30 AM IST cron fires:
-1. git log --oneline -3 shows a2e5d66 at HEAD on BOTH EC2s
-2. Line 198 of executor.py shows 16-space indent
-3. EC2-NEW pulled the fix
-4. validate_tomorrow.sh runs morning checkpoint
-
-### Real Money Trading Status (END OF DAY)
-
-| Profile | Status | Reason |
-|---------|--------|--------|
-| vishal-live | LIVE (cron active) | Bug fixed for tomorrow |
-| neha-live | STOPPED | Decision pending |
-| vishal paper | active | DryRun broker |
-| neha paper | active | DryRun broker |
-
-### Next Session Priorities
-
-1. Verify cron fires correctly Wednesday morning with patched code
-2. Run validate_tomorrow.sh at 9:35 / 11:00 / 15:30 IST
-3. EOD Wednesday: pull dhan_live.json, verify DB matches
-4. If 5/5 PASS for 3 days: consider re-enabling neha-live cron
-5. Then build dashboard improvements (Kiro)
-6. Then build Telegram bot
-
-### Don't Touch (working)
-
-- intraday/executor.py (just fixed)
-- intraday/auth_server.py (May 18 fix)
-- config/profile.py (May 18 fix)
-- fno/pnl_calculator.py (May 18 fix)
-- scripts/fno_mtm_run.py (May 18 fix)
-- scripts/sync_dhan_live.py (built today)
-- scripts/check_dhan_orders.py (validation diagnostic)
-- scripts/validate_tomorrow.sh (validation orchestrator)
+**Last Updated**: 2026-05-19 EOD — bugs found + dashboard Phase 1 shipped + Telegram live
+**Update Protocol**: Replace TODAY section at end of each session.
 
 ---
 
-## PREVIOUS SESSION (2026-05-19 morning) - CONTEXT AUTOMATION + SSM WORKFLOW DECIDED
+## TODAY (2026-05-19 EOD) — 3 BUGS + PHASE 1 DASHBOARD + TELEGRAM ACTIVE
+
+### Real Money Today (vishal-live)
+
+- Dhan API truth P&L: +Rs.85.16
+- Our DB-reported P&L: -Rs.129.97 (WRONG by Rs.215)
+- Available balance EOD: Rs.13,632.80
+- 3 trades executed (IOC, COHANCE, INFY)
+- Daily loss limit Rs.500 NOT breached
+- All positions auto-squared by Dhan at 15:30 IST
+
+### Dashboard Phase 1 — SHIPPED (commit 96c8770)
+
+7 files committed by Kiro:
+- dashboard/v2/css/design.css (color palette, typography, spacing)
+- dashboard/v2/css/components.css (cards, pills, badges)
+- dashboard/v2/components/header.html (template fragment)
+- dashboard/v2/universe.html (4-tier Indian universe with staleness timestamps)
+- dashboard/v2/risk.html (profile config + risk gates + capital scaling)
+- alerts/telegram_bot.py (skeleton: /ping, /status only)
+- config/telegram.yaml.example (template, no secrets)
+
+Live URLs verified working:
+- https://d2q1cy3ph7jbd0.cloudfront.net (old dashboard, still 200)
+- https://d2q1cy3ph7jbd0.cloudfront.net/v2/universe.html (200)
+- https://d2q1cy3ph7jbd0.cloudfront.net/v2/risk.html (200)
+
+### Telegram Bot — ACTIVE (running on EC2-OLD)
+
+- Bot username: created via @BotFather
+- Token: stored in config/telegram.yaml (gitignored)
+- Allowed chat_id: 5422811137 (vishal)
+- Process PID: 204601 (background, started today)
+- Tested: /ping returned Pong successfully
+- Available: /ping, /status, /help
+- NOT WIRED: trade alerts, P&L alerts (Phase 4)
+
+### Three Bugs Discovered Today (NOT fixed)
+
+#### Bug 1 (CRITICAL): MARKET retry skips SL placement + DB write
+- Yesterday's commit a2e5d66 (return None indent) is in code at correct indent
+- BUT logs show MARKET retry STILL bypasses SL+DB after fill
+- Pattern: 04:00:23 "MARKET retry filled 3 INFY" -> immediately "BUY IOC" (next stock)
+- 5 INFY shares + 1 ADANIGREEN share unprotected all day
+- There is a SECOND code path the indent fix didn't reach
+- Need to read place_orders() function to find it
+
+#### Bug 2: Cross-process token sharing
+- Cron session 05 auth'd Dhan at 05:00 (PID 185464)
+- Cron session 07 detected stale 3.7-hour session, re-authed
+- But OLD monitor process kept running with OLD invalid token
+- get_positions returned HTTP 400 from 07:30 to 09:45 (2+ hours)
+- INFY position monitoring blind for entire afternoon
+
+#### Bug 3: Force exit logs success on failed order
+- Code: place_order returned HTTP 400 'Invalid Token'
+- Same flow logged "OK INFY exit order placed"
+- Recorded synthetic P&L -Rs.13.93
+- Reality: Dhan auto-square-off closed position
+- Our system told a lie
+
+### Capital Plan Agreed Today
+
+User goal: Rs.1 lakh/month income by June 20 (32 days from today).
+Capital source: Rs.5 lakh own savings (confirmed not loan).
+
+Math:
+- Rs.5L × 0.9% daily = Rs.4,500/day = Rs.1L/month (achievable)
+- Requires 60%+ win rate (unproven yet — bugs hide truth)
+
+Staged deployment plan agreed:
+- Days 1-5 (May 20-24): Fix bugs, validate clean DB-vs-Dhan
+- Days 6-15 (May 27-Jun 6): Scale Rs.15K → Rs.50K → Rs.2L
+- Days 16-25 (Jun 8-19): Scale to Rs.5L
+- Day 26+ (Jun 20+): Income phase, Rs.5L deployed
+
+Honest probability estimate:
+- 25% chance hit Rs.1L/month by Jun 20
+- 35% chance hit Rs.50-80K/month
+- 25% chance hit Rs.20-40K/month
+- 15% chance net loss for the month
+
+Strict gate: NO scale up if any day shows DB-vs-Dhan drift > Rs.5.
+
+### F&O Findings (paper, deferred)
+
+vishal F&O paper today:
+- Strategy 15 NIFTY: P&L Rs.413.75 (correct)
+- Strategy 16 BANKNIFTY: P&L Rs.92,025 (FAKE — max possible was Rs.216)
+- Strategy 17 FINNIFTY: P&L Rs.10 (force exit lost real prices)
+
+Root cause: BANKNIFTY current_price has garbage values (5849, 11972).
+Same Bug T resurrection (third or fourth time).
+Deferred — not blocking real money.
+
+neha F&O: HTTP 401 confirmed (no Data API on neha account, by design).
+
+### Validation Script Status
+
+CHECK 1 PASS — Cron fired correctly
+CHECK 2 PASS — No 5-second duplicates on Dhan
+CHECK 3 PASS — Trade counter at 3 (correct)
+CHECK 4 PASS — Same-symbol block working
+CHECK 5 FAIL — DB-vs-Dhan: 7 mismatches (Bug 1 effect)
+
+### What's Working
+
+- Indent fix yesterday DID work for ONE path (verified in code)
+- Auth fix per-profile sessions still working
+- Same-symbol block functional when DB has rows
+- Trade counter holds at 3/3
+- Dashboard Phase 1 v2 ready for Phase 2 wiring
+- Telegram bot active, ready for Phase 4 alert wiring
+- Dhan API truth source (sync_dhan_live.py) reliable
+- Real money capital intact
+
+### What's Broken
+
+- Bug 1: MARKET retry second code path (real money unprotected)
+- Bug 2: Cross-process token contamination (causes Bug 3)
+- Bug 3: Force exit lies on failed orders
+- F&O P&L calculation (paper-only, deferred)
+- Dashboard old version P&L wrong (DB-derived, fixable in Phase 2)
+- Validate_tomorrow.sh false-positives on Check 5 (compares wrong fields)
+
+### Tomorrow's Priority (one bug at a time, no plan jumps)
+
+1. Read place_orders() function structure
+2. Find Bug 1 second path
+3. Propose one-block patch
+4. User approves
+5. Apply to executor.py
+6. Test on paper for one day
+7. THEN consider scaling capital
+
+Decision pending tomorrow:
+- Old dashboard P&L fix (read from dhan_live.json instead of DB)
+  → Safe display-only fix
+  → Can be done without lifting intraday freeze
+
+### Don't Touch (working)
+
+- intraday/executor.py line 198 (yesterday fix correct)
+- intraday/auth_server.py
+- config/profile.py
+- scripts/sync_dhan_live.py
+- alerts/telegram_bot.py (active, leave running)
+- dashboard/v2/* (Phase 1 done)
+
+### Cron Status
+
+OLD EC2: vishal-live LIVE + paper + F&O all running
+NEW EC2: empty (neha-live STOPPED)
+
+### Today's Session Architecture
+
+Three parallel tracks worked:
+1. Trading: bug discovery + capital plan (vishal + Claude)
+2. Dashboard Phase 1: Kiro fresh session (succeeded after SCP workaround)
+3. Telegram bot: setup + activation
+
+All three tracks landed in single commit 96c8770.
+
+### Cumulative Real Money May 12-19
+
+- Total real-money trades closed: ~6
+- Real cumulative P&L (Dhan truth): -Rs.700 to -Rs.1,500 estimate
+- Charges burden: Rs.50-70 per round-trip on small positions
+
+---
+
+## PREVIOUS SESSION (2026-05-19 morning) — EXECUTOR.PY INDENT FIX (a2e5d66)
 
 
 ### Session Outcome
