@@ -667,3 +667,45 @@ NOT BUILT YET (Phases 2, 3, 4, 13, 16):
 3. Copy CONTEXT.md to new Bedrock chat
 4. Type: "Continue from 2026-05-19 EOD. Either run option C (extract real win rate) or option B (write Prompt 2C-FAST/NARROW for Kiro to complete swing)."
 
+
+---
+
+## RECONCILIATION SCRIPT BUILT (2026-05-20 03:00 IST)
+
+### scripts/reconcile_dhan_db.py — DONE
+
+Detects DB-vs-Dhan drift per trade. Classifies issues:
+- PHANTOM_TRADE — in Dhan, missing from DB
+- ORPHAN_DB — in DB, missing from Dhan
+- PNL_DRIFT — P&L off by > Rs.5
+- QTY_DRIFT — quantity mismatch
+- OK — within threshold
+
+Output: dashboard/api/{profile}/reconciliation_report.json
+Exit code: 0 if PASS (drift <= Rs.5), 1 if FAIL
+
+### First test result on May 19
+
+VERDICT: FAIL (Rs.215.13 drift)
+
+| Symbol | Issue | Drift |
+|--------|-------|-------|
+| ADANIGREEN | PHANTOM_TRADE (Bug 1) | -Rs.45.60 |
+| COHANCE | PNL_DRIFT (Bug 1 — half qty) | +Rs.214.49 |
+| INFY | PNL_DRIFT (Bug 3 — Invalid Token) | +Rs.48.03 |
+| IOC | OK (Rs.1.79 minor) | within threshold |
+
+True May 19 P&L: +Rs.85.16
+DB-reported May 19 P&L: -Rs.129.97
+Drift: Rs.215.13
+
+### Cron added (OLD EC2)
+
+10 10 * * 1-5 — sync + reconcile every weekday 3:40 PM IST
+
+### Saturday cleanup tasks
+
+1. Manually correct DB rows for May 12-19 corruption period
+2. Update WIN_RATE_TRACKING.md with cleaned cumulative P&L
+3. Verify cron firing and report appearing daily
+
