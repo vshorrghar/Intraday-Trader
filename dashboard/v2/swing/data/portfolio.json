@@ -1,0 +1,14 @@
+{
+  "total_value": 0,
+  "cash_balance": 100000,
+  "deployed_capital": 0,
+  "capital_limit": 100000,
+  "starting_capital": 100000,
+  "unrealized_pnl": 0,
+  "today_pnl": 0,
+  "positions": [],
+  "last_updated": "2026-05-19T18:00:00+05:30",
+  "environment": "PAPER",
+  "currency": "INR",
+  "note": "Phase 1 placeholder. Real data when swing module live."
+}

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>intraday-trader — Swing Trading Dashboard</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <link rel="stylesheet" href="css/swing.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <h1 class="logo">📊 trader-swing</h1>
+            <span class="env-badge sim">SIM</span>
+        </div>
+        <div class="header-center">
+            <nav class="tabs" role="tablist">
+                <button class="tab active" data-tab="signals" role="tab" aria-selected="true">
+                    <span class="tab-icon">🎯</span> Signals
+                </button>
+                <button class="tab" data-tab="portfolio" role="tab">
+                    <span class="tab-icon">💼</span> Portfolio
+                </button>
+                <button class="tab" data-tab="scanner" role="tab">
+                    <span class="tab-icon">🔍</span> Scanner
+                </button>
+                <button class="tab" data-tab="risk" role="tab">
+                    <span class="tab-icon">🛡️</span> Risk
+                </button>
+                <button class="tab" data-tab="history" role="tab">
+                    <span class="tab-icon">📈</span> History
+                </button>
+                <button class="tab" data-tab="universe" role="tab">
+                    <span class="tab-icon">🌍</span> Universe
+                </button>
+            </nav>
+        </div>
+        <div class="header-right">
+            <span class="market-status" id="marketStatus">● Markets Closed</span>
+            <span class="last-update" id="lastUpdate">—</span>
+            <button class="btn-refresh" id="btnRefresh" title="Refresh data">⟳</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- ═══════════ SIGNALS TAB ═══════════ -->
+        <section class="tab-content active" id="tab-signals">
+            <div class="signals-header">
+                <h2>Today's Swing Signals</h2>
+                <div class="signals-meta">
+                    <span class="meta-item" id="signalDate">—</span>
+                    <span class="meta-item" id="signalCount">0 picks</span>
+                    <span class="meta-item" id="avgConfidence">Avg confidence: —</span>
+                </div>
+            </div>
+
+            <div class="signals-grid" id="signalsGrid">
+                <!-- Signal cards rendered by JS -->
+                <div class="empty-state">
+                    <p>No signals yet. Swing scanner runs at 15:30 IST (after NSE close).</p>
+                </div>
+            </div>
+
+            <!-- LLM Rationale Panel -->
+            <div class="rationale-panel" id="rationalePanel" style="display:none;">
+                <div class="rationale-header">
+                    <h3>🧠 AI Rationale — <span id="rationaleSymbol"></span></h3>
+                    <button class="btn-close" id="closeRationale">✕</button>
+                </div>
+                <div class="rationale-body" id="rationaleBody"></div>
+            </div>
+        </section>
+
+        <!-- ═══════════ PORTFOLIO TAB ═══════════ -->
+        <section class="tab-content" id="tab-portfolio">
+            <div class="portfolio-summary">
+                <div class="stat-card">
+                    <span class="stat-label">Portfolio Value</span>
+                    <span class="stat-value" id="portfolioValue">₹0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Cash Available</span>
+                    <span class="stat-value" id="cashAvailable">₹0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Open Positions</span>
+                    <span class="stat-value" id="openPositions">0 / 12</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Unrealized P&L</span>
+                    <span class="stat-value" id="unrealizedPnl">₹0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Today's P&L</span>
+                    <span class="stat-value" id="todayPnl">₹0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Capital Utilization</span>
+                    <span class="stat-value" id="capitalUtilization">0%</span>
+                    <div class="progress-bar"><div class="progress-fill" id="capitalProgress"></div></div>
+                </div>
+            </div>
+
+            <h3>Open Positions</h3>
+            <div class="table-container">
+                <table class="data-table" id="positionsTable">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Entry</th>
+                            <th>Current</th>
+                            <th>P&L %</th>
+                            <th>Stop Loss</th>
+                            <th>Target</th>
+                            <th>Days Held</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="positionsBody">
+                        <tr><td colspan="8" class="empty-row">No open positions</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ═══════════ SCANNER TAB ═══════════ -->
+        <section class="tab-content" id="tab-scanner">
+            <div class="scanner-controls">
+                <h2>Universe Scanner</h2>
+                <div class="filter-row">
+                    <select id="scannerTier" class="select-input">
+                        <option value="all">All Tiers</option>
+                        <option value="tier1">Tier 1 — US Large Caps</option>
+                        <option value="tier2">Tier 2 — UCITS ETFs</option>
+                        <option value="tier3_dk">Tier 3 — Danish C25</option>
+                        <option value="tier3_eu">Tier 3 — EU Large Caps</option>
+                    </select>
+                    <select id="scannerSort" class="select-input">
+                        <option value="score">Sort: Score ↓</option>
+                        <option value="momentum_5d">Sort: 5d Momentum ↓</option>
+                        <option value="momentum_20d">Sort: 20d Momentum ↓</option>
+                        <option value="volume">Sort: Volume ↓</option>
+                        <option value="near_high">Sort: Near 52w High ↓</option>
+                    </select>
+                    <input type="text" id="scannerSearch" class="text-input" placeholder="Search symbol...">
+                </div>
+            </div>
+
+            <!-- Heatmap -->
+            <div class="heatmap-container" id="heatmapContainer">
+                <h3>Momentum Heatmap (5-day)</h3>
+                <div class="heatmap" id="heatmap">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Scanner Table -->
+            <div class="table-container">
+                <table class="data-table" id="scannerTable">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Score</th>
+                            <th>Price</th>
+                            <th>5d %</th>
+                            <th>20d %</th>
+                            <th>From 52w High</th>
+                            <th>Avg Vol (20d)</th>
+                            <th>Signals</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scannerBody">
+                        <tr><td colspan="8" class="empty-row">Run scanner to populate</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ═══════════ RISK TAB ═══════════ -->
+        <section class="tab-content" id="tab-risk">
+            <h2>Risk Dashboard</h2>
+
+            <div class="risk-grid">
+                <div class="risk-card">
+                    <h4>Daily Loss Cap</h4>
+                    <div class="risk-gauge">
+                        <div class="gauge-bar">
+                            <div class="gauge-fill" id="dailyLossGauge" style="width: 0%"></div>
+                        </div>
+                        <span class="gauge-label" id="dailyLossLabel">0% / 2% max</span>
+                    </div>
+                </div>
+
+                <div class="risk-card">
+                    <h4>Position Concentration</h4>
+                    <div class="concentration-chart" id="concentrationChart">
+                        <div class="donut-placeholder">
+                            <span>No positions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="risk-card">
+                    <h4>Sector Exposure</h4>
+                    <div class="sector-bars" id="sectorBars">
+                        <div class="sector-row">
+                            <span class="sector-name">Technology</span>
+                            <div class="sector-bar"><div class="sector-fill" style="width: 0%"></div></div>
+                            <span class="sector-pct">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="risk-card">
+                    <h4>Risk Parameters</h4>
+                    <div class="params-list">
+                        <div class="param-row">
+                            <span>Max Position Size</span>
+                            <span>DKK 15,000</span>
+                        </div>
+                        <div class="param-row">
+                            <span>Stop Loss Range</span>
+                            <span>4-6%</span>
+                        </div>
+                        <div class="param-row">
+                            <span>Min R:R Ratio</span>
+                            <span>2.0</span>
+                        </div>
+                        <div class="param-row">
+                            <span>Max Positions</span>
+                            <span>12</span>
+                        </div>
+                        <div class="param-row">
+                            <span>Daily Loss Cap</span>
+                            <span>2%</span>
+                        </div>
+                        <div class="param-row">
+                            <span>Max Sector</span>
+                            <span>30%</span>
+                        </div>
+                        <div class="param-row">
+                            <span>Daily Capital Limit</span>
+                            <span>Profile-dependent (Rs.50K–3L)</span>
+                        </div>
+                        <div class="param-row">
+                            <span>Tax Rate</span>
+                            <span>STCG 15% + STT + GST</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ HISTORY TAB ═══════════ -->
+        <section class="tab-content" id="tab-history">
+            <div class="history-header">
+                <h2>Trade History</h2>
+                <div class="history-stats">
+                    <div class="stat-card small">
+                        <span class="stat-label">Total Trades</span>
+                        <span class="stat-value" id="totalTrades">0</span>
+                    </div>
+                    <div class="stat-card small">
+                        <span class="stat-label">Win Rate</span>
+                        <span class="stat-value" id="winRate">—</span>
+                    </div>
+                    <div class="stat-card small">
+                        <span class="stat-label">Avg R:R Achieved</span>
+                        <span class="stat-value" id="avgRR">—</span>
+                    </div>
+                    <div class="stat-card small">
+                        <span class="stat-label">Total P&L</span>
+                        <span class="stat-value" id="totalPnl">₹0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equity Curve -->
+            <div class="chart-container">
+                <h3>Equity Curve</h3>
+                <div class="equity-chart" id="equityChart">
+                    <canvas id="equityCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Trade Log -->
+            <div class="table-container">
+                <table class="data-table" id="historyTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Symbol</th>
+                            <th>Entry</th>
+                            <th>Exit</th>
+                            <th>P&L %</th>
+                            <th>P&L DKK</th>
+                            <th>Days</th>
+                            <th>Outcome</th>
+                            <th>Signal Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody">
+                        <tr><td colspan="9" class="empty-row">No completed trades yet</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ═══════════ UNIVERSE TAB ═══════════ -->
+        <section class="tab-content" id="tab-universe">
+            <h2>Investment Universe</h2>
+            <p class="subtitle">~170 NSE instruments across 4 tiers (CNC delivery only)</p>
+
+            <div class="universe-tiers">
+                <div class="tier-section" id="tier1Section">
+                    <div class="tier-header">
+                        <h3>🇮🇳 Tier 1 — Nifty 50</h3>
+                        <span class="tier-count" id="tier1Count">50 stocks</span>
+                        <span class="tier-desc">Large-cap blue chips • Highest liquidity</span>
+                    </div>
+                    <div class="tier-chips" id="tier1Chips"></div>
+                </div>
+
+                <div class="tier-section" id="tier2Section">
+                    <div class="tier-header">
+                        <h3>🇮🇳 Tier 2 — Nifty Next 50</h3>
+                        <span class="tier-count" id="tier2Count">50 stocks</span>
+                        <span class="tier-desc">Mid-cap growth • Good liquidity</span>
+                    </div>
+                    <div class="tier-chips" id="tier2Chips"></div>
+                </div>
+
+                <div class="tier-section" id="tier3DkSection">
+                    <div class="tier-header">
+                        <h3>💊 Tier 3 — Defensive</h3>
+                        <span class="tier-count" id="tier3DkCount">20 stocks</span>
+                        <span class="tier-desc">Pharma + FMCG + Healthcare (slow grinders)</span>
+                    </div>
+                    <div class="tier-chips" id="tier3DkChips"></div>
+                </div>
+
+                <div class="tier-section" id="tier3EuSection">
+                    <div class="tier-header">
+                        <h3>🚀 Tier 4 — Momentum</h3>
+                        <span class="tier-count" id="tier3EuCount">29 stocks</span>
+                        <span class="tier-desc">IT + Banks + Metals (sector leaders)</span>
+                    </div>
+                    <div class="tier-chips" id="tier3EuChips"></div>
+                </div>
+            </div>
+
+            <div class="universe-rules">
+                <h3>Swing Universe Rules</h3>
+                <table class="data-table compact">
+                    <thead>
+                        <tr><th>Asset Type</th><th>Eligible</th><th>Use</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>NSE equity (CNC delivery)</td><td class="yes">✅ Yes</td><td>Swing primary</td></tr>
+                        <tr><td>NSE F&O (options/futures)</td><td class="no">❌ No</td><td>Excluded (separate F&O module)</td></tr>
+                        <tr><td>NSE intraday (MIS)</td><td class="no">❌ No</td><td>Excluded (separate intraday module)</td></tr>
+                        <tr><td>BSE-only stocks</td><td class="no">❌ No</td><td>Liquidity insufficient</td></tr>
+                        <tr><td>Below Rs.50 price</td><td class="no">❌ No</td><td>Tick slippage too high</td></tr>
+                        <tr><td>Below Rs.5 Cr daily turnover</td><td class="no">❌ No</td><td>Liquidity filter</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <span>intraday-trader v0.1 • Swing Module • Paper Mode</span>
+        <span>STCG 15% + STT • CNC delivery • Long-only</span>
+    </footer>
+
+    <script src="js/swing.js"></script>
+</body>
+</html>
