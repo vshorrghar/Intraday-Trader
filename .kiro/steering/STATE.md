@@ -572,3 +572,98 @@ Wait for 20+ validated trades on RS-First v3 + Bug 5 fix before evaluating.
 Paste RULES.md + STATE.md + your question. Any AI that lectures without reading both is wasting your time.
 
 End of STATE.md
+
+---
+
+## TODAY (2026-05-19 LATE NIGHT) — BUG 1 FIX + SWING SKELETON + 6 INSTITUTIONAL DOCS
+
+### Real Money Status
+- vishal-live: Rs.15K live, Bug 1 fix shipped, awaiting validation
+- neha-live: STOPPED (since May 18, awaiting Bug 1 validation 5+ days clean)
+- Total real money exposure: Rs.15K
+- Cumulative real P&L May 12-19: -Rs.1,200 to -Rs.1,500 (Dhan truth)
+
+### Commits Tonight
+- 8b96b23: Bug 1 reconcile + Bug 3 exit honesty (CRITICAL fix)
+- 646705c: Dashboard v2 swing tab (danish-eq UI ported, Indian markets)
+- f84be10: Swing paper-mode skeleton (60% built)
+- 5bc4cb3: 6 new institutional steering docs
+
+### Bug 1 Fix Status
+SHIPPED via commit 8b96b23. Tomorrow morning May 20 first market test.
+Defense in depth: get_positions reconcile #1 + cancel-detection #2 + reconcile #3.
+Validation gate: 30 trading days clean before any capital scaling per Rule 25 precedent.
+
+### Swing Module Status — 60% Complete
+DONE (commit f84be10):
+- swing/sector_map.py (12 sector classifications)
+- swing/models.py (SwingTradeSetup + SwingConfig dataclasses)
+- swing/risk_manager.py (1% sizing, sector cap, regime, daily/weekly loss)
+- swing/monitor.py (smart time stop, NEVER auto-sells winners, EXIT_FAILED audit)
+- swing/manual_override.py (pause/resume/exit/status)
+- fetchers/swing_earnings_list.py (manual list)
+- run_swing.py (orchestrator skeleton)
+- run_swing_daily.sh + run_swing_monitor.sh (wrappers)
+- scripts/swing_control.py (CLI)
+- scripts/swing_schema.sql (applied to all 4 DBs)
+- vishal profile YAML updated with swing config
+
+NOT BUILT YET (Phases 2, 3, 4, 13, 16):
+- swing/scanner.py — 20-DMA pullback scoring (currently placeholder)
+- swing/selector.py — LLM prompt for swing (currently placeholder)
+- swing/executor.py — CNC product_type swap (currently intraday MIS code)
+- swing/dashboard.py — JSON writer (currently placeholder)
+- Cron entries (Phase 13)
+- Rule 25 in RULES.md (Phase 16)
+- Profile YAMLs for neha, vishal-live, neha-live (only vishal done)
+
+### Test Results
+- AST parse all swing files: OK
+- Pipeline dry-run: runs, prints "placeholder" messages, writes empty JSONs
+- Manual override: pause/resume/exit/status all working
+- DB schema applied: swing_trades + swing_audit on all 4 DBs
+
+### 6 New Institutional Steering Docs
+1. EDGE.md (387 lines) — Why each strategy should make money
+2. DECISIONS.md (472 lines) — Strategic decision log, append-only
+3. BUGS_AND_FIXES.md (479 lines) — Bug catalog with patterns
+4. WIN_RATE_TRACKING.md (436 lines) — Statistical validation log (has [FILL_IN] markers)
+5. REGIME_LOG.md (261 lines) — Daily regime template (entries start May 20)
+6. TRADE_REVIEW.md (251 lines) — Daily post-mortem template (entries start May 20)
+
+### Tomorrow's Priority (May 20)
+1. Pre-market: verify Bug 1 fix at HEAD on both EC2s
+2. 9:30 AM IST: tail intraday log, watch for RECONCILE: messages
+3. Update WIN_RATE_TRACKING.md with REAL data extracted from intraday DBs
+4. EOD: write first REGIME_LOG.md and TRADE_REVIEW.md entries
+5. NO new code building tomorrow (validation day)
+
+### Saturday/Sunday Plan
+1. Run Prompt 2C: complete swing Phases 2, 3, 4, 13, 16
+2. End-to-end test before Monday cron
+3. Monday May 26: paper swing trading begins
+
+### Pending Decisions
+- F&O fate (REWRITE/KILL) — decide by June 1
+- Capital scaling Rs.15K → Rs.30K — gated by 50+ trades + Bug 1 30-day clean
+- neha-live reactivation — after Bug 1 5-day clean validation
+
+### Don't Touch
+- intraday/executor.py (Bug 1 fix is delicate, 16-space indent + reconcile logic)
+- intraday/monitor.py (Bug 3 fix is in 3 locations)
+- swing/* skeleton (working, awaiting Phases 2-4)
+- dashboard/v2/swing/ (UI works, awaiting real swing data)
+
+### Cumulative Stats
+- Codebase: ~22,000 lines (estimated)
+- Trading strategies: 4 designed, 1 live, 0 statistically validated
+- Steering docs: 16 total (RULES, STATE, HISTORY, STRATEGY, LEARNING, GLOSSARY, BUSINESS_DOC, TECHNICAL_DOC, FNO_STRATEGY, CONTEXT, EDGE, DECISIONS, BUGS_AND_FIXES, WIN_RATE_TRACKING, REGIME_LOG, TRADE_REVIEW)
+- Real money trades to date: ~5 closed
+- Real money cumulative loss: Rs.1,200-1,500
+
+### How To Resume Tomorrow
+1. Open EC2-OLD via SSM
+2. cd ~/dev-sandbox && bash scripts/build_context.sh
+3. Copy CONTEXT.md to new Bedrock chat
+4. Type: "Continue from 2026-05-19 EOD. Either run option C (extract real win rate) or option B (write Prompt 2C-FAST/NARROW for Kiro to complete swing)."
+
