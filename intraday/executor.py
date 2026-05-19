@@ -195,7 +195,7 @@ class Order_Executor:
                     "%s %s (order %s) did not fill — all attempts exhausted, no SL placed",
                     entry_side, trade.nse_symbol, buy_order_id,
                 )
-            return None
+                return None
 
         if filled_qty < trade.quantity:
             # Partial fill — cancel rest, place SL only for filled qty
