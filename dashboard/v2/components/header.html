@@ -1,0 +1,120 @@
+<!-- ═══════════════════════════════════════════════════════════
+     Intraday Trader v2 — Header Component (template fragment)
+     Include this in all v2 pages via JS or server-side include.
+     ═══════════════════════════════════════════════════════════ -->
+<header class="header">
+    <div class="header-left">
+        <h1 class="logo">📈 Intraday Trader</h1>
+        <select class="profile-switcher" id="profileSwitcher">
+            <option value="vishal-live">vishal-live</option>
+            <option value="neha-live">neha-live</option>
+            <option value="vishal">vishal (paper)</option>
+            <option value="neha">neha (paper)</option>
+        </select>
+        <span class="badge badge-live" id="modeBadge">● LIVE</span>
+    </div>
+
+    <nav class="header-center">
+        <div class="tabs" role="tablist">
+            <a class="tab" href="universe.html" role="tab">
+                <span class="tab-icon">🌐</span> Universe
+            </a>
+            <a class="tab" href="risk.html" role="tab">
+                <span class="tab-icon">🛡️</span> Risk
+            </a>
+            <a class="tab disabled" href="#" role="tab" aria-disabled="true">
+                <span class="tab-icon">📊</span> Dashboard
+                <span class="badge badge-info">Phase 2</span>
+            </a>
+            <a class="tab disabled" href="#" role="tab" aria-disabled="true">
+                <span class="tab-icon">🎯</span> Signals
+                <span class="badge badge-info">Phase 3</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="header-right">
+        <span class="market-status" id="marketStatus">● Market Closed</span>
+        <span class="timestamp" id="lastSync">Last sync: —</span>
+    </div>
+</header>
+
+<style>
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-6);
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--header-height);
+}
+.header-left { display: flex; align-items: center; gap: var(--space-3); }
+.logo { font-size: var(--text-xl); font-weight: var(--weight-bold); letter-spacing: -0.5px; }
+.profile-switcher {
+    background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary);
+    padding: var(--space-1) var(--space-3); border-radius: var(--radius);
+    font-size: var(--text-sm); font-family: var(--font-mono); cursor: pointer; outline: none;
+}
+.profile-switcher:focus { border-color: var(--accent); }
+.header-center { display: flex; align-items: center; }
+.tabs { display: flex; gap: var(--space-1); }
+.tab {
+    display: flex; align-items: center; gap: var(--space-1);
+    padding: var(--space-2) var(--space-4); border-radius: var(--radius);
+    font-size: var(--text-sm); font-weight: var(--weight-medium);
+    color: var(--text-secondary); text-decoration: none; transition: var(--transition-fast);
+}
+.tab:hover:not(.disabled) { background: var(--bg-hover); color: var(--text-primary); }
+.tab.active { background: var(--accent); color: white; }
+.tab.disabled { opacity: 0.5; cursor: not-allowed; }
+.tab-icon { font-size: var(--text-base); }
+.header-right { display: flex; align-items: center; gap: var(--space-4); font-size: var(--text-sm); }
+.market-status { color: var(--red); font-weight: var(--weight-medium); }
+.market-status.open { color: var(--green); }
+</style>
+
+<script>
+(function() {
+    const switcher = document.getElementById("profileSwitcher");
+    const badge = document.getElementById("modeBadge");
+    const params = new URLSearchParams(window.location.search);
+    const profile = params.get("profile") || "vishal-live";
+    switcher.value = profile;
+    updateBadge(profile);
+
+    switcher.addEventListener("change", function() {
+        const url = new URL(window.location);
+        url.searchParams.set("profile", this.value);
+        window.location.href = url.toString();
+    });
+
+    function updateBadge(p) {
+        if (p.includes("live")) {
+            badge.className = "badge badge-live";
+            badge.textContent = "\u25cf LIVE";
+        } else {
+            badge.className = "badge badge-paper";
+            badge.textContent = "\u25cf PAPER";
+        }
+    }
+
+    // Market status (IST = UTC+5:30)
+    const now = new Date();
+    const utcH = now.getUTCHours(), utcM = now.getUTCMinutes();
+    const istTotalMin = utcH * 60 + utcM + 330;
+    const istH = Math.floor(istTotalMin / 60) % 24;
+    const istM = istTotalMin % 60;
+    const day = now.getUTCDay();
+    const marketEl = document.getElementById("marketStatus");
+    const marketOpen = (istH * 60 + istM) >= 555; // 9:15
+    const marketClose = (istH * 60 + istM) <= 930; // 15:30
+    if (day >= 1 && day <= 5 && marketOpen && marketClose) {
+        marketEl.textContent = "\u25cf Market Open";
+        marketEl.classList.add("open");
+    }
+})();
+</script>

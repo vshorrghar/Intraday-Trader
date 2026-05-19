@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universe — Intraday Trader v2</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+    <link rel="stylesheet" href="css/design.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <!-- Header (template fragment) -->
+    <div id="header-slot"></div>
+
+    <main class="page-wrapper fade-in">
+        <h2 class="section-title">🌐 Trading Universe</h2>
+        <p class="section-subtitle">
+            4-tier Indian equity universe. Scanner pulls from Nifty 500 API at runtime.
+            Symbols below are reference constituents — actual scan uses live NSE data.
+        </p>
+
+        <!-- Tier 1: Nifty 50 -->
+        <div class="tier-section">
+            <div class="tier-header">
+                <h3>Tier 1 — Nifty 50</h3>
+                <span class="tier-count">50 stocks</span>
+                <span class="badge badge-live">Primary Alpha</span>
+            </div>
+            <div class="tier-meta">
+                <span>Large-cap blue chips • Highest liquidity • All F&O eligible</span>
+                <span class="timestamp" data-tier="nifty50">Last updated: 2026-05-19</span>
+            </div>
+            <p class="tier-desc">Core universe. Every scan cycle scores these first. Best fills, tightest spreads.</p>
+            <div class="chip-grid" id="tier1-chips">
+                <!-- Nifty 50 constituents -->
+            </div>
+        </div>
+
+        <!-- Tier 2: Nifty Next 50 -->
+        <div class="tier-section">
+            <div class="tier-header">
+                <h3>Tier 2 — Nifty Next 50</h3>
+                <span class="tier-count">50 stocks</span>
+                <span class="badge badge-accent">Secondary</span>
+            </div>
+            <div class="tier-meta">
+                <span>Large-cap growth • Good liquidity • Most F&O eligible</span>
+                <span class="timestamp" data-tier="next50">Last updated: 2026-05-19</span>
+            </div>
+            <p class="tier-desc">Next tier of liquid large-caps. Slightly wider spreads but strong momentum candidates.</p>
+            <div class="chip-grid" id="tier2-chips">
+                <!-- Nifty Next 50 constituents -->
+            </div>
+        </div>
+
+        <!-- Tier 3: Nifty 500 (ex-100) -->
+        <div class="tier-section">
+            <div class="tier-header">
+                <h3>Tier 3 — Nifty 500 (ex-Nifty 100)</h3>
+                <span class="tier-count">~400 stocks</span>
+                <span class="badge badge-info">Diversifier</span>
+            </div>
+            <div class="tier-meta">
+                <span>Mid & small cap • Variable liquidity • Scanner filters by volume</span>
+                <span class="timestamp" data-tier="nifty500">Last updated: 2026-05-19</span>
+            </div>
+            <p class="tier-desc">
+                Full Nifty 500 minus top 100. Scanner applies 500K volume floor (or 4%+ momentum with 100K).
+                Not displayed individually — fetched live from NSE API each scan cycle.
+            </p>
+            <div class="chip-grid" id="tier3-chips">
+                <!-- Representative sample only -->
+            </div>
+            <p class="text-muted" style="margin-top: var(--space-3); font-size: var(--text-xs);">
+                ↑ Showing 30 representative stocks. Full 400+ fetched from NSE Nifty 500 API at runtime.
+            </p>
+        </div>
+
+        <!-- Tier 4: F&O Eligible -->
+        <div class="tier-section">
+            <div class="tier-header">
+                <h3>Tier 4 — F&O Eligible</h3>
+                <span class="tier-count">~190 stocks</span>
+                <span class="badge badge-paper">Derivatives</span>
+            </div>
+            <div class="tier-meta">
+                <span>Options + Futures eligible • Used by F&O module • Lot size varies</span>
+                <span class="timestamp" data-tier="fno">Last updated: 2026-05-19</span>
+            </div>
+            <p class="tier-desc">
+                Stocks eligible for derivatives trading on NSE. F&O module uses these for Iron Condors,
+                spreads, and directional plays. Intraday scanner gives +1 bonus to F&O-eligible stocks (liquidity signal).
+            </p>
+            <div class="chip-grid" id="tier4-chips">
+                <!-- Representative F&O stocks -->
+            </div>
+            <p class="text-muted" style="margin-top: var(--space-3); font-size: var(--text-xs);">
+                ↑ Showing 40 representative F&O stocks. Full ~190 list from NSE F&O segment data.
+            </p>
+        </div>
+
+        <!-- Universe Rules -->
+        <div class="card" style="margin-top: var(--space-8);">
+            <div class="card-header">
+                <h3 class="card-title">📋 Scanner Inclusion Rules</h3>
+            </div>
+            <div class="params-list">
+                <div class="param-row">
+                    <span class="param-key">Price range</span>
+                    <span class="param-value">₹50 — ₹5,000</span>
+                </div>
+                <div class="param-row">
+                    <span class="param-key">Volume floor</span>
+                    <span class="param-value">500K shares/day</span>
+                </div>
+                <div class="param-row">
+                    <span class="param-key">Momentum bypass</span>
+                    <span class="param-value">≥4% change + 100K volume</span>
+                </div>
+                <div class="param-row">
+                    <span class="param-key">Source API</span>
+                    <span class="param-value">NSE Nifty 500 live</span>
+                </div>
+                <div class="param-row">
+                    <span class="param-key">Scan frequency</span>
+                    <span class="param-value">Every 15 min (9:30–13:00 IST)</span>
+                </div>
+                <div class="param-row">
+                    <span class="param-key">Output per cycle</span>
+                    <span class="param-value">Top 15 LONG + 15 SHORT = 30</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer style="padding: var(--space-3) var(--space-6); background: var(--bg-secondary); border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: var(--text-xs); color: var(--text-muted);">
+        <span>Intraday Trader v2 • Phase 1</span>
+        <span>Data: hardcoded reference (live API in Phase 2)</span>
+    </footer>
+
+    <script>
+    // Universe data — hardcoded reference constituents
+    const UNIVERSE = {
+        nifty50: [
+            "ADANIENT","ADANIPORTS","APOLLOHOSP","ASIANPAINT","AXISBANK",
+            "BAJAJ-AUTO","BAJFINANCE","BAJAJFINSV","BEL","BPCL",
+            "BHARTIARTL","BRITANNIA","CIPLA","COALINDIA","DRREDDY",
+            "EICHERMOT","GRASIM","HCLTECH","HDFCBANK","HDFCLIFE",
+            "HEROMOTOCO","HINDALCO","HINDUNILVR","ICICIBANK","ITC",
+            "INDUSINDBK","INFY","JSWSTEEL","KOTAKBANK","LT",
+            "M&M","MARUTI","NTPC","NESTLEIND","ONGC",
+            "POWERGRID","RELIANCE","SBILIFE","SBIN","SUNPHARMA",
+            "TCS","TATACONSUM","TATAMOTORS","TATASTEEL","TECHM",
+            "TITAN","ULTRACEMCO","WIPRO","SHRIRAMFIN","TRENT"
+        ],
+        next50: [
+            "ABB","ADANIGREEN","AMBUJACEM","AUROPHARMA","BANKBARODA",
+            "BOSCHLTD","CANBK","CHOLAFIN","COLPAL","DABUR",
+            "DLF","GAIL","GODREJCP","HAL","HAVELLS",
+            "HINDPETRO","ICICIPRULI","ICICIGI","INDHOTEL","IOC",
+            "IRCTC","IRFC","JIOFIN","JSWENERGY","JINDALSTEL",
+            "LTF","LTIM","LICI","LODHA","MARICO",
+            "MAXHEALTH","NHPC","NAUKRI","OBEROIRLTY","OFSS",
+            "PAGEIND","PERSISTENT","PIDILITIND","PNB","POLYCAB",
+            "RECLTD","SBICARD","SIEMENS","SRF","TORNTPHARM",
+            "TVSMOTOR","UNIONBANK","VEDL","ZOMATO","ZYDUSLIFE"
+        ],
+        nifty500_sample: [
+            "AARTIIND","AFFLE","ALKEM","ASTRAL","ATUL",
+            "BALRAMCHIN","BSOFT","CANFINHOME","COFORGE","CROMPTON",
+            "CUMMINSIND","DEEPAKNITRO","DIXON","ESCORTS","EXIDEIND",
+            "FEDERALBNK","FORTIS","GMRINFRA","GRINDWELL","GSPL",
+            "IDFCFIRSTB","INDIAMART","JUBLFOOD","KPITTECH","LAURUSLABS",
+            "MPHASIS","MUTHOOTFIN","NATIONALUM","NAVINFLUOR","NLCINDIA"
+        ],
+        fno: [
+            "AARTIIND","ABB","ABBOTINDIA","ABCAPITAL","ABFRL",
+            "ACC","ADANIENT","ADANIPORTS","ALKEM","AMBUJACEM",
+            "APOLLOHOSP","ASHOKLEY","ASIANPAINT","ASTRAL","ATUL",
+            "AUBANK","AUROPHARMA","AXISBANK","BAJAJ-AUTO","BAJAJFINSV",
+            "BAJFINANCE","BALKRISIND","BANDHANBNK","BANKBARODA","BATAINDIA",
+            "BEL","BERGEPAINT","BHARATFORG","BHARTIARTL","BHEL",
+            "BIOCON","BOSCHLTD","BPCL","BRITANNIA","BSOFT",
+            "CANBK","CANFINHOME","CHAMBLFERT","CHOLAFIN","CIPLA"
+        ]
+    };
+
+    function renderChips(containerId, symbols) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = symbols.map(s =>
+            '<span class="chip">' + s + '</span>'
+        ).join("");
+    }
+
+    renderChips("tier1-chips", UNIVERSE.nifty50);
+    renderChips("tier2-chips", UNIVERSE.next50);
+    renderChips("tier3-chips", UNIVERSE.nifty500_sample);
+    renderChips("tier4-chips", UNIVERSE.fno);
+
+    // Load header fragment
+    fetch("components/header.html")
+        .then(r => r.text())
+        .then(html => {
+            document.getElementById("header-slot").innerHTML = html;
+            // Mark Universe tab active
+            const tabs = document.querySelectorAll(".tab");
+            tabs.forEach(t => {
+                if (t.href && t.href.includes("universe")) t.classList.add("active");
+            });
+        })
+        .catch(() => {
+            document.getElementById("header-slot").innerHTML =
+                '<div style="padding:12px 24px;background:var(--bg-secondary);border-bottom:1px solid var(--border);">' +
+                '<strong>📈 Intraday Trader v2</strong> — Universe</div>';
+        });
+
+    // Staleness check: highlight timestamps older than 7 days
+    document.querySelectorAll(".timestamp[data-tier]").forEach(el => {
+        const dateStr = el.textContent.replace("Last updated: ", "");
+        const updated = new Date(dateStr);
+        const daysSince = (Date.now() - updated.getTime()) / (1000 * 60 * 60 * 24);
+        if (daysSince > 7) {
+            el.classList.add("timestamp-stale");
+            el.textContent += " ⚠️ stale";
+        }
+    });
+    </script>
+</body>
+</html>

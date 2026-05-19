@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk — Intraday Trader v2</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <link rel="stylesheet" href="css/design.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div id="header-slot"></div>
+
+    <main class="page-wrapper fade-in">
+        <h2 class="section-title">🛡️ Risk Configuration</h2>
+        <p class="section-subtitle">
+            Profile capital limits and trading gates. These values are read from config/profiles/*.yaml on EC2.
+            Changes require explicit approval per Rule 16.
+        </p>
+
+        <!-- Profile cards grid -->
+        <div class="grid-2" id="profileGrid">
+            <!-- vishal-live -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">vishal-live</h3>
+                    <span class="badge badge-live">● LIVE</span>
+                </div>
+                <div class="params-list">
+                    <div class="param-row"><span class="param-key">Daily Capital</span><span class="param-value">₹15,000</span></div>
+                    <div class="param-row"><span class="param-key">Per-Trade Max</span><span class="param-value">₹4,500</span></div>
+                    <div class="param-row"><span class="param-key">Max Trades/Day</span><span class="param-value">3</span></div>
+                    <div class="param-row"><span class="param-key">Daily Loss Limit</span><span class="param-value text-red">₹900</span></div>
+                    <div class="param-row"><span class="param-key">Min Confidence</span><span class="param-value">7</span></div>
+                    <div class="param-row"><span class="param-key">VIX Threshold</span><span class="param-value">20</span></div>
+                    <div class="param-row"><span class="param-key">EC2</span><span class="param-value">OLD (13.206.144.6)</span></div>
+                </div>
+            </div>
+
+            <!-- neha-live -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">neha-live</h3>
+                    <span class="badge badge-stopped">● STOPPED</span>
+                </div>
+                <div class="params-list">
+                    <div class="param-row"><span class="param-key">Daily Capital</span><span class="param-value">₹10,000</span></div>
+                    <div class="param-row"><span class="param-key">Per-Trade Max</span><span class="param-value">₹4,000</span></div>
+                    <div class="param-row"><span class="param-key">Max Trades/Day</span><span class="param-value">3</span></div>
+                    <div class="param-row"><span class="param-key">Daily Loss Limit</span><span class="param-value text-red">₹900</span></div>
+                    <div class="param-row"><span class="param-key">Min Confidence</span><span class="param-value">8</span></div>
+                    <div class="param-row"><span class="param-key">VIX Threshold</span><span class="param-value">20</span></div>
+                    <div class="param-row"><span class="param-key">EC2</span><span class="param-value">NEW (13.202.63.223)</span></div>
+                </div>
+                <p class="text-muted" style="margin-top: var(--space-3); font-size: var(--text-xs);">
+                    ⚠️ Stopped since May 18 — duplicate order bug under investigation
+                </p>
+            </div>
+
+            <!-- vishal paper -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">vishal</h3>
+                    <span class="badge badge-paper">● PAPER</span>
+                </div>
+                <div class="params-list">
+                    <div class="param-row"><span class="param-key">Daily Capital</span><span class="param-value">₹3,00,000</span></div>
+                    <div class="param-row"><span class="param-key">Per-Trade Max</span><span class="param-value">₹50,000</span></div>
+                    <div class="param-row"><span class="param-key">Max Trades/Day</span><span class="param-value">6</span></div>
+                    <div class="param-row"><span class="param-key">Daily Loss Limit</span><span class="param-value text-red">₹9,000</span></div>
+                    <div class="param-row"><span class="param-key">Min Confidence</span><span class="param-value">7</span></div>
+                    <div class="param-row"><span class="param-key">VIX Threshold</span><span class="param-value">18</span></div>
+                    <div class="param-row"><span class="param-key">EC2</span><span class="param-value">OLD (13.206.144.6)</span></div>
+                </div>
+            </div>
+
+            <!-- neha paper -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">neha</h3>
+                    <span class="badge badge-paper">● PAPER</span>
+                </div>
+                <div class="params-list">
+                    <div class="param-row"><span class="param-key">Daily Capital</span><span class="param-value">₹3,00,000</span></div>
+                    <div class="param-row"><span class="param-key">Per-Trade Max</span><span class="param-value">₹50,000</span></div>
+                    <div class="param-row"><span class="param-key">Max Trades/Day</span><span class="param-value">6</span></div>
+                    <div class="param-row"><span class="param-key">Daily Loss Limit</span><span class="param-value text-red">₹9,000</span></div>
+                    <div class="param-row"><span class="param-key">Min Confidence</span><span class="param-value">7</span></div>
+                    <div class="param-row"><span class="param-key">VIX Threshold</span><span class="param-value">18</span></div>
+                    <div class="param-row"><span class="param-key">EC2</span><span class="param-value">OLD (13.206.144.6)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Risk Gates -->
+        <div class="card" style="margin-top: var(--space-8);">
+            <div class="card-header">
+                <h3 class="card-title">⚡ Global Risk Gates</h3>
+                <span class="badge badge-info">Hardcoded in risk_manager.py</span>
+            </div>
+            <div class="params-list">
+                <div class="param-row"><span class="param-key">VIX > 25</span><span class="param-value text-red">SKIP entire session</span></div>
+                <div class="param-row"><span class="param-key">VIX > 22</span><span class="param-value text-yellow">REDUCE to 1 trade max</span></div>
+                <div class="param-row"><span class="param-key">VIX ≤ 22</span><span class="param-value text-green">Normal trading</span></div>
+                <div class="param-row"><span class="param-key">Min R:R ratio</span><span class="param-value">2.0 (reject below)</span></div>
+                <div class="param-row"><span class="param-key">Force exit time</span><span class="param-value">15:15 IST</span></div>
+                <div class="param-row"><span class="param-key">Entry delay</span><span class="param-value">15 min (starts 9:30 IST)</span></div>
+                <div class="param-row"><span class="param-key">Late gate: max trades</span><span class="param-value">After 11 AM → SKIP if limit hit</span></div>
+                <div class="param-row"><span class="param-key">Late gate: loss cap</span><span class="param-value">After 11 AM → SKIP if loss > 50% daily limit</span></div>
+            </div>
+        </div>
+
+        <!-- F&O Risk -->
+        <div class="card" style="margin-top: var(--space-5);">
+            <div class="card-header">
+                <h3 class="card-title">📊 F&O Paper Config</h3>
+                <span class="badge badge-paper">Paper Only</span>
+            </div>
+            <div class="params-list">
+                <div class="param-row"><span class="param-key">Paper Capital</span><span class="param-value">₹50,000</span></div>
+                <div class="param-row"><span class="param-key">Per-Trade Max</span><span class="param-value">₹25,000</span></div>
+                <div class="param-row"><span class="param-key">Daily Loss Limit</span><span class="param-value text-red">₹5,000</span></div>
+                <div class="param-row"><span class="param-key">Max Lots/Trade</span><span class="param-value">1</span></div>
+                <div class="param-row"><span class="param-key">Min Confidence</span><span class="param-value">8</span></div>
+                <div class="param-row"><span class="param-key">VIX Threshold</span><span class="param-value">22</span></div>
+                <div class="param-row"><span class="param-key">Naked selling block</span><span class="param-value">After 14:00 IST</span></div>
+                <div class="param-row"><span class="param-key">Directional buy block</span><span class="param-value">After 13:00 IST</span></div>
+                <div class="param-row"><span class="param-key">Confluence: hedged</span><span class="param-value">≥ 20</span></div>
+                <div class="param-row"><span class="param-key">Confluence: directional</span><span class="param-value">≥ 60</span></div>
+                <div class="param-row"><span class="param-key">Confluence: naked</span><span class="param-value">≥ 75</span></div>
+            </div>
+        </div>
+
+        <!-- Capital Scaling -->
+        <div class="card" style="margin-top: var(--space-5);">
+            <div class="card-header">
+                <h3 class="card-title">📈 Capital Scaling Plan</h3>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Trigger</th>
+                            <th>Capital/Profile</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td style="font-family: var(--font);">Live deployment</td>
+                            <td>₹10K–15K</td>
+                            <td><span class="badge badge-live">CURRENT</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td style="font-family: var(--font);">50 profitable trades</td>
+                            <td>₹50K</td>
+                            <td><span class="text-muted">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td style="font-family: var(--font);">3 months consistent</td>
+                            <td>₹2L</td>
+                            <td><span class="text-muted">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td style="font-family: var(--font);">6 months consistent</td>
+                            <td>₹5L</td>
+                            <td><span class="text-muted">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td style="font-family: var(--font);">12+ months proven</td>
+                            <td>₹10–25L</td>
+                            <td><span class="text-muted">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer style="padding: var(--space-3) var(--space-6); background: var(--bg-secondary); border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: var(--text-xs); color: var(--text-muted);">
+        <span>Intraday Trader v2 • Phase 1</span>
+        <span>Config source: RULES.md Section 5 (hardcoded, not live YAML read)</span>
+    </footer>
+
+    <script>
+    fetch("components/header.html")
+        .then(r => r.text())
+        .then(html => {
+            document.getElementById("header-slot").innerHTML = html;
+            const tabs = document.querySelectorAll(".tab");
+            tabs.forEach(t => { if (t.href && t.href.includes("risk")) t.classList.add("active"); });
+        })
+        .catch(() => {
+            document.getElementById("header-slot").innerHTML =
+                '<div style="padding:12px 24px;background:var(--bg-secondary);border-bottom:1px solid var(--border);"><strong>📈 Intraday Trader v2</strong> — Risk</div>';
+        });
+    </script>
+</body>
+</html>

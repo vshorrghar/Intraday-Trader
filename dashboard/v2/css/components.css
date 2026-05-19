@@ -1,0 +1,331 @@
+/* ═══════════════════════════════════════════════════════════
+   Intraday Trader v2 — Component Library
+   Reusable UI components: cards, pills, badges, tables
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Cards ─── */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.card:hover {
+    border-color: var(--border-light);
+}
+
+.card-elevated {
+    background: var(--bg-elevated);
+    box-shadow: var(--shadow);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+}
+
+.card-title {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+}
+
+/* ─── Stat Cards ─── */
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.stat-label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: var(--weight-medium);
+}
+
+.stat-value {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    font-family: var(--font-mono);
+}
+
+.stat-value.positive { color: var(--green); }
+.stat-value.negative { color: var(--red); }
+.stat-value.neutral { color: var(--text-primary); }
+
+/* ─── Badges / Pills ─── */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.badge-live {
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid var(--green-border);
+}
+
+.badge-paper {
+    background: var(--yellow-bg);
+    color: var(--yellow);
+    border: 1px solid var(--yellow-border);
+}
+
+.badge-stopped {
+    background: var(--red-bg);
+    color: var(--red);
+    border: 1px solid var(--red-border);
+}
+
+.badge-info {
+    background: var(--blue-bg);
+    color: var(--blue);
+    border: 1px solid var(--blue-border);
+}
+
+.badge-accent {
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+/* ─── Pills (larger, rounded) ─── */
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    cursor: default;
+    transition: var(--transition-fast);
+}
+
+.pill:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+}
+
+.pill-active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+/* ─── Chips (stock symbols) ─── */
+.chip {
+    display: inline-block;
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    font-weight: var(--weight-medium);
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    transition: var(--transition-fast);
+    cursor: default;
+}
+
+.chip:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+    background: var(--bg-elevated);
+}
+
+.chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+/* ─── Tier Sections ─── */
+.tier-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    margin-bottom: var(--space-5);
+}
+
+.tier-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+    flex-wrap: wrap;
+}
+
+.tier-header h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+}
+
+.tier-count {
+    font-size: var(--text-xs);
+    background: var(--bg-hover);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}
+
+.tier-meta {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-bottom: var(--space-3);
+    display: flex;
+    gap: var(--space-4);
+}
+
+.tier-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--space-4);
+}
+
+/* ─── Tables ─── */
+.table-container {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+}
+
+.data-table th {
+    background: var(--bg-secondary);
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    font-weight: var(--weight-semibold);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+}
+
+.data-table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+}
+
+.data-table tbody tr:hover {
+    background: var(--bg-hover);
+}
+
+/* ─── Param rows (key-value display) ─── */
+.params-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.param-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--text-sm);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.param-row:last-child {
+    border-bottom: none;
+}
+
+.param-key {
+    color: var(--text-secondary);
+}
+
+.param-value {
+    font-weight: var(--weight-semibold);
+    font-family: var(--font-mono);
+}
+
+/* ─── Gauge bars ─── */
+.gauge-bar {
+    height: 8px;
+    background: var(--bg-hover);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin: var(--space-2) 0;
+}
+
+.gauge-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 0.5s ease;
+    background: var(--green);
+}
+
+.gauge-fill.warning { background: var(--yellow); }
+.gauge-fill.danger { background: var(--red); }
+
+/* ─── Grid layouts ─── */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-5);
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-4);
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-4);
+}
+
+/* ─── Empty state ─── */
+.empty-state {
+    text-align: center;
+    padding: var(--space-12) var(--space-6);
+    color: var(--text-muted);
+}
+
+.empty-state p {
+    font-size: var(--text-base);
+}
+
+/* ─── Timestamp display ─── */
+.timestamp {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+.timestamp-stale {
+    color: var(--yellow);
+}

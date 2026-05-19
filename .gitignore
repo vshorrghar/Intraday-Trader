@@ -44,3 +44,4 @@ neha_index.html
 config/profiles/*.yaml
 dashboard/api/*.json
 dashboard/._*
+config/telegram.yaml

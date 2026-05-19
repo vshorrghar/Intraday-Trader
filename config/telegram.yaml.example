@@ -1,0 +1,17 @@
+# Telegram Bot Configuration — EXAMPLE
+# Copy to config/telegram.yaml and fill in real values.
+# config/telegram.yaml is gitignored (contains secrets).
+#
+# How to get these values:
+# 1. Message @BotFather on Telegram → /newbot → get token
+# 2. Message your bot, then visit:
+#    https://api.telegram.org/bot<TOKEN>/getUpdates
+#    Look for "chat":{"id": YOUR_CHAT_ID}
+
+bot_token: "YOUR_BOT_TOKEN_HERE"
+
+# Only these chat IDs can interact with the bot.
+# Leave empty to allow all (not recommended for production).
+allowed_chat_ids:
+  - "YOUR_CHAT_ID_HERE"
+  # - "SECOND_PERSON_CHAT_ID"
