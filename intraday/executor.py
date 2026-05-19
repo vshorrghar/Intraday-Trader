@@ -166,14 +166,60 @@ class Order_Executor:
         filled_qty = self._wait_for_fill(buy_order_id, trade.quantity, timeout=10)
 
         if filled_qty == 0:
+            # CRITICAL: wait_for_fill may have returned 0 because get_order_list
+            # threw exceptions (token expired, rate limit, network). Order may
+            # have ACTUALLY filled. Reconcile via get_positions before assuming.
+            try:
+                if hasattr(self.broker, "get_positions"):
+                    positions = self.broker.get_positions()
+                    for pos in positions:
+                        pos_symbol = str(pos.get("tradingsymbol", "")).upper()
+                        pos_qty = int(pos.get("quantity", 0))
+                        target_symbol = trade.tradingsymbol.upper()
+                        if pos_symbol == target_symbol and pos_qty != 0:
+                            logger.warning(
+                                "RECONCILE: %s shows %d qty in positions despite wait_for_fill=0. "
+                                "LIMIT actually filled. Skipping MARKET retry to prevent duplicate.",
+                                target_symbol, pos_qty
+                            )
+                            filled_qty = abs(pos_qty)
+                            break
+            except Exception as e:
+                logger.warning("Position reconcile failed for %s: %s", trade.nse_symbol, e)
+
+        # If reconcile didn't find a filled position, proceed with cancel + MARKET retry
+        if filled_qty == 0:
             # Entry did not fill — cancel LIMIT order
             try:
-                self.broker.cancel_order(buy_order_id)
+                cancel_result = self.broker.cancel_order(buy_order_id)
+                # Detect "Order Is Cancelled" / "Traded" — means already filled
+                cancel_str = str(cancel_result).lower()
+                if "cancelled" in cancel_str or "traded" in cancel_str or "already" in cancel_str:
+                    logger.warning(
+                        "CANCEL HINT: %s cancel response suggests order already filled: %s. "
+                        "Re-checking positions before MARKET retry.",
+                        trade.nse_symbol, cancel_result
+                    )
+                    try:
+                        if hasattr(self.broker, "get_positions"):
+                            positions = self.broker.get_positions()
+                            for pos in positions:
+                                pos_symbol = str(pos.get("tradingsymbol", "")).upper()
+                                pos_qty = int(pos.get("quantity", 0))
+                                if pos_symbol == trade.tradingsymbol.upper() and pos_qty != 0:
+                                    logger.warning(
+                                        "RECONCILE-2: %s has %d qty after cancel error. Skipping MARKET retry.",
+                                        pos_symbol, pos_qty
+                                    )
+                                    filled_qty = abs(pos_qty)
+                                    break
+                    except Exception as e:
+                        logger.warning("Re-reconcile failed: %s", e)
             except Exception as e:
-                logger.warning("cancel_order failed for %s: %s", buy_order_id, e)
+                logger.warning("cancel_order exception for %s: %s", buy_order_id, e)
 
-            # MARKET fallback for high-confidence picks (conf >= 8)
-            if trade.confidence_score >= 8:
+            # MARKET fallback ONLY if reconcile didn't find filled position
+            if filled_qty == 0 and trade.confidence_score >= 8:
                 logger.info("Retrying %s with MARKET order (conf %d)", trade.nse_symbol, trade.confidence_score)
                 market_result = self.broker.place_order(
                     symbol=trade.tradingsymbol,

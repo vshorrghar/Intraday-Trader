@@ -437,6 +437,19 @@ class Position_Monitor:
             # Bug J + naked-position fix: place broker exit FIRST, get real fill price
             exit_side = "BUY" if direction == "SHORT" else "SELL"
             actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, current)
+            if fill_status in ("order_failed", "no_broker"):
+                logger.error(
+                    "\U0001f6a8 %s SL HIT but exit order FAILED (status=%s). Position remains OPEN on broker. "
+                    "DB will NOT be marked closed. Manual reconciliation required.",
+                    trade["tradingsymbol"], fill_status
+                )
+                self._audit("EXIT_FAILED", {
+                    "symbol": trade["tradingsymbol"],
+                    "trigger": "SL_HIT",
+                    "fill_status": fill_status,
+                    "intended_exit": current
+                })
+                return
             gross_pnl = self._calc_pnl(trade, actual_exit_price)
             # Bug D fix: subtract real Dhan charges from gross
             buy_p = trade["entry_price"] if direction == "LONG" else actual_exit_price
@@ -460,6 +473,19 @@ class Position_Monitor:
             # Bug J/K fix: place broker exit FIRST, get real fill price
             exit_side = "BUY" if direction == "SHORT" else "SELL"
             actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, current)
+            if fill_status in ("order_failed", "no_broker"):
+                logger.error(
+                    "\U0001f6a8 %s TARGET HIT but exit order FAILED (status=%s). Position remains OPEN on broker. "
+                    "DB will NOT be marked closed. Manual reconciliation required.",
+                    trade["tradingsymbol"], fill_status
+                )
+                self._audit("EXIT_FAILED", {
+                    "symbol": trade["tradingsymbol"],
+                    "trigger": "TARGET_HIT",
+                    "fill_status": fill_status,
+                    "intended_exit": current
+                })
+                return
             gross_pnl = self._calc_pnl(trade, actual_exit_price)
             # Bug D fix: subtract real Dhan charges from gross
             buy_p = trade["entry_price"] if direction == "LONG" else actual_exit_price
@@ -557,6 +583,18 @@ class Position_Monitor:
             exit_side = "BUY" if direction == "SHORT" else "SELL"
             cached_price = trade.get("current_price", trade["entry_price"])
             actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, cached_price)
+            if fill_status in ("order_failed", "no_broker"):
+                logger.error(
+                    "\U0001f6a8 %s FORCE EXIT FAILED (status=%s). Position remains OPEN on broker. "
+                    "Dhan auto-square-off at 15:30 IST will close it. DB stays OPEN for manual review.",
+                    trade["tradingsymbol"], fill_status
+                )
+                self._audit("EXIT_FAILED", {
+                    "symbol": trade["tradingsymbol"],
+                    "trigger": "FORCE_EXIT",
+                    "fill_status": fill_status
+                })
+                continue
             gross_pnl = self._calc_pnl(trade, actual_exit_price)
             # Bug D fix: subtract real Dhan charges from gross
             buy_p = trade["entry_price"] if direction == "LONG" else actual_exit_price
