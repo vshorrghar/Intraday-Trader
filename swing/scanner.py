@@ -1,185 +1,308 @@
-"""Swing trade scanner — identifies multi-day setups from NSE data.
+"""
+Swing scanner — 20-DMA pullback scoring.
+Strategy: Investors Way Strategy 3 (pullback in uptrending stocks).
 
-Runs after market close (3:30 PM IST), scans for:
-- Breakouts above resistance with volume confirmation
-- Pullbacks to support in uptrending stocks
-- Reversals at key levels with bullish candle patterns
-- Momentum stocks with strong sector tailwinds
+Signals:
+  1. 20-DMA pullback proximity (0-5 pts) — KEY SIGNAL
+  2. RSI(2) oversold (0-3 pts)
+  3. Bullish reversal candle (0-3 pts)
+  4. Defensive sector bonus (0-3 pts)
+  5. Liquidity confirmation (0-2 pts)
+
+Penalties:
+  1. Falling knife (-3 pts)
+  2. Weakening trend (-2 pts)
+
+# TODO Week 3: Replace flat sector bonus with full correlation matrix
+# TODO Week 3: Add 8-signal regime detector (currently 0 signals here)
+# TODO Week 4: Add news sentiment signal
+# TODO Week 4: Add FII/DII flow integration
 """
 
-from __future__ import annotations
-
 import logging
-import time
-from datetime import datetime, timedelta, timezone
+import math
+from datetime import datetime
+from pathlib import Path
 
-import requests
-
-from swing.models import SwingConfig
+from swing.sector_map import SECTOR_MAP, DEFENSIVE_SECTORS
+from fetchers.swing_earnings_list import get_earnings_within_days
 
 logger = logging.getLogger(__name__)
-IST = timezone(timedelta(hours=5, minutes=30))
 
-NSE_BASE = "https://www.nseindia.com"
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    "Accept": "application/json",
-    "Referer": "https://www.nseindia.com/",
-}
+# F&O ban list (updated manually — automate Week 3)
+FNO_BAN_LIST = set()  # Empty for now; populated from NSE daily
 
 
-class SwingScanner:
-    """Scans NSE for swing trade candidates."""
+def compute_sma(closes: list, period: int) -> float:
+    """Simple moving average of last N closes."""
+    if len(closes) < period:
+        return 0.0
+    return sum(closes[-period:]) / period
 
-    def __init__(self, config: SwingConfig) -> None:
-        self.config = config
-        self._session = None
 
-    def _get_session(self):
-        if not self._session:
-            self._session = requests.Session()
-            self._session.headers.update(HEADERS)
-            try:
-                self._session.get(NSE_BASE, timeout=10)
-            except Exception:
-                pass
-        return self._session
+def compute_ema(closes: list, period: int) -> float:
+    """Exponential moving average."""
+    if len(closes) < period:
+        return 0.0
+    multiplier = 2 / (period + 1)
+    ema = sum(closes[:period]) / period
+    for price in closes[period:]:
+        ema = (price - ema) * multiplier + ema
+    return ema
 
-    def scan(self) -> dict:
-        """Run full swing scan. Returns candidates with technical data."""
-        session = self._get_session()
 
-        # Fetch sector indices for sector strength
-        sectors = self._fetch_sectors(session)
+def compute_rsi(closes: list, period: int = 2) -> float:
+    """RSI calculation. Default period=2 for swing oversold detection."""
+    if len(closes) < period + 1:
+        return 50.0
+    gains = []
+    losses = []
+    for i in range(-period, 0):
+        change = closes[i] - closes[i - 1]
+        if change > 0:
+            gains.append(change)
+            losses.append(0)
+        else:
+            gains.append(0)
+            losses.append(abs(change))
+    avg_gain = sum(gains) / period
+    avg_loss = sum(losses) / period
+    if avg_loss == 0:
+        return 100.0
+    rs = avg_gain / avg_loss
+    return 100 - (100 / (1 + rs))
 
-        # Fetch Nifty 500 stocks with delivery data (high delivery = swing interest)
-        candidates = self._fetch_delivery_leaders(session)
 
-        # Fetch 52-week high/low breakouts
-        breakouts = self._fetch_52w_breakouts(session)
+def compute_atr(highs: list, lows: list, closes: list, period: int = 14) -> float:
+    """Average True Range."""
+    if len(highs) < period + 1:
+        return 0.0
+    trs = []
+    for i in range(-period, 0):
+        tr = max(
+            highs[i] - lows[i],
+            abs(highs[i] - closes[i - 1]),
+            abs(lows[i] - closes[i - 1])
+        )
+        trs.append(tr)
+    return sum(trs) / period
 
-        # Enrich with live quotes
-        enriched = self._enrich_candidates(session, candidates + breakouts)
 
-        logger.info("Swing scan: %d candidates, %d sectors", len(enriched), len(sectors))
+def _detect_reversal_candle(opens: list, highs: list, lows: list, closes: list) -> int:
+    """Detect bullish reversal candle patterns. Returns score 0-3."""
+    if len(opens) < 2:
+        return 0
 
-        return {
-            "candidates": enriched,
-            "sectors": sectors,
-            "scan_time": datetime.now(IST).isoformat(),
-        }
+    o, h, l, c = opens[-1], highs[-1], lows[-1], closes[-1]
+    prev_o, prev_c = opens[-2], closes[-2]
+    body = abs(c - o)
+    upper_wick = h - max(o, c)
+    lower_wick = min(o, c) - l
+    total_range = h - l
 
-    def _fetch_sectors(self, session) -> list[dict]:
-        """Fetch sector indices for sector rotation analysis."""
-        try:
-            r = session.get(f"{NSE_BASE}/api/allIndices", timeout=15)
-            if r.status_code == 200:
-                data = r.json()
-                sectors = []
-                for item in data.get("data", []):
-                    name = item.get("index", "")
-                    if "NIFTY" in name.upper():
-                        sectors.append({
-                            "name": name,
-                            "last_price": float(item.get("last", 0)),
-                            "change_pct": float(item.get("percentChange", 0)),
-                        })
-                return sorted(sectors, key=lambda x: x["change_pct"], reverse=True)
-        except Exception as e:
-            logger.error("Failed to fetch sectors: %s", e)
-        return []
+    if total_range == 0:
+        return 0
 
-    def _fetch_delivery_leaders(self, session) -> list[dict]:
-        """Fetch stocks with high delivery percentage (institutional interest)."""
-        try:
-            r = session.get(
-                f"{NSE_BASE}/api/live-analysis-most-active-securities?index=volume",
-                timeout=15,
-            )
-            if r.status_code == 200:
-                data = r.json()
-                candidates = []
-                for item in data.get("data", [])[:30]:
-                    candidates.append({
-                        "symbol": item.get("symbol", ""),
-                        "ltp": float(item.get("ltp", 0)),
-                        "change_pct": float(item.get("pChange", 0)),
-                        "volume": int(item.get("totalTradedVolume", 0)),
-                        "category": "delivery_leader",
-                    })
-                return candidates
-        except Exception as e:
-            logger.error("Failed to fetch delivery leaders: %s", e)
-        return []
+    # Hammer: lower wick > 2x body, small upper wick
+    if lower_wick > 2 * body and upper_wick < body * 0.5 and c > o:
+        return 3
 
-    def _fetch_52w_breakouts(self, session) -> list[dict]:
-        """Fetch stocks near 52-week highs (breakout candidates)."""
-        try:
-            r = session.get(
-                f"{NSE_BASE}/api/live-analysis-variations?index=gainers",
-                timeout=15,
-            )
-            if r.status_code == 200:
-                data = r.json()
-                items = []
-                if isinstance(data, dict):
-                    for val in data.values():
-                        if isinstance(val, list):
-                            items = val
-                            break
-                elif isinstance(data, list):
-                    items = data
+    # Bullish engulfing: today's body engulfs yesterday's
+    if c > o and prev_c < prev_o:  # today green, yesterday red
+        if c > prev_o and o < prev_c:  # engulfs
+            return 3
 
-                breakouts = []
-                for item in items[:20]:
-                    if not isinstance(item, dict):
-                        continue
-                    breakouts.append({
-                        "symbol": item.get("symbol", ""),
-                        "ltp": float(item.get("ltp", item.get("lastPrice", 0)) or 0),
-                        "change_pct": float(item.get("perChange", item.get("pChange", 0)) or 0),
-                        "volume": int(float(item.get("tradedQuantity", 0) or 0)),
-                        "category": "breakout",
-                    })
-                return breakouts
-        except Exception as e:
-            logger.error("Failed to fetch breakouts: %s", e)
-        return []
+    # Inside day near support (small range inside previous range)
+    prev_range = highs[-2] - lows[-2]
+    if prev_range > 0 and total_range < prev_range * 0.6:
+        return 2
 
-    def _enrich_candidates(self, session, candidates: list[dict]) -> list[dict]:
-        """Enrich candidates with full OHLCV data from NSE quote API."""
-        enriched = []
-        seen = set()
+    # Bullish doji (small body, long wicks)
+    if body < total_range * 0.1 and c >= o:
+        return 1
 
-        for c in candidates:
-            sym = c.get("symbol", "")
-            if not sym or sym in seen:
-                continue
-            seen.add(sym)
+    return 0
 
-            try:
-                r = session.get(f"{NSE_BASE}/api/quote-equity?symbol={sym}", timeout=10)
-                if r.status_code == 200:
-                    data = r.json()
-                    price_info = data.get("priceInfo", {})
-                    ltp = float(price_info.get("lastPrice", 0) or 0)
 
-                    if ltp < self.config.price_range_min or ltp > self.config.price_range_max:
-                        continue
+def score_swing_candidate(symbol: str, daily_data: dict, sector: str = "") -> dict | None:
+    """
+    Score a stock for swing entry using 20-DMA pullback strategy.
 
-                    c["ltp"] = ltp
-                    c["open"] = float(price_info.get("open", 0) or 0)
-                    c["high"] = float(price_info.get("intraDayHighLow", {}).get("max", 0) or 0)
-                    c["low"] = float(price_info.get("intraDayHighLow", {}).get("min", 0) or 0)
-                    c["prev_close"] = float(price_info.get("previousClose", 0) or 0)
-                    c["change_pct"] = float(price_info.get("pChange", 0) or 0)
-                    c["high_52w"] = float(price_info.get("weekHighLow", {}).get("max", 0) or 0)
-                    c["low_52w"] = float(price_info.get("weekHighLow", {}).get("min", 0) or 0)
+    Args:
+        symbol: NSE symbol
+        daily_data: dict with keys 'open', 'high', 'low', 'close', 'volume'
+                    each a list of floats (oldest first, newest last)
+                    Minimum 200 data points required.
+        sector: sector classification from SECTOR_MAP
 
-                    enriched.append(c)
-                time.sleep(0.3)
-            except Exception:
-                pass
+    Returns:
+        dict with score and details, or None if gated out.
+    """
+    closes = daily_data.get("close", [])
+    highs = daily_data.get("high", [])
+    lows = daily_data.get("low", [])
+    opens = daily_data.get("open", [])
+    volumes = daily_data.get("volume", [])
 
-        logger.info("Enriched %d swing candidates with live data", len(enriched))
-        return enriched
+    if len(closes) < 200:
+        return None
+
+    latest_close = closes[-1]
+    latest_low = lows[-1]
+    latest_high = highs[-1]
+
+    # ─── GATE 1: Pass/Fail filters ───
+    # Price range
+    if latest_close < 50 or latest_close > 5000:
+        return None
+
+    # 20-day avg turnover >= Rs.5 Cr
+    if len(volumes) >= 20:
+        avg_volume_20 = sum(volumes[-20:]) / 20
+        avg_turnover = avg_volume_20 * latest_close
+        if avg_turnover < 5_00_00_000:  # Rs.5 Cr
+            return None
+    else:
+        return None
+
+    # 200-DMA and 50-DMA
+    dma_200 = compute_sma(closes, 200)
+    dma_50 = compute_sma(closes, 50)
+    dma_20 = compute_sma(closes, 20)
+
+    if dma_200 <= 0 or dma_50 <= 0 or dma_20 <= 0:
+        return None
+
+    # Must be above 200-DMA (uptrend)
+    if latest_close < dma_200:
+        return None
+
+    # Must be above 50-DMA
+    if latest_close < dma_50:
+        return None
+
+    # ATR(14) % between 1.5 and 5
+    atr = compute_atr(highs, lows, closes, 14)
+    atr_pct = (atr / latest_close) * 100 if latest_close > 0 else 0
+    if atr_pct < 1.5 or atr_pct > 5:
+        return None
+
+    # F&O ban list
+    if symbol in FNO_BAN_LIST:
+        return None
+
+    # ─── GATE 2: Earnings filter ───
+    if get_earnings_within_days(symbol, days=5):
+        return None
+
+    # ─── SIGNAL 1: 20-DMA pullback (0-5 pts) — KEY SIGNAL ───
+    delta = (latest_low - dma_20) / dma_20 * 100
+    if delta <= 0:
+        signal_1 = 5  # precise touch or below
+    elif delta <= 0.5:
+        signal_1 = 4
+    elif delta <= 1.0:
+        signal_1 = 3
+    elif delta <= 2.0:
+        signal_1 = 1
+    else:
+        signal_1 = 0
+
+    # ─── SIGNAL 2: RSI(2) oversold (0-3 pts) ───
+    rsi2 = compute_rsi(closes, 2)
+    if rsi2 < 5:
+        signal_2 = 3
+    elif rsi2 < 10:
+        signal_2 = 2
+    elif rsi2 < 15:
+        signal_2 = 1
+    else:
+        signal_2 = 0
+
+    # ─── SIGNAL 3: Bullish reversal candle (0-3 pts) ───
+    signal_3 = _detect_reversal_candle(opens, highs, lows, closes)
+
+    # ─── SIGNAL 4: Defensive sector bonus (0-3 pts) ───
+    stock_sector = sector or SECTOR_MAP.get(symbol, "UNKNOWN")
+    if stock_sector in DEFENSIVE_SECTORS:
+        signal_4 = 3
+    elif stock_sector in ("PHARMA", "FMCG", "HEALTHCARE"):
+        signal_4 = 3
+    elif stock_sector in ("CONSUMER_DURABLE",):
+        signal_4 = 1
+    else:
+        signal_4 = 0
+
+    # ─── SIGNAL 5: Liquidity confirmation (0-2 pts) ───
+    if avg_turnover > 20_00_00_000:  # Rs.20 Cr
+        signal_5 = 2
+    elif avg_turnover > 5_00_00_000:  # Rs.5 Cr (already gated)
+        signal_5 = 1
+    else:
+        signal_5 = 0
+
+    # ─── PENALTY 1: Falling knife (-3 pts) ───
+    if len(closes) >= 5:
+        last_5d_return = (closes[-1] - closes[-6]) / closes[-6] * 100
+    else:
+        last_5d_return = 0
+    penalty_1 = -3 if last_5d_return < -8 else 0
+
+    # ─── PENALTY 2: Weakening trend (-2 pts) ───
+    # Close > 200-DMA but close < 50-DMA
+    penalty_2 = -2 if (latest_close > dma_200 and latest_close < dma_50) else 0
+
+    # ─── TOTAL SCORE ───
+    total_score = signal_1 + signal_2 + signal_3 + signal_4 + signal_5 + penalty_1 + penalty_2
+    total_score = max(0, total_score)
+
+    return {
+        "symbol": symbol,
+        "tradingsymbol": symbol,
+        "score": total_score,
+        "latest_close": latest_close,
+        "dma_20": round(dma_20, 2),
+        "dma_50": round(dma_50, 2),
+        "dma_200": round(dma_200, 2),
+        "rsi2": round(rsi2, 1),
+        "atr_pct": round(atr_pct, 2),
+        "avg_turnover_cr": round(avg_turnover / 1_00_00_000, 1),
+        "sector": stock_sector,
+        "delta_from_20dma": round(delta, 2),
+        "last_5d_return": round(last_5d_return, 1),
+        "signals": {
+            "pullback": signal_1,
+            "rsi2_oversold": signal_2,
+            "reversal_candle": signal_3,
+            "defensive_sector": signal_4,
+            "liquidity": signal_5,
+        },
+        "penalties": {
+            "falling_knife": penalty_1,
+            "weakening_trend": penalty_2,
+        },
+    }
+
+
+def scan_universe(universe_data: dict, min_score: int = 8, top_n: int = 30) -> list:
+    """
+    Score all stocks in universe, return top N by score.
+
+    Args:
+        universe_data: dict of {symbol: daily_ohlc_dict}
+        min_score: minimum score to qualify
+        top_n: max candidates to return
+
+    Returns:
+        list of scored candidates, sorted by score descending
+    """
+    candidates = []
+    for symbol, daily_data in universe_data.items():
+        sector = SECTOR_MAP.get(symbol, "")
+        result = score_swing_candidate(symbol, daily_data, sector)
+        if result and result["score"] >= min_score:
+            candidates.append(result)
+
+    # Sort by score descending
+    candidates.sort(key=lambda x: x["score"], reverse=True)
+    return candidates[:top_n]
