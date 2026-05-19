@@ -709,3 +709,65 @@ Drift: Rs.215.13
 2. Update WIN_RATE_TRACKING.md with cleaned cumulative P&L
 3. Verify cron firing and report appearing daily
 
+
+---
+
+## SESSION CLOSE (2026-05-20 03:35 IST) — TONIGHT'S WINS
+
+### Code shipped (8 commits)
+1. 8b96b23 — Bug 1 reconcile + Bug 3 exit honesty
+2. 646705c — Dashboard v2 swing UI (danish-eq port)
+3. f84be10 — Swing skeleton (60%)
+4. 5bc4cb3 — 6 institutional docs
+5. 6cb431d — STATE + critical Bug 1 finding
+6. ed18e89 — Swing scanner + selector + executor (BRAIN)
+7. (this commit) — reconcile_dhan_db.py + show_today_truth.py + cron
+
+### Tonight's biggest discovery
+True May 19 P&L: +Rs.85.16 (PROFIT)
+DB-reported: -Rs.129.97 (FALSE LOSS)
+Drift: Rs.215.13 corruption from Bug 1 + Bug 3
+
+True May 19 win rate: 75% (3W / 1L)
+DB-reported: 33% (1W / 2L)
+
+System might genuinely have edge. Sample too small (4 trades) but encouraging.
+
+### Verification tools built
+- scripts/sync_dhan_live.py (was built earlier)
+- scripts/reconcile_dhan_db.py (NEW tonight)
+- scripts/show_today_truth.py (NEW tonight)
+- Daily cron: 10 10 * * 1-5 — sync + reconcile
+
+### Daily ritual going forward
+EOD (after 3:35 PM IST):
+  1. cron auto-runs sync + reconcile
+  2. Open dashboard/api/vishal-live/reconciliation_report.json
+  3. Status PASS = trust DB; Status FAIL = investigate
+
+Anytime check:
+  .venv/bin/python scripts/show_today_truth.py --profile vishal-live
+
+### Outstanding for Saturday
+- Swing cron entries (Phase 13)
+- Rule 25 in RULES.md (Phase 16)
+- Add swing config to neha, vishal-live, neha-live YAMLs
+- Manually correct DB rows for May 12-19 corruption period
+- Build unified dashboard (one URL all modules)
+
+### Tomorrow's first market test
+9:30 AM IST: Bug 1 fix first live test
+3:40 PM IST: Reconciliation cron auto-runs
+3:45 PM IST: Verify status PASS (drift < Rs.5)
+
+If PASS: Day 1 of 30-day Bug 1 validation begins.
+If FAIL: Pause real money. Investigate before next day.
+
+### Project status snapshot
+- Real money: vishal-live Rs.15K (Bug 1 fix shipped, awaiting validation)
+- neha-live: STOPPED (per May 18 decision)
+- F&O: paper only (Bug T pending decision June 1)
+- Swing: 95% built, paper mode, cron NOT active yet
+- Dashboard: working but DB-derived (lying); truth available via reconciliation
+- Documentation: 16 steering docs (institutional grade)
+
