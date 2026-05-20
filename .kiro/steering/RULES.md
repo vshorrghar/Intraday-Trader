@@ -694,6 +694,31 @@ Paste RULES.md (this file) + STATE.md + your question.
 
 Any AI that lectures without reading both docs is wasting your time.
 
+
+### Rule 25: Crontab Edits Use Safe Editor Script Only
+
+NEVER pipe transformed crontab output directly to `crontab -`. The pipeline
+can fail silently and produce empty stdout, which wipes the crontab.
+
+Wrong (caused wipes May 18, May 20):
+  crontab -l | sed '...' | crontab -
+  crontab -l | awk '...' | crontab -
+
+Right:
+  bash scripts/safe_crontab_edit.sh
+
+The safe editor:
+- Backs up to /var/backups/crontab_*.txt with size verification
+- Aborts if backup empty
+- Opens vim editor
+- Validates new file non-empty AND contains run_daily.sh
+- Shows diff and asks confirmation before installing
+
+Recovery from wipe:
+  crontab scripts/crontab.canonical
+
+Prior incidents: LEARNING.md May 18 + May 20.
+
 End of RULES.md
 
 ### Rule 22: Command Format For SSM Web Console

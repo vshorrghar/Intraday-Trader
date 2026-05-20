@@ -1,0 +1,17 @@
+# OLD EC2 crontab — restored 2026-05-20 from STATE.md canonical
+# Reason: prior crontab wiped by failed sed pipeline at 04:33 UTC
+
+# === Intraday continuous scan (every 15 min, 9:30 AM - 1:00 PM IST) ===
+# vishal-live --live RE-ENABLED 2026-05-21 (Bug A patched commit 5131cd6)
+*/15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal-live --live >> logs/cron_vishal_live.log 2>&1
+*/15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal >> logs/cron_vishal.log 2>&1
+*/15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile neha >> logs/cron_neha.log 2>&1
+
+# === F&O paper (vishal only, 9:20 AM IST) ===
+50 3 * * 1-5 /home/ec2-user/dev-sandbox/run_fno_daily.sh --profile vishal >> /home/ec2-user/dev-sandbox/logs/cron_fno_vishal.log 2>&1
+
+# === Reconciliation (3:40 PM IST = 10:10 UTC) ===
+10 10 * * 1-5 cd /home/ec2-user/dev-sandbox && .venv/bin/python scripts/sync_dhan_live.py >> logs/sync_dhan.log 2>&1 && .venv/bin/python scripts/reconcile_dhan_db.py --profile vishal-live >> logs/reconcile.log 2>&1
+
+# === Dashboard sync hourly (9 AM - 5 PM IST) ===
+0 3-10 * * 1-5 cd /home/ec2-user/dev-sandbox && export AWS_PROFILE=vishal-admin && aws s3 sync dashboard/ s3://dev-sandbox-dashboard-176767908884/ --delete --exclude "db-sync/*" >> logs/dashboard_sync.log 2>&1
