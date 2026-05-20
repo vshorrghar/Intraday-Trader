@@ -15,3 +15,10 @@
 
 # === Dashboard sync hourly (9 AM - 5 PM IST) ===
 0 3-10 * * 1-5 cd /home/ec2-user/dev-sandbox && export AWS_PROFILE=vishal-admin && aws s3 sync dashboard/ s3://dev-sandbox-dashboard-176767908884/ --delete --exclude "db-sync/*" >> logs/dashboard_sync.log 2>&1
+
+# === Dhan live sync every 5 min during market hours (writes JSON, S3 hourly sync uploads it) ===
+*/5 4-9 * * 1-5 cd /home/ec2-user/dev-sandbox && .venv/bin/python scripts/sync_dhan_live.py >> logs/sync_dhan_live.log 2>&1
+
+# === Daily crontab auto-backup at 4:00 AM IST = 22:30 UTC prev day, also at 11:30 UTC = 5 PM IST EOD ===
+30 22 * * * /home/ec2-user/dev-sandbox/scripts/backup_crontab.sh >> /home/ec2-user/dev-sandbox/logs/crontab_backup.log 2>&1
+30 11 * * 1-5 /home/ec2-user/dev-sandbox/scripts/backup_crontab.sh >> /home/ec2-user/dev-sandbox/logs/crontab_backup.log 2>&1
