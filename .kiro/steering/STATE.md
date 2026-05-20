@@ -15,6 +15,82 @@
 
 ---
 
+---
+
+## TODAY (2026-05-20 EOD) — TATASTEEL BUG + CRONTAB SAFETY + vishal-live RE-ENABLED
+
+### Real Money Today (vishal-live)
+- TATASTEEL SHORT trade — Bug A exposed (rogue monitor double-SHORT)
+- Position: 22 intended, 44 actual on Dhan, 22 unprotected by SL
+- User manually closed via Dhan app at 10:18 IST
+- Net: -Rs.38 after charges (within Rs.500 daily cap)
+- Capital intact: ~Rs.13,580
+- Daily loss limit NOT breached
+
+### Two Critical Bugs Found and Fixed (commits today)
+
+#### Bug 1: Bedrock Opus 4-7 timeouts (commit 5131cd6)
+- config/config.yaml had bedrock_model_id = us.anthropic.claude-opus-4-7
+- Opus consistently timed out 120s
+- Result: ZERO trades placed at 9:30 AM and 9:45 AM crons
+- Fix: Changed to us.anthropic.claude-sonnet-4-6
+- Pre-flight tested: Sonnet 4.6 returns OK in ~1 second
+- Also fixed in config/config_neha.yaml (gitignored, manual edit)
+
+#### Bug A: Rogue monitor double-SHORT (commit 5131cd6)
+- intraday/executor.py line 313: added "action": entry_side to record dict
+- intraday/monitor.py line 86: defensive warning if action field missing
+- Bug existed since SHORT support added (commit 23a0261 May 14)
+- 6 days silent before TATASTEEL exposed it on real money
+- Validation: pending tomorrow's first SHORT pick on fresh code
+
+### Crontab Safety Guard (commit 7843628)
+- scripts/safe_crontab_edit.sh — defensive editor with backup + validate + diff + confirm
+- scripts/crontab.canonical — known-good restore source
+- RULES.md Rule 25 — never pipe transformed crontab to crontab -
+- Prevents wipes like May 18, May 20
+
+### vishal-live --live RE-ENABLED for May 21
+- Cron line uncommented via safe editor
+- Bug A fix validates on first SHORT trade tomorrow
+- Daily loss cap Rs.500 bounds real money exposure
+- Per-trade Rs.4,500, max 3 trades
+
+### F&O Paper — Actually Working
+- 2 IRON_CONDORs opened (NIFTY + BANKNIFTY) at 9:33 IST
+- Force exited at 15:15 IST
+- Net: -Rs.1.14 (50% win rate)
+- 3 issues identified for Saturday cleanup:
+  - F&O Bedrock config still uses Opus 4-7 (13-min strategy selection)
+  - Dhan HTTP 429 rate limits on BANKNIFTY/FINNIFTY
+  - MTM cron produces fake P&L from stale option chain LTPs
+
+### Intraday Paper Today
+- vishal: HINDPETRO LONG +Rs.470.87 (winner)
+- neha: BPCL LONG +Rs.331.48 (winner)
+- Plus 5+ paper SHORT exits with [LONG] mislabel (Bug A fired in paper)
+- Combined paper: ~+Rs.605
+
+### Swing Module Truth Discovered
+- run_swing.py is placeholder skeleton, imports only SwingConfig + is_paused
+- 1,300 lines of real code in swing/*.py orphaned (never called)
+- swing_trades DB schema missing action column
+- Status: 30% complete (was claimed 60-90% in prior STATE.md)
+- Saturday: dedicated rebuild session
+
+### Tomorrow May 21 — vishal-live Watch Plan
+- Whenever user wakes (Denmark CET, no 5 AM alarm needed)
+- Rs.500 daily loss cap = sleep insurance
+- Check dashboard https://d2q1cy3ph7jbd0.cloudfront.net/?profile=vishal-live
+- Pull Dhan truth: scripts/sync_dhan_live.py
+- Verify: SHORT trade exits with [SHORT] label (not [LONG])
+- Verify: monitor places BUY (not SELL) on SHORT exit
+- If buggy: emergency disable cron via safe editor
+
+### Today's Commits
+- 5131cd6 fix: Bedrock Sonnet 4.6 + rogue monitor double-SHORT bug
+- 7843628 feat: crontab safety guard + Rule 25 + vishal-live re-enabled
+
 ## TODAY (2026-05-19 EOD) — 3 BUGS + PHASE 1 DASHBOARD + TELEGRAM ACTIVE
 
 ### Real Money Today (vishal-live)
@@ -770,4 +846,26 @@ If FAIL: Pause real money. Investigate before next day.
 - Swing: 95% built, paper mode, cron NOT active yet
 - Dashboard: working but DB-derived (lying); truth available via reconciliation
 - Documentation: 16 steering docs (institutional grade)
+
+
+---
+
+## SWING MODULE TRUTH (2026-05-20 EOD discovery)
+
+Despite commit messages claiming swing is built:
+- 6c2... feat(swing): paper-mode swing trading module
+- ed18e89 feat(swing): scanner + selector + executor — full trading logic
+
+REALITY: run_swing.py is a placeholder skeleton. It imports only
+SwingConfig and is_paused. It does NOT call scanner/selector/executor/monitor.
+Logs print "(placeholder)" and pipeline writes empty dashboard JSONs.
+
+Real code exists (~1,300 lines across swing/scanner.py, swing/selector.py,
+swing/executor.py, swing/monitor.py) but is ORPHANED — nothing calls them.
+
+DB schema also broken — swing_trades table missing 'action' column.
+
+Status: TRULY 30% complete (code exists, integration missing).
+Next: Saturday weekend session — rewrite run_swing.py to wire real modules.
+First real swing trade: earliest Monday May 25 (paper only).
 

@@ -1,4 +1,4 @@
-# PROJECT CONTEXT (auto-generated 2026-05-19 20:35 IST)
+# PROJECT CONTEXT (auto-generated 2026-05-20 11:35 IST)
 
 Paste this entire file into new Bedrock chat for full project context.
 Contains all 5 steering docs concatenated.
@@ -703,6 +703,31 @@ Paste RULES.md (this file) + STATE.md + your question.
 
 Any AI that lectures without reading both docs is wasting your time.
 
+
+### Rule 25: Crontab Edits Use Safe Editor Script Only
+
+NEVER pipe transformed crontab output directly to `crontab -`. The pipeline
+can fail silently and produce empty stdout, which wipes the crontab.
+
+Wrong (caused wipes May 18, May 20):
+  crontab -l | sed '...' | crontab -
+  crontab -l | awk '...' | crontab -
+
+Right:
+  bash scripts/safe_crontab_edit.sh
+
+The safe editor:
+- Backs up to /var/backups/crontab_*.txt with size verification
+- Aborts if backup empty
+- Opens vim editor
+- Validates new file non-empty AND contains run_daily.sh
+- Shows diff and asks confirmation before installing
+
+Recovery from wipe:
+  crontab scripts/crontab.canonical
+
+Prior incidents: LEARNING.md May 18 + May 20.
+
 End of RULES.md
 
 ### Rule 22: Command Format For SSM Web Console
@@ -752,6 +777,82 @@ Location: .kiro/steering/CONTEXT.md
 **Update Protocol**: Replace TODAY section at end of each session.
 
 ---
+
+---
+
+## TODAY (2026-05-20 EOD) — TATASTEEL BUG + CRONTAB SAFETY + vishal-live RE-ENABLED
+
+### Real Money Today (vishal-live)
+- TATASTEEL SHORT trade — Bug A exposed (rogue monitor double-SHORT)
+- Position: 22 intended, 44 actual on Dhan, 22 unprotected by SL
+- User manually closed via Dhan app at 10:18 IST
+- Net: -Rs.38 after charges (within Rs.500 daily cap)
+- Capital intact: ~Rs.13,580
+- Daily loss limit NOT breached
+
+### Two Critical Bugs Found and Fixed (commits today)
+
+#### Bug 1: Bedrock Opus 4-7 timeouts (commit 5131cd6)
+- config/config.yaml had bedrock_model_id = us.anthropic.claude-opus-4-7
+- Opus consistently timed out 120s
+- Result: ZERO trades placed at 9:30 AM and 9:45 AM crons
+- Fix: Changed to us.anthropic.claude-sonnet-4-6
+- Pre-flight tested: Sonnet 4.6 returns OK in ~1 second
+- Also fixed in config/config_neha.yaml (gitignored, manual edit)
+
+#### Bug A: Rogue monitor double-SHORT (commit 5131cd6)
+- intraday/executor.py line 313: added "action": entry_side to record dict
+- intraday/monitor.py line 86: defensive warning if action field missing
+- Bug existed since SHORT support added (commit 23a0261 May 14)
+- 6 days silent before TATASTEEL exposed it on real money
+- Validation: pending tomorrow's first SHORT pick on fresh code
+
+### Crontab Safety Guard (commit 7843628)
+- scripts/safe_crontab_edit.sh — defensive editor with backup + validate + diff + confirm
+- scripts/crontab.canonical — known-good restore source
+- RULES.md Rule 25 — never pipe transformed crontab to crontab -
+- Prevents wipes like May 18, May 20
+
+### vishal-live --live RE-ENABLED for May 21
+- Cron line uncommented via safe editor
+- Bug A fix validates on first SHORT trade tomorrow
+- Daily loss cap Rs.500 bounds real money exposure
+- Per-trade Rs.4,500, max 3 trades
+
+### F&O Paper — Actually Working
+- 2 IRON_CONDORs opened (NIFTY + BANKNIFTY) at 9:33 IST
+- Force exited at 15:15 IST
+- Net: -Rs.1.14 (50% win rate)
+- 3 issues identified for Saturday cleanup:
+  - F&O Bedrock config still uses Opus 4-7 (13-min strategy selection)
+  - Dhan HTTP 429 rate limits on BANKNIFTY/FINNIFTY
+  - MTM cron produces fake P&L from stale option chain LTPs
+
+### Intraday Paper Today
+- vishal: HINDPETRO LONG +Rs.470.87 (winner)
+- neha: BPCL LONG +Rs.331.48 (winner)
+- Plus 5+ paper SHORT exits with [LONG] mislabel (Bug A fired in paper)
+- Combined paper: ~+Rs.605
+
+### Swing Module Truth Discovered
+- run_swing.py is placeholder skeleton, imports only SwingConfig + is_paused
+- 1,300 lines of real code in swing/*.py orphaned (never called)
+- swing_trades DB schema missing action column
+- Status: 30% complete (was claimed 60-90% in prior STATE.md)
+- Saturday: dedicated rebuild session
+
+### Tomorrow May 21 — vishal-live Watch Plan
+- Whenever user wakes (Denmark CET, no 5 AM alarm needed)
+- Rs.500 daily loss cap = sleep insurance
+- Check dashboard https://d2q1cy3ph7jbd0.cloudfront.net/?profile=vishal-live
+- Pull Dhan truth: scripts/sync_dhan_live.py
+- Verify: SHORT trade exits with [SHORT] label (not [LONG])
+- Verify: monitor places BUY (not SELL) on SHORT exit
+- If buggy: emergency disable cron via safe editor
+
+### Today's Commits
+- 5131cd6 fix: Bedrock Sonnet 4.6 + rogue monitor double-SHORT bug
+- 7843628 feat: crontab safety guard + Rule 25 + vishal-live re-enabled
 
 ## TODAY (2026-05-19 EOD) — 3 BUGS + PHASE 1 DASHBOARD + TELEGRAM ACTIVE
 
@@ -1406,6 +1507,132 @@ NOT BUILT YET (Phases 2, 3, 4, 13, 16):
 4. Type: "Continue from 2026-05-19 EOD. Either run option C (extract real win rate) or option B (write Prompt 2C-FAST/NARROW for Kiro to complete swing)."
 
 
+---
+
+## RECONCILIATION SCRIPT BUILT (2026-05-20 03:00 IST)
+
+### scripts/reconcile_dhan_db.py — DONE
+
+Detects DB-vs-Dhan drift per trade. Classifies issues:
+- PHANTOM_TRADE — in Dhan, missing from DB
+- ORPHAN_DB — in DB, missing from Dhan
+- PNL_DRIFT — P&L off by > Rs.5
+- QTY_DRIFT — quantity mismatch
+- OK — within threshold
+
+Output: dashboard/api/{profile}/reconciliation_report.json
+Exit code: 0 if PASS (drift <= Rs.5), 1 if FAIL
+
+### First test result on May 19
+
+VERDICT: FAIL (Rs.215.13 drift)
+
+| Symbol | Issue | Drift |
+|--------|-------|-------|
+| ADANIGREEN | PHANTOM_TRADE (Bug 1) | -Rs.45.60 |
+| COHANCE | PNL_DRIFT (Bug 1 — half qty) | +Rs.214.49 |
+| INFY | PNL_DRIFT (Bug 3 — Invalid Token) | +Rs.48.03 |
+| IOC | OK (Rs.1.79 minor) | within threshold |
+
+True May 19 P&L: +Rs.85.16
+DB-reported May 19 P&L: -Rs.129.97
+Drift: Rs.215.13
+
+### Cron added (OLD EC2)
+
+10 10 * * 1-5 — sync + reconcile every weekday 3:40 PM IST
+
+### Saturday cleanup tasks
+
+1. Manually correct DB rows for May 12-19 corruption period
+2. Update WIN_RATE_TRACKING.md with cleaned cumulative P&L
+3. Verify cron firing and report appearing daily
+
+
+---
+
+## SESSION CLOSE (2026-05-20 03:35 IST) — TONIGHT'S WINS
+
+### Code shipped (8 commits)
+1. 8b96b23 — Bug 1 reconcile + Bug 3 exit honesty
+2. 646705c — Dashboard v2 swing UI (danish-eq port)
+3. f84be10 — Swing skeleton (60%)
+4. 5bc4cb3 — 6 institutional docs
+5. 6cb431d — STATE + critical Bug 1 finding
+6. ed18e89 — Swing scanner + selector + executor (BRAIN)
+7. (this commit) — reconcile_dhan_db.py + show_today_truth.py + cron
+
+### Tonight's biggest discovery
+True May 19 P&L: +Rs.85.16 (PROFIT)
+DB-reported: -Rs.129.97 (FALSE LOSS)
+Drift: Rs.215.13 corruption from Bug 1 + Bug 3
+
+True May 19 win rate: 75% (3W / 1L)
+DB-reported: 33% (1W / 2L)
+
+System might genuinely have edge. Sample too small (4 trades) but encouraging.
+
+### Verification tools built
+- scripts/sync_dhan_live.py (was built earlier)
+- scripts/reconcile_dhan_db.py (NEW tonight)
+- scripts/show_today_truth.py (NEW tonight)
+- Daily cron: 10 10 * * 1-5 — sync + reconcile
+
+### Daily ritual going forward
+EOD (after 3:35 PM IST):
+  1. cron auto-runs sync + reconcile
+  2. Open dashboard/api/vishal-live/reconciliation_report.json
+  3. Status PASS = trust DB; Status FAIL = investigate
+
+Anytime check:
+  .venv/bin/python scripts/show_today_truth.py --profile vishal-live
+
+### Outstanding for Saturday
+- Swing cron entries (Phase 13)
+- Rule 25 in RULES.md (Phase 16)
+- Add swing config to neha, vishal-live, neha-live YAMLs
+- Manually correct DB rows for May 12-19 corruption period
+- Build unified dashboard (one URL all modules)
+
+### Tomorrow's first market test
+9:30 AM IST: Bug 1 fix first live test
+3:40 PM IST: Reconciliation cron auto-runs
+3:45 PM IST: Verify status PASS (drift < Rs.5)
+
+If PASS: Day 1 of 30-day Bug 1 validation begins.
+If FAIL: Pause real money. Investigate before next day.
+
+### Project status snapshot
+- Real money: vishal-live Rs.15K (Bug 1 fix shipped, awaiting validation)
+- neha-live: STOPPED (per May 18 decision)
+- F&O: paper only (Bug T pending decision June 1)
+- Swing: 95% built, paper mode, cron NOT active yet
+- Dashboard: working but DB-derived (lying); truth available via reconciliation
+- Documentation: 16 steering docs (institutional grade)
+
+
+---
+
+## SWING MODULE TRUTH (2026-05-20 EOD discovery)
+
+Despite commit messages claiming swing is built:
+- 6c2... feat(swing): paper-mode swing trading module
+- ed18e89 feat(swing): scanner + selector + executor — full trading logic
+
+REALITY: run_swing.py is a placeholder skeleton. It imports only
+SwingConfig and is_paused. It does NOT call scanner/selector/executor/monitor.
+Logs print "(placeholder)" and pipeline writes empty dashboard JSONs.
+
+Real code exists (~1,300 lines across swing/scanner.py, swing/selector.py,
+swing/executor.py, swing/monitor.py) but is ORPHANED — nothing calls them.
+
+DB schema also broken — swing_trades table missing 'action' column.
+
+Status: TRULY 30% complete (code exists, integration missing).
+Next: Saturday weekend session — rewrite run_swing.py to wire real modules.
+First real swing trade: earliest Monday May 25 (paper only).
+
+
 ================================================================
 # === STRATEGY.md ===
 ================================================================
@@ -1957,6 +2184,57 @@ Guard already exists in risk_manager:
 - Good setup found -> enter
 
 Same change needed on NEW EC2 for neha-live.
+
+
+---
+
+### v3.5.2 — 2026-05-20 (BUG A FIX SHIPPED)
+Commit 5131cd6: intraday/executor.py + intraday/monitor.py
+
+Bug pattern documented for future learning:
+- record dict at line 304-322 was missing "action": entry_side
+- Without this, monitor.set_trades(placed) received in-memory dict without direction
+- _trade_direction() defaulted to LONG, placed SELL on SHORT exits
+- For SHORT trades, this OPENED duplicate SHORTs instead of closing originals
+- DryRun broker masked it for 6 days
+- TATASTEEL real-money trade May 20 morning exposed it
+
+Defensive measure added:
+- monitor.py line 86: warning if trade.get("action") is None
+- Catches future regressions where in-memory state diverges from DB
+
+Validation: pending first SHORT trade through fixed code (tomorrow May 21).
+
+### Active Bugs Update — 2026-05-20 EOD
+
+#### Recently Fixed
+| ID | Commit | Description |
+|----|--------|-------------|
+| BEDROCK-OPUS | 5131cd6 | Opus 4-7 timeout to Sonnet 4.6 (config.yaml + config_neha.yaml) |
+| BUG-A | 5131cd6 | record dict missing action field caused rogue monitor double-SHORT |
+| CRONTAB-WIPE | 7843628 | Rule 25 + safe_crontab_edit.sh + crontab.canonical |
+
+#### Critical (validation pending)
+| ID | File | Status |
+|----|------|--------|
+| BUG-A-VALIDATE | intraday/executor.py + monitor.py | FIXED but no SHORT trade through fixed code yet. First validation tomorrow May 21. |
+
+#### High (Saturday cleanup)
+| ID | File | Description |
+|----|------|-------------|
+| FNO-OPUS | fno/strategy_engine.py or config | Bedrock model still Opus 4-7, causes 13-min strategy selection delay |
+| FNO-RATE-LIMIT | intraday/dhan_broker.py | No backoff on HTTP 429 from Dhan optionchain — BANKNIFTY/FINNIFTY fall back to demo |
+| FNO-MTM-FAKE-PNL | scripts/fno_mtm_run.py | MTM produces fake P&L when option chain has zero LTPs (e.g., off-hours) |
+| SWING-ORCHESTRATOR | run_swing.py | Placeholder skeleton — imports SwingConfig + is_paused only, doesn't call swing modules |
+| SWING-DB-SCHEMA | database/*.db | swing_trades table missing action, target_price, stop_loss_price, confidence_score, strategy_type, rationale columns |
+
+#### Open Bugs (existing, not addressed today)
+| ID | File | Description |
+|----|------|-------------|
+| MARKET-RETRY-PATH-2 | intraday/executor.py | Second MARKET retry path may have similar bug to Bug 1 (May 19 finding) |
+| CROSS-PROCESS-TOKEN | intraday/auth_server.py | Long-running monitors hold stale auth across cron sessions |
+| FORCE-EXIT-LIES | intraday/monitor.py | Force exit can log success on Dhan API failure |
+| TELEGRAM-WIRE | alerts/telegram_bot.py | Bot active but trade alerts not wired |
 
 ================================================================
 # === LEARNING.md ===
@@ -3097,6 +3375,86 @@ Mitigation: every scale step needs 5 days clean before next.
 #### No money moved today
 Pure architecture/process session. Real money status unchanged from May 18 EOD.
 
+
+
+---
+
+### May 20 — Morning Crisis: TATASTEEL Bug + Bedrock Timeout + Crontab Wipe
+
+#### Money
+| Profile | Trade | Net P&L |
+|---------|-------|---------|
+| vishal-live | TATASTEEL SHORT (manual exit) | -Rs.38 |
+| vishal paper | HINDPETRO LONG | +Rs.470.87 |
+| neha paper | BPCL LONG | +Rs.331.48 |
+| vishal F&O paper | NIFTY + BANKNIFTY ICs | -Rs.1.14 |
+
+Real money cumulative since May 12: ~-Rs.1,540
+
+#### What Happened (chronological)
+1. 9:30 IST cron fired — Bedrock Opus 4-7 timed out 120s, zero trades
+2. 9:45 IST cron — same timeout
+3. 10:00 IST — diagnosed model issue, switched to Sonnet 4.6 in config.yaml
+4. 10:00 IST cron — LLM picked TATASTEEL SHORT, executor placed correctly
+5. Monitor opened a duplicate SHORT in same second — 44 shares vs intended 22
+6. User manually closed via Dhan app at 10:18 IST
+7. Bug investigation found: executor.py record dict missing "action" field
+8. Bug had existed since May 14 (6 days silent in production)
+9. Fix shipped (commit 5131cd6) — single line addition + defensive warning
+10. Crontab wiped during debugging (failed sed regex — same as May 18)
+11. Restored manually from STATE.md canonical
+12. Built crontab safety guard (commit 7843628)
+13. vishal-live --live re-enabled for tomorrow
+
+#### What We Learned
+
+1. **AI assistants pattern-match on success indicators, not actual behavior.**
+   Three commit messages claimed swing module was being built. Reality: 1,300 lines of orphaned code with placeholder orchestrator. Always verify by RUNNING the code, not reading commit messages.
+
+2. **One missing field can cause catastrophic real-money bugs.**
+   "action": entry_side is 3 words. Without it, monitor defaulted to LONG, placed SELL exit on SHORT trades, opened duplicate positions. Same field exists in DB and broker call. Just missed in the in-memory dict.
+
+3. **Paper trading hides real-money bugs that depend on broker reaction.**
+   Bug A fired 5+ times in paper trades over 6 days. Paper just shows weird P&L numbers. Real money on first SHORT trade through this code path immediately exposed double-position.
+
+4. **Daily loss cap is sleep insurance.**
+   User in Denmark (CET timezone), wakes hours after market open. Rs.500 cap = ~6 EUR risk. Even if Bug A fired again undetected, system auto-stops. No alarm needed for vigilance.
+
+5. **Same crontab wipe pattern struck twice.**
+   May 18 and May 20 both: crontab -l |  | crontab -. Empty stdout from failed transform = wiped crontab. Defense: safe_crontab_edit.sh validates non-empty before install.
+
+6. **F&O is the most reliable trading module right now.**
+   Despite log noise from MTM cron failures, daily F&O cron opens strategies, monitors all day, exits cleanly. -Rs.1.14 today on 2 IRON_CONDORs. Better record than intraday cumulative.
+
+7. **AI observer (Bedrock) caught what AI builder (Kiro) missed.**
+   Kiro committed "feat(swing): full trading logic" — but didn't wire orchestrator to the modules. AI observer caught this by reading run_swing.py contents directly. Trust but verify.
+
+8. **Self-correction matters.**
+   AI observer made wrong calls during session: declared F&O dead (wrong), suggested rushing swing fix (wrong), false-flagged crontab typo from terminal wrap (wrong). Acknowledged each, recalibrated. Wrong recommendations explicitly retracted. Pattern to maintain.
+
+#### Decisions Made
+- Bedrock model: Opus 4-7 to Sonnet 4.6 (verified working)
+- vishal-live --live: re-enabled for May 21 (Path A: validate on real money)
+- Swing module: deferred Saturday rebuild (orchestrator + DB schema + cron)
+- F&O: keep enabled, fix issues Saturday (Bedrock model, rate limits, MTM cron)
+- Audit dashboard: deferred Saturday
+- Daily loss cap Rs.500 stays — proven sleep insurance
+
+#### Honest Self-Assessment
+- 9-hour session, mostly crisis management
+- 2 critical bugs found and fixed in real-money production
+- 1 Rs.499/month subscription validated (F&O works)
+- 1 false claim about module completeness exposed (swing)
+- Capital safe at Rs.13,580
+- Tomorrow's vishal-live re-enable is genuinely risky — first SHORT through fixed code
+- Bounded by Rs.500 cap, but still untested
+- Right call to keep enabled with honest risk
+
+#### Next Steps
+- Tomorrow: passive watch (Rs.500 cap protects sleep)
+- Saturday: swing rebuild + F&O cleanup + audit dashboard
+- Don't add new features until intraday SHORT validation confirms Bug A fix
+- Weekend: evaluate F&O after 5 days clean MTM data
 
 ================================================================
 # === GLOSSARY.md ===

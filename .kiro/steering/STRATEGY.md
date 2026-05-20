@@ -546,3 +546,54 @@ Guard already exists in risk_manager:
 - Good setup found -> enter
 
 Same change needed on NEW EC2 for neha-live.
+
+
+---
+
+### v3.5.2 — 2026-05-20 (BUG A FIX SHIPPED)
+Commit 5131cd6: intraday/executor.py + intraday/monitor.py
+
+Bug pattern documented for future learning:
+- record dict at line 304-322 was missing "action": entry_side
+- Without this, monitor.set_trades(placed) received in-memory dict without direction
+- _trade_direction() defaulted to LONG, placed SELL on SHORT exits
+- For SHORT trades, this OPENED duplicate SHORTs instead of closing originals
+- DryRun broker masked it for 6 days
+- TATASTEEL real-money trade May 20 morning exposed it
+
+Defensive measure added:
+- monitor.py line 86: warning if trade.get("action") is None
+- Catches future regressions where in-memory state diverges from DB
+
+Validation: pending first SHORT trade through fixed code (tomorrow May 21).
+
+### Active Bugs Update — 2026-05-20 EOD
+
+#### Recently Fixed
+| ID | Commit | Description |
+|----|--------|-------------|
+| BEDROCK-OPUS | 5131cd6 | Opus 4-7 timeout to Sonnet 4.6 (config.yaml + config_neha.yaml) |
+| BUG-A | 5131cd6 | record dict missing action field caused rogue monitor double-SHORT |
+| CRONTAB-WIPE | 7843628 | Rule 25 + safe_crontab_edit.sh + crontab.canonical |
+
+#### Critical (validation pending)
+| ID | File | Status |
+|----|------|--------|
+| BUG-A-VALIDATE | intraday/executor.py + monitor.py | FIXED but no SHORT trade through fixed code yet. First validation tomorrow May 21. |
+
+#### High (Saturday cleanup)
+| ID | File | Description |
+|----|------|-------------|
+| FNO-OPUS | fno/strategy_engine.py or config | Bedrock model still Opus 4-7, causes 13-min strategy selection delay |
+| FNO-RATE-LIMIT | intraday/dhan_broker.py | No backoff on HTTP 429 from Dhan optionchain — BANKNIFTY/FINNIFTY fall back to demo |
+| FNO-MTM-FAKE-PNL | scripts/fno_mtm_run.py | MTM produces fake P&L when option chain has zero LTPs (e.g., off-hours) |
+| SWING-ORCHESTRATOR | run_swing.py | Placeholder skeleton — imports SwingConfig + is_paused only, doesn't call swing modules |
+| SWING-DB-SCHEMA | database/*.db | swing_trades table missing action, target_price, stop_loss_price, confidence_score, strategy_type, rationale columns |
+
+#### Open Bugs (existing, not addressed today)
+| ID | File | Description |
+|----|------|-------------|
+| MARKET-RETRY-PATH-2 | intraday/executor.py | Second MARKET retry path may have similar bug to Bug 1 (May 19 finding) |
+| CROSS-PROCESS-TOKEN | intraday/auth_server.py | Long-running monitors hold stale auth across cron sessions |
+| FORCE-EXIT-LIES | intraday/monitor.py | Force exit can log success on Dhan API failure |
+| TELEGRAM-WIRE | alerts/telegram_bot.py | Bot active but trade alerts not wired |

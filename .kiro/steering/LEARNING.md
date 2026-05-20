@@ -1087,3 +1087,130 @@ plan still hits Jun 20 within probability bounds.
 Bigger risk: undiscovered bug at Rs.5L scale costing Rs.10K-50K.
 Mitigation: every scale step needs 5 days clean before next.
 
+
+---
+
+### May 19 — Context Automation Workflow Decided
+
+#### What we discussed
+- Pasting 5 steering docs into every Bedrock chat = friction
+- Explored Bedrock KB, Lambda agents, CloudFront URL fetching
+- Found honest limit: Bedrock browser chat cannot auto-fetch ANY external content
+- Pasting is unavoidable; goal became minimizing friction
+- User frustrated with multi-step solutions, wanted ONE command
+- Vim hung on huge paste (10k+ lines) — switched to cat heredoc method
+- Realized Kiro can do the segregation work (reads files on EC2)
+
+#### Decisions
+1. Single CONTEXT.md = bundle of all 5 steering docs
+2. Rebuilt via git post-commit hook after any steering edit
+3. Workflow: paste CONTEXT.md at chat start, capture-heredoc at chat end
+4. Trigger: "capture session" --> AI generates heredoc that updates all 5 docs + CONTEXT.md
+5. SSM web console is canonical command channel (Rule 22)
+6. Capture protocol formalized as Rule 23
+7. Paste-based context formalized as Rule 24
+8. Future: Kiro ingestion of /tmp/session_chat.txt for hands-off updates
+
+#### What I (the AI) got wrong this session
+1. Suggested CloudFront URL solution claiming I could fetch it — I cannot
+2. Over-engineered first proposals (KB, Lambda, agents) before acknowledging chat-channel limits
+3. Confused user by mixing "EC2 reads Bedrock" (impossible) with "AI segregates in chat" (real)
+4. Took 4-5 exchanges to land on the simple answer: I segregate in my response, you paste
+
+#### What user got right
+1. Pushed back when solutions were too complex
+2. Pointed out CloudFront wouldn't work because I cannot read URLs
+3. Insisted on ONE command instead of multi-step rituals
+4. Specified vim over nano (operator preference)
+5. Set scale expectation: chats can be 10,000+ lines
+6. Caught that Kiro is the right tool for segregation
+
+#### Action items for next session
+- [ ] Run validate_tomorrow.sh at market hours (3 checkpoints)
+- [ ] Decide on dashboard P&L source (Option B: live Dhan)
+- [ ] Verify Rule 22/23/24 are being followed in next AI session
+- [ ] Consider Kiro ingestion workflow for future captures
+
+#### No money moved today
+Pure architecture/process session. Real money status unchanged from May 18 EOD.
+
+
+
+---
+
+### May 20 — Morning Crisis: TATASTEEL Bug + Bedrock Timeout + Crontab Wipe
+
+#### Money
+| Profile | Trade | Net P&L |
+|---------|-------|---------|
+| vishal-live | TATASTEEL SHORT (manual exit) | -Rs.38 |
+| vishal paper | HINDPETRO LONG | +Rs.470.87 |
+| neha paper | BPCL LONG | +Rs.331.48 |
+| vishal F&O paper | NIFTY + BANKNIFTY ICs | -Rs.1.14 |
+
+Real money cumulative since May 12: ~-Rs.1,540
+
+#### What Happened (chronological)
+1. 9:30 IST cron fired — Bedrock Opus 4-7 timed out 120s, zero trades
+2. 9:45 IST cron — same timeout
+3. 10:00 IST — diagnosed model issue, switched to Sonnet 4.6 in config.yaml
+4. 10:00 IST cron — LLM picked TATASTEEL SHORT, executor placed correctly
+5. Monitor opened a duplicate SHORT in same second — 44 shares vs intended 22
+6. User manually closed via Dhan app at 10:18 IST
+7. Bug investigation found: executor.py record dict missing "action" field
+8. Bug had existed since May 14 (6 days silent in production)
+9. Fix shipped (commit 5131cd6) — single line addition + defensive warning
+10. Crontab wiped during debugging (failed sed regex — same as May 18)
+11. Restored manually from STATE.md canonical
+12. Built crontab safety guard (commit 7843628)
+13. vishal-live --live re-enabled for tomorrow
+
+#### What We Learned
+
+1. **AI assistants pattern-match on success indicators, not actual behavior.**
+   Three commit messages claimed swing module was being built. Reality: 1,300 lines of orphaned code with placeholder orchestrator. Always verify by RUNNING the code, not reading commit messages.
+
+2. **One missing field can cause catastrophic real-money bugs.**
+   "action": entry_side is 3 words. Without it, monitor defaulted to LONG, placed SELL exit on SHORT trades, opened duplicate positions. Same field exists in DB and broker call. Just missed in the in-memory dict.
+
+3. **Paper trading hides real-money bugs that depend on broker reaction.**
+   Bug A fired 5+ times in paper trades over 6 days. Paper just shows weird P&L numbers. Real money on first SHORT trade through this code path immediately exposed double-position.
+
+4. **Daily loss cap is sleep insurance.**
+   User in Denmark (CET timezone), wakes hours after market open. Rs.500 cap = ~6 EUR risk. Even if Bug A fired again undetected, system auto-stops. No alarm needed for vigilance.
+
+5. **Same crontab wipe pattern struck twice.**
+   May 18 and May 20 both: crontab -l |  | crontab -. Empty stdout from failed transform = wiped crontab. Defense: safe_crontab_edit.sh validates non-empty before install.
+
+6. **F&O is the most reliable trading module right now.**
+   Despite log noise from MTM cron failures, daily F&O cron opens strategies, monitors all day, exits cleanly. -Rs.1.14 today on 2 IRON_CONDORs. Better record than intraday cumulative.
+
+7. **AI observer (Bedrock) caught what AI builder (Kiro) missed.**
+   Kiro committed "feat(swing): full trading logic" — but didn't wire orchestrator to the modules. AI observer caught this by reading run_swing.py contents directly. Trust but verify.
+
+8. **Self-correction matters.**
+   AI observer made wrong calls during session: declared F&O dead (wrong), suggested rushing swing fix (wrong), false-flagged crontab typo from terminal wrap (wrong). Acknowledged each, recalibrated. Wrong recommendations explicitly retracted. Pattern to maintain.
+
+#### Decisions Made
+- Bedrock model: Opus 4-7 to Sonnet 4.6 (verified working)
+- vishal-live --live: re-enabled for May 21 (Path A: validate on real money)
+- Swing module: deferred Saturday rebuild (orchestrator + DB schema + cron)
+- F&O: keep enabled, fix issues Saturday (Bedrock model, rate limits, MTM cron)
+- Audit dashboard: deferred Saturday
+- Daily loss cap Rs.500 stays — proven sleep insurance
+
+#### Honest Self-Assessment
+- 9-hour session, mostly crisis management
+- 2 critical bugs found and fixed in real-money production
+- 1 Rs.499/month subscription validated (F&O works)
+- 1 false claim about module completeness exposed (swing)
+- Capital safe at Rs.13,580
+- Tomorrow's vishal-live re-enable is genuinely risky — first SHORT through fixed code
+- Bounded by Rs.500 cap, but still untested
+- Right call to keep enabled with honest risk
+
+#### Next Steps
+- Tomorrow: passive watch (Rs.500 cap protects sleep)
+- Saturday: swing rebuild + F&O cleanup + audit dashboard
+- Don't add new features until intraday SHORT validation confirms Bug A fix
+- Weekend: evaluate F&O after 5 days clean MTM data
