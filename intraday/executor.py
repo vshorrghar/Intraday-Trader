@@ -310,6 +310,7 @@ class Order_Executor:
             "target_price": trade.target_price,
             "stop_loss_price": trade.stop_loss_price,
             "quantity": trade.quantity,
+            "action": entry_side,
             "buy_order_id": buy_order_id,
             "sl_order_id": sl_order_id,
             "confidence_score": trade.confidence_score,

@@ -82,6 +82,8 @@ class Position_Monitor:
     @staticmethod
     def _trade_direction(trade: dict) -> str:
         """Returns 'LONG' or 'SHORT' based on action field. Defaults to LONG."""
+        if not trade.get("action"):
+            logger.warning("\u26a0\ufe0f Trade %s missing 'action' field \u2014 defaulting to LONG. May indicate stale upstream record.", trade.get("tradingsymbol", "?"))
         action = (trade.get("action") or "BUY").upper()
         return "SHORT" if action == "SELL" else "LONG"
 
