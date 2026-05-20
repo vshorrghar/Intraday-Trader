@@ -56,7 +56,7 @@ def fetch_trades(profile, date):
             SELECT timestamp, tradingsymbol, quantity, entry_price, exit_price,
                    status, pnl, target_price, stop_loss_price, action
             FROM intraday_trades
-            WHERE trade_date = ? AND action = 'BUY'
+            WHERE trade_date = ? AND action IN ('BUY', 'SELL')
             ORDER BY timestamp
         """, (date,))
         return [dict(r) for r in cur.fetchall()]
