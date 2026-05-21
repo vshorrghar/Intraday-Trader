@@ -472,6 +472,14 @@ class Position_Monitor:
         # --- Target hit (direction-aware) ---
         target_hit = (direction == "LONG" and current >= target) or (direction == "SHORT" and current <= target)
         if target_hit:
+            # Bug B fix: cancel orphan SL BEFORE placing exit order
+            sl_order_id = trade.get('sl_order_id')
+            if sl_order_id and self.broker:
+                try:
+                    self.broker.cancel_order(sl_order_id)
+                    logger.info('Bug B: SL cancelled before target exit: %s sl_order_id=%s', trade['tradingsymbol'], sl_order_id)
+                except Exception as e:
+                    logger.warning('Bug B: SL cancel failed before target exit: %s - proceeding with exit anyway', e)
             # Bug J/K fix: place broker exit FIRST, get real fill price
             exit_side = "BUY" if direction == "SHORT" else "SELL"
             actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, current)
@@ -525,8 +533,30 @@ class Position_Monitor:
         # --- Trailing SL ---
         new_sl = calc_trailing_sl(entry, current, self.config.trailing_sl_trigger_pct)
         if new_sl and new_sl > sl:
-            trade["stop_loss_price"] = round(new_sl, 2)
-            logger.info("📈 %s trailing SL moved: ₹%.2f → ₹%.2f", trade["tradingsymbol"], sl, new_sl)
+            # Bug B fix: modify SL order on Dhan, not just memory
+            sl_order_id = trade.get('sl_order_id')
+            if sl_order_id and self.broker:
+                try:
+                    new_trigger = round(round(new_sl / 0.05) * 0.05, 2)
+                    # LONG: limit below trigger; SHORT: limit above trigger
+                    if direction == "SHORT":
+                        new_limit = round(round((new_sl + 0.50) / 0.05) * 0.05, 2)
+                    else:
+                        new_limit = round(round((new_sl - 0.50) / 0.05) * 0.05, 2)
+                    self.broker.modify_order(
+                        order_id=sl_order_id,
+                        price=new_limit,
+                        trigger_price=new_trigger,
+                    )
+                    trade["stop_loss_price"] = round(new_sl, 2)
+                    logger.info("📈 %s trailing SL modified on Dhan: ₹%.2f → ₹%.2f (trigger=%.2f, limit=%.2f)", trade["tradingsymbol"], sl, new_sl, new_trigger, new_limit)
+                except Exception as e:
+                    logger.warning("Bug B: trailing SL modify failed: %s - keeping original SL ₹%.2f", e, sl)
+                    # Do NOT update trade stop_loss_price if modify fails
+            else:
+                # Fallback: no SL order ID (DryRun or missing) - update memory only
+                trade["stop_loss_price"] = round(new_sl, 2)
+                logger.info("📈 %s trailing SL moved (memory only): ₹%.2f → ₹%.2f", trade["tradingsymbol"], sl, new_sl)
             if self.db:
                 self._audit("SL_ADJUST", {"symbol": trade["tradingsymbol"], "old_sl": sl, "new_sl": new_sl})
 
@@ -583,6 +613,14 @@ class Position_Monitor:
                 continue
             direction = self._trade_direction(trade)
             exit_side = "BUY" if direction == "SHORT" else "SELL"
+            # Bug B fix: cancel orphan SL BEFORE placing force exit order
+            sl_order_id = trade.get('sl_order_id')
+            if sl_order_id and self.broker:
+                try:
+                    self.broker.cancel_order(sl_order_id)
+                    logger.info('Bug B: SL cancelled before force exit: %s sl_order_id=%s', trade['tradingsymbol'], sl_order_id)
+                except Exception as e:
+                    logger.warning('Bug B: SL cancel failed before force exit: %s - proceeding anyway', e)
             cached_price = trade.get("current_price", trade["entry_price"])
             actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, cached_price)
             if fill_status in ("order_failed", "no_broker"):
