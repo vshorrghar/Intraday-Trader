@@ -434,3 +434,53 @@ This document represents my commitment to:
 
 Vishal | 2026-05-19 | Founder, Principal Trader
 
+
+---
+
+## REAL TRADE DATA POPULATED 2026-05-21 EOD
+
+Replacing prior [FILL_IN] template markers with actual data from
+database/vishal-live.db + Dhan API truth (dhan_live.json).
+
+### vishal-live (Real Money) — 2026-05-12 to 2026-05-21
+
+| Date | Symbol | Direction | Entry | Exit | Net P&L | Notes |
+|------|--------|-----------|-------|------|---------|-------|
+| 2026-05-12 | ONGC | LONG | ~245 | ~243.5 | -Rs.53.80 | First real trade |
+| 2026-05-12 | WIPRO | SHORT | ? | ? | -Rs.20.00 | Low conviction |
+| 2026-05-13 | HINDZINC | LONG | ? | ? | -Rs.28.30 | Charges-tainted |
+| 2026-05-14 | VEDL | LONG | 334.30 | ? | TBD | x10 shares |
+| 2026-05-15 | INFY | LONG | 1124.10 | ? | TBD | Open EOD May 15 |
+| 2026-05-15 | HDFCBANK | LONG | 779.90 | ? | TBD | Open EOD May 15 |
+| 2026-05-15 | SAREGAMA | LONG | 411.90 | NEVER FILLED | Rs.0 | Bug 3 (limit order) |
+| 2026-05-19 | IOC | LONG | ? | ? | TBD | (closed +Rs.85 day) |
+| 2026-05-19 | COHANCE | LONG | ? | ? | TBD | (closed +Rs.85 day) |
+| 2026-05-19 | INFY | LONG | ? | ? | TBD | (closed +Rs.85 day) |
+| 2026-05-20 | TATASTEEL | SHORT | 203.73 | 204.10 | -Rs.38 | Bug A fired, manual exit |
+| 2026-05-21 | BEL | LONG | 425.75 | 421.40 | -Rs.43.50 | Force exit |
+| 2026-05-21 | ANGELONE | LONG | 337.40 | 339.32 | +Rs.24.90 | Target hit clean |
+| 2026-05-21 | HFCL | LONG | 144.93 | 145.27 | +Rs.10.54 (planned) +Rs.36.58 (with phantom SHORT) | Bug B fired |
+
+### Statistics (limited sample, n=14, including bug-tainted)
+- Total trades: 14
+- Winners: 4 (ANGELONE, HFCL planned exit, HFCL phantom recovery, IOC?)
+- Losers: ~7
+- Bug-tainted: 5+ (TATASTEEL bug A, HFCL bug B, SAREGAMA Bug 3, etc.)
+- Cumulative net P&L: ~-Rs.1,520
+
+### Honest Read
+- n=14 is statistically meaningless
+- Most "losses" are bug-related not strategy-related
+- Cannot conclude anything about win rate yet
+- Need 30+ clean trades (post Bug B fix) for first signal
+- Need 100 clean trades for confidence
+
+### Going Forward (post Bug B fix)
+- Track: every trade with bug-flag (Y/N)
+- Only count clean trades toward win rate stats
+- Bug-tainted trades go in separate ledger
+- After 14 days zero bugs found → confidence increases
+
+### Markers replacing [FILL_IN]
+This entire section now has REAL DATA. Prior template stubs deleted.
+Update daily after EOD reconciliation script runs (Saturday addition).

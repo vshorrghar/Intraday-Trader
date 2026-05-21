@@ -249,3 +249,89 @@ I commit to daily trade reviews because:
 
 Vishal | 2026-05-19 | Founder, Principal Trader
 
+
+---
+
+## 2026-05-20 — TATASTEEL Post-Mortem
+
+### Trade
+- Symbol: TATASTEEL
+- Direction: SHORT
+- Entry: Rs.203.73 (intended 22 shares)
+- Actual filled on Dhan: 44 shares (Bug A doubled)
+- Manual exit: Rs.204.10 via Dhan app at 10:18 IST
+- Net P&L: -Rs.38 after charges
+
+### What Went Right
+- LLM picked correctly: Metal sector weak (-0.53%), TATASTEEL momentum down -2.66%
+- R:R 2.0, confidence 7, all gates passed
+- User caught the bug within 18 minutes
+- Daily loss cap Rs.500 NOT breached
+- Manual close locked in bounded loss
+
+### What Went Wrong
+- Bug A: monitor opened SECOND SHORT (44 vs intended 22)
+- 22 shares unprotected (only 22 covered by SL @ 207.80)
+- System lied in logs: labeled SHORT trade as [LONG]
+- Without manual intervention, loss could have been Rs.300+ if TATASTEEL spiked
+
+### Process Lessons
+- Real money exposes bugs paper hides
+- User vigilance saved capital today
+- Telegram alert for unexpected position would have helped
+- Same pattern as upcoming Bug B (orphan SL) — exit/cleanup paths underbuild
+
+### Strategy Lessons
+- Pick was sound, execution was buggy
+- Don't blame strategy when infrastructure fails
+- This trade does NOT count toward win rate stats (bug-tainted)
+
+### Action Taken
+- Bug A patched same day (commit 5131cd6)
+- Defensive warning added in monitor.py
+- vishal-live continued trading after fix
+
+---
+
+## 2026-05-21 — HFCL Post-Mortem
+
+### Trade
+- Symbol: HFCL
+- Direction: LONG (intended), then phantom SHORT (bug)
+- Entry: Rs.144.93 x 31
+- Target hit exit: Rs.145.27
+- Phantom SHORT created at: ~Rs.143.76 x 31
+- Manual close phantom: Rs.142.55 x 31
+- Net P&L combined: +Rs.36.58 (lucky outcome)
+
+### What Went Right
+- LLM picked correctly: Infrastructure sector +0.78%, HFCL momentum +2.31%
+- Volume 19.9M, exceptional liquidity
+- R:R 2.0, target hit cleanly
+- Bug A entry fix worked perfectly (no rogue duplicate at entry)
+- Lucky direction on phantom SHORT (HFCL drifted down)
+- User noticed phantom position via Dhan app
+
+### What Went Wrong
+- Bug B: original SL not cancelled when target hit
+- Orphan SL fired at 142.25, created phantom SHORT
+- 31 shares phantom SHORT had ZERO stop loss
+- Trailing SL was fake — only updated memory, not Dhan order
+- Could have lost Rs.150-300 if HFCL had spiked instead of drifted
+
+### Process Lessons
+- Two bugs in two days = pattern (entry then exit)
+- Every order lifecycle must be code-traced (create → cancel/modify/fill)
+- Don't trust Dhan auto-cleanup (slow, unreliable)
+- EOD reconciliation script is now P0 priority
+
+### Strategy Lessons
+- LONG MOMENTUM with sector confirmation works (consistent with HINDPETRO, BPCL)
+- Fast targets at 0.3-0.5% above entry hit reliably in NEUTRAL/bullish regimes
+- Charges still eating most profit at Rs.4,500/trade scale
+- Need bigger per-trade size or higher win rate to be net positive
+
+### Action Taken
+- Logged in BUGS_AND_FIXES.md
+- Bug B fix scheduled tonight Thursday evening
+- vishal-live continues uninterrupted

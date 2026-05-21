@@ -259,3 +259,35 @@ I commit to daily regime entries (5-10 min/day) because:
 
 Vishal | 2026-05-19 | Founder, Principal Trader
 
+
+---
+
+## 2026-05-20 (Wed) — BEARISH, VIX Elevated
+
+- VIX: 19.25 (elevated)
+- Sectors green: 4 of 27 (~15%)
+- Market mood: BEARISH (heavy selling pressure)
+- Top sectors: PHARMA +0.62%, IT +0.54%, HEALTHCARE +0.50%, AUTO flat
+- Weak sectors: METAL -0.53%, FMCG, BANK
+- Scanner picked: TATASTEEL SHORT (Metal weak, momentum down)
+- Real money: 1 trade (TATASTEEL), -Rs.38 net (Bug A fire, manual exit)
+- F&O paper: 2 IRON_CONDORs, -Rs.1.14 net
+
+## 2026-05-21 (Thu) — NEUTRAL leaning bullish, VIX moderate
+
+- VIX: 17.46 morning, drifted to 18.01 by 13:15 IST
+- Sectors green: ~12 of 27 (~44%)
+- Market mood: NEUTRAL with bullish sectors leading
+- Strong sectors: Energy, Auto
+- Weak sectors: Banking, FMCG, Media (some)
+- Scanner picked: 3 LONG trades (BEL, ANGELONE, HFCL) — all MOMENTUM setup
+- Real money: 3 trades, +Rs.17.98 realized (~break-even after charges)
+- HFCL had Bug B fire (orphan SL → phantom SHORT)
+- Bug A fix VALIDATED on 3 LONG entries — no rogue duplicates
+
+## Pattern Forming (n=2 days, very small sample)
+- Both days had Bug events (A May 20, B May 21)
+- LONG trades worked when market neutral/bullish (May 21)
+- SHORT trades work when market clearly bearish (May 20)
+- VIX 17-19 range = trades happen, results mixed
+- Need more data points before any pattern claim

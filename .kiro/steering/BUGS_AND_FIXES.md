@@ -477,3 +477,58 @@ Quarterly bug review (end of each calendar quarter):
 Last review: 2026-05-19 (initial)
 Next review due: 2026-09-30 (Q3 close)
 
+
+---
+
+## Bug B — Orphan SL on Exit (CONFIRMED PRODUCTION 2026-05-21)
+
+### Status
+- Discovered: 2026-05-21 (HFCL real money trade)
+- Patched: PENDING (fix tonight)
+- Severity: CRITICAL — creates phantom positions
+
+### Description
+When intraday position closes via target hit (or force exit), the original
+STOP_LOSS order placed at entry remains PENDING on Dhan. Our code does not
+call broker.cancel_order(sl_order_id).
+
+If price later drifts to the SL trigger, Dhan executes the SELL/BUY,
+creating a fresh phantom position with NO stop loss.
+
+### Evidence (Real Money)
+HFCL trade 2026-05-21:
+- 10:30:43 IST: BUY 31 HFCL @ 144.93 (planned)
+- 10:30:45 IST: SL placed SELL 31 STOP_LOSS trigger 142.25 (planned)
+- 11:46:52 IST: Target hit. SELL 31 @ 145.27 closed long (planned)
+- 11:46:52 IST: Original SL stayed PENDING (BUG)
+- ~14:30 IST: HFCL drifted to 142.25, orphan SL fired
+- Created phantom SHORT 31 HFCL @ 143.76, no protection
+- ~15:00 IST: User noticed via Dhan app, manual close BUY 31 @ 142.55
+- Outcome: +Rs.0.93 (lucky), risk had been -Rs.150 to -Rs.300
+
+### Three Variants of Bug B
+B-target: Target hit doesn't cancel SL → orphan
+B-force: Force exit at 15:15 doesn't cancel SL → orphan
+B-trailing: Trailing SL only updates memory (trade['stop_loss_price']),
+           doesn't call broker.modify_order(). Original SL stays at entry-time level.
+
+### Fix Plan (tonight Thursday May 21 evening)
+File: intraday/monitor.py
+
+Pattern:
+1. In target_hit branch: broker.cancel_order(trade['sl_order_id']) BEFORE placing exit
+2. In force_exit_all: same pattern for each open position
+3. In trailing SL: broker.modify_order(sl_order_id, new_trigger) instead of memory-only update
+4. Verify cancel/modify success via get_order_list before proceeding
+
+### Pattern Family
+Same family as Bug A:
+- Bug A (entry path): in-memory state missing field, monitor took wrong direction
+- Bug B (exit path): code missing call to broker.cancel_order/modify_order
+- Both: silent for days/weeks because paper masks them, real money exposes them
+
+### Lesson
+For every broker order placed, code must explicitly handle its lifecycle:
+- Created → trace through Cancel/Filled/Modified states
+- Don't rely on Dhan auto-cleanup (proven unreliable: ANGELONE waited 1h12m, HFCL never cleaned)
+- Audit pattern: search for every place_order call, verify matching cleanup logic

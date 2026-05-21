@@ -44,3 +44,60 @@ No edge? -> kill F&O, save Rs.499/mo.
 - Backtest expansion (50+ stock universe)
 - Telegram trade alerts
 - Capital scaling decisions
+
+## Priority 0 (CRITICAL) — Systemic LONG-only audit
+
+May 20 EOD discovered THREE places where code assumed LONG-only direction:
+
+1. intraday/executor.py record dict (FIXED commit 5131cd6)
+2. intraday/monitor.py _trade_direction (FIXED commit 5131cd6 + defensive warning)
+3. scripts/_status_lib.py fetch_trades query (FIXED commit XXXXX May 20 night)
+
+Saturday TASK 1A: grep entire codebase for similar patterns:
+
+  grep -rn "action = 'BUY'\|action == 'BUY'\|action == "BUY"\|direction = 'LONG'\|direction == 'LONG'" \
+    --include="*.py" --include="*.sql" --include="*.sh" .
+
+Any matches: review, decide if SHORT path is handled.
+
+Also audit places that compute P&L:
+  buy_price - sell_price       (LONG correct, SHORT wrong)
+  exit_price - entry_price     (LONG correct, SHORT inverted)
+
+Look for missing direction-aware math.
+
+This systemic blind spot has produced 3 bugs in 6 days.
+Could be 5-10 more places hiding.
+
+
+---
+
+## UPDATE 2026-05-21 EOD
+
+Bug B fired in production today (HFCL phantom SHORT).
+Saturday plan REORDERED — Bug B fix moved to TONIGHT (Thursday May 21 evening).
+
+### Tonight (Thursday May 21 evening, after this doc update)
+P0: Fix Bug B variants in intraday/monitor.py
+- B-target: cancel SL when target hits
+- B-force: cancel SL on force exit
+- B-trailing: modify Dhan SL order on trailing SL move (not just memory)
+Test on paper end-to-end.
+Commit + push.
+
+### Saturday May 24 (revised scope)
+P0 (if not finished tonight): finish any remaining Bug B work
+P1: Build EOD reconciliation script (scripts/eod_reconcile.py)
+- Compare Dhan truth to DB nightly
+- Telegram alert if drift > Rs.5 OR orphan orders detected
+- Cron at 15:35 IST after market close
+P2: Fix other intraday bugs:
+- Force-exit-lies (record P&L only after verifying TRADED status)
+- Cross-process token (refresh auth at start of every monitor cycle)
+P3 (deferred): Swing module rebuild
+P4 (deferred): F&O cleanup (Bedrock to Sonnet, rate-limit backoff, MTM fake P&L)
+
+### NOT for this weekend
+- Audit dashboard (defer to next weekend)
+- Capital scaling discussions
+- Telegram trade alerts wiring (only EOD recon alerts)
