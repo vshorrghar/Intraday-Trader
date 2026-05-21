@@ -17,6 +17,56 @@
 
 ---
 
+---
+
+## TODAY (2026-05-21 EOD) — BUG B FIRED IN PRODUCTION + VALIDATION DAY
+
+### Real Money Today (vishal-live) — 3 trades, all bug-tainted in some way
+
+| Stock | Entry | Exit | Qty | Net | Notes |
+|-------|-------|------|-----|-----|-------|
+| BEL | 425.75 | 421.40 | 10 | -Rs.43.50 | Force exit at 15:15 IST, planned |
+| ANGELONE | 337.40 | 339.32 | 13 | +Rs.24.90 | Target hit, clean trade |
+| HFCL | 143.17 | 143.76 | 62 (!) | +Rs.36.58 | Bug B fired - see below |
+
+Total realized: +Rs.17.98
+Estimated charges: ~Rs.20-25
+Net after charges: ~Rs.0 to -Rs.5
+
+### BUG B CONFIRMED IN PRODUCTION
+
+Sequence on HFCL:
+- 10:30:43 IST: BUY 31 HFCL @ 144.93 (planned entry)
+- 10:30:45 IST: SL placed SELL 31 STOP_LOSS trigger 142.25 (planned)
+- 11:46:52 IST: Target hit - SELL 31 @ 145.27 closed long position (planned)
+- 11:46:52 IST: Original SL at 142.25 NOT CANCELLED by our code (Bug B)
+- ~14:30 IST: HFCL drifted to 142.25, orphan SL triggered, Dhan executed SELL 31
+- Created phantom SHORT 31 HFCL with no SL protection
+- ~15:00 IST: User noticed on Dhan app, manually squared off (BUY 31 @ 142.55)
+
+Lucky outcome: HFCL stayed range-bound, phantom SHORT closed at +Rs.0.93.
+Real risk had HFCL spiked: -Rs.150 to -Rs.300 unprotected.
+
+### Bug A (May 20 fix) - VALIDATED
+- 3 trades placed today, all LONG, no rogue duplicates
+- No [LONG] mislabel events
+- Fix from commit 5131cd6 confirmed working for entry path
+- SHORT direction validation still pending (no SHORT picks today)
+
+### Validation Status
+- vishal-live --live: continues uninterrupted (no pause, partner directive)
+- Bug A entry-path fix: VALIDATED on 3 LONG trades today
+- Bug B exit-path: CONFIRMED firing on HFCL - fix tonight
+- Trailing SL fakeness: confirmed in logs (only memory, not Dhan modify)
+- F&O paper: working, deferred to weekend cleanup
+
+### Tonight's Bug Fix Marathon (Thu May 21 evening)
+- Fix Bug B-1: cancel SL on target hit
+- Fix Bug B-2: cancel SL on force exit
+- Fix Bug B-3: trailing SL must modify Dhan order, not just memory
+- Test on paper end-to-end before commit
+- vishal-live ready for Friday with bug-free exit path
+
 ## TODAY (2026-05-20 EOD) — TATASTEEL BUG + CRONTAB SAFETY + vishal-live RE-ENABLED
 
 ### Real Money Today (vishal-live)

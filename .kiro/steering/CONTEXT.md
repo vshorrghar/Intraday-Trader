@@ -1,4 +1,4 @@
-# PROJECT CONTEXT (auto-generated 2026-05-20 11:35 IST)
+# PROJECT CONTEXT (auto-generated 2026-05-21 10:24 IST)
 
 Paste this entire file into new Bedrock chat for full project context.
 Contains all 5 steering docs concatenated.
@@ -779,6 +779,56 @@ Location: .kiro/steering/CONTEXT.md
 ---
 
 ---
+
+---
+
+## TODAY (2026-05-21 EOD) — BUG B FIRED IN PRODUCTION + VALIDATION DAY
+
+### Real Money Today (vishal-live) — 3 trades, all bug-tainted in some way
+
+| Stock | Entry | Exit | Qty | Net | Notes |
+|-------|-------|------|-----|-----|-------|
+| BEL | 425.75 | 421.40 | 10 | -Rs.43.50 | Force exit at 15:15 IST, planned |
+| ANGELONE | 337.40 | 339.32 | 13 | +Rs.24.90 | Target hit, clean trade |
+| HFCL | 143.17 | 143.76 | 62 (!) | +Rs.36.58 | Bug B fired - see below |
+
+Total realized: +Rs.17.98
+Estimated charges: ~Rs.20-25
+Net after charges: ~Rs.0 to -Rs.5
+
+### BUG B CONFIRMED IN PRODUCTION
+
+Sequence on HFCL:
+- 10:30:43 IST: BUY 31 HFCL @ 144.93 (planned entry)
+- 10:30:45 IST: SL placed SELL 31 STOP_LOSS trigger 142.25 (planned)
+- 11:46:52 IST: Target hit - SELL 31 @ 145.27 closed long position (planned)
+- 11:46:52 IST: Original SL at 142.25 NOT CANCELLED by our code (Bug B)
+- ~14:30 IST: HFCL drifted to 142.25, orphan SL triggered, Dhan executed SELL 31
+- Created phantom SHORT 31 HFCL with no SL protection
+- ~15:00 IST: User noticed on Dhan app, manually squared off (BUY 31 @ 142.55)
+
+Lucky outcome: HFCL stayed range-bound, phantom SHORT closed at +Rs.0.93.
+Real risk had HFCL spiked: -Rs.150 to -Rs.300 unprotected.
+
+### Bug A (May 20 fix) - VALIDATED
+- 3 trades placed today, all LONG, no rogue duplicates
+- No [LONG] mislabel events
+- Fix from commit 5131cd6 confirmed working for entry path
+- SHORT direction validation still pending (no SHORT picks today)
+
+### Validation Status
+- vishal-live --live: continues uninterrupted (no pause, partner directive)
+- Bug A entry-path fix: VALIDATED on 3 LONG trades today
+- Bug B exit-path: CONFIRMED firing on HFCL - fix tonight
+- Trailing SL fakeness: confirmed in logs (only memory, not Dhan modify)
+- F&O paper: working, deferred to weekend cleanup
+
+### Tonight's Bug Fix Marathon (Thu May 21 evening)
+- Fix Bug B-1: cancel SL on target hit
+- Fix Bug B-2: cancel SL on force exit
+- Fix Bug B-3: trailing SL must modify Dhan order, not just memory
+- Test on paper end-to-end before commit
+- vishal-live ready for Friday with bug-free exit path
 
 ## TODAY (2026-05-20 EOD) — TATASTEEL BUG + CRONTAB SAFETY + vishal-live RE-ENABLED
 
@@ -2236,6 +2286,45 @@ Validation: pending first SHORT trade through fixed code (tomorrow May 21).
 | FORCE-EXIT-LIES | intraday/monitor.py | Force exit can log success on Dhan API failure |
 | TELEGRAM-WIRE | alerts/telegram_bot.py | Bot active but trade alerts not wired |
 
+
+---
+
+### Bug B CONFIRMED IN PRODUCTION - 2026-05-21
+
+Evidence: HFCL trade 10:30-15:00 IST.
+- Target hit at 11:46, exited 31 long @ 145.27
+- Original SL at trigger 142.25 stayed PENDING (not cancelled)
+- HFCL drifted to 142.25 around 14:30, SL fired
+- Created phantom SHORT 31 @ 143.76
+- Manual close required by user
+
+Same family as Bug A but exit path:
+- Bug A: in-memory state missing field, monitor wrong direction
+- Bug B: code missing call to broker.cancel_order
+
+### Active Bugs Updated
+
+#### Critical (production-confirmed, fix tonight)
+| ID | File | Description |
+|----|------|-------------|
+| BUG-B-TARGET | intraday/monitor.py | Target hit doesn't cancel SL on Dhan, creates orphan |
+| BUG-B-FORCE | intraday/monitor.py | Force exit doesn't cancel SL, same orphan risk |
+| BUG-B-TRAILING | intraday/monitor.py | Trailing SL only updates memory, doesn't modify Dhan |
+
+#### High (deferred next session)
+| ID | File | Description |
+|----|------|-------------|
+| FORCE-EXIT-LIES | intraday/monitor.py | Force exit logs success on Dhan API failure |
+| CROSS-PROCESS-TOKEN | intraday/auth_server.py | Long-running monitors hold stale auth |
+| EOD-RECONCILE-MISSING | scripts/ | No automated DB-vs-Dhan compare daily |
+
+#### Recently Validated (working)
+| ID | Commit | Status |
+|----|--------|--------|
+| BUG-A | 5131cd6 | 3 LONG trades May 21 clean, no duplicates |
+| BEDROCK-SONNET | 5131cd6 | Sub-second LLM responses all day |
+| CRONTAB-SAFETY | 7843628 | No wipes since Rule 25 added |
+
 ================================================================
 # === LEARNING.md ===
 ================================================================
@@ -3455,6 +3544,77 @@ Real money cumulative since May 12: ~-Rs.1,540
 - Saturday: swing rebuild + F&O cleanup + audit dashboard
 - Don't add new features until intraday SHORT validation confirms Bug A fix
 - Weekend: evaluate F&O after 5 days clean MTM data
+
+
+---
+
+### May 21 EOD - Bug A Validated, Bug B Fired in Production
+
+#### Money
+| Trade | Direction | Net P&L |
+|-------|-----------|---------|
+| BEL | LONG | -Rs.43.50 (force exit) |
+| ANGELONE | LONG | +Rs.24.90 (target hit) |
+| HFCL | LONG -> phantom SHORT -> manual close | +Rs.36.58 (lucky) |
+
+Total realized: +Rs.17.98
+After charges: ~Rs.0 to -Rs.5
+Cumulative real money since May 12: ~-Rs.1,520
+
+#### What Happened - HFCL Bug B Fire
+
+10:30 IST: System bought 31 HFCL @ 144.93 with SL at 142.25 (correct setup)
+11:46 IST: Target hit. System sold 31 @ 145.27 (closed long correctly)
+11:46 IST: Original SL at 142.25 stayed PENDING on Dhan (Bug B - not cancelled)
+~14:30 IST: HFCL drifted to 142.25, SL triggered, Dhan auto-sold 31
+Result: Fresh SHORT 31 HFCL @ 143.76, no SL, no target, no protection
+~15:00 IST: User spotted unexpected SHORT position on Dhan app
+~15:00 IST: User manually closed via BUY 31 @ 142.55
+
+Profit by accident: +Rs.36.58 because HFCL drifted down (favorable for SHORT)
+
+#### What We Learned
+
+1. Real money exposes bugs paper cannot.
+   Bug B existed since SHORT support added (May 14). 7 days silent.
+   Paper trading uses DryRunBrokerClient - no real pending orders.
+   Real money fired Bug B today on first target-hit-after-paper exit pattern.
+
+2. Phantom positions are the worst class of bug.
+   Don't see in DB, don't see in dashboard, only in Dhan app.
+   Without Dhan API truth pull, would be flying blind.
+
+3. Lucky != safe.
+   Today HFCL phantom SHORT closed +Rs.0.93. Could have been -Rs.300.
+   Same bug, different price action, very different outcomes.
+
+4. Eyes-on-screen at market close was the saving grace.
+   Telegram alerts not yet wired.
+   User noticed unexpected position via Dhan app reflexively.
+   Future: EOD reconciliation script + Telegram alert mandatory.
+
+5. Bug A fix is working as designed.
+   3 LONG trades placed cleanly today. No rogue duplicates, no [LONG] mislabel.
+   Fix from commit 5131cd6 is solid for entry path.
+   Exit-path bugs (Bug B) untouched until tonight.
+
+6. Charge math at small capital is brutal.
+   Net realized +Rs.17.98 today. Estimated charges Rs.20-25.
+   Net after charges: roughly break-even.
+   At Rs.4,500/trade and Rs.7-10 charges, need >=Rs.30/trade gross to be net positive.
+
+#### Decision Made
+- vishal-live --live continues uninterrupted (partner directive: no pause)
+- Tonight (Thu May 21 evening): Bug B fix marathon
+- Fix B-target, B-force-exit, B-trailing
+- Test on paper before commit
+- Friday: vishal-live trades with bug-free exit path
+
+#### What we are NOT doing
+- Not pausing vishal-live
+- Not adding F&O live, swing live, positional
+- Not scaling capital until 14 consecutive bug-free days
+- Not trusting commit messages without running the code
 
 ================================================================
 # === GLOSSARY.md ===

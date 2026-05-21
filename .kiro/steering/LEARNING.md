@@ -1214,3 +1214,74 @@ Real money cumulative since May 12: ~-Rs.1,540
 - Saturday: swing rebuild + F&O cleanup + audit dashboard
 - Don't add new features until intraday SHORT validation confirms Bug A fix
 - Weekend: evaluate F&O after 5 days clean MTM data
+
+
+---
+
+### May 21 EOD - Bug A Validated, Bug B Fired in Production
+
+#### Money
+| Trade | Direction | Net P&L |
+|-------|-----------|---------|
+| BEL | LONG | -Rs.43.50 (force exit) |
+| ANGELONE | LONG | +Rs.24.90 (target hit) |
+| HFCL | LONG -> phantom SHORT -> manual close | +Rs.36.58 (lucky) |
+
+Total realized: +Rs.17.98
+After charges: ~Rs.0 to -Rs.5
+Cumulative real money since May 12: ~-Rs.1,520
+
+#### What Happened - HFCL Bug B Fire
+
+10:30 IST: System bought 31 HFCL @ 144.93 with SL at 142.25 (correct setup)
+11:46 IST: Target hit. System sold 31 @ 145.27 (closed long correctly)
+11:46 IST: Original SL at 142.25 stayed PENDING on Dhan (Bug B - not cancelled)
+~14:30 IST: HFCL drifted to 142.25, SL triggered, Dhan auto-sold 31
+Result: Fresh SHORT 31 HFCL @ 143.76, no SL, no target, no protection
+~15:00 IST: User spotted unexpected SHORT position on Dhan app
+~15:00 IST: User manually closed via BUY 31 @ 142.55
+
+Profit by accident: +Rs.36.58 because HFCL drifted down (favorable for SHORT)
+
+#### What We Learned
+
+1. Real money exposes bugs paper cannot.
+   Bug B existed since SHORT support added (May 14). 7 days silent.
+   Paper trading uses DryRunBrokerClient - no real pending orders.
+   Real money fired Bug B today on first target-hit-after-paper exit pattern.
+
+2. Phantom positions are the worst class of bug.
+   Don't see in DB, don't see in dashboard, only in Dhan app.
+   Without Dhan API truth pull, would be flying blind.
+
+3. Lucky != safe.
+   Today HFCL phantom SHORT closed +Rs.0.93. Could have been -Rs.300.
+   Same bug, different price action, very different outcomes.
+
+4. Eyes-on-screen at market close was the saving grace.
+   Telegram alerts not yet wired.
+   User noticed unexpected position via Dhan app reflexively.
+   Future: EOD reconciliation script + Telegram alert mandatory.
+
+5. Bug A fix is working as designed.
+   3 LONG trades placed cleanly today. No rogue duplicates, no [LONG] mislabel.
+   Fix from commit 5131cd6 is solid for entry path.
+   Exit-path bugs (Bug B) untouched until tonight.
+
+6. Charge math at small capital is brutal.
+   Net realized +Rs.17.98 today. Estimated charges Rs.20-25.
+   Net after charges: roughly break-even.
+   At Rs.4,500/trade and Rs.7-10 charges, need >=Rs.30/trade gross to be net positive.
+
+#### Decision Made
+- vishal-live --live continues uninterrupted (partner directive: no pause)
+- Tonight (Thu May 21 evening): Bug B fix marathon
+- Fix B-target, B-force-exit, B-trailing
+- Test on paper before commit
+- Friday: vishal-live trades with bug-free exit path
+
+#### What we are NOT doing
+- Not pausing vishal-live
+- Not adding F&O live, swing live, positional
+- Not scaling capital until 14 consecutive bug-free days
+- Not trusting commit messages without running the code

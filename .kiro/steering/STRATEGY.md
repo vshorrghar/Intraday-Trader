@@ -597,3 +597,42 @@ Validation: pending first SHORT trade through fixed code (tomorrow May 21).
 | CROSS-PROCESS-TOKEN | intraday/auth_server.py | Long-running monitors hold stale auth across cron sessions |
 | FORCE-EXIT-LIES | intraday/monitor.py | Force exit can log success on Dhan API failure |
 | TELEGRAM-WIRE | alerts/telegram_bot.py | Bot active but trade alerts not wired |
+
+
+---
+
+### Bug B CONFIRMED IN PRODUCTION - 2026-05-21
+
+Evidence: HFCL trade 10:30-15:00 IST.
+- Target hit at 11:46, exited 31 long @ 145.27
+- Original SL at trigger 142.25 stayed PENDING (not cancelled)
+- HFCL drifted to 142.25 around 14:30, SL fired
+- Created phantom SHORT 31 @ 143.76
+- Manual close required by user
+
+Same family as Bug A but exit path:
+- Bug A: in-memory state missing field, monitor wrong direction
+- Bug B: code missing call to broker.cancel_order
+
+### Active Bugs Updated
+
+#### Critical (production-confirmed, fix tonight)
+| ID | File | Description |
+|----|------|-------------|
+| BUG-B-TARGET | intraday/monitor.py | Target hit doesn't cancel SL on Dhan, creates orphan |
+| BUG-B-FORCE | intraday/monitor.py | Force exit doesn't cancel SL, same orphan risk |
+| BUG-B-TRAILING | intraday/monitor.py | Trailing SL only updates memory, doesn't modify Dhan |
+
+#### High (deferred next session)
+| ID | File | Description |
+|----|------|-------------|
+| FORCE-EXIT-LIES | intraday/monitor.py | Force exit logs success on Dhan API failure |
+| CROSS-PROCESS-TOKEN | intraday/auth_server.py | Long-running monitors hold stale auth |
+| EOD-RECONCILE-MISSING | scripts/ | No automated DB-vs-Dhan compare daily |
+
+#### Recently Validated (working)
+| ID | Commit | Status |
+|----|--------|--------|
+| BUG-A | 5131cd6 | 3 LONG trades May 21 clean, no duplicates |
+| BEDROCK-SONNET | 5131cd6 | Sub-second LLM responses all day |
+| CRONTAB-SAFETY | 7843628 | No wipes since Rule 25 added |
