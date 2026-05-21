@@ -20,7 +20,7 @@ def main():
     # Get our picks today
     our_picks = []
     try:
-        trades = conn.execute("SELECT tradingsymbol FROM intraday_trades WHERE trade_date=? AND action='BUY'", (today,)).fetchall()
+        trades = conn.execute("SELECT tradingsymbol FROM intraday_trades WHERE trade_date=? AND action IN ('BUY', 'SELL')", (today,)).fetchall()
         our_picks = [t["tradingsymbol"] for t in trades]
     except Exception:
         pass
