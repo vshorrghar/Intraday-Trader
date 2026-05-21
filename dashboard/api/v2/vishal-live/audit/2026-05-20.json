@@ -1,0 +1,68 @@
+{
+  "profile": "vishal-live",
+  "date": "2026-05-20",
+  "generated_at": "2026-05-21T18:07:33.370202+05:30",
+  "source": "db",
+  "staleness_seconds": 0,
+  "summary": {
+    "trades_attempted": 1,
+    "trades_executed": 1,
+    "trades_won": 1,
+    "trades_lost": 0,
+    "gross_pnl_db": 3.37,
+    "gross_pnl_dhan": 3.37,
+    "estimated_charges": 52.24,
+    "net_pnl_estimated": -48.87,
+    "drift_vs_db": "OK",
+    "drift_amount_rs": 0.0,
+    "capital_deployed_max": 4482.0,
+    "dhan_available_balance": null,
+    "phase": 1,
+    "phase_progress": "25/50 trades to Phase 2"
+  },
+  "trades": [
+    {
+      "trade_id": 27,
+      "symbol": "Tata Steel Limited",
+      "tradingsymbol": "TATASTEEL",
+      "direction": "SHORT",
+      "action_db": "SELL",
+      "entry_price": 203.73,
+      "exit_price": 204.1,
+      "qty_intended": 22,
+      "qty_actual_dhan": 22,
+      "qty_drift": 0,
+      "qty_drift_reason": "",
+      "target_price": 195.58,
+      "stop_loss_price": 207.8,
+      "rr_planned": 2.0,
+      "confidence": 7,
+      "strategy_type": "SHORT_MOMENTUM",
+      "rationale_llm": "BEARISH day, 1 pick max. VIX 19.25 triggers 2% SL. TATASTEEL setup_type=SHORT. Volume 12.23M (highest among short candidates). Price down -2.66% aligning with Metal sector -0.53% (red). LTP 203.73 vs open 207.50, within 1.82% of open (within 3% bearish allowance). SL at 207.80 (2% above entry per VIX>18 rule). Target 195.58 (4% below entry). R:R = 8.15/4.07 = 2.0. Strong short momentum with sector confirmation. high_volatility=FALSE.",
+      "outcome": "STOPPED_OUT",
+      "outcome_reason": "",
+      "duration_min": null,
+      "won": true,
+      "pnl_db": 3.37,
+      "pnl_dhan": 3.37,
+      "charges_estimated": 52.24,
+      "pnl_net_estimated": -48.87,
+      "tags": [
+        "short",
+        "short_momentum"
+      ]
+    }
+  ],
+  "phase_status": {
+    "current_phase": 1,
+    "current_phase_name": "Validation",
+    "trades_this_phase": 25,
+    "trades_needed_next": 50,
+    "trades_remaining": 25,
+    "win_count": 7,
+    "win_rate": 28.0,
+    "phase_progress": "25/50 trades to Phase 2"
+  },
+  "dhan_raw_summary": null,
+  "bugs_observed": []
+}
