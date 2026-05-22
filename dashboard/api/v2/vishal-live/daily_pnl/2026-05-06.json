@@ -1,0 +1,70 @@
+{
+  "profile": "vishal-live",
+  "date": "2026-05-06",
+  "generated_at": "2026-05-22T17:48:10.357731+05:30",
+  "capital_configured": 15000,
+  "capital_deployed_peak": 9211.7,
+  "capital_deployed_pct": 61.4,
+  "daily_gross_pnl": 204.61,
+  "daily_charges": 204.61,
+  "daily_net_pnl": 0.0,
+  "daily_return_pct": 0.0,
+  "charge_ratio_pct": 100.0,
+  "trade_count": 4,
+  "wins": 0,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 1,
+      "symbol": "PNB",
+      "direction": "LONG",
+      "qty": 24,
+      "entry_price": 109.8,
+      "exit_price": 0.0,
+      "capital_used": 2635.2,
+      "gross_pnl": 51.32,
+      "charges": 51.32,
+      "net_pnl": 0.0,
+      "status": "OPEN"
+    },
+    {
+      "trade_id": 2,
+      "symbol": "VEDL",
+      "direction": "LONG",
+      "qty": 8,
+      "entry_price": 316.0,
+      "exit_price": 0.0,
+      "capital_used": 2528.0,
+      "gross_pnl": 51.26,
+      "charges": 51.26,
+      "net_pnl": 0.0,
+      "status": "OPEN"
+    },
+    {
+      "trade_id": 3,
+      "symbol": "HDFCLIFE",
+      "direction": "LONG",
+      "qty": 3,
+      "entry_price": 598.0,
+      "exit_price": 0.0,
+      "capital_used": 1794.0,
+      "gross_pnl": 50.9,
+      "charges": 50.9,
+      "net_pnl": 0.0,
+      "status": "OPEN"
+    },
+    {
+      "trade_id": 4,
+      "symbol": "MAHABANK",
+      "direction": "LONG",
+      "qty": 27,
+      "entry_price": 83.5,
+      "exit_price": 0.0,
+      "capital_used": 2254.5,
+      "gross_pnl": 51.13,
+      "charges": 51.13,
+      "net_pnl": 0.0,
+      "status": "OPEN"
+    }
+  ]
+}

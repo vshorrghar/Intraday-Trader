@@ -1,0 +1,57 @@
+{
+  "profile": "vishal",
+  "date": "2026-05-11",
+  "generated_at": "2026-05-22T17:48:10.378237+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 178931.7,
+  "capital_deployed_pct": 59.6,
+  "daily_gross_pnl": 239.46,
+  "daily_charges": 239.46,
+  "daily_net_pnl": 0.0,
+  "daily_return_pct": 0.0,
+  "charge_ratio_pct": 100.0,
+  "trade_count": 3,
+  "wins": 0,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 66,
+      "symbol": "SBIN",
+      "direction": "LONG",
+      "qty": 61,
+      "entry_price": 974.8,
+      "exit_price": 974.8,
+      "capital_used": 59462.8,
+      "gross_pnl": 79.73,
+      "charges": 79.73,
+      "net_pnl": 0.0,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 67,
+      "symbol": "SUNPHARMA",
+      "direction": "LONG",
+      "qty": 32,
+      "entry_price": 1875.0,
+      "exit_price": 1875.0,
+      "capital_used": 60000.0,
+      "gross_pnl": 80.0,
+      "charges": 80.0,
+      "net_pnl": 0.0,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 68,
+      "symbol": "SBIN",
+      "direction": "LONG",
+      "qty": 61,
+      "entry_price": 974.9,
+      "exit_price": 974.9,
+      "capital_used": 59468.9,
+      "gross_pnl": 79.73,
+      "charges": 79.73,
+      "net_pnl": 0.0,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

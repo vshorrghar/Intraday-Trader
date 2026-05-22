@@ -1,0 +1,57 @@
+{
+  "profile": "vishal-live",
+  "date": "2026-05-12",
+  "generated_at": "2026-05-22T17:48:10.356089+05:30",
+  "capital_configured": 15000,
+  "capital_deployed_peak": 11554.5,
+  "capital_deployed_pct": 77.0,
+  "daily_gross_pnl": 162.93,
+  "daily_charges": 155.78,
+  "daily_net_pnl": 7.15,
+  "daily_return_pct": 0.048,
+  "charge_ratio_pct": 95.6,
+  "trade_count": 3,
+  "wins": 1,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 5,
+      "symbol": "ONGC",
+      "direction": "LONG",
+      "qty": 13,
+      "entry_price": 297.9,
+      "exit_price": 0.0,
+      "capital_used": 3872.7,
+      "gross_pnl": 51.94,
+      "charges": 51.94,
+      "net_pnl": 0.0,
+      "status": "OPEN"
+    },
+    {
+      "trade_id": 6,
+      "symbol": "ONGC",
+      "direction": "LONG",
+      "qty": 13,
+      "entry_price": 296.8,
+      "exit_price": 297.35,
+      "capital_used": 3858.4,
+      "gross_pnl": 59.08,
+      "charges": 51.93,
+      "net_pnl": 7.15,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 7,
+      "symbol": "WIPRO",
+      "direction": "LONG",
+      "qty": 20,
+      "entry_price": 191.17,
+      "exit_price": 191.17,
+      "capital_used": 3823.4,
+      "gross_pnl": 51.91,
+      "charges": 51.91,
+      "net_pnl": 0.0,
+      "status": "STOPPED_OUT"
+    }
+  ]
+}

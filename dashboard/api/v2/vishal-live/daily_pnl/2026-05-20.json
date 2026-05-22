@@ -1,0 +1,31 @@
+{
+  "profile": "vishal-live",
+  "date": "2026-05-20",
+  "generated_at": "2026-05-22T17:48:10.349952+05:30",
+  "capital_configured": 15000,
+  "capital_deployed_peak": 4482.06,
+  "capital_deployed_pct": 29.9,
+  "daily_gross_pnl": 55.61,
+  "daily_charges": 52.24,
+  "daily_net_pnl": 3.37,
+  "daily_return_pct": 0.022,
+  "charge_ratio_pct": 93.9,
+  "trade_count": 1,
+  "wins": 1,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 27,
+      "symbol": "TATASTEEL",
+      "direction": "SHORT",
+      "qty": 22,
+      "entry_price": 203.73,
+      "exit_price": 204.1,
+      "capital_used": 4482.06,
+      "gross_pnl": 55.61,
+      "charges": 52.24,
+      "net_pnl": 3.37,
+      "status": "STOPPED_OUT"
+    }
+  ]
+}

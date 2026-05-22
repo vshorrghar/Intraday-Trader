@@ -1,0 +1,44 @@
+{
+  "profile": "neha",
+  "date": "2026-05-06",
+  "generated_at": "2026-05-22T17:48:10.408618+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 29903.0,
+  "capital_deployed_pct": 10.0,
+  "daily_gross_pnl": 170.5,
+  "daily_charges": 114.95,
+  "daily_net_pnl": 55.55,
+  "daily_return_pct": 0.019,
+  "charge_ratio_pct": 67.4,
+  "trade_count": 2,
+  "wins": 2,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 4,
+      "symbol": "HDFCLIFE",
+      "direction": "LONG",
+      "qty": 25,
+      "entry_price": 599.0,
+      "exit_price": 600.55,
+      "capital_used": 14975.0,
+      "gross_pnl": 96.24,
+      "charges": 57.49,
+      "net_pnl": 38.75,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 5,
+      "symbol": "VEDL",
+      "direction": "LONG",
+      "qty": 48,
+      "entry_price": 311.0,
+      "exit_price": 311.35,
+      "capital_used": 14928.0,
+      "gross_pnl": 74.26,
+      "charges": 57.46,
+      "net_pnl": 16.8,
+      "status": "STOPPED_OUT"
+    }
+  ]
+}

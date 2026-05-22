@@ -1,0 +1,31 @@
+{
+  "profile": "vishal",
+  "date": "2026-05-08",
+  "generated_at": "2026-05-22T17:48:10.379107+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 59925.48,
+  "capital_deployed_pct": 20.0,
+  "daily_gross_pnl": 79.96,
+  "daily_charges": 79.96,
+  "daily_net_pnl": 0.0,
+  "daily_return_pct": 0.0,
+  "charge_ratio_pct": 100.0,
+  "trade_count": 1,
+  "wins": 0,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 61,
+      "symbol": "MRPL",
+      "direction": "LONG",
+      "qty": 356,
+      "entry_price": 168.33,
+      "exit_price": 0.0,
+      "capital_used": 59925.48,
+      "gross_pnl": 79.96,
+      "charges": 79.96,
+      "net_pnl": 0.0,
+      "status": "OPEN"
+    }
+  ]
+}

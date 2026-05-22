@@ -1,0 +1,83 @@
+{
+  "profile": "neha",
+  "date": "2026-05-12",
+  "generated_at": "2026-05-22T17:48:10.403981+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 299582.61,
+  "capital_deployed_pct": 99.9,
+  "daily_gross_pnl": -822.1,
+  "daily_charges": 399.8,
+  "daily_net_pnl": -1221.9,
+  "daily_return_pct": -0.407,
+  "charge_ratio_pct": 48.6,
+  "trade_count": 5,
+  "wins": 1,
+  "losses": 3,
+  "trades": [
+    {
+      "trade_id": 24,
+      "symbol": "ONGC",
+      "direction": "LONG",
+      "qty": 203,
+      "entry_price": 294.35,
+      "exit_price": 296.25,
+      "capital_used": 59753.05,
+      "gross_pnl": 465.58,
+      "charges": 79.88,
+      "net_pnl": 385.7,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 25,
+      "symbol": "HINDCOPPER",
+      "direction": "LONG",
+      "qty": 102,
+      "entry_price": 587.5,
+      "exit_price": 576.7,
+      "capital_used": 59925.0,
+      "gross_pnl": -1021.64,
+      "charges": 79.96,
+      "net_pnl": -1101.6,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 26,
+      "symbol": "INFY",
+      "direction": "LONG",
+      "qty": 53,
+      "entry_price": 1131.7,
+      "exit_price": 1131.3,
+      "capital_used": 59980.1,
+      "gross_pnl": 58.79,
+      "charges": 79.99,
+      "net_pnl": -21.2,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 27,
+      "symbol": "WIPRO",
+      "direction": "LONG",
+      "qty": 314,
+      "entry_price": 190.99,
+      "exit_price": 190.99,
+      "capital_used": 59970.86,
+      "gross_pnl": 79.99,
+      "charges": 79.99,
+      "net_pnl": 0.0,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 28,
+      "symbol": "ONGC",
+      "direction": "LONG",
+      "qty": 202,
+      "entry_price": 296.8,
+      "exit_price": 294.4,
+      "capital_used": 59953.6,
+      "gross_pnl": -404.82,
+      "charges": 79.98,
+      "net_pnl": -484.8,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

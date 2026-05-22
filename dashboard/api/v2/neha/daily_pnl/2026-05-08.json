@@ -1,0 +1,70 @@
+{
+  "profile": "neha",
+  "date": "2026-05-08",
+  "generated_at": "2026-05-22T17:48:10.405803+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 239598.39,
+  "capital_deployed_pct": 79.9,
+  "daily_gross_pnl": 926.5,
+  "daily_charges": 319.8,
+  "daily_net_pnl": 606.7,
+  "daily_return_pct": 0.202,
+  "charge_ratio_pct": 34.5,
+  "trade_count": 4,
+  "wins": 3,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 18,
+      "symbol": "MRPL",
+      "direction": "LONG",
+      "qty": 356,
+      "entry_price": 168.33,
+      "exit_price": 0.0,
+      "capital_used": 59925.48,
+      "gross_pnl": 79.96,
+      "charges": 79.96,
+      "net_pnl": 0.0,
+      "status": "OPEN"
+    },
+    {
+      "trade_id": 19,
+      "symbol": "MRPL",
+      "direction": "LONG",
+      "qty": 357,
+      "entry_price": 168.0,
+      "exit_price": 168.77,
+      "capital_used": 59976.0,
+      "gross_pnl": 354.88,
+      "charges": 79.99,
+      "net_pnl": 274.89,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 20,
+      "symbol": "MRPL",
+      "direction": "LONG",
+      "qty": 357,
+      "entry_price": 167.63,
+      "exit_price": 168.46,
+      "capital_used": 59843.91,
+      "gross_pnl": 376.23,
+      "charges": 79.92,
+      "net_pnl": 296.31,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 21,
+      "symbol": "MRPL",
+      "direction": "LONG",
+      "qty": 355,
+      "entry_price": 168.6,
+      "exit_price": 168.7,
+      "capital_used": 59853.0,
+      "gross_pnl": 115.43,
+      "charges": 79.93,
+      "net_pnl": 35.5,
+      "status": "STOPPED_OUT"
+    }
+  ]
+}

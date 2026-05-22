@@ -1,0 +1,57 @@
+{
+  "profile": "vishal",
+  "date": "2026-05-12",
+  "generated_at": "2026-05-22T17:48:10.377307+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 154788.0,
+  "capital_deployed_pct": 51.6,
+  "daily_gross_pnl": -75.31,
+  "daily_charges": 227.39,
+  "daily_net_pnl": -302.7,
+  "daily_return_pct": -0.101,
+  "charge_ratio_pct": 301.9,
+  "trade_count": 3,
+  "wins": 1,
+  "losses": 2,
+  "trades": [
+    {
+      "trade_id": 69,
+      "symbol": "ONGC",
+      "direction": "LONG",
+      "qty": 123,
+      "entry_price": 293.5,
+      "exit_price": 296.15,
+      "capital_used": 36100.5,
+      "gross_pnl": 394.0,
+      "charges": 68.05,
+      "net_pnl": 325.95,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 70,
+      "symbol": "ONGC",
+      "direction": "LONG",
+      "qty": 201,
+      "entry_price": 297.5,
+      "exit_price": 294.45,
+      "capital_used": 59797.5,
+      "gross_pnl": -533.15,
+      "charges": 79.9,
+      "net_pnl": -613.05,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 71,
+      "symbol": "INFY",
+      "direction": "LONG",
+      "qty": 52,
+      "entry_price": 1132.5,
+      "exit_price": 1132.2,
+      "capital_used": 58890.0,
+      "gross_pnl": 63.84,
+      "charges": 79.44,
+      "net_pnl": -15.6,
+      "status": "STOPPED_OUT"
+    }
+  ]
+}

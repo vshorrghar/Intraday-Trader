@@ -1,0 +1,70 @@
+{
+  "profile": "vishal-live",
+  "date": "2026-05-22",
+  "generated_at": "2026-05-22T17:48:10.346989+05:30",
+  "capital_configured": 15000,
+  "capital_deployed_peak": 12685.4,
+  "capital_deployed_pct": 84.6,
+  "daily_gross_pnl": 207.43,
+  "daily_charges": 206.35,
+  "daily_net_pnl": 1.08,
+  "daily_return_pct": 0.007,
+  "charge_ratio_pct": 99.5,
+  "trade_count": 4,
+  "wins": 2,
+  "losses": 2,
+  "trades": [
+    {
+      "trade_id": 31,
+      "symbol": "ITC",
+      "direction": "SHORT",
+      "qty": 14,
+      "entry_price": 304.55,
+      "exit_price": 304.55,
+      "capital_used": 4263.7,
+      "gross_pnl": 47.6,
+      "charges": 52.13,
+      "net_pnl": -4.53,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 32,
+      "symbol": "ANGELONE",
+      "direction": "SHORT",
+      "qty": 13,
+      "entry_price": 337.7,
+      "exit_price": 337.5,
+      "capital_used": 4390.1,
+      "gross_pnl": 50.14,
+      "charges": 52.2,
+      "net_pnl": -2.06,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 33,
+      "symbol": "HFCL",
+      "direction": "LONG",
+      "qty": 14,
+      "entry_price": 145.65,
+      "exit_price": 146.14,
+      "capital_used": 2039.1,
+      "gross_pnl": 55.71,
+      "charges": 51.02,
+      "net_pnl": 4.69,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 34,
+      "symbol": "SAIL",
+      "direction": "LONG",
+      "qty": 10,
+      "entry_price": 199.25,
+      "exit_price": 199.76,
+      "capital_used": 1992.5,
+      "gross_pnl": 53.98,
+      "charges": 51.0,
+      "net_pnl": 2.98,
+      "status": "STOPPED_OUT"
+    }
+  ]
+}

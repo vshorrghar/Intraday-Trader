@@ -1,0 +1,70 @@
+{
+  "profile": "neha",
+  "date": "2026-05-14",
+  "generated_at": "2026-05-22T17:48:10.402102+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 143689.95,
+  "capital_deployed_pct": 47.9,
+  "daily_gross_pnl": 1494.71,
+  "daily_charges": 271.85,
+  "daily_net_pnl": 1222.86,
+  "daily_return_pct": 0.408,
+  "charge_ratio_pct": 18.2,
+  "trade_count": 4,
+  "wins": 4,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 35,
+      "symbol": "VEDL",
+      "direction": "LONG",
+      "qty": 120,
+      "entry_price": 332.6,
+      "exit_price": 333.7,
+      "capital_used": 39912.0,
+      "gross_pnl": 159.46,
+      "charges": 69.96,
+      "net_pnl": 89.5,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 36,
+      "symbol": "BHARTIARTL",
+      "direction": "LONG",
+      "qty": 13,
+      "entry_price": 1841.5,
+      "exit_price": 1882.3,
+      "capital_used": 23939.5,
+      "gross_pnl": 887.39,
+      "charges": 61.97,
+      "net_pnl": 825.42,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 37,
+      "symbol": "VEDL",
+      "direction": "LONG",
+      "qty": 119,
+      "entry_price": 335.7,
+      "exit_price": 337.95,
+      "capital_used": 39948.3,
+      "gross_pnl": 295.09,
+      "charges": 69.97,
+      "net_pnl": 225.12,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 38,
+      "symbol": "ADANIPOWER",
+      "direction": "LONG",
+      "qty": 179,
+      "entry_price": 222.85,
+      "exit_price": 223.55,
+      "capital_used": 39890.15,
+      "gross_pnl": 152.77,
+      "charges": 69.95,
+      "net_pnl": 82.82,
+      "status": "STOPPED_OUT"
+    }
+  ]
+}

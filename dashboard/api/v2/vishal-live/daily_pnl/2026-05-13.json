@@ -1,0 +1,31 @@
+{
+  "profile": "vishal-live",
+  "date": "2026-05-13",
+  "generated_at": "2026-05-22T17:48:10.355223+05:30",
+  "capital_configured": 15000,
+  "capital_deployed_peak": 3358.75,
+  "capital_deployed_pct": 22.4,
+  "daily_gross_pnl": 51.68,
+  "daily_charges": 51.68,
+  "daily_net_pnl": 0.0,
+  "daily_return_pct": 0.0,
+  "charge_ratio_pct": 100.0,
+  "trade_count": 1,
+  "wins": 0,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 8,
+      "symbol": "HINDZINC",
+      "direction": "LONG",
+      "qty": 5,
+      "entry_price": 671.75,
+      "exit_price": 671.75,
+      "capital_used": 3358.75,
+      "gross_pnl": 51.68,
+      "charges": 51.68,
+      "net_pnl": 0.0,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

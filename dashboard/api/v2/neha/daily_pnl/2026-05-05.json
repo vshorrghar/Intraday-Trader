@@ -1,0 +1,57 @@
+{
+  "profile": "neha",
+  "date": "2026-05-05",
+  "generated_at": "2026-05-22T17:48:10.409572+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 44190.0,
+  "capital_deployed_pct": 14.7,
+  "daily_gross_pnl": 172.09,
+  "daily_charges": 172.09,
+  "daily_net_pnl": 0.0,
+  "daily_return_pct": 0.0,
+  "charge_ratio_pct": 100.0,
+  "trade_count": 3,
+  "wins": 0,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 1,
+      "symbol": "VEDL",
+      "direction": "LONG",
+      "qty": 50,
+      "entry_price": 297.0,
+      "exit_price": 297.0,
+      "capital_used": 14850.0,
+      "gross_pnl": 57.42,
+      "charges": 57.42,
+      "net_pnl": 0.0,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 2,
+      "symbol": "ADANIPOWER",
+      "direction": "LONG",
+      "qty": 65,
+      "entry_price": 228.0,
+      "exit_price": 228.0,
+      "capital_used": 14820.0,
+      "gross_pnl": 57.41,
+      "charges": 57.41,
+      "net_pnl": 0.0,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 3,
+      "symbol": "TATATECH",
+      "direction": "LONG",
+      "qty": 24,
+      "entry_price": 605.0,
+      "exit_price": 605.0,
+      "capital_used": 14520.0,
+      "gross_pnl": 57.26,
+      "charges": 57.26,
+      "net_pnl": 0.0,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

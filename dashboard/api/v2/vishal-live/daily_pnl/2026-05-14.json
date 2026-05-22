@@ -1,0 +1,31 @@
+{
+  "profile": "vishal-live",
+  "date": "2026-05-14",
+  "generated_at": "2026-05-22T17:48:10.354414+05:30",
+  "capital_configured": 15000,
+  "capital_deployed_peak": 3343.0,
+  "capital_deployed_pct": 22.3,
+  "daily_gross_pnl": 92.09,
+  "daily_charges": 51.67,
+  "daily_net_pnl": 40.42,
+  "daily_return_pct": 0.269,
+  "charge_ratio_pct": 56.1,
+  "trade_count": 1,
+  "wins": 1,
+  "losses": 0,
+  "trades": [
+    {
+      "trade_id": 9,
+      "symbol": "VEDL",
+      "direction": "LONG",
+      "qty": 10,
+      "entry_price": 334.3,
+      "exit_price": 338.7,
+      "capital_used": 3343.0,
+      "gross_pnl": 92.09,
+      "charges": 51.67,
+      "net_pnl": 40.42,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

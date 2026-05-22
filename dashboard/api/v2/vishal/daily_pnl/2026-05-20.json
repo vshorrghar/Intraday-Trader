@@ -1,0 +1,70 @@
+{
+  "profile": "vishal",
+  "date": "2026-05-20",
+  "generated_at": "2026-05-22T17:48:10.371057+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 199523.58,
+  "capital_deployed_pct": 66.5,
+  "daily_gross_pnl": 675.16,
+  "daily_charges": 299.77,
+  "daily_net_pnl": 375.39,
+  "daily_return_pct": 0.125,
+  "charge_ratio_pct": 44.4,
+  "trade_count": 4,
+  "wins": 2,
+  "losses": 2,
+  "trades": [
+    {
+      "trade_id": 104,
+      "symbol": "BEL",
+      "direction": "SHORT",
+      "qty": 122,
+      "entry_price": 409.8,
+      "exit_price": 410.25,
+      "capital_used": 49995.6,
+      "gross_pnl": 76.73,
+      "charges": 75.0,
+      "net_pnl": 1.73,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 105,
+      "symbol": "NMDC",
+      "direction": "SHORT",
+      "qty": 570,
+      "entry_price": 87.61,
+      "exit_price": 87.57,
+      "capital_used": 49937.7,
+      "gross_pnl": -0.89,
+      "charges": 74.97,
+      "net_pnl": -75.86,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 106,
+      "symbol": "TATASTEEL",
+      "direction": "SHORT",
+      "qty": 244,
+      "entry_price": 204.57,
+      "exit_price": 204.7,
+      "capital_used": 49915.08,
+      "gross_pnl": 53.61,
+      "charges": 74.96,
+      "net_pnl": -21.35,
+      "status": "STOPPED_OUT"
+    },
+    {
+      "trade_id": 107,
+      "symbol": "HINDPETRO",
+      "direction": "LONG",
+      "qty": 131,
+      "entry_price": 379.2,
+      "exit_price": 383.2,
+      "capital_used": 49675.2,
+      "gross_pnl": 545.71,
+      "charges": 74.84,
+      "net_pnl": 470.87,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}
