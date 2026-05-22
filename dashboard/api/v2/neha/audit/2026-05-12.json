@@ -189,5 +189,35 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "ONGC (trade_id 24) executed cleanly with correct qty 203, GAP strategy triggered a win at +385.7 PnL with a solid 2.09:1 R:R and strong volume confirmation.",
+      "Zero qty_drift across all 5 trades \u2014 execution layer is functioning correctly with no slippage on order sizing."
+    ],
+    "what_went_wrong": [
+      "HINDCOPPER (trade_id 25) was the largest single loss at -1101.6 PnL (-1181.56 net), wiping out 2.86x the day's only winner \u2014 position sizing relative to stop distance needs review.",
+      "INFY and WIPRO (trade_ids 26, 27) are tagged 'long' but strategy_type is 'SHORT_MOMENTUM' in a sector down -3.61%/-3.42% \u2014 direction and strategy_type are directly contradictory, these should be SHORT trades.",
+      "ONGC was traded twice (trade_ids 24 and 28) on the same day; trade_id 28 was FORCE_EXITED at -484.8, meaning a winning symbol was re-entered and stopped out, turning a net positive ONGC day negative.",
+      "WIPRO (trade_id 27) shows entry_price == exit_price (190.99) yet pnl_db is 0.0 while pnl_net_estimated is -79.99 \u2014 charges consumed the entire position with zero price movement, indicating a near-immediate stop-out."
+    ],
+    "patterns_observed": [
+      "All 5 trades are LONG on a bearish day; there is no short-side exposure despite IT sector being down -3.61% and the overall market being red \u2014 strategy has a systematic long bias that is not adapting to market regime.",
+      "Confidence scores of 7-8 are assigned to all trades including the two contradictory LONG/SHORT_MOMENTUM trades, suggesting confidence scoring is not penalizing directional-strategy mismatches.",
+      "phase_status shows 0 trades counted toward phase progress despite 5 trades executing today \u2014 phase trade counter appears disconnected from actual trade log."
+    ],
+    "bugs_or_risks_flagged": [
+      "CRITICAL LOGIC BUG \u2014 trade_ids 26 (INFY) and 27 (WIPRO): direction='LONG' paired with strategy_type='SHORT_MOMENTUM' in a confirmed downtrending sector; system either entered the wrong direction or mislabeled the strategy \u2014 requires immediate code audit of direction-assignment logic for SHORT_MOMENTUM signals.",
+      "PHASE COUNTER BUG \u2014 phase_status.trades_this_phase=0 and win_count=0 despite 5 executed trades and 1 win recorded in summary; phase tracking is not ingesting today's trades, progress will be incorrect at phase boundary.",
+      "RISK BUG \u2014 ONGC double-traded same day (trade_ids 24, 28) with no deduplication or same-symbol cooldown logic; combined ONGC exposure was 405 shares intraday, and the second entry reversed the day's only winner into a net loss on that symbol.",
+      "DATA QUALITY FLAG \u2014 dhan_available_balance=null; without live balance confirmation, capital_deployed_max=299583 cannot be validated against actual margin, creating undetected overexposure risk."
+    ],
+    "recommendation": "Immediately audit and fix the direction-assignment logic for SHORT_MOMENTUM strategy to enforce SHORT entries, and add a same-symbol cooldown rule to block re-entry on a symbol already traded that session."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T11:10:09.518311+05:30",
+    "input_tokens": 2029,
+    "output_tokens": 875
+  }
 }

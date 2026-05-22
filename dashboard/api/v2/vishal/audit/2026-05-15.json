@@ -222,5 +222,41 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "All 6 trades executed with zero qty_drift \u2014 no execution slippage or fill anomalies detected across WIPRO, HDFCBANK, UNITDSPR, and INFY.",
+      "drift_amount_rs is 0.0 and drift_vs_db is OK \u2014 DB and Dhan PnL are perfectly reconciled, no data integrity issues.",
+      "UNITDSPR (T87) and INFY (T88, T89) were correctly identified as defensive plays on a bearish day, showing sound sector rotation logic.",
+      "RR planned was 2.0+ on all trades with defined confidence scores \u2014 position sizing discipline appears intact."
+    ],
+    "what_went_wrong": [
+      "HDFCBANK was traded twice (T85, T86) in the same direction on the same day, contributing -1441.88 gross PnL \u2014 this is 83% of the day's total loss from a single name.",
+      "All 3 losing trades (WIPRO T84, HDFCBANK T85, T86) were FORCE_EXITED, suggesting stops were not pre-placed or price action was not respected before forced closure.",
+      "INFY T88 and T89 are near-duplicate entries (Rs.1121.1 and Rs.1120.1, same qty 44, same strategy, same day) \u2014 doubling up on INFY added unnecessary concentration risk for a net combined gain of only Rs.75.48 gross.",
+      "Three 'won' trades (T87, T88, T89) produced gross PnL of only Rs.149.23 combined, insufficient to offset Rs.1881.01 gross loss \u2014 win/loss sizing asymmetry is severe.",
+      "rr_planned is 0 on T87, T88, T89 \u2014 this field should never be zero on executed trades; it indicates either a logging bug or trades entered without a defined R:R target.",
+      "Net PnL on T88 (-12.76) and T89 (-61.06) is negative despite being marked 'won' \u2014 charges are consuming the entire gross profit, making these trades effectively losers after costs.",
+      "phase_status shows 0 trades counted toward Phase 2 despite 6 trades being executed today \u2014 phase trade counter appears misaligned with actual execution data."
+    ],
+    "patterns_observed": [
+      "FORCE_EXIT is clustering on LONG momentum trades during adverse intraday moves (WIPRO, HDFCBANK x2) \u2014 suggests entries are being made too late in the move or stops are too tight relative to intraday volatility.",
+      "Both INFY trades (T88, T89) are nearly identical setups executed sequentially \u2014 this looks like a scale-in or retry pattern that is not explicitly tagged, creating hidden concentration without clear protocol.",
+      "All 6 trades are LONG \u2014 no short-side trades taken despite the day being described as 'bearish' in T88/T89 rationale; directional bias may be limiting edge on down days.",
+      "Charges of Rs.426.97 on Rs.149.23 gross wins means the system is paying 2.86x its winning gross PnL in fees \u2014 charge-to-win ratio is unsustainable at current win trade sizing."
+    ],
+    "bugs_or_risks_flagged": [
+      "RISK \u2014 rr_planned = 0 on T87 (UNITDSPR), T88 (INFY), T89 (INFY): a zero value in a required numeric field indicates either a logging/ORM bug or trades were placed without a defined R:R; classify as Bug B (data integrity) until confirmed.",
+      "RISK \u2014 phase_status.trades_this_phase = 0 and win_count = 0 despite 6 executed trades and 3 wins in today's log \u2014 phase counter is not updating from trade records; classify as Bug A (state tracking failure).",
+      "RISK \u2014 HDFCBANK traded as two separate strategy types (MOMENTUM T85, GAP T86) on the same day same direction \u2014 if the system lacks a per-symbol daily exposure cap, this is a position limit control gap.",
+      "RISK \u2014 T88 and T89 both tagged 'won' but net_pnl_estimated is negative (-12.76 and -61.06) \u2014 win/loss classification logic does not account for charges, which will distort win_rate and phase progression metrics."
+    ],
+    "recommendation": "Immediately fix the phase trade counter bug (Bug A) and the rr_planned=0 logging bug (Bug B), then enforce a hard per-symbol intraday exposure cap (e.g., max 1 open position per symbol) to prevent HDFCBANK-style double-concentration losses that are structurally wiping out all winning-day gains."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T10:49:04.583543+05:30",
+    "input_tokens": 2330,
+    "output_tokens": 1149
+  }
 }

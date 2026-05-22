@@ -1,0 +1,19 @@
+{
+  "validated_at": "2026-05-22T14:52:24.155245+05:30",
+  "schema_ok": true,
+  "trust_score": 0.933,
+  "claims_total": 20,
+  "verified": 14,
+  "failed": 0,
+  "structurally_skipped": 1,
+  "external_data_needed": 0,
+  "opinion": 5,
+  "failures": [],
+  "skipped_details": [
+    {
+      "field": "what_went_right[0]",
+      "claim": "drift 47.58",
+      "reason": "drift_value_unmatched_but_plausible"
+    }
+  ]
+}

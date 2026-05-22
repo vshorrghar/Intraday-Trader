@@ -1,0 +1,29 @@
+{
+  "validated_at": "2026-05-22T14:52:24.153285+05:30",
+  "schema_ok": true,
+  "trust_score": 0.75,
+  "claims_total": 18,
+  "verified": 9,
+  "failed": 0,
+  "structurally_skipped": 3,
+  "external_data_needed": 0,
+  "opinion": 6,
+  "failures": [],
+  "skipped_details": [
+    {
+      "field": "what_went_wrong[3]",
+      "claim": "trade_id 69 value 2.12",
+      "reason": "value_not_in_trade_fields"
+    },
+    {
+      "field": "what_went_right[0]",
+      "claim": "drift 123.0",
+      "reason": "drift_value_unmatched_but_plausible"
+    },
+    {
+      "field": "what_went_right[1]",
+      "claim": "drift 302.7",
+      "reason": "drift_value_unmatched_but_plausible"
+    }
+  ]
+}

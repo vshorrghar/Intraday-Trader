@@ -127,5 +127,35 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "ONGC trade_id 69 (GAP strategy) executed cleanly with zero qty_drift, correct fill at 123 shares, and delivered +257.9 net PnL \u2014 the only profitable trade of the day.",
+      "All 3 trades had qty_drift = 0 and gross_pnl_db matched gross_pnl_dhan exactly at -302.7, confirming broker reconciliation is clean with drift_amount_rs = 0.0."
+    ],
+    "what_went_wrong": [
+      "ONGC trade_id 70 (MOMENTUM) re-entered the same symbol at a higher price (297.5 vs prior exit 296.15) after trade_id 69 already closed, turning a winning day into a -530 net loss \u2014 classic overtrading on a single name.",
+      "INFY trade_id 71 is tagged 'long' and 'short_momentum' simultaneously with direction=LONG, but the rationale explicitly describes a breakdown and sector freefall \u2014 this is a directional logic contradiction and likely a LONG entered against a SHORT signal.",
+      "INFY trade_id 71 has rr_planned = 0, meaning no R:R was logged at order time despite the rationale citing 2.0:1 \u2014 pre-trade risk parameters are not being committed to the record before entry.",
+      "ONGC trade_id 69 also has rr_planned = 0 despite rationale citing 2.12:1 R:R \u2014 this is a systemic data entry failure across multiple trades, not a one-off."
+    ],
+    "patterns_observed": [
+      "Both ONGC trades (69, 70) were taken on the same symbol in the same session with escalating size (123 \u2192 201 qty), indicating size-up-on-conviction behavior that converted a +258 winner into a -693 loser \u2014 net destruction of 950 Rs on one ticker.",
+      "Charges (227.39) represent 75% of gross loss magnitude (302.7), meaning the cost structure is punishing at this capital level \u2014 3 trades burned 227 Rs in fees alone.",
+      "phase_status shows 0 trades counted toward Phase 2 progress despite 3 trades executed today \u2014 trades_this_phase = 0 is inconsistent with trades_executed = 3 and needs immediate investigation."
+    ],
+    "bugs_or_risks_flagged": [
+      "LOGIC BUG \u2014 INFY trade_id 71: direction=LONG combined with strategy_type=SHORT_MOMENTUM and a rationale describing a short setup is a contradictory trade record; classify as Bug A (directional tag mismatch) \u2014 verify whether the actual order sent to Dhan was LONG or SHORT.",
+      "DATA BUG \u2014 trade_ids 69 and 71 have rr_planned = 0 while rationale contains valid R:R calculations; rr_planned field is not being populated from rationale at trade creation \u2014 flag as Bug B (missing pre-trade parameter commit).",
+      "PHASE TRACKING BUG \u2014 phase_status.trades_this_phase = 0 and win_count = 0 despite summary showing 3 executed trades and 1 win today; phase counter is either not incrementing on execution or reading from a stale/wrong data source \u2014 requires immediate fix before phase graduation logic can be trusted.",
+      "RISK FLAG \u2014 dhan_available_balance = null; with 154,788 Rs capital deployed and no balance visibility, there is no intraday margin breach detection \u2014 this is a live risk control gap."
+    ],
+    "recommendation": "Fix the phase trade counter bug and INFY directional tag conflict before tomorrow's session, and implement a hard rule blocking same-symbol re-entry within the same session unless a pre-defined re-entry condition is explicitly logged."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T10:47:56.122733+05:30",
+    "input_tokens": 1465,
+    "output_tokens": 923
+  }
 }

@@ -65,5 +65,31 @@
     "phase_progress": "25/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "HINDZINC: qty_drift = 0, execution matched intent exactly \u2014 no slippage on order quantity.",
+      "drift_amount_rs = 0.0 and drift_vs_db = OK \u2014 P&L reconciliation between DB and Dhan is clean for today."
+    ],
+    "what_went_wrong": [
+      "HINDZINC: FORCE_EXITED at breakeven (entry 671.75 = exit 671.75), burning 51.68 Rs in charges with zero price movement captured \u2014 full cost, zero reward.",
+      "Phase 1 win rate is 28% (7/25) against a planned RR of 2.0 \u2014 at this hit rate the strategy is marginally negative expectancy and needs immediate review before reaching trade 50."
+    ],
+    "patterns_observed": [
+      "HINDZINC force_exit tag with identical entry/exit price suggests premature exit trigger or stop hit at entry level \u2014 possible tight stop placement or system-level force-exit logic firing too early on momentum entries.",
+      "dhan_available_balance = null is a recurring data gap risk \u2014 without live balance visibility, position sizing and risk checks cannot be validated in real time."
+    ],
+    "bugs_or_risks_flagged": [
+      "HINDZINC: FORCE_EXITED with pnl_db = 0.0 and pnl_dhan = 0.0 but pnl_net_estimated = -51.68 \u2014 the 'won' field is null, meaning this trade is orphaned in win/loss accounting and will silently distort phase win rate calculations.",
+      "dhan_available_balance = null: if this persists across sessions, capital deployment checks are running blind \u2014 flag as Bug Risk B, capital guard is non-functional.",
+      "28% win rate at trade 25 with RR 2.0 yields ~0.56 expectancy ratio \u2014 below the 33% breakeven threshold for 2:1 RR; continuing to Phase 2 without strategy adjustment risks compounding losses across 25 more validation trades."
+    ],
+    "recommendation": "Before the next trade, fix the null 'won' field logic for FORCE_EXITED outcomes so they register correctly in phase win rate, and audit the force-exit trigger condition to determine if stops are being placed too close to entry on momentum setups like HINDZINC."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-21T23:37:06.803814+05:30",
+    "input_tokens": 872,
+    "output_tokens": 576
+  }
 }

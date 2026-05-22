@@ -1,0 +1,28 @@
+{
+  "validated_at": "2026-05-22T14:52:24.151250+05:30",
+  "schema_ok": true,
+  "trust_score": 0.6,
+  "claims_total": 17,
+  "verified": 3,
+  "failed": 2,
+  "structurally_skipped": 0,
+  "external_data_needed": 0,
+  "opinion": 12,
+  "failures": [
+    {
+      "field": "what_went_wrong[3]",
+      "claim": "4 of 6 trade",
+      "reason": "wrong_count",
+      "expected": "6",
+      "got": "4"
+    },
+    {
+      "field": "patterns_observed[0]",
+      "claim": "4 of 6 trade",
+      "reason": "wrong_count",
+      "expected": "6",
+      "got": "4"
+    }
+  ],
+  "skipped_details": []
+}

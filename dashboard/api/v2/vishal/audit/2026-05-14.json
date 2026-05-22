@@ -221,5 +221,35 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "Perfect execution fidelity: all 6 trades had qty_drift=0, DB and Dhan PnL matched exactly (drift_amount_rs=0.0), confirming clean order routing.",
+      "Strong gross day: \u20b92035.54 gross, \u20b91633.08 net estimated, 6/6 wins with sector-aligned entries (NIFTY METAL, ENERGY, Telecom all confirming)."
+    ],
+    "what_went_wrong": [
+      "VEDL trade_id 80 and ADANIPOWER trade_id 83 nearly broke even after charges (net \u20b91.52 and \u20b92.11 respectively) \u2014 gross PnL was too thin relative to brokerage drag, indicating late entries or insufficient move captured.",
+      "rr_planned=0 on all 6 trades is a data integrity issue \u2014 planned R:R is documented in rationale_summary text but never written to the rr_planned field, making systematic R:R tracking impossible.",
+      "VEDL was traded 3 times (trade_ids 78, 80, 82) in the same direction on the same day \u2014 repeated re-entries into the same name after a STOPPED_OUT outcome signals possible revenge/overtrading pattern without a documented re-entry rule.",
+      "phase_status shows trades_this_phase=0 and win_count=0 despite 6 trades being logged \u2014 phase tracker is not updating from today's session, creating a split between trade log and phase progress."
+    ],
+    "patterns_observed": [
+      "All 6 trades are LONG-only on a green market day \u2014 no short setups were considered or attempted, indicating a directional bias filter that may underperform on mixed or red days.",
+      "STOPPED_OUT outcomes are logged as wins (trade_ids 78, 80, 82, 83) \u2014 stop was hit on the profitable side, but this label conflates 'stop triggered' with 'target hit' and will corrupt win-rate quality analysis over time.",
+      "FORCE_EXITED trades (ADANIPOWER 79, BHARTIARTL 81) generated the bulk of net PnL (\u20b9691.54 + \u20b9757.35 = \u20b91448.89 of \u20b91633.08 net) \u2014 held trades are doing the heavy lifting while stopped trades barely cover charges."
+    ],
+    "bugs_or_risks_flagged": [
+      "rr_planned=0 on all trades (78,79,80,81,82,83): field is never populated \u2014 this is a Bug B class data omission; downstream R:R filtering and phase analytics will produce incorrect results.",
+      "phase_status.trades_this_phase=0 and win_count=0 despite 6 executed trades on 2026-05-14 \u2014 phase counter is disconnected from today's trade log; this is a Bug A class sync failure that will cause incorrect phase promotion triggers.",
+      "STOPPED_OUT tagged as won=true (VEDL 78, 80, 82; ADANIPOWER 83) \u2014 outcome='STOPPED_OUT' conventionally means stop-loss was hit; using it to mean 'trailing stop hit at profit' is a semantic bug that will corrupt loss-rate and drawdown statistics.",
+      "dhan_available_balance=null \u2014 live capital availability is untracked; combined with capital_deployed_max of \u20b9204,907, there is no guardrail visible against over-deployment in Phase 1."
+    ],
+    "recommendation": "Fix the phase_status sync bug immediately (Bug A) so phase promotion is not missed, and enforce rr_planned field population at trade entry (Bug B) before tomorrow's session \u2014 without these two fields, the entire Phase 1 validation dataset is analytically compromised."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T10:48:38.651317+05:30",
+    "input_tokens": 2248,
+    "output_tokens": 911
+  }
 }

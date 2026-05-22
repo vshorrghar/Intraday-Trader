@@ -1,0 +1,46 @@
+{
+  "validated_at": "2026-05-22T14:52:24.142296+05:30",
+  "schema_ok": true,
+  "trust_score": 0.688,
+  "claims_total": 20,
+  "verified": 11,
+  "failed": 3,
+  "structurally_skipped": 2,
+  "external_data_needed": 0,
+  "opinion": 4,
+  "failures": [
+    {
+      "field": "what_went_wrong[0]",
+      "claim": "4 of 8 trade",
+      "reason": "wrong_count",
+      "expected": "8",
+      "got": "4"
+    },
+    {
+      "field": "patterns_observed[0]",
+      "claim": "6 of 8 trade",
+      "reason": "wrong_count",
+      "expected": "8",
+      "got": "6"
+    },
+    {
+      "field": "recommendation",
+      "claim": "0 of 8 trade",
+      "reason": "wrong_count",
+      "expected": "8",
+      "got": "0"
+    }
+  ],
+  "skipped_details": [
+    {
+      "field": "what_went_wrong[2]",
+      "claim": "trade_id 43 value -148.93",
+      "reason": "value_not_in_trade_fields"
+    },
+    {
+      "field": "patterns_observed[0]",
+      "claim": "75.0% loss",
+      "reason": "unknown_pct_subject"
+    }
+  ]
+}

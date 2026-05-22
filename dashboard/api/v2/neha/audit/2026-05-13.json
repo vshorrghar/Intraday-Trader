@@ -222,5 +222,39 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "Zero qty_drift across all 6 trades \u2014 execution integrity is clean, no fill slippage or partial fill issues detected.",
+      "PnL reconciliation between DB and Dhan is exact (drift_amount_rs = 0.0), confirming no data pipeline or booking discrepancy.",
+      "MANAPPURAM (trade_id 32) and HINDPETRO (trade_id 33) both delivered positive net PnL after charges, validating the GAP and MOMENTUM setups in a trending sector environment.",
+      "Sector alignment was disciplined \u2014 VEDL, HINDZINC in NIFTY METAL; HINDPETRO, ADANIPOWER in NIFTY ENERGY/PSE \u2014 all backed by index confirmation."
+    ],
+    "what_went_wrong": [
+      "ADANIPOWER (trade_id 34) is the session's primary damage at -1007.33 net \u2014 largest position (276 qty, ~60K notional) force-exited for the worst outcome; this single trade nearly wiped all winners.",
+      "HINDZINC (trade_id 29) was force-exited at -308.77 net despite confidence 8 and RR 2.16 \u2014 two force-exits in one session (HINDZINC, ADANIPOWER) suggests either stop placement is too tight or intraday volatility is being underestimated at entry.",
+      "GROWW (trade_id 30) shows rr_planned = 0, which is a data integrity red flag \u2014 a confidence-8 trade should never have a null/zero RR recorded; this may indicate the risk engine skipped RR calculation at order time.",
+      "HINDPETRO (trade_id 33) entered 3.1% above open, flagged in rationale as 'slight chase' \u2014 chasing entries erodes edge and this pattern should be rule-blocked, not manually rationalized.",
+      "Net PnL of -532.10 against gross of -81.53 means charges (450.57) consumed the entire gross and added 5.5x the gross loss \u2014 charge-to-gross ratio is dangerously high for this position sizing and trade count."
+    ],
+    "patterns_observed": [
+      "All 6 trades are LONG \u2014 zero directional diversification; on a day where 3 trades failed, a single SHORT hedge in a weak sector could have offset damage.",
+      "Force-exit outcomes (HINDZINC, ADANIPOWER) are clustering on the two trades that explicitly recorded rr_planned = 2.2, suggesting the RR-2.2 target bracket may be triggering adverse stop behavior or the targets are being set too aggressively relative to intraday ATR.",
+      "Charges at 450.57 on 6 trades = ~75 Rs/trade average \u2014 with gross PnL of only -81.53, the strategy is not generating enough gross edge per trade to survive realistic brokerage; minimum gross PnL target per session needs to be recalibrated above 450 Rs just to break even.",
+      "phase_status shows trades_this_phase = 0 despite 6 trades executed today \u2014 this is a counter sync bug; the phase tracker is not ingesting today's trades."
+    ],
+    "bugs_or_risks_flagged": [
+      "BUG RISK \u2014 phase_status.trades_this_phase = 0 and win_count = 0 despite 6 executed trades with 3 wins on 2026-05-13; phase progress counter is not updating from today's session, corrupting Phase 1 validation tracking.",
+      "BUG RISK \u2014 GROWW (trade_id 30) and VEDL (trade_id 31) and MANAPPURAM (trade_id 32) and HINDPETRO (trade_id 33) all show rr_planned = 0; only HINDZINC (29) and ADANIPOWER (34) have rr_planned populated \u2014 RR field is being written only on select trades, likely a conditional write bug in the order/strategy logging module.",
+      "BUG RISK \u2014 dhan_available_balance = null; if this field is used downstream for position sizing or margin checks, a null value could allow oversized orders to pass through without capital validation \u2014 verify the balance fetch is not silently failing.",
+      "No bugs of class Bug A or Bug B triggered \u2014 all qty_drift values are 0 across all trades; no qty integrity issues to flag."
+    ],
+    "recommendation": "Fix the phase counter sync bug immediately as it is invalidating Phase 1 tracking, then enforce a hard rule-block on rr_planned = 0 trades at order entry \u2014 no RR, no execution \u2014 and cap single-trade notional so that one force-exit (like ADANIPOWER at -1007 net) cannot exceed 50% of the day's gross winner total."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T11:10:36.780203+05:30",
+    "input_tokens": 2256,
+    "output_tokens": 1162
+  }
 }

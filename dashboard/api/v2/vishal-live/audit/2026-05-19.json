@@ -127,5 +127,34 @@
     "phase_progress": "25/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "Zero qty_drift across all 3 trades (IOC, COHANCE, INFY) \u2014 execution layer is clean, no Bug A or Bug B class issues today.",
+      "PnL reconciliation between DB and Dhan is exact (drift_amount_rs = 0.0), confirming no data integrity issues in the ledger."
+    ],
+    "what_went_wrong": [
+      "COHANCE LONG stopped out at -123.59 gross, contributing ~95% of the day's gross loss; a 2% SL on a mid-cap momentum name at VIX 18.93 is structurally undersized for the volatility regime.",
+      "INFY trade (trade_id 26) tagged FORCE_EXITED \u2014 a confidence-8 setup with planned R:R 2:1 was not allowed to run to either target or natural SL, indicating a process or time-based override is cutting winners/losers prematurely.",
+      "Win rate at Phase 1 checkpoint is 28% (7/25) \u2014 well below the minimum ~40% needed for a 2:1 R:R system to be breakeven; charges of 155.43 on only 10,872 deployed capital represent a 1.43% cost drag per day."
+    ],
+    "patterns_observed": [
+      "All 3 trades today were LONG-only in a session where IOC (GAP) was the only technical winner yet still netted negative after charges \u2014 the strategy is systematically charge-negative on small-qty, low-price-point names like IOC (qty 32, price 135) where brokerage/STT erodes any gross edge.",
+      "Two of three trades used identical SL logic (2% per VIX) but produced very different loss magnitudes \u2014 COHANCE lost 9x more than INFY on similar R:R plans, suggesting position sizing is not normalized to rupee-risk per trade.",
+      "FORCE_EXIT on INFY signals a recurring intraday time-cutoff or margin-triggered exit pattern; if this is happening on confidence-8 trades, it is destroying expected value systematically."
+    ],
+    "bugs_or_risks_flagged": [
+      "NO drift_amount_rs bug today (value = 0.0) \u2014 flag is clear.",
+      "INFY (trade_id 26) outcome = FORCE_EXITED with won = false and rr_planned = 2.0 \u2014 if force-exit logic is not logged in bugs_observed, there is a silent process risk: the system is overriding strategy exits without recording why, making it impossible to audit whether FORCE_EXIT is a risk-control action or a software fault.",
+      "IOC (trade_id 24) has rr_planned = 0 despite a rationale citing R:R 2.17:1 \u2014 this is a data entry or logging bug; rr_planned should reflect the pre-trade plan, not zero, and this discrepancy will corrupt any downstream R:R performance analytics.",
+      "Phase win rate 28% (7/25) crossing the 25-trade checkpoint without a formal go/no-go review is an operational risk \u2014 continuing to Phase 2 at this win rate with current charge structure projects to deep capital erosion."
+    ],
+    "recommendation": "Fix the rr_planned = 0 logging bug on GAP strategy trades (IOC is the live example), normalize all position sizes to a fixed rupee-risk per trade rather than percentage-of-price SL, and conduct a mandatory Phase 1 go/no-go review now \u2014 do not add more trades until win rate trajectory and force-exit trigger logic are formally reviewed."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T10:18:55.711056+05:30",
+    "input_tokens": 1459,
+    "output_tokens": 873
+  }
 }

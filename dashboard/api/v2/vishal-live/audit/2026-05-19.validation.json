@@ -1,0 +1,19 @@
+{
+  "validated_at": "2026-05-22T14:52:24.179316+05:30",
+  "schema_ok": true,
+  "trust_score": 0.857,
+  "claims_total": 14,
+  "verified": 6,
+  "failed": 0,
+  "structurally_skipped": 1,
+  "external_data_needed": 1,
+  "opinion": 6,
+  "failures": [],
+  "skipped_details": [
+    {
+      "field": "bugs_or_risks_flagged[2]",
+      "claim": "trade_id 24 value 2.17",
+      "reason": "value_not_in_trade_fields"
+    }
+  ]
+}

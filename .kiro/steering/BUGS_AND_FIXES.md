@@ -532,3 +532,136 @@ For every broker order placed, code must explicitly handle its lifecycle:
 - Created → trace through Cancel/Filled/Modified states
 - Don't rely on Dhan auto-cleanup (proven unreliable: ANGELONE waited 1h12m, HFCL never cleaned)
 - Audit pattern: search for every place_order call, verify matching cleanup logic
+
+---
+
+## Bug C — RR Data Integrity (DISCOVERED 2026-05-21 by AI audit)
+
+### Status
+- Discovered: 2026-05-21 (audit narrative caught it)
+- Severity: HIGH (data integrity, not capital risk)
+- Patched: PENDING — separate session
+
+### Description
+intraday_trades DB rows show rr_planned=0 for trades that visually had proper R:R 2.0 setups in the LLM rationale. Root cause: SL price recorded above entry price for LONG trades.
+
+### Evidence
+ANGELONE trade_id 29 (May 21):
+- direction: LONG
+- entry_price: 336.90
+- target_price: 350.38
+- stop_loss_price: 339.45 <- ABOVE entry, impossible for LONG
+- LLM rationale claims R:R = 13.48/6.74 = 2.0
+- DB stored SL=339.45 (which would be ABOVE entry for LONG)
+
+HFCL trade_id 30 (May 21):
+- direction: LONG
+- entry_price: 144.85
+- stop_loss_price: likely same pattern
+- audit shows rr_planned=0
+
+### Likely Root Causes (need investigation)
+1. Executor tick-rounding flipping LONG SL above entry on edge cases
+2. Scanner/selector passing SHORT-formatted SL to LONG trade
+3. Risk manager modifying SL incorrectly between LLM pick and order placement
+
+### Investigation Plan (DEFER for separate session)
+1. Pull all LONG trades from DB
+2. Find any with stop_loss_price >= entry_price (impossible state)
+3. Cross-reference with LLM rationale to see what was intended
+4. Trace through executor to see where the bad value came from
+
+### Why this matters
+- Audit RR calculation correctly flagged this
+- Real money trades may have been placed with wrong SL
+- If SL was placed at wrong level on Dhan, real risk exposure != planned exposure
+- Need to verify Dhan-side SL values match what we intended
+
+### Pattern
+Same family as Bug A (entry direction) and Bug B (exit cleanup):
+- Bug A: in-memory state missing field -> wrong direction
+- Bug B: code missing call to broker.cancel_order -> orphan SL
+- Bug C: data integrity at write time -> wrong SL stored in DB
+
+All three only visible via audit/reconciliation, not via runtime logs.
+
+---
+
+## Bug B-2 — Trailing-SL exit path leaves orphan STOP_LOSS order
+## DISCOVERED 2026-05-22 (vishal-live live trading)
+
+### Status
+- Original Bug B fix (f9d4998, 2026-05-21) covered 3 paths: target hit, force exit, trailing modify
+- Bug B-2 confirmed today: trailing-SL → market-exit path leaves the original STOP_LOSS order pending in Dhan
+- Severity: HIGH — orphan SL can fire later and create unprotected phantom position
+- Today: caught manually after ~43 min unprotected window. No phantom triggered (price stayed away from trigger), but exposure was real.
+
+### Production Evidence (2026-05-22 vishal-live)
+
+Order timeline from Dhan API (/v2/orders):
+
+10:30:41  HFCL  BUY   14  TRADED      LIMIT       (entry)
+10:30:43  HFCL  SELL  14  PENDING     STOP_LOSS @ 142.75   <- original SL placed
+... trailing SL modified multiple times in monitor.py ...
+11:03:00  HFCL  SELL  14  TRADED      LIMIT       <- exit market order placed FRESH
+11:46:07  HFCL  SELL  14  CANCELLED   STOP_LOSS @ 142.75   <- original SL still PENDING until manual cancel
+
+SAIL: identical pattern (entry 10:30:43, exit 10:54:49 LIMIT, orphan SL pending until 11:46:09 manual cancel)
+
+DB state was correct throughout (HFCL trade_id 33: STOPPED_OUT, pnl +4.69; SAIL trade_id 34: STOPPED_OUT, pnl +2.98).
+The bug is broker-side: code never called cancel_order(sl_order_id) on the trailing-breach exit path.
+
+### Window of Risk
+HFCL: position closed 11:03, orphan SL still active until 11:46 = 43 minutes unprotected
+SAIL: position closed 10:54, orphan SL still active until 11:46 = 52 minutes unprotected
+
+If price had hit trigger in this window, orphan SL would fire → create unprotected SHORT → no exit logic.
+Same failure mode as May 21 HFCL phantom-SHORT incident.
+
+### Root Cause
+intraday/monitor.py — the code path that fires when trailing SL is breached.
+Instead of letting the modified Dhan STOP_LOSS order execute, code places a brand-new LIMIT SELL market order to close the position. The original (now stale) STOP_LOSS order is never cancelled.
+
+Evidence in log (2026-05-22 vishal-live):
+  05:14:48  HFCL trailing SL modified on Dhan: 142.74 → 146.03 (modify, not cancel+replace)
+  05:33:02  HFCL exit FILLED @ 146.14 via fresh "SELL HFCL x14 @ 0.00" (market order)
+The modified STOP_LOSS at 146.03 was never cancelled and remained pending.
+
+Wait — actually trigger 142.75 not 146.03. So the trailing-modify wasn't even what caused the exit.
+The exit fired because monitor.py decided to force-exit for some other reason (target reached? rule check?).
+Need to investigate WHY monitor placed a market exit at 11:03 instead of letting the modified SL handle it.
+
+### Fix Path
+intraday/monitor.py — find the code branch that places exit LIMIT order via SELL @ 0.00 market.
+Before placing that order, call broker.cancel_order(trade.sl_order_id).
+Same defensive pattern as the 3 paths in commit f9d4998.
+
+### Investigation Hooks for Kiro
+1. grep -n "place_order.*0.00\|MARKET\|market.*exit" intraday/monitor.py
+2. Trace: what condition triggered the exit at 11:03 for HFCL? (was it target hit, time-based exit, drift exit?)
+3. Whichever branch — add cancel_order before place_order
+
+### Manual Remediation
+2026-05-22 11:46 IST — HFCL + SAIL orphan SLs cancelled manually in Dhan UI.
+
+
+---
+
+## Audit Tooling Gaps (DISCOVERED 2026-05-22)
+
+### Gap 1: scripts/check_dhan_orders.py false positives
+Compares Dhan filled-leg quantities (BUY+SELL separate) vs DB single-row trade model. Always flags closed-long SELL legs as mismatch (e.g. "HFCL SELL db=0 dhan=14").
+Fix: compute net position per symbol (sum BUY - sum SELL on Dhan side, compare with DB open positions). Or join with intraday_trades.exit_price to derive synthetic SELL rows.
+
+### Gap 2: No automated orphan-order detection (CRITICAL)
+Bug B-2 caught manually only because user noticed Dhan UI panel showed pending orders for closed positions. Today's check_dhan_orders.py only inspects TRADED orders, never inspects PENDING orders for orphan status.
+
+Required: new check or extension to existing script that does:
+  for each PENDING order in Dhan:
+      if symbol has no matching open position in DB → ALERT (orphan SL)
+
+This automates today's manual catch. Without it, a future Bug B-3 in a different code path will go undetected until either:
+- the orphan fires and creates a phantom (capital loss)
+- user happens to glance at Dhan UI
+
+Add to crontab to run every 5 minutes during market hours.

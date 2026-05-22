@@ -158,5 +158,35 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "4/4 trades profitable with zero qty drift across all positions (VEDL x2, BHARTIARTL, ADANIPOWER) \u2014 execution integrity is clean today.",
+      "BHARTIARTL (trade 36) drove 67% of gross PnL (825.42 of 1222.86) with a 40.8pt move \u2014 best single-trade contribution of the session."
+    ],
+    "what_went_wrong": [
+      "ADANIPOWER (trade 38) netted only 12.87 after charges on 82.82 gross \u2014 charges consumed 84% of gross profit, making this trade nearly pointless on a net basis.",
+      "VEDL (trade 35) similarly saw charges eat ~78% of gross (89.5 gross, 19.54 net) \u2014 low per-unit move on high-charge instruments is a structural drag.",
+      "rr_planned is 0 on all 4 trades despite rationale summaries citing R:R 2.1-2.2:1 \u2014 this field is not being populated, creating a data integrity gap.",
+      "phase_status shows 0 trades this phase and 0 wins despite 4 trades executing today \u2014 phase tracker is not syncing with live trade data."
+    ],
+    "patterns_observed": [
+      "All 4 trades are LONG-only with confidence pinned at exactly 8 \u2014 no directional diversity and suspiciously uniform confidence scoring suggests a hardcoded or default value rather than live assessment.",
+      "VEDL was traded twice in the same session (trades 35 and 37) with entries 15 minutes or less apart at different prices (332.6 and 335.7) \u2014 possible re-entry after stop, worth confirming this is intentional and not a duplicate order bug.",
+      "Two trades exited as STOPPED_OUT yet are marked won=true \u2014 stop placement may be above entry (trailing or breakeven stop), but this outcome label combination should be explicitly validated in the audit schema."
+    ],
+    "bugs_or_risks_flagged": [
+      "BUG RISK \u2014 rr_planned=0 on all trades (VEDL 35, BHARTIARTL 36, VEDL 37, ADANIPOWER 38): field is never written at trade creation; rationale strings contain R:R values but they are not machine-readable or enforced.",
+      "BUG RISK \u2014 phase_status.trades_this_phase=0 and win_count=0 despite 4 executed winning trades today; phase counter is either reading from wrong profile scope or not being incremented post-execution.",
+      "BUG RISK \u2014 outcome='STOPPED_OUT' combined with won=true on VEDL (35, 37) and ADANIPOWER (38): if stop-loss trigger and win condition can coexist, the outcome enum needs a defined breakeven-stop or trailing-stop value to avoid misclassification in downstream analytics.",
+      "COST RISK \u2014 ADANIPOWER (trade 38): 179 shares at 0.70pt move generates 82.82 gross but only 12.87 net; at this charge-to-gross ratio, any slippage of 1-2 paise turns this trade net negative \u2014 minimum move threshold needs enforcing before entry."
+    ],
+    "recommendation": "Immediately fix the phase_status trade counter sync bug and enforce rr_planned write-at-entry before scaling to 50-trade phase targets, or phase progression data will be completely unreliable."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T11:10:57.523357+05:30",
+    "input_tokens": 1692,
+    "output_tokens": 840
+  }
 }

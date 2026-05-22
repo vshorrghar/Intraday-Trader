@@ -220,5 +220,34 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "Zero qty_drift across all 6 trades \u2014 execution engine matched intended size perfectly on TATASTEEL, NMDC, BEL, BPCL, HINDCOPPER, and ABCAPITAL.",
+      "BPCL LONG captured \u20b9331.48 gross PnL and was the sole trade that covered its charges, delivering \u20b9256.54 net \u2014 clean momentum read on Energy sector alignment."
+    ],
+    "what_went_wrong": [
+      "4 of 5 SHORT trades (TATASTEEL, NMDC, HINDCOPPER, ABCAPITAL) were stopped out with minimal gross loss but each consumed \u20b967\u2013\u20b9130 in charges, making charges the primary P&L killer today \u2014 gross PnL was +\u20b9229.91 but net was -\u20b9201.57.",
+      "BEL shows won=true but pnl_net_estimated is -\u20b967.16 \u2014 a 'win' that still loses money after charges; the gross PnL of \u20b97.83 is negligible and reflects an entry/exit spread of only \u20b90.50 on 122 shares, suggesting the target was never meaningfully reached.",
+      "BPCL has rr_planned=0 while all other trades show rr_planned=2.0 \u2014 a zero RR on the only winning trade is a data integrity issue and suggests the trade was either entered without a plan or the field was not populated correctly.",
+      "Phase progress shows 0/50 trades despite 6 trades executed today \u2014 phase_status.trades_this_phase=0 contradicts summary.trades_attempted=6, indicating a counter sync failure."
+    ],
+    "patterns_observed": [
+      "All 5 SHORT trades entered with identical confidence=7 and rr_planned=2.0 yet 4 were stopped out \u2014 the SHORT_MOMENTUM strategy is generating valid-looking setups that are reversing immediately at entry, suggesting stop placement at 2% above entry is too tight for current intraday volatility on metal/commodities names.",
+      "Charges of \u20b9431.48 on \u20b9229.91 gross PnL means the charge ratio is 188% of gross \u2014 at current trade sizing and frequency, the system cannot be profitable unless per-trade gross PnL materially exceeds ~\u20b972 average charge per trade.",
+      "Exit prices on stopped-out trades are within \u20b90.01\u2013\u20b90.50 of entry prices (TATASTEEL -\u20b90.01, NMDC +\u20b90.01, HINDCOPPER +\u20b90.50, ABCAPITAL +\u20b90.35) \u2014 stops are triggering near-immediately, which may indicate entries are being placed after a move is already exhausted."
+    ],
+    "bugs_or_risks_flagged": [
+      "RISK \u2014 BPCL (trade_id 67): rr_planned=0 is almost certainly a missing-value bug; every other trade logs rr_planned=2.0 \u2014 a zero RR field will corrupt any downstream Sharpe/RR analytics and must be validated at trade entry time.",
+      "RISK \u2014 phase_status.trades_this_phase=0 and win_count=0 despite 6 executed trades and 2 wins in summary \u2014 this is a phase counter bug that will cause Phase 2 unlock to never trigger correctly; flag for immediate investigation in phase progression logic.",
+      "RISK \u2014 BEL (trade_id 66): won=true with pnl_db=\u20b97.83 and pnl_net_estimated=-\u20b967.16 \u2014 the 'won' flag appears to be driven by gross PnL only, not net; if strategy evaluation or phase win_rate uses this flag, it will overstate performance."
+    ],
+    "recommendation": "Fix the phase counter sync bug immediately as it will block Phase 2 unlock, then add a hard rule that no SHORT_MOMENTUM trade is logged with rr_planned=0 or taken unless expected gross PnL per trade exceeds \u20b9150 to clear estimated charges."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T11:12:39.120538+05:30",
+    "input_tokens": 2464,
+    "output_tokens": 986
+  }
 }

@@ -1,0 +1,21 @@
+{
+  "validated_at": "2026-05-22T14:52:24.149245+05:30",
+  "schema_ok": true,
+  "trust_score": 0.857,
+  "claims_total": 14,
+  "verified": 6,
+  "failed": 1,
+  "structurally_skipped": 0,
+  "external_data_needed": 0,
+  "opinion": 7,
+  "failures": [
+    {
+      "field": "what_went_wrong[0]",
+      "claim": "4 of 5 short",
+      "reason": "wrong_count",
+      "expected": "5",
+      "got": "4"
+    }
+  ],
+  "skipped_details": []
+}

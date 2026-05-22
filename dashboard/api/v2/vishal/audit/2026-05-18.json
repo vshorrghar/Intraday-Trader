@@ -252,5 +252,39 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "TECHM (trade_id 92) delivered the day's only meaningful profit at +868.27 net, validating the relative-strength LONG thesis on a red market day with IT sector as the sole green sector.",
+      "All 7 trades executed with zero qty_drift and zero drift_amount_rs \u2014 order routing integrity held perfectly across the session.",
+      "PnL reconciliation between DB and Dhan is exact on every trade, confirming no shadow fills or partial execution discrepancies.",
+      "Sector-alignment logic was sound: PSU Bank shorts (SBIN, PNB) and gap shorts (TATASTEEL, ETERNAL) were directionally correct given tape context."
+    ],
+    "what_went_wrong": [
+      "5 of 7 trades stopped out, producing gross losses of -387.07 before charges, and net charges of 514.34 nearly wiped the single winning day \u2014 net PnL is a near-breakeven 43.98 on 328,703 capital deployed (0.013% return).",
+      "TECHM was traded twice same day (trade_ids 92 and 96); trade 96 at entry 1426.0 entered near trade 92's exit at 1427.3, essentially chasing the same move at a worse price \u2014 trade 96 net is -61.54 after charges despite a gross win.",
+      "DELHIVERY (trade_id 91) at confidence 8 produced the largest net loss of the day at -199.51, and the gross PnL of -124.54 on a momentum short suggests stop placement was too tight relative to intraday volatility with VIX at 19.86.",
+      "Charges of 514.34 against gross PnL of 558.32 represent a 92.1% charge-to-gross ratio \u2014 this ratio is structurally unsustainable and will result in net losses on any day without a standout winner like TECHM-92.",
+      "phase_status shows 0/50 trades counted toward Phase 2 despite 7 trades executed today \u2014 trades_this_phase: 0 is inconsistent with today's activity and suggests a phase counter bug."
+    ],
+    "patterns_observed": [
+      "Short bias dominates (5 shorts, 2 longs) with a 0% win rate on all short trades today; both wins came exclusively from LONG TECHM, suggesting the short edge is either unvalidated or not working in current VIX 19-20 choppy tape.",
+      "Both FORCE_EXITED trades (TECHM 92 and 96) are the only winners \u2014 all STOPPED_OUT trades lost, indicating stop levels may be systematically too tight across SHORT_GAP and SHORT_MOMENTUM strategies.",
+      "PSU Bank sector was targeted twice (SBIN, PNB) with high confidence (8/8) and both stopped out, suggesting sector weakness alone is insufficient signal without intraday momentum confirmation at entry.",
+      "Gross PnL per losing trade averages -77.61 vs charges per trade averaging 73.48 \u2014 the cost structure requires win rates significantly above 50% or larger winners to be viable at current position sizing."
+    ],
+    "bugs_or_risks_flagged": [
+      "BUG RISK \u2014 phase_status.trades_this_phase = 0 and phase_status.win_count = 0 despite 7 executed trades and 2 wins logged in summary; phase counter is not ingesting today's trades, likely a session/date boundary or DB commit issue \u2014 affects progression tracking to Phase 2.",
+      "RISK \u2014 TECHM double-entry same session (trade_ids 92 and 96): no rule violation flagged in bugs_observed, but re-entering the same symbol at near-identical prices without a documented re-entry rule creates implicit concentration risk and resulted in a net-losing second trade (-61.54) \u2014 system should enforce single-symbol-per-session guard or require explicit re-entry tag.",
+      "RISK \u2014 rr_planned = 0 on TECHM trade_id 92 (REVERSAL strategy); a planned R:R of zero is either a data entry error or means no pre-defined target was set before entry, which violates disciplined trade structuring \u2014 rationale_summary contradicts this by stating R:R 2.0:1.",
+      "RISK \u2014 dhan_available_balance = null; with 328,703 capital deployed, inability to verify available margin in real time creates unquantified intraday margin breach risk \u2014 this field must be populated before session open."
+    ],
+    "recommendation": "Immediately fix the phase counter ingestion bug so trade progression is accurately tracked, and impose a hard rule barring same-symbol re-entry within the same session unless a documented re-entry condition is met and rr_planned is non-zero at order time."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T10:49:34.882054+05:30",
+    "input_tokens": 2641,
+    "output_tokens": 1152
+  }
 }

@@ -285,5 +285,35 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "Zero qty_drift across all 8 trades \u2014 execution matched intent perfectly on every position including WIPRO, HDFCBANK, INFY, and ADANIPORTS.",
+      "PnL reconciliation is clean: gross_pnl_db and gross_pnl_dhan match exactly at -1800.25 with drift_amount_rs at 0.0, confirming no broker-side discrepancy."
+    ],
+    "what_went_wrong": [
+      "4 of 8 trades tagged 'force_exit' (WIPRO, HDFCBANK, INFY trade_id 44, ADANIPORTS) \u2014 this is not stop-out behavior, it suggests end-of-day or system-forced liquidation is masking true strategy performance and inflating loss count.",
+      "HDFCBANK (trade_id 41) alone accounts for -858.93 PnL, nearly 48% of gross loss, on a GAP strategy with only 64 qty \u2014 the per-unit loss of ~12.6 Rs/share on a 'controlled momentum' entry signals stop placement may be too wide or entry timing was poor.",
+      "Two consecutive INFY LONGs (trade_id 43 and 44) both lost within the same session \u2014 re-entering the same symbol in the same direction after a stop-out is a revenge/overfit pattern and compounded losses by -148.93 combined.",
+      "HUDCO SHORT (trade_id 42) is marked 'won: true' but outcome is 'STOPPED_OUT' \u2014 a winning trade should not be stopped out unless the stop was placed in profit territory; this label inconsistency needs investigation."
+    ],
+    "patterns_observed": [
+      "LONG bias is overwhelming: 6 of 8 trades were LONG on what rationale describes as a 'red day' \u2014 the system is systematically fading bearish market conditions, which likely explains the 75% loss rate today.",
+      "All 4 force-exits (WIPRO, HDFCBANK, INFY-44, ADANIPORTS) lost money, suggesting the force-exit mechanism is not protecting capital but instead locking in losses before trades can recover \u2014 review force-exit trigger logic.",
+      "rr_planned is 0 on trade_id 43 (INFY) and trade_id 45 (UNITDSPR) \u2014 two trades entered with no defined R:R, which violates basic trade planning discipline regardless of outcome."
+    ],
+    "bugs_or_risks_flagged": [
+      "DATA INCONSISTENCY \u2014 HUDCO (trade_id 42): won=true but outcome='STOPPED_OUT'; a stop-out on a winning trade implies stop logic or outcome classification has a labeling bug \u2014 verify stop placement and exit price logic in db write.",
+      "MISSING R:R \u2014 trade_id 43 (INFY) and trade_id 45 (UNITDSPR) have rr_planned=0; if this is a db null/default rather than intentional, it is a Bug A class data integrity issue in trade logging.",
+      "phase_status shows trades_this_phase=0 and win_count=0 despite 8 trades and 2 wins recorded in summary \u2014 phase tracker is not syncing with executed trades, this is a Bug B class counter drift that will corrupt phase progression logic.",
+      "drift_amount_rs=0.0 is clean today \u2014 no drift bug risk, but dhan_available_balance is null; this missing field prevents post-session margin verification and should be treated as a data collection gap risk."
+    ],
+    "recommendation": "Immediately fix the phase_status trade counter (showing 0/8 trades) and the HUDCO won/outcome label conflict before tomorrow's session, as both will corrupt performance tracking and phase advancement decisions."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T11:11:19.829947+05:30",
+    "input_tokens": 2875,
+    "output_tokens": 911
+  }
 }

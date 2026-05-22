@@ -1,0 +1,27 @@
+{
+  "validated_at": "2026-05-22T14:52:24.144954+05:30",
+  "schema_ok": true,
+  "trust_score": 0.895,
+  "claims_total": 27,
+  "verified": 17,
+  "failed": 1,
+  "structurally_skipped": 1,
+  "external_data_needed": 0,
+  "opinion": 8,
+  "failures": [
+    {
+      "field": "what_went_wrong[0]",
+      "claim": "10 of 11 trade",
+      "reason": "wrong_count",
+      "expected": "11",
+      "got": "10"
+    }
+  ],
+  "skipped_details": [
+    {
+      "field": "what_went_right[0]",
+      "claim": "drift 11.0",
+      "reason": "drift_value_unmatched_but_plausible"
+    }
+  ]
+}

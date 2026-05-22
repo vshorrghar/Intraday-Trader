@@ -65,5 +65,33 @@
     "phase_progress": "25/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "VEDL: Perfect execution alignment \u2014 qty_intended=10 matches qty_actual_dhan=10, zero qty_drift, and PnL reconciles identically between DB and Dhan (\u20b940.42), confirming no slippage or fill discrepancy.",
+      "VEDL: Trade rationale was sound \u2014 33.1M volume, metal sector leadership +1.42%, and R:R 2.1:1 met minimum threshold; gross PnL positive confirms directional call was correct."
+    ],
+    "what_went_wrong": [
+      "VEDL: Net PnL is -\u20b911.25 after estimated charges of \u20b951.67 on a gross gain of only \u20b940.42 \u2014 charges consumed 127% of gross profit, making this a losing trade in real terms despite a winning direction.",
+      "VEDL: FORCE_EXITED outcome tag indicates the trade did not exit on strategy signal \u2014 this undermines R:R integrity and suggests the 2.1:1 planned reward was not realized cleanly.",
+      "Phase 1 win rate sits at 28% (7W/25T) \u2014 well below any viable edge threshold; at this rate, charges alone will erode capital before Phase 2 qualification at 50 trades."
+    ],
+    "patterns_observed": [
+      "Single-trade days with small gross PnL (sub-\u20b9100) are structurally unprofitable given the fixed-cost charge floor of ~\u20b950+ per round-trip \u2014 need either higher conviction sizing or multi-trade days to justify operational overhead.",
+      "FORCE_EXIT pattern on VEDL suggests either time-based or risk-limit exits are triggering before price targets are hit \u2014 this is compressing realized R:R versus planned R:R and is likely a systemic drag across the phase."
+    ],
+    "bugs_or_risks_flagged": [
+      "drift_amount_rs=0.0 and qty_drift=0 \u2014 no Bug A or Bug B flagged for VEDL; execution layer is clean on this trade.",
+      "RISK: dhan_available_balance=null \u2014 live session with no balance snapshot is a monitoring blind spot; margin calls or balance exhaustion would not be caught in post-trade audit.",
+      "RISK: FORCE_EXITED on VEDL with no explanation in tags or rationale \u2014 if this was a broker-side force exit (margin/risk limits) rather than a strategy exit, it must be logged explicitly to distinguish operational risk from strategy behavior.",
+      "RISK: win_rate=28% at trade 25 of Phase 1 \u2014 if minimum viable win rate for break-even (given avg charge/gross ratio observed today) is ~55-60%, the strategy is not yet validated and Phase 2 promotion criteria should be reviewed."
+    ],
+    "recommendation": "Immediately add a minimum gross PnL threshold filter (e.g., reject trades where projected gross PnL at target < 2x estimated charges) to prevent structurally charge-negative setups like VEDL from executing, and audit all 25 Phase 1 FORCE_EXIT trades to determine if premature exits are the primary cause of the 28% win rate."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-21T23:37:25.490792+05:30",
+    "input_tokens": 874,
+    "output_tokens": 759
+  }
 }

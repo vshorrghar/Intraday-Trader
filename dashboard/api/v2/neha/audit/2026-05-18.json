@@ -376,5 +376,41 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "Zero qty_drift across all 11 trades \u2014 execution engine matched intended qty perfectly on every fill, no Bug A or Bug B class issues present.",
+      "TECHM LONG (trade_id 53) was the sole winner at +447.62 gross, correctly identifying IT as the only strong sector on a broad red day \u2014 contrarian sector read was accurate.",
+      "PnL reconciliation is clean: drift_amount_rs = 0.0 and gross_pnl_db matches gross_pnl_dhan exactly at -185.45 across all trades, indicating no broker-side slippage or data mismatch.",
+      "Charges infrastructure is functioning \u2014 estimated_charges of 824.38 are being tracked and netted, showing cost-awareness is built in."
+    ],
+    "what_went_wrong": [
+      "10 of 11 trades stopped out \u2014 a 9% win rate is catastrophically below any viable edge threshold; the SHORT_MOMENTUM strategy produced zero wins across PNB (x2), TATASTEEL (x3), DELHIVERY, NBCC, GMRAIRPORT, HFCL.",
+      "TATASTEEL was traded three times (trade_ids 52, 55, 48) and lost all three \u2014 repeated re-entry into a losing symbol on the same day without a win is a concentration and discipline failure.",
+      "PNB was traded twice (trade_ids 47, 50) and lost both \u2014 same pattern as TATASTEEL, no evidence of a rule preventing same-symbol re-entry after a stop.",
+      "TECHM trade_id 53 was FORCE_EXITED with rr_planned = 0, meaning no R:R target was set at entry \u2014 the win here was luck-assisted by a forced exit, not plan execution; rr_planned = 0 should never reach live execution.",
+      "Net PnL of -1009.83 after charges means charges (824.38) nearly quintupled the gross loss (-185.45) \u2014 the cost structure is eating the account; at this trade frequency and size, charges are the primary P&L killer.",
+      "TECHM trade_id 56 entered at 1427.2 which is exactly the exit price of trade_id 53 \u2014 this looks like an immediate re-entry at the prior exit price with no pause or confirmation, and it lost."
+    ],
+    "patterns_observed": [
+      "All SHORT_MOMENTUM trades show micro-pip exit differences (entry vs exit spread of 0.01\u20130.26 Rs), suggesting stops are being hit almost immediately after entry \u2014 possible premature entry before momentum confirms, or stops are too tight for the volatility.",
+      "Every SHORT_MOMENTUM trade rationale cites sector weakness AND volume confirmation AND R:R >= 2, yet all 9 lost \u2014 the signal criteria appear over-fitted or the execution timing is entering after the move has already occurred.",
+      "Phase progress shows 0/50 trades counted toward Phase 2 despite 11 trades executed today \u2014 this is a data discrepancy; phase_status.trades_this_phase = 0 while summary shows trades_executed = 11, which requires immediate investigation.",
+      "Capital deployed peaked at 548,778 Rs on a day with near-total losses \u2014 position sizing is not being reduced dynamically after consecutive losses, violating basic drawdown management."
+    ],
+    "bugs_or_risks_flagged": [
+      "PHASE TRACKING BUG \u2014 phase_status.trades_this_phase = 0 while trades_executed = 11; today's trades are not being credited to phase progress counter, likely a date-filter or commit issue in the phase update logic.",
+      "rr_planned = 0 on TECHM trade_id 53 reached live execution \u2014 this is a validation gap; any trade with rr_planned = 0 should be blocked at order submission or flagged as a critical input error before entry.",
+      "TATASTEEL same-symbol triple re-entry (trade_ids 48, 52, 55) and PNB double re-entry (trade_ids 47, 50) with no wins \u2014 no same-day same-symbol re-entry guard exists in the system; this is a risk control gap, not just a judgment call.",
+      "TECHM trade_id 56 entry price 1427.2 equals trade_id 53 exit price exactly \u2014 system may be auto-re-entering at last exit price without human confirmation; audit whether trade_id 56 was manually approved or system-generated.",
+      "drift_amount_rs = 0.0 is clean today, but dhan_available_balance = null \u2014 missing balance data means the system cannot confirm if capital_deployed_max of 548,778 Rs was within approved limits; null balance is a risk monitoring blind spot."
+    ],
+    "recommendation": "Halt live trading immediately, fix the phase trade counter bug, add a same-symbol same-day re-entry block after two consecutive stops, and mandate rr_planned > 0 as a hard pre-order validation gate before resuming."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T11:11:49.933944+05:30",
+    "input_tokens": 3829,
+    "output_tokens": 1192
+  }
 }

@@ -223,5 +223,38 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "All 6 trades executed with zero qty_drift \u2014 no Bug A or Bug B class issues detected across ANGELONE, HSCL, SUZLON, BHEL, RELIANCE, SAIL.",
+      "PnL reconciliation is clean: gross_pnl_db and gross_pnl_dhan match exactly at -59.87 with drift_amount_rs = 0.0, confirming broker-DB sync integrity.",
+      "SAIL SHORT delivered the day's best net return (+360.99 estimated), validating the SHORT_REVERSAL strategy when relative weakness is present against a green sector.",
+      "ANGELONE GAP trade was the second-best net winner (+152.24), showing the GAP strategy is functioning correctly with proper volume confirmation above 2M threshold."
+    ],
+    "what_went_wrong": [
+      "SUZLON LONG was the largest single loss (-797.98 net) \u2014 a MOMENTUM trade entered long into a stock with Energy sector tailwind, yet force-exited negative; review whether 931-share size at Rs 53 is oversized relative to the day's capital deployment.",
+      "BHEL SHORT lost -225.35 net despite clear relative weakness logic \u2014 the SHORT_REVERSAL was force-exited, suggesting stop placement or timing on the SHORT_REVERSAL strategy is too tight.",
+      "HSCL MOMENTUM trade technically 'won' gross (+53.62) but lost net (-14.88) \u2014 charges of ~68.50 on a 62-qty trade completely consumed the gross edge; position size is too small to overcome charge drag.",
+      "4 of 6 trades were FORCE_EXITED \u2014 this is a systemic pattern, not isolated; either the exit trigger is premature or holding time is misaligned with the strategy's expected move duration."
+    ],
+    "patterns_observed": [
+      "FORCE_EXIT is the dominant outcome (4/6 trades: SUZLON, BHEL, RELIANCE, SAIL) \u2014 this suggests the force-exit mechanism is firing too broadly or too early, converting potential runners into capped exits.",
+      "All 6 trades logged confidence = 7 and rr_planned is either 0 or 2.0-2.2 \u2014 the two GAP/MOMENTUM trades with rr_planned = 0 (ANGELONE, HSCL) have no defined reward target, which is a planning gap.",
+      "Estimated charges total 436.39 against gross PnL of -59.87, meaning charges alone are 7x the gross loss \u2014 the account is charge-heavy relative to position sizing; small-qty trades like HSCL (62 shares) are structurally unprofitable.",
+      "Phase progress shows 0/50 trades counted toward Phase 2 despite 6 trades executed today \u2014 phase_status.trades_this_phase = 0 is inconsistent with today's activity and may indicate a phase tracking bug."
+    ],
+    "bugs_or_risks_flagged": [
+      "PHASE TRACKING DISCREPANCY: phase_status.trades_this_phase = 0 and win_count = 0 despite 6 trades and 4 wins recorded today \u2014 this is a likely bug in the phase counter update logic; affects ANGELONE, HSCL, SUZLON, BHEL, RELIANCE, SAIL.",
+      "rr_planned = 0 on ANGELONE and HSCL \u2014 trades entered without a defined risk-reward target are not auditable for strategy compliance; flag as a data integrity risk requiring mandatory rr_planned > 0 on all entries.",
+      "HSCL structural charge risk: gross PnL +53.62 consumed entirely by charges leaving -14.88 net \u2014 any trade with expected gross move under ~Rs 100 on sub-100 qty is mathematically charge-negative; needs a minimum edge filter.",
+      "drift_amount_rs = 0.0 \u2014 confirmed OK, no bug risk on this field today."
+    ],
+    "recommendation": "Fix the phase counter bug immediately (trades_this_phase shows 0 despite 6 live trades), and enforce a minimum gross_pnl_threshold filter pre-trade to reject setups like HSCL where expected move cannot cover estimated charges given the intended qty."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T11:13:03.135126+05:30",
+    "input_tokens": 2429,
+    "output_tokens": 1018
+  }
 }

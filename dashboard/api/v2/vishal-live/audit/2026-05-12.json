@@ -127,5 +127,35 @@
     "phase_progress": "25/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "All 3 trades executed with zero qty_drift \u2014 no slippage or fill discrepancies detected across ONGC and WIPRO.",
+      "PnL reconciliation between DB and Dhan is exact (drift_amount_rs = 0.0), indicating clean broker sync on trade_id 6 (ONGC)."
+    ],
+    "what_went_wrong": [
+      "WIPRO (trade_id 7) is tagged 'long' but strategy_type is 'SHORT_MOMENTUM' \u2014 direction and strategy are contradictory; rationale confirms a short thesis (IT sector -3.55%, WIPRO down 2.80%) yet a LONG was entered.",
+      "WIPRO (trade_id 7) shows rr_planned = 0 despite rationale citing a 2.0:1 R:R \u2014 this is a data integrity failure, either at trade logging or strategy engine level.",
+      "Gross PnL of 7.15 is entirely consumed by estimated charges of 155.78, producing net_pnl of -148.63 \u2014 at current position sizing and win rate (28%), charges are destroying edge.",
+      "ONGC (trade_id 5) remains OPEN with no exit_price \u2014 an unresolved position at audit time creates overnight or next-session risk that is unquantified in this report."
+    ],
+    "patterns_observed": [
+      "Both ONGC trades (trade_id 5 and 6) entered the same symbol same direction within the same session \u2014 possible double-dip or re-entry pattern that inflates capital concentration in one name (ONGC ~$11.5K deployed).",
+      "Phase 1 win rate is 28% over 25 trades \u2014 below the 40%+ typically required to offset brokerage drag; current trajectory will not support Phase 2 qualification without strategy adjustment.",
+      "FORCE_EXIT tag on trade_id 6 (ONGC) with only 0.55 Rs move suggests premature exit \u2014 planned target was 3.77% but trade was closed at a fraction, capping the winning trade well below its R:R potential."
+    ],
+    "bugs_or_risks_flagged": [
+      "BUG \u2014 WIPRO (trade_id 7): direction='LONG' conflicts with strategy_type='SHORT_MOMENTUM'; if the execution engine fired a LONG order on a SHORT_MOMENTUM signal, this is a critical logic inversion bug that must be traced to the signal-to-order translation layer immediately.",
+      "BUG \u2014 WIPRO (trade_id 7): rr_planned = 0 is almost certainly a null/zero default write error at trade inception; the rationale confirms a valid 2.0:1 R:R was computed, meaning the field was never populated \u2014 audit the trade logging pipeline for missing rr_planned writes.",
+      "RISK \u2014 ONGC (trade_id 5): open position with no exit_price and pnl_net_estimated already at -51.94 Rs in charges alone; if this rolls overnight without a hard SL in the system, downside is unbounded relative to the day's gross PnL of 7.15 Rs.",
+      "RISK \u2014 drift_amount_rs = 0.0 is clean today, but dhan_available_balance = null indicates the balance feed is broken; a null balance field means margin and buying-power checks cannot be validated \u2014 fix the balance API pull before next session."
+    ],
+    "recommendation": "Fix the SHORT_MOMENTUM-to-LONG order inversion bug in WIPRO (trade_id 7) before next session, and halt trading until the signal-to-direction translation layer is audited and confirmed correct \u2014 a misfire of this type in larger size will cause outsized losses."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-21T23:36:50.322821+05:30",
+    "input_tokens": 1507,
+    "output_tokens": 907
+  }
 }

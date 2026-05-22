@@ -252,5 +252,41 @@
     "phase_progress": "25/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "Zero qty_drift across all 7 trades \u2014 execution layer is clean, no Bug A or Bug B class issues detected.",
+      "drift_amount_rs = 0.0 and drift_vs_db = OK confirms DB and broker PnL are in sync; no reconciliation risk today.",
+      "TECHM (trade_id 19) correctly identified as lone green sector play on a red day, captured +31.21 gross before charges.",
+      "Position sizing is consistent and controlled \u2014 max capital deployed 27,112 across 7 trades, no single oversized bet."
+    ],
+    "what_went_wrong": [
+      "Net PnL is -353.51 after charges of 363.56, meaning charges alone wiped the day \u2014 gross PnL of 10.05 is structurally insufficient to survive transaction costs at this size.",
+      "TATASTEEL was traded twice (trade_id 17 and 20) on the same SHORT_GAP thesis, both stopped out \u2014 re-entering a name that already stopped you out same day is a discipline failure, not a strategy decision.",
+      "TECHM trade_id 19 shows rr_planned = 0, which is a data integrity issue \u2014 every executed trade must have a non-zero planned R:R before entry.",
+      "TECHM trade_id 23 entered at 1,427 vs trade_id 19 entry at 1,401 \u2014 chasing a stock up 26 points after a prior force-exit on the same name same day destroyed the R:R premise entirely.",
+      "6 of 7 trades are STOPPED_OUT \u2014 the stop placement or entry timing is systematically off; winners are not being let run while losers are hitting stops consistently.",
+      "pnl_net_estimated is negative even on the winning TECHM trade (-20.89) \u2014 at current position sizes, charges per trade (~52 Rs average) exceed realistic per-trade gross profit potential."
+    ],
+    "patterns_observed": [
+      "Same-symbol re-entry pattern: TATASTEEL shorted twice (trade_id 17, 20) and TECHM longed twice (trade_id 19, 23) \u2014 this is a revenge/conviction trading loop, not a systematic signal.",
+      "All 5 SHORT trades (TATASTEEL x2, ETERNAL, SBIN, CANBK) lost despite correct directional read on a bearish day \u2014 entries are likely too late in the move, buying into exhausted momentum rather than leading it.",
+      "Charges-to-gross ratio is 36:1 (363.56 charges vs 10.05 gross) \u2014 at Phase 1 capital levels, the cost structure makes profitability mathematically improbable without much larger per-trade moves.",
+      "Win rate is 28% over 25 Phase 1 trades \u2014 with a stated R:R of 2.0:1, breakeven win rate is ~33%; the system is currently below breakeven threshold."
+    ],
+    "bugs_or_risks_flagged": [
+      "BUG RISK \u2014 trade_id 19 (TECHM): rr_planned = 0 is an invalid value; this field should never be zero on an executed trade \u2014 indicates either a pre-trade validation gap or a logging failure.",
+      "DATA INTEGRITY \u2014 trade_id 22 (CANBK): rationale_summary is truncated ('Weakest sector moment' \u2014 no period, incomplete sentence) suggesting a logging/truncation bug in the rationale capture pipeline.",
+      "DATA INTEGRITY \u2014 trade_id 23 (TECHM): rationale_summary also truncated ('Classic green-stock-on-red-day reversal play with') \u2014 same truncation bug affecting at least 2 of 7 records today.",
+      "EXECUTION RISK \u2014 TATASTEEL trade_id 20 re-entry after trade_id 17 stop-out: no rule in bugs_observed or tags flags this as a re-entry; the system is not enforcing a same-symbol same-day re-entry block.",
+      "COST STRUCTURE RISK \u2014 estimated_charges of 363.56 on 27,112 capital deployed = 1.34% round-trip cost drag; at Phase 1 lot sizes, this makes net profitability structurally dependent on home-run trades that the 2% SL regime cannot produce."
+    ],
+    "recommendation": "Immediately patch the rr_planned = 0 validation and rationale truncation bugs, enforce a hard same-symbol same-day re-entry block, and run a charges sensitivity analysis \u2014 at current capital and lot sizes, net profitability requires average gross per trade above 52 Rs which demands either larger position sizes or wider profit targets before Phase 2 is considered."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T10:18:34.041491+05:30",
+    "input_tokens": 2726,
+    "output_tokens": 1121
+  }
 }

@@ -1,0 +1,13 @@
+{
+  "validated_at": "2026-05-22T14:52:24.138380+05:30",
+  "schema_ok": true,
+  "trust_score": 1.0,
+  "claims_total": 26,
+  "verified": 15,
+  "failed": 0,
+  "structurally_skipped": 0,
+  "external_data_needed": 1,
+  "opinion": 10,
+  "failures": [],
+  "skipped_details": []
+}

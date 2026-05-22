@@ -158,5 +158,37 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "HINDPETRO LONG (trade 107) was the standout trade: +470.87 gross PnL on 131 shares, sector-aligned with NIFTY ENERGY +0.90%, and correctly identified as a gap-recovery momentum setup.",
+      "Zero qty_drift across all 4 trades \u2014 order sizing executed exactly as intended on BEL, NMDC, TATASTEEL, and HINDPETRO.",
+      "drift_amount_rs is 0.0 and drift_vs_db is OK \u2014 DB and Dhan PnL reconcile perfectly across all trades.",
+      "All 4 trades attempted were executed \u2014 no slippage or failed orders at the broker level."
+    ],
+    "what_went_wrong": [
+      "HINDPETRO (trade 107) has rr_planned = 0 \u2014 a live trade executed with no defined risk-reward target is a process violation and must be corrected before next session.",
+      "3 of 4 trades (BEL, NMDC, TATASTEEL) were STOPPED_OUT shorts with net losses of -73.27, -150.83, and -96.31 respectively after charges \u2014 gross wins mean nothing when charges consume or invert PnL.",
+      "BEL (trade 104) is logged as won=true with pnl_db=+1.73 but pnl_net_estimated=-73.27 \u2014 a trade that costs 73 Rs net should not be classified as a win; the won flag logic does not account for charges.",
+      "Estimated charges of 299.77 Rs against gross PnL of 375.39 Rs represent a 79.9% charge-to-gross ratio \u2014 at this capital and trade frequency, the cost structure is destroying edge on smaller-move trades like NMDC and TATASTEEL."
+    ],
+    "patterns_observed": [
+      "All 3 SHORT trades (BEL, NMDC, TATASTEEL) were stopped out despite valid sector-aligned rationales \u2014 suggests stop placement may be too tight or short entries are being taken too close to intraday lows with insufficient room.",
+      "The single LONG trade (HINDPETRO) drove 100% of profitable PnL (+470.87) while all SHORT setups net-negative after charges \u2014 directional bias toward SHORTs on this date was a drag; LONG momentum setups outperformed.",
+      "Phase progress shows 0/50 trades counted toward Phase 2 despite 4 trades executed today \u2014 phase_status counter appears disconnected from today's trades and needs investigation."
+    ],
+    "bugs_or_risks_flagged": [
+      "BUG RISK \u2014 rr_planned=0 on HINDPETRO (trade 107): A force-exited trade with no planned RR logged is a data integrity issue; either the RR was never set pre-trade or it failed to write, both are unacceptable for backtesting validity.",
+      "BUG RISK \u2014 won=true on BEL (trade 104) despite pnl_net_estimated=-73.27: The won flag is driven by gross pnl_db (+1.73) not net PnL \u2014 this will corrupt win_rate stats in phase tracking and any downstream strategy scoring.",
+      "BUG RISK \u2014 phase_status.trades_this_phase=0 and win_count=0 despite 4 trades on this date: Phase counter is not incrementing from today's session, suggesting a phase-assignment or trade-tagging pipeline failure that will break Phase 2 eligibility tracking.",
+      "RISK \u2014 No bugs_observed filed in the audit log despite the above three issues being present: The automated bug detection is either not running or has silent failure modes \u2014 manual override required."
+    ],
+    "recommendation": "Fix the won-flag logic to use pnl_net_estimated (not pnl_db) as the win/loss arbiter immediately, then audit why phase_status trade counters did not increment from today's 4 executed trades before the next session runs."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T10:50:24.892569+05:30",
+    "input_tokens": 1812,
+    "output_tokens": 967
+  }
 }

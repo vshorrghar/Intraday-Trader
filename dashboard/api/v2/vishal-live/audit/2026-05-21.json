@@ -138,5 +138,36 @@
   },
   "bugs_observed": [
     "Qty drift on HFCL: DB=31, Dhan=62"
-  ]
+  ],
+  "narrative": {
+    "what_went_right": [
+      "All 3 trades executed successfully with zero slippage on qty for BEL (trade_id 28) and ANGELONE (trade_id 29), qty_drift=0 on both.",
+      "ANGELONE (trade_id 29) and HFCL (trade_id 30) both closed as wins, demonstrating valid momentum entry logic on high-volume setups."
+    ],
+    "what_went_wrong": [
+      "BEL (trade_id 28) was FORCE_EXITED at a loss of -74.98 DB / -43.5 Dhan; a planned RR of 2.0 was not realized, suggesting stop placement or exit timing failure.",
+      "ANGELONE (trade_id 29) has rr_planned=0, which means either the RR was not set before entry or was not logged \u2014 this is a pre-trade discipline failure regardless of outcome.",
+      "HFCL (trade_id 30) also has rr_planned=0 and carried a Bug A qty drift; the win here masks the operational risk of doubling position size unintentionally.",
+      "Net PnL is -138.59 after charges despite 2 wins out of 3 \u2014 charges of 156.57 are consuming all gross profit, indicating position sizes are too small relative to charge drag.",
+      "Phase 1 win rate is 28% across 25 trades, well below any viable threshold for progression; today's session does not materially improve that trajectory."
+    ],
+    "patterns_observed": [
+      "All 3 trades are LONG MOMENTUM with gap-up entries \u2014 zero directional or strategy diversification, creating correlated drawdown risk on any broad market reversal.",
+      "Two of three trades (ANGELONE trade_id 29, HFCL trade_id 30) have rr_planned=0, suggesting RR calculation is being skipped or not enforced at order entry.",
+      "Every trade has a negative pnl_net_estimated despite two gross wins \u2014 charge drag is a systemic issue at current capital deployment levels around 13127 Rs."
+    ],
+    "bugs_or_risks_flagged": [
+      "BUG A \u2014 HFCL (trade_id 30): qty_drift=31, Dhan executed 62 shares vs DB intended 31; this is a confirmed order duplication or double-fill bug that must be investigated in the order routing layer immediately.",
+      "DRIFT RISK \u2014 drift_amount_rs=57.99 flagged between DB and Dhan gross PnL (DB: -40.01, Dhan: +17.98); this 57.99 Rs discrepancy is unreconciled and may compound across sessions into material misreporting.",
+      "HFCL (trade_id 30) pnl_db=8.24 vs pnl_dhan=36.58 \u2014 the 28.34 Rs gap is directly explained by the double qty in Dhan; if Bug A is not fixed, live risk is double the intended exposure on any future HFCL or similar trade.",
+      "rr_planned=0 on ANGELONE (trade_id 29) and HFCL (trade_id 30) \u2014 trading without a logged RR target is a process control failure; if stops were placed without logging, the audit trail is incomplete and unauditable."
+    ],
+    "recommendation": "Immediately audit and patch the HFCL order routing bug (Bug A, trade_id 30) to prevent double-fill recurrence, and enforce a hard pre-trade gate that blocks order submission if rr_planned=0 or drift_amount_rs > 0 is unresolved from the prior session."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-21T22:08:18.553217+05:30",
+    "input_tokens": 1530,
+    "output_tokens": 892
+  }
 }

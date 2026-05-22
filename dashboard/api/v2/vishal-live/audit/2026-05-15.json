@@ -256,5 +256,45 @@
     "phase_progress": "25/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "Zero qty_drift across all 7 trades \u2014 execution layer is clean, no Bug A or Bug B class issues detected.",
+      "drift_amount_rs = 0.0 and drift_vs_db = OK \u2014 DB and Dhan PnL are perfectly reconciled, no data integrity issues.",
+      "Charges infrastructure is intact \u2014 estimated_charges tracked at 363.62, net_pnl is independently calculated from gross.",
+      "Trade 14 (INFY) shows near-breakeven gross PnL (-1.97) on a STOPPED_OUT, suggesting stop discipline briefly worked as intended."
+    ],
+    "what_went_wrong": [
+      "7/7 trades lost, 0 wins \u2014 0% win rate today is a hard stop signal; trading on a bearish broad market day with 7 LONG-only entries shows directional bias blindness.",
+      "HDFCBANK was traded twice (trades 11 and 13) within the same session in the same direction, compounding single-stock loss to -144.21 gross with no evidence of prior stop reassessment.",
+      "INFY was traded three times (trades 12, 14, 15) in the same direction on the same day, stacking losses to -50.10 gross and -206.28 net estimated \u2014 this is overtrading a losing name.",
+      "6 of 7 trades tagged FORCE_EXITED, meaning systematic end-of-session exits drove losses, not disciplined stop-outs \u2014 intraday SL discipline appears absent or too wide.",
+      "rr_planned = 0 on trade 14 (INFY) \u2014 a live trade was entered with no planned R:R, which is a process violation.",
+      "Net PnL estimated at -633.42 versus gross -269.8 \u2014 charges of 363.62 represent 135% of gross loss, meaning the cost structure is destroying edge before price action even acts.",
+      "Phase 1 win rate is 28% across 25 trades \u2014 well below any viable edge threshold; continuing to Phase 2 at this rate is premature."
+    ],
+    "patterns_observed": [
+      "All 7 trades were LONG on a day where broad market was bearish \u2014 strategy has no SHORT capability or bearish-day filter, creating systematic directional mismatch.",
+      "Repeat entries into INFY (3x) and HDFCBANK (2x) on losing days suggests no intraday symbol-level loss limit rule is enforced.",
+      "FORCE_EXIT dominance (6/7) indicates trades are not hitting SL or TP intraday \u2014 they are being held to session close, which negates the stated 2% SL logic in rationale.",
+      "All confidence scores are 7-8 yet all trades lost \u2014 confidence scoring is uncalibrated and not predictive; it should be audited against historical outcomes.",
+      "Charges per trade average 51.94 INR; on small-qty trades like INFY (qty 3-4) and UNITDSPR (qty 2), charges consume 50-100%+ of any realistic gross profit target."
+    ],
+    "bugs_or_risks_flagged": [
+      "RISK \u2014 trade 14 (INFY): rr_planned = 0 on a live executed trade; this is a critical process gap \u2014 no trade should be logged or executed without a defined R:R.",
+      "RISK \u2014 trade 14 (INFY): rationale_summary is truncated, ending with 'VI' \u2014 logging pipeline has a character-limit or write bug cutting off trade rationale mid-sentence.",
+      "RISK \u2014 INFY traded 3x same direction same day (trades 12, 14, 15): no per-symbol daily trade limit guard is enforced in execution logic.",
+      "RISK \u2014 HDFCBANK traded 2x same direction same day (trades 11, 13): same per-symbol guard absence confirmed across two symbols.",
+      "RISK \u2014 6/7 FORCE_EXIT outcomes: if 2% SL is set at entry but price never triggers it intraday, the SL is either not being placed as a live order or is set too wide; verify broker-side SL order placement for all FORCE_EXITED trades.",
+      "RISK \u2014 dhan_available_balance = null: end-of-day capital availability is unrecorded; this prevents margin utilization auditing and is a data pipeline gap that must be fixed.",
+      "NOTE \u2014 drift_amount_rs = 0.0: confirmed no bug risk on this field per rules."
+    ],
+    "recommendation": "Halt live trading immediately and implement three hard rules before next session: (1) a per-symbol max 1 re-entry daily limit, (2) a bearish-market-day LONG filter or SHORT capability, and (3) broker-side SL order confirmation logging to eliminate FORCE_EXIT as the dominant outcome."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T10:18:07.551888+05:30",
+    "input_tokens": 2635,
+    "output_tokens": 1169
+  }
 }

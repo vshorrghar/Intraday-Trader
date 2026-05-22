@@ -220,5 +220,40 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "All 6 trades executed with zero qty_drift across the board \u2014 no slippage or fill discrepancies on INFY, IOC, COHANCE, ADANIGREEN, HSCL, IDBI.",
+      "PnL reconciliation is clean: gross_pnl_db matches gross_pnl_dhan exactly at -1433.46, drift_amount_rs is 0.0 \u2014 books are tight.",
+      "INFY (trade_id 58) delivered the best net result at +143.7 net, validating the IT sector momentum read with confidence 9.",
+      "HSCL (trade_id 62) and IDBI (trade_id 63) both converted stopped-out outcomes to wins, suggesting stops were placed with enough room to let trades breathe."
+    ],
+    "what_went_wrong": [
+      "COHANCE (trade_id 60) entry was 4.95% above open \u2014 rationale itself flagged 'Watch for entry' yet the trade was taken; this single trade accounts for -999.94 gross PnL and -1067.26 net, nearly the entire day's loss.",
+      "ADANIGREEN (trade_id 61) lost -942.08 gross (-1011.30 net); combined with COHANCE, two losing trades wiped out all four winners and then some, pointing to asymmetric loss sizing.",
+      "IOC (trade_id 59) was tagged STOPPED_OUT yet marked won=true with a positive pnl_db of 63.48 \u2014 outcome label is contradictory and likely a data integrity issue.",
+      "rr_planned is recorded as 0 on trades 58, 59, 62, 63 \u2014 missing R:R planning data makes post-trade analysis unreliable and suggests pre-trade discipline is inconsistent.",
+      "phase_status shows 0 trades counted this phase despite 6 trades logged today \u2014 phase counter is not updating, which will corrupt phase progression tracking."
+    ],
+    "patterns_observed": [
+      "All 6 trades are LONG-only on a broadly green day \u2014 no short setups attempted, indicating a directional bias that may underperform on mean-reversion or red days.",
+      "The two largest-position-size trades by capital (COHANCE 75 lots at 461.8, ADANIGREEN 27 lots at 1424.0) are both losers, while the four winners are smaller-capital trades \u2014 position sizing is inversely correlated with outcome today.",
+      "Three of four winning trades have rr_planned=0, suggesting wins may be coming from unplanned or reactive exits (FORCE_EXITED on INFY confirms this) rather than structured target hits.",
+      "Charges of 409.84 on gross_pnl of -1433.46 represent a 28.6% drag \u2014 high turnover relative to profit capture, particularly visible on IOC (trade_id 59) where net flips negative (-3.96) despite a gross win."
+    ],
+    "bugs_or_risks_flagged": [
+      "PHASE COUNTER BUG: phase_status.trades_this_phase=0 and win_count=0 despite 6 executed trades and 4 wins in today's log \u2014 phase progression logic is not consuming today's trades; affects INFY, IOC, COHANCE, ADANIGREEN, HSCL, IDBI.",
+      "DATA INTEGRITY \u2014 IOC (trade_id 59): outcome='STOPPED_OUT' but won=true and pnl_db=+63.48 \u2014 a stop-out should not be a winner unless stop was on the profit side; label conflict must be resolved or outcome taxonomy is broken.",
+      "MISSING RR DATA: rr_planned=0 on trades 58, 59, 62, 63 \u2014 zero is indistinguishable from 'not set' vs 'genuinely no R:R planned'; use null or a sentinel value to avoid silent data corruption in backtesting.",
+      "RISK CONTROL GAP \u2014 COHANCE (trade_id 60): system accepted an entry 4.95% above open flagged in its own rationale as a stretched entry; no automated entry-distance guard triggered, indicating missing pre-trade filter enforcement.",
+      "dhan_available_balance=null \u2014 capital utilization at 219,695 with no balance visibility is a live risk; if margin is close to limit, next trade could face rejection with no warning."
+    ],
+    "recommendation": "Fix the phase counter bug immediately as it will corrupt all progression metrics, then add a hard pre-trade filter rejecting any entry more than 3% above open to prevent repeat COHANCE-class losses."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T11:12:16.257752+05:30",
+    "input_tokens": 2247,
+    "output_tokens": 1115
+  }
 }

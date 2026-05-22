@@ -1,0 +1,24 @@
+{
+  "validated_at": "2026-05-22T14:52:24.147289+05:30",
+  "schema_ok": true,
+  "trust_score": 0.9,
+  "claims_total": 31,
+  "verified": 18,
+  "failed": 0,
+  "structurally_skipped": 2,
+  "external_data_needed": 3,
+  "opinion": 8,
+  "failures": [],
+  "skipped_details": [
+    {
+      "field": "what_went_wrong[0]",
+      "claim": "trade_id 60 value 4.95",
+      "reason": "value_not_in_trade_fields"
+    },
+    {
+      "field": "bugs_or_risks_flagged[3]",
+      "claim": "trade_id 60 value 4.95",
+      "reason": "value_not_in_trade_fields"
+    }
+  ]
+}

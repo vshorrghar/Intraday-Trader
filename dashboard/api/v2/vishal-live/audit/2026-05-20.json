@@ -64,5 +64,32 @@
     "phase_progress": "25/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "TATASTEEL: qty_drift = 0, execution was clean \u2014 intended 22 shares, got 22 shares, no slippage on fill size.",
+      "TATASTEEL: PnL reconciliation is exact \u2014 db and Dhan both show 3.37 Rs, drift_amount_rs = 0.0, books are clean."
+    ],
+    "what_went_wrong": [
+      "TATASTEEL: Gross PnL 3.37 Rs vs estimated charges 52.24 Rs \u2014 net is -48.87 Rs; this trade had no business being taken if charges consume 15x the gross profit.",
+      "TATASTEEL SHORT_MOMENTUM trade was stopped out at 204.10 against a short entry at 203.73 \u2014 price moved against the position immediately, RR planned was 2.0 but realized outcome was a loss after charges despite 'won: true' flag, which is misleading.",
+      "Phase 1 win rate is 28.0% across 25 trades \u2014 well below any viable threshold; at this charge-to-gross ratio, even a 60% win rate may not produce net profitability."
+    ],
+    "patterns_observed": [
+      "Single-trade days with sub-100 Rs gross PnL are structurally unprofitable given 52+ Rs charge load \u2014 this is a sizing and frequency problem, not a signal quality problem.",
+      "SHORT_MOMENTUM on TATASTEEL was directionally aligned (sector red, price down -2.66%, VIX elevated) yet still stopped out \u2014 momentum entries during high-VIX days may be getting tagged at extended levels with insufficient buffer before SL."
+    ],
+    "bugs_or_risks_flagged": [
+      "TATASTEEL: 'won: true' with 'outcome: STOPPED_OUT' and net PnL of -48.87 Rs is a data integrity risk \u2014 the 'won' flag appears to be based on gross_pnl_db > 0 (3.37 Rs), not net PnL; this will corrupt win_rate and phase progression metrics if left uncorrected.",
+      "Phase win_rate of 28.0% is being tracked against gross outcomes, not net \u2014 7 'wins' in 25 trades may all be net losers after charges; the phase progression logic is likely built on a flawed win definition.",
+      "dhan_available_balance is null \u2014 missing balance snapshot is an operational risk; cannot verify if capital constraints affected execution or if margin calls are approaching."
+    ],
+    "recommendation": "Immediately patch the 'won' flag logic to evaluate net_pnl_estimated, not pnl_db, and halt phase progression counting until win_rate is recalculated on net basis \u2014 current 28% gross win rate almost certainly inverts to 0-10% net, making Phase 2 promotion criteria meaningless."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T10:19:12.003876+05:30",
+    "input_tokens": 893,
+    "output_tokens": 689
+  }
 }

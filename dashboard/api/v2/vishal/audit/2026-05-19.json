@@ -253,5 +253,41 @@
     "phase_progress": "0/50 trades to Phase 2"
   },
   "dhan_raw_summary": null,
-  "bugs_observed": []
+  "bugs_observed": [],
+  "narrative": {
+    "what_went_right": [
+      "Perfect execution fidelity: all 7 trades had qty_drift=0, meaning intended vs actual qty matched across INFY, IOC, ADANIGREEN, IDBI, HINDPETRO, TCS, HSCL.",
+      "gross_pnl_db and gross_pnl_dhan are identical at 245.78 with drift_amount_rs=0.0, confirming clean broker reconciliation for the day.",
+      "5/7 win rate (71.4%) with disciplined RR entries (2.17-2.22:1) on INFY, IOC, ADANIGREEN, IDBI, HSCL \u2014 strategy selection and entry timing held up.",
+      "IDBI delivered the best net winner at +233.19 net estimated, validating PSU Bank momentum entry despite slightly below-threshold volume."
+    ],
+    "what_went_wrong": [
+      "Estimated charges of 458.39 obliterated gross PnL of 245.78, flipping the day to -212.61 net \u2014 charge drag is the #1 performance killer today.",
+      "TCS lost -748.59 net estimated on a FORCE_EXIT, single-handedly wiping out INFY (+149.25) and two other winners; force exit on a loser signals stop discipline or exit-trigger logic may need review.",
+      "IOC net PnL was only +1.04 after charges on a 286-qty trade \u2014 this trade was essentially charge-negative at scale and should be questioned for minimum edge threshold.",
+      "HINDPETRO FORCE_EXIT produced -66.97 net on a trade with gross PnL of only -3.26, meaning charges dominated; small gross moves with high qty or brokerage are destroying net edge.",
+      "rr_planned=0 on 5 of 7 trades (INFY, IOC, ADANIGREEN, IDBI, HSCL) \u2014 planned RR is not being logged at entry, creating a blind spot in pre-trade discipline tracking.",
+      "phase_status shows trades_this_phase=0 and win_count=0 despite 7 trades and 5 wins logged today \u2014 phase tracker is not syncing with actual trade data."
+    ],
+    "patterns_observed": [
+      "All 7 trades were LONG on a broad gap-up day \u2014 zero directional diversification; strategy is fully correlated to market-open momentum and will be catastrophically exposed on a gap-up fade day.",
+      "3 of 7 trades were FORCE_EXITED (INFY, TCS, HINDPETRO); force exits skew outcomes unpredictably \u2014 winning on INFY but losing badly on TCS suggests force-exit timing logic is inconsistent.",
+      "IT sector concentration risk: both INFY and TCS were traded simultaneously under the same IT momentum thesis \u2014 TCS loss partially offset INFY gain, netting sector exposure without sector-level position sizing.",
+      "Charge-to-gross ratio is 186% (458.39 charges vs 245.78 gross) \u2014 at this ratio, the system needs a significantly higher gross PnL per trade to be viable; low-price high-qty trades like IOC and IDBI are charge traps."
+    ],
+    "bugs_or_risks_flagged": [
+      "PHASE TRACKER BUG: phase_status.trades_this_phase=0 and win_count=0 despite 7 executed trades and 5 wins in today's log \u2014 phase counter is not reading from the correct data source or is resetting incorrectly; tag: INFY, IOC, ADANIGREEN, IDBI, TCS, HINDPETRO, HSCL.",
+      "rr_planned=0 on trade_ids 97, 98, 99, 100, 103 (INFY, IOC, ADANIGREEN, IDBI, HSCL) \u2014 either RR is not being computed pre-entry or not being written to DB; this is a data integrity gap, not a trade execution bug but must be fixed before phase progression.",
+      "drift_amount_rs=0.0 is clean \u2014 no drift bug today, confirmed OK.",
+      "All qty_drift=0 across all trades \u2014 no Bug A or Bug B class quantity drift detected today.",
+      "dhan_available_balance=null \u2014 balance field is not being populated post-session; this prevents real-time capital utilization checks and is a monitoring blind spot risk."
+    ],
+    "recommendation": "Immediately fix the phase tracker sync bug and enforce a minimum net-PnL-after-charges threshold per trade (suggest \u226550 Rs net) to auto-reject setups like IOC (+1.04 net) before entry, or the system will grind capital on charge drag regardless of win rate."
+  },
+  "narrative_meta": {
+    "model": "us.anthropic.claude-sonnet-4-6",
+    "generated_at": "2026-05-22T10:50:02.838402+05:30",
+    "input_tokens": 2572,
+    "output_tokens": 1150
+  }
 }
