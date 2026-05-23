@@ -919,3 +919,119 @@ Status: TRULY 30% complete (code exists, integration missing).
 Next: Saturday weekend session — rewrite run_swing.py to wire real modules.
 First real swing trade: earliest Monday May 25 (paper only).
 
+
+---
+
+## TODAY (2026-05-24 EOD) — STRATEGY OVERHAUL SESSION
+
+### Key Discovery
+System was LLM-driven, not rule-based. Claude via Bedrock made ALL trade decisions.
+Strategy labels (VWAP, ORB, MOMENTUM) were LLM opinions, not computed conditions.
+Confidence scores INVERTED: conf 6 = 71% WR (best), conf 8 = 46% WR (worst).
+min_confidence_score: 7 was filtering OUT the best trades.
+
+### Data Analysis Run
+  vishal-live:  29 trades, 28% WR, -Rs.412 net (real money Rs.15K)
+  vishal-paper: 86 trades, 64% WR, +Rs.2,780 net (paper)
+  neha-paper:   81 trades, 54% WR, -Rs.6,031 net (paper)
+
+### Backtest Infrastructure Built
+  backtest/rule_engine.py       — ORB+VWAP+ATR signals (NO LLM)
+  backtest/run_big_test.py      — intraday + F&O combined test
+  backtest/run_full_backtest.py — all strategy variants
+  backtest/universes.py         — FNO_ELIGIBLE + GAP_STRATEGY_BLACKLIST
+
+### V6 Strategy — Backtested Results (6 months, after fixing direction bug)
+  Win rate:      60.0% (after sector filtering)
+  Profit factor: 3.72
+  Net 6 months:  +Rs.4,983 at Rs.2L capital
+  Monthly avg:   +Rs.830
+  Active days:   15 of 117 (selective — only on catalyst gap days)
+
+V6 Signal definition:
+  1. Stock gapped > 1.5% at open (catalyst)
+  2. Nifty UP on the day (market direction filter)
+  3. Price breaks opening range high (9:15-9:30)
+  4. Price above VWAP (computed from open)
+  5. Volume > 1.5x stock 20-day average (relative volume)
+  Stop: entry - (1.5 x ATR14)
+  Target: entry + (3 x ATR14) = 2:1 RR
+
+### Sector Blacklist (stocks that fail on gap days)
+  GAP_STRATEGY_BLACKLIST in backtest/universes.py:
+  BPCL, HINDPETRO, CHENNPETRO, IOC (oil marketing — gap fades)
+  GODREJPROP, DLF (real estate — gap fades)
+  ADANIPOWER, ADANIGREEN, ADANIENT (too volatile)
+  APLAPOLLO, JIOFIN, COFORGE (consistent losers)
+
+### Top Performing Stocks on Gap Days
+  HINDZINC, SHRIRAMFIN, GRASIM, POWERGRID, ULTRACEMCO
+  Common trait: PSU infra, financials, manufacturing
+
+### F&O Module Status (discovered today)
+  5,400 lines already built and running paper daily (96 strategies)
+  Primary strategy: Iron Condor (SELLING with hedge) — correct approach
+  Real paper results: 23 IRON_CONDOR trades, Rs.4,124 profit, 78% WR
+  Known bug: pnl_calculator.py shows Rs.92K on Rs.216 premium (impossible)
+  Fix P&L bug before trusting any F&O numbers
+  Readiness: 7/10 paper, 4/10 live
+
+### Swing Module Status (discovered today)
+  1,620 lines already built but NEVER RUN (0 trades)
+  Scanner uses REAL math: SMA, RSI(2), hammer/engulfing patterns
+  Strategy: 20-DMA Pullback, LONG only, CNC delivery
+  Entry: near 20-DMA + RSI(2) < 10 + bullish candle
+  Exit: +8% target OR -4% stop loss OR 15 days max hold
+  Missing: daily OHLC data fetcher + cron entry
+  Readiness: 5/10 paper, 3/10 live
+
+### New Files Created Today
+  backtest/rule_engine.py
+  backtest/run_big_test.py
+  backtest/run_full_backtest.py
+  backtest/universes.py (with FNO_ELIGIBLE, NIFTY500, GAP_STRATEGY_BLACKLIST)
+  intraday/selector_v2.py (started — rule-based V6 picker)
+  config/profiles/vishal-v2.yaml (paper only, rule-based)
+  audit/STRATEGY_FORENSICS.md
+  audit/FNO_CODE_AUDIT.md
+  audit/SWING_CODE_AUDIT.md
+  vishal-docs/SONNET_LOGICS.md (18 sections, master strategy design)
+
+### Decisions Made Today (do not relitigate)
+  1. Never delete vishal-live v1 — always keep as rollback
+  2. v2 (rule-based) runs alongside v1, not replacing it
+  3. Paper before live — always
+  4. Staged capital: paper then Rs.25K then Rs.50K then Rs.1L
+  5. Three streams: intraday V6 + swing 20-DMA + F&O Iron Condor
+  6. F&O = SELLING with hedge (Iron Condor), NOT buying options
+  7. Long only for intraday (short signals failed — 10-20% WR)
+  8. Sector blacklist applied to V6 strategy
+  9. Confidence score is noise — remove or lower to 6
+
+### Backtest Bugs Found and Fixed Today
+  Bug: STOPPED_OUT showing profit (short signals treated as longs)
+  Bug: Exit checked ALL candles including pre-entry
+  Fix: Long-only filter (gap_pct > 0 AND direction == LONG)
+  Fix: Walk candles AFTER entry_idx only
+  Fix: Use c["low"] <= sl (not c["close"])
+
+### P0 Bugs Status (from prior audit — still unfixed)
+  P0-1: Force-exit-lies (most dangerous — fix first)
+  P0-2: Cross-process token
+  P0-3: Orphan SL on trailing-exit
+  P0-4: No automated orphan detection
+  P0-5: RR data integrity
+  Decision: Fix after strategy edge confirmed
+
+### Next Session Priorities
+  1. Fix F&O P&L bug in fno/pnl_calculator.py
+  2. Read real F&O paper performance after fix
+  3. Complete selector_v2.py, wire into run_intraday.py
+  4. Wire swing module: daily OHLC fetcher + cron
+  5. Deploy all three in paper simultaneously
+
+### How To Start Next Session
+  Read .kiro/steering/CONTEXT.md (this file rebuilt)
+  Then check: ps aux | grep run_daily
+  Then check: tail -20 logs/cron_vishal.log
+  Then ask: what is running, last results, top issues

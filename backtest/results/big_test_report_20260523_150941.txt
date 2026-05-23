@@ -1,0 +1,103 @@
+======================================================================
+BIG TEST REPORT — Intraday + F&O Simulation
+Capital: Intraday ₹200,000 | F&O ₹200,000
+Generated: 2026-05-23 15:09 IST
+======================================================================
+
+──────────────────────────────────────────────────────────────────────
+TEST A — INTRADAY (V6 Strategy, F&O Universe)
+──────────────────────────────────────────────────────────────────────
+  Capital:        ₹200,000
+  Per trade:      ₹50,000
+  Max positions:  4 simultaneous
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Total days:     117
+  Active days:    49 (signal fired)
+  Skipped days:   68 (no catalyst gap)
+  Total trades:   96
+  Win rate:       76.0%  (73W / 23L)
+  Profit factor:  8.54
+  Total gross:    ₹43,164.92
+  Total charges:  ₹5,057.00
+  Total net 6m:   ₹38,107.92
+  Monthly avg:    ₹6,351.32
+  Per trade avg:  ₹396.96
+  Annual proj:    ₹76,215.84
+
+  Monthly breakdown:
+    2025-12: ₹  +1,358  (2 trades)
+    2026-01: ₹    -924  (12 trades)
+    2026-02: ₹  +6,023  (12 trades)
+    2026-03: ₹ +17,406  (32 trades)
+    2026-04: ₹  +9,729  (26 trades)
+    2026-05: ₹  +4,516  (12 trades)
+
+  Top 10 stocks:
+    HINDZINC       :   2 trades, 100% WR, ₹  +2,249
+    COFORGE        :   2 trades, 100% WR, ₹  +2,130
+    POWERGRID      :   3 trades, 100% WR, ₹  +2,022
+    HUDCO          :   2 trades, 100% WR, ₹  +1,624
+    HAVELLS        :   2 trades, 100% WR, ₹  +1,583
+    SHRIRAMFIN     :   3 trades, 100% WR, ₹  +1,533
+    GAIL           :   1 trades, 100% WR, ₹  +1,285
+    HCLTECH        :   2 trades, 100% WR, ₹  +1,258
+    VOLTAS         :   2 trades, 100% WR, ₹  +1,130
+    SOBHA          :   1 trades, 100% WR, ₹  +1,094
+
+  Bottom 5 stocks (consider blacklisting):
+    GODREJPROP     :   1 trades, 0% WR, ₹  -1,003
+    CHENNPETRO     :   1 trades, 0% WR, ₹    -946
+    APLAPOLLO      :   1 trades, 0% WR, ₹    -907
+    HINDPETRO      :   4 trades, 50% WR, ₹    -803
+    BPCL           :   2 trades, 0% WR, ₹    -795
+
+──────────────────────────────────────────────────────────────────────
+TEST B — F&O SIMULATION (Options proxy model)
+──────────────────────────────────────────────────────────────────────
+  Capital:        ₹200,000
+  Per lot cost:   ₹15,000 (ATM option estimate)
+  Leverage model: 5x stock move
+  ⚠️  NOTE: This is a PROXY model, not real options pricing
+  ⚠️  Real options affected by IV, Greeks, theta decay
+  ⚠️  Use this for direction only, not exact numbers
+
+  Active days:    49
+  Total trades:   96 lots
+  Win rate:       25.0%  (24W / 72L)
+  Premium used:   ₹1,440,000.00
+  Total net 6m:   ₹-588,403.85
+  Monthly avg:    ₹-98,067.31
+  Annual proj:    ₹-1,176,807.70
+
+  Monthly breakdown:
+    2025-12: ₹  +1,625  (2 lots)
+    2026-01: ₹ -71,707  (12 lots)
+    2026-02: ₹ -72,153  (12 lots)
+    2026-03: ₹-268,028  (32 lots)
+    2026-04: ₹ -96,481  (26 lots)
+    2026-05: ₹ -81,659  (12 lots)
+
+======================================================================
+COMBINED RESULTS — Both streams together
+======================================================================
+  Total capital deployed: ₹400,000
+  Intraday net 6m:        ₹+38,107.92
+  F&O net 6m:             ₹-588,403.85
+  Combined net 6m:        ₹-550,295.93
+  Combined monthly avg:   ₹-91,715.99
+  Combined annual proj:   ₹-1,100,591.86
+  Return on ₹4L capital:  -137.6% in 6 months
+
+  ⚠️  BELOW TARGET: ₹-91,716/month
+  Need: More signals, larger capital, or add swing stream
+
+======================================================================
+WHAT TO DO NEXT
+======================================================================
+  1. Paper trade intraday V6 for 2 weeks (validate backtest)
+  2. Paper trade F&O alongside (learn real options behavior)
+  3. After 30 paper trades: deploy intraday live at ₹2L
+  4. After 30 more: deploy F&O live at ₹1L (reduced)
+  5. Add swing trading as 3rd stream (₹2L more)
+  6. Combined target: ₹1L/month within 6-9 months
+======================================================================

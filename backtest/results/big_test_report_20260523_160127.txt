@@ -1,0 +1,103 @@
+======================================================================
+BIG TEST REPORT — Intraday + F&O Simulation
+Capital: Intraday ₹200,000 | F&O ₹200,000
+Generated: 2026-05-23 16:01 IST
+======================================================================
+
+──────────────────────────────────────────────────────────────────────
+TEST A — INTRADAY (V6 Strategy, F&O Universe)
+──────────────────────────────────────────────────────────────────────
+  Capital:        ₹200,000
+  Per trade:      ₹50,000
+  Max positions:  4 simultaneous
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Total days:     117
+  Active days:    19 (signal fired)
+  Skipped days:   98 (no catalyst gap)
+  Total trades:   44
+  Win rate:       52.3%  (23W / 21L)
+  Profit factor:  1.16
+  Total gross:    ₹2,673.49
+  Total charges:  ₹2,305.43
+  Total net 6m:   ₹368.06
+  Monthly avg:    ₹61.34
+  Per trade avg:  ₹8.37
+  Annual proj:    ₹736.12
+
+  Monthly breakdown:
+    2025-12: ₹  +1,358  (2 trades)
+    2026-01: ₹  -3,520  (9 trades)
+    2026-02: ₹  +1,470  (5 trades)
+    2026-03: ₹    -694  (6 trades)
+    2026-04: ₹  +2,253  (17 trades)
+    2026-05: ₹    -498  (5 trades)
+
+  Top 10 stocks:
+    HINDZINC       :   2 trades, 100% WR, ₹  +2,249
+    SHRIRAMFIN     :   2 trades, 100% WR, ₹  +1,446
+    GRASIM         :   1 trades, 100% WR, ₹    +841
+    POWERGRID      :   1 trades, 100% WR, ₹    +534
+    LODHA          :   1 trades, 100% WR, ₹    +489
+    IIFLSEC        :   1 trades, 100% WR, ₹    +460
+    ULTRACEMCO     :   1 trades, 100% WR, ₹    +442
+    ADANIENSOL     :   1 trades, 100% WR, ₹    +433
+    TIINDIA        :   1 trades, 100% WR, ₹    +403
+    LICI           :   2 trades, 50% WR, ₹    +316
+
+  Bottom 5 stocks (consider blacklisting):
+    GODREJPROP     :   1 trades, 0% WR, ₹  -1,003
+    CHENNPETRO     :   1 trades, 0% WR, ₹    -946
+    APLAPOLLO      :   1 trades, 0% WR, ₹    -907
+    BPCL           :   1 trades, 0% WR, ₹    -763
+    HINDPETRO      :   2 trades, 50% WR, ₹    -746
+
+──────────────────────────────────────────────────────────────────────
+TEST B — F&O SIMULATION (Options proxy model)
+──────────────────────────────────────────────────────────────────────
+  Capital:        ₹200,000
+  Per lot cost:   ₹15,000 (ATM option estimate)
+  Leverage model: 5x stock move
+  ⚠️  NOTE: This is a PROXY model, not real options pricing
+  ⚠️  Real options affected by IV, Greeks, theta decay
+  ⚠️  Use this for direction only, not exact numbers
+
+  Active days:    19
+  Total trades:   44 lots
+  Win rate:       47.7%  (21W / 23L)
+  Premium used:   ₹660,000.00
+  Total net 6m:   ₹-116,752.49
+  Monthly avg:    ₹-19,458.75
+  Annual proj:    ₹-233,504.98
+
+  Monthly breakdown:
+    2025-12: ₹  +1,625  (2 lots)
+    2026-01: ₹ -42,322  (9 lots)
+    2026-02: ₹  -3,588  (5 lots)
+    2026-03: ₹ -33,203  (6 lots)
+    2026-04: ₹ -15,615  (17 lots)
+    2026-05: ₹ -23,649  (5 lots)
+
+======================================================================
+COMBINED RESULTS — Both streams together
+======================================================================
+  Total capital deployed: ₹400,000
+  Intraday net 6m:        ₹   +368.06
+  F&O net 6m:             ₹-116,752.49
+  Combined net 6m:        ₹-116,384.43
+  Combined monthly avg:   ₹-19,397.40
+  Combined annual proj:   ₹-232,768.86
+  Return on ₹4L capital:  -29.1% in 6 months
+
+  ⚠️  BELOW TARGET: ₹-19,397/month
+  Need: More signals, larger capital, or add swing stream
+
+======================================================================
+WHAT TO DO NEXT
+======================================================================
+  1. Paper trade intraday V6 for 2 weeks (validate backtest)
+  2. Paper trade F&O alongside (learn real options behavior)
+  3. After 30 paper trades: deploy intraday live at ₹2L
+  4. After 30 more: deploy F&O live at ₹1L (reduced)
+  5. Add swing trading as 3rd stream (₹2L more)
+  6. Combined target: ₹1L/month within 6-9 months
+======================================================================
