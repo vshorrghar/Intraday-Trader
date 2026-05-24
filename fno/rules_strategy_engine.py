@@ -182,11 +182,16 @@ class FnO_Rules_Strategy_Engine:
             return None
 
         # ── Rule 2: IRON CONDOR ──
+        # Confluence threshold raised to 60 (was 55) based on paper data:
+        # confluence >= 40 → 80% WR, +Rs.97/trade
+        # confluence < 40  → 60% WR, +Rs.5/trade  (2026-05-24 analysis)
+        # BANKNIFTY requires higher bar (65) — 33% WR at standard threshold
+        _ic_confluence_min = 65 if index == "BANKNIFTY" else 60
         if (regime == MarketRegime.SIDEWAYS
                 and ivp >= 65
                 and vrp >= 2.0
                 and gex_regime == "PINNED"
-                and confluence >= 55
+                and confluence >= _ic_confluence_min
                 and dte >= 3):
             confidence = _confluence_to_confidence(confluence)
             legs = self._build_legs("IRON_CONDOR", chain, confidence)
