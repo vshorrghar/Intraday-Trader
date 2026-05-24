@@ -308,12 +308,20 @@ def main() -> None:
         db.close()
         sys.exit(1)
 
-    # ── Phase 9: LLM strategy selection ──
-    phase_log("Strategy Selection", "START")
+    # ── Phase 9: Strategy selection (V2 rules or V1 LLM) ──
+    # V2: deterministic rule table (no LLM, no Bedrock)
+    # V1: LLM-based selection (original behaviour — unchanged)
+    _fno_selector = getattr(config, "selector", "v1")
+    phase_log(f"Strategy Selection [{_fno_selector.upper()}]", "START")
     try:
-        from fno.strategy_engine import FnO_Strategy_Engine
-
-        strategy_engine = FnO_Strategy_Engine(config, db, greeks_calc)
+        if _fno_selector == "v2":
+            from fno.rules_strategy_engine import FnO_Rules_Strategy_Engine
+            strategy_engine = FnO_Rules_Strategy_Engine(config, db, greeks_calc)
+            logger.info("F&O using V2 rules-based strategy engine")
+        else:
+            from fno.strategy_engine import FnO_Strategy_Engine
+            strategy_engine = FnO_Strategy_Engine(config, db, greeks_calc)
+            logger.info("F&O using V1 LLM strategy engine")
         # Fetch real VIX from NSE sector indices
         try:
             from fetchers.nse_market_movers import fetch_sector_indices
