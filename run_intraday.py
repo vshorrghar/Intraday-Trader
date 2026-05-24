@@ -261,38 +261,98 @@ def main() -> None:
         _generate_partial_report([], db, intra_config, dry_run)
         sys.exit(1)
 
-    # ── Phase 7: LLM trade selection ──
-    phase_log("LLM Trade Selection", "START")
-    try:
-        from llm.bedrock_client import BedrockClient
-        from intraday.selector import select_trades_llm
+    # ── Phase 7: Trade selection (V2 rules or V1 LLM) ──
+    # V2: deterministic ORB rules (no LLM, no price ceiling, LONG only)
+    # V1: LLM-based selection (original behaviour — unchanged)
+    _selector_version = getattr(intra_config, "selector", "v1")
+    phase_log(f"Trade Selection [{_selector_version.upper()}]", "START")
 
-        bedrock = BedrockClient(
-            region=app_config.bedrock_region,
-            model_id=app_config.bedrock_model_id,
-        )
-        trades = select_trades_llm(
-            candidates=filtered,
-            sectors=scan_result.sectors,
-            vix_value=scan_result.vix_value,
-            config=intra_config,
-            bedrock_client=bedrock,
-            gainers=scan_result.gainers,
-            losers=scan_result.losers,
-            dry_run=dry_run,
-        )
-        if not trades:
-            phase_log("LLM Trade Selection", "FAIL")
-            logger.error("LLM returned zero valid picks — aborting")
+    if _selector_version == "v2":
+        try:
+            from intraday.selector_v2 import select_trades_v2
+            from backtest.data_loader import fetch_and_cache_historical
+            from backtest.universes import get_universe
+
+            # Fetch 15-min historical data for candidate symbols
+            candidate_universe = {}
+            for c in filtered:
+                sym = c.get("nse_symbol") or c.get("symbol")
+                sec_id = str(c.get("security_id") or c.get("securityId", ""))
+                if sym and sec_id:
+                    candidate_universe[sym] = sec_id
+
+            today_str = ist_now().strftime("%Y-%m-%d")
+            historical_data = fetch_and_cache_historical(
+                symbols=candidate_universe,
+                from_date=(ist_now() - __import__("datetime").timedelta(days=30)).strftime("%Y-%m-%d"),
+                to_date=today_str,
+                interval="15",
+                cache_dir="cache/historical_v2",
+                broker=broker,
+            )
+
+            # Fetch Nifty index for market direction
+            nifty_data = broker.get_historical_ohlc(
+                security_id="13",
+                exchange_segment="IDX_I",
+                instrument="INDEX",
+                interval="15",
+                from_date=(ist_now() - __import__("datetime").timedelta(days=5)).strftime("%Y-%m-%d"),
+                to_date=today_str,
+            )
+
+            trades = select_trades_v2(
+                candidates=filtered,
+                historical_data=historical_data,
+                nifty_data=nifty_data,
+                config=intra_config,
+                target_date=today_str,
+            )
+
+            if not trades:
+                phase_log("Trade Selection [V2]", "SKIP")
+                logger.info("V2: No signals today — flat market or no catalyst gaps")
+                _generate_partial_report([], db, intra_config, dry_run)
+                sys.exit(0)
+
+            phase_log("Trade Selection [V2]", "DONE")
+        except Exception as exc:
+            phase_log("Trade Selection [V2]", "FAIL")
+            logger.error("V2 selection failed: %s", exc)
             _generate_partial_report([], db, intra_config, dry_run)
             sys.exit(1)
+    else:
+        # V1: original LLM selection — unchanged
+        try:
+            from llm.bedrock_client import BedrockClient
+            from intraday.selector import select_trades_llm
 
-        phase_log("LLM Trade Selection", "DONE")
-    except Exception as exc:
-        phase_log("LLM Trade Selection", "FAIL")
-        logger.error("LLM selection failed: %s", exc)
-        _generate_partial_report([], db, intra_config, dry_run)
-        sys.exit(1)
+            bedrock = BedrockClient(
+                region=app_config.bedrock_region,
+                model_id=app_config.bedrock_model_id,
+            )
+            trades = select_trades_llm(
+                candidates=filtered,
+                sectors=scan_result.sectors,
+                vix_value=scan_result.vix_value,
+                config=intra_config,
+                bedrock_client=bedrock,
+                gainers=scan_result.gainers,
+                losers=scan_result.losers,
+                dry_run=dry_run,
+            )
+            if not trades:
+                phase_log("LLM Trade Selection", "FAIL")
+                logger.error("LLM returned zero valid picks — aborting")
+                _generate_partial_report([], db, intra_config, dry_run)
+                sys.exit(1)
+
+            phase_log("LLM Trade Selection", "DONE")
+        except Exception as exc:
+            phase_log("LLM Trade Selection", "FAIL")
+            logger.error("LLM selection failed: %s", exc)
+            _generate_partial_report([], db, intra_config, dry_run)
+            sys.exit(1)
 
     # ── Print morning picks ──
     _print_morning_picks(trades, scan_result.vix_value, intra_config)
