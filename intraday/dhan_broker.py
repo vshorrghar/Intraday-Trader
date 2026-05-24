@@ -771,3 +771,58 @@ class DhanBrokerClient(BrokerClient):
             logger.error("Dhan historical OHLC error for %s: %s", security_id, e)
             return None
 
+    def get_daily_ohlc(
+        self,
+        security_id: str,
+        exchange_segment: str = 'NSE_EQ',
+        instrument: str = 'EQUITY',
+        from_date: str = '',
+        to_date: str = '',
+    ) -> dict | None:
+        """Fetch daily OHLC from Dhan /v2/charts/historical endpoint.
+
+        Parameters
+        ----------
+        security_id : str
+            Dhan security ID (e.g. '11536' for TCS).
+        exchange_segment : str
+            'NSE_EQ', 'BSE_EQ', etc.
+        instrument : str
+            'EQUITY', 'FUTIDX', etc.
+        from_date : str
+            Start date 'YYYY-MM-DD'.
+        to_date : str
+            End date 'YYYY-MM-DD'.
+
+        Returns
+        -------
+        dict | None
+            Dict with keys: open, high, low, close, volume, timestamp
+            (each is a list). Returns None on failure.
+        """
+        url = f'{BASE_URL}/charts/historical'
+        payload = {
+            'securityId': security_id,
+            'exchangeSegment': exchange_segment,
+            'instrument': instrument,
+            'expiryCode': 0,
+            'fromDate': from_date,
+            'toDate': to_date,
+        }
+        try:
+            resp = self._session.post(
+                url, headers=self._headers(), json=payload, timeout=15,
+            )
+            if resp.status_code == 200:
+                data = resp.json()
+                if isinstance(data, dict) and 'open' in data:
+                    return data
+                logger.warning('Dhan daily OHLC: unexpected response structure for %s', security_id)
+                return None
+            else:
+                logger.warning('Dhan daily OHLC HTTP %s for %s', resp.status_code, security_id)
+                return None
+        except Exception as e:
+            logger.error('Dhan daily OHLC error for %s: %s', security_id, e)
+            return None
+
