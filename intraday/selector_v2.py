@@ -35,16 +35,63 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 IST = timezone(timedelta(hours=5, minutes=30))
 
-# Chronic losers — consistent negative P&L across all backtests
-# From backtest results 2026-05-23 and live data 2026-05-24
+# DYNAMIC SUSPENSION LIST — reviewed every 2 weeks
+# Rule: stock suspended if WR < 30% over last 14 days with >= 3 trades
+# Rule: stock reinstated when WR improves above 45%
+# NOT permanent — market regimes change, stocks recover
+#
+# Only permanent exclusion: structural impossibility
+# (e.g. MRF at Rs.1.4L — mathematically untradeable at Rs.10K/trade)
+#
+# Last reviewed: 2026-05-24
+# Next review:   2026-06-07
+#
+# To update: run scripts/review_blacklist.py (TODO — build this)
+
 INTRADAY_V2_BLACKLIST = {
-    # Chronic losers from backtest
-    "TATASTEEL", "TECHM", "BPCL", "ASIANPAINT", "HINDUNILVR",
+    # STRUCTURAL: mathematically untradeable at current capital
+    "MRF",          # Rs.1.4L/share — need Rs.1.4L just for 1 share
+
+    # SUSPENDED 2026-05-24: consistent losers from Nifty500 backtest
+    # Review 2026-06-07 — remove if live WR improves above 45%
+    "SAIL",         # 0-33% WR, -Rs.5,260 across all configs
+    "LAURUSLABS",   # 0% WR, -Rs.4,851
+    "IPCALAB",      # 0% WR, -Rs.4,209
+    "CONCOR",       # 33% WR, -Rs.4,145
+    "PRESTIGE",     # 0% WR, -Rs.4,098
+    "GNFC",         # 0-50% WR, -Rs.3,309
+    "BSE",          # 0% WR, -Rs.3,539
+    "SONACOMS",     # 0% WR, -Rs.3,568
+    "ANGELONE",     # 0% WR, -Rs.3,054
+    "PVRINOX",      # 0% WR, -Rs.2,804
+    "PIIND",        # 0% WR, -Rs.2,865
+    "MCDOWELL-N",   # 0% WR, -Rs.2,152
+    "GODREJCP",     # 0% WR, -Rs.2,739
+    "UBL",          # 0% WR, -Rs.3,150
+
+    # SUSPENDED from previous backtest 2026-05-23
+    # Review 2026-06-07
+    "TATASTEEL", "BPCL", "ASIANPAINT", "HINDUNILVR",
     "TATACONSUM", "HDFCLIFE", "ADANIPOWER", "BEL", "COFORGE",
     "IREDA", "NAUKRI", "BDL", "CANBK", "MAZDOCK",
-    "HAL", "ASTRAL", "FEDERALBNK", "OFSS",
+    "ASTRAL", "FEDERALBNK", "OFSS",
     "BAJAJFINSV", "BAJFINANCE", "HEROMOTOCO", "BAJAJ-AUTO",
     "JSWSTEEL", "INDIGO", "COCHINSHIP",
+
+    # REINSTATED (removed from suspension):
+    # None yet — add here when live data shows improvement
+}
+
+# PRIORITY WHITELIST — give these priority when they appear as signals
+# Consistent winners from Nifty500 backtest 2026-05-24
+# These stocks have proven they move cleanly on catalyst days
+INTRADAY_V2_WHITELIST = {
+    "HINDZINC", "NESTLEIND", "PNBHOUSING", "BHEL",
+    "ADANIENSOL", "NTPC", "SHRIRAMFIN", "GRANULES",
+    "ULTRACEMCO", "GRASIM", "GAIL", "BOSCHLTD",
+    "DRREDDY", "MOTHERSON", "PFC", "LICI",
+    "POWERGRID", "CHOLAFIN", "TATACHEM", "GRASIM",
+    "IIFLSEC", "TIINDIA", "IRCON", "MARUTI",
 }
 
 

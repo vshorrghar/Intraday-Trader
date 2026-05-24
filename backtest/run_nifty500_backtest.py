@@ -39,7 +39,8 @@ IST = timezone(timedelta(hours=5, minutes=30))
 
 # Capital configurations to test
 CAPITAL_CONFIGS = [
-    {"total": 300_000,   "per_trade": 75_000,   "max_trades": 4},
+    {"total":  30_000,   "per_trade":  10_000,  "max_trades": 3},   # Monday live
+    {"total": 300_000,   "per_trade":  75_000,  "max_trades": 4},   # vishal/neha paper
     {"total": 500_000,   "per_trade": 100_000,  "max_trades": 5},
     {"total": 1_000_000, "per_trade": 200_000,  "max_trades": 5},
 ]
