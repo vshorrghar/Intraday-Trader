@@ -56,5 +56,6 @@ class IntraConfig:
     trailing_sl_trigger_pct: float = 0.5
     partial_book_pct: float = 50.0
     daily_loss_limit: float = 2500.0  # Max cumulative realized loss per day
+    selector: str = "v1"          # "v1" = LLM, "v2" = rules-based V6+V4
     telegram_token: str = ""
     telegram_chat_id: str = ""
