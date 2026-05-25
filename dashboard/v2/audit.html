@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit — Intraday Trader v2</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
+    <link rel="stylesheet" href="css/design.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div id="header-slot"></div>
+    <main class="page-wrapper fade-in">
+        <div class="audit-controls">
+            <h2 class="section-title">🔍 Trade Audit</h2>
+            <select id="datePicker" class="profile-switcher"></select>
+        </div>
+
+        <div class="kpi-grid" id="auditKpis">
+            <div class="kpi-card"><span class="kpi-label">Trades</span><span class="kpi-value" id="akTrades">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Net P&L</span><span class="kpi-value" id="akPnl">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Win Rate</span><span class="kpi-value" id="akWR">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Charges</span><span class="kpi-value" id="akCharges">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Drift</span><span class="kpi-value" id="akDrift">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Trust Score</span><span class="kpi-value" id="akTrust">—</span></div>
+        </div>
+
+        <section class="card" id="narrativeSection" style="display:none">
+            <h3 class="card-title">🤖 AI Narrative</h3>
+            <div id="narrativeContent"></div>
+        </section>
+
+        <section class="card" id="bugsSection" style="display:none">
+            <h3 class="card-title" style="color:var(--red)">🚨 Bugs Observed</h3>
+            <ul id="bugsList"></ul>
+        </section>
+
+        <section class="card">
+            <h3 class="card-title">📋 Trades</h3>
+            <div id="auditTradesTable"><p class="text-muted">Select a date...</p></div>
+        </section>
+    </main>
+
+    <style>
+    .audit-controls{display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-4)}
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--space-3);margin-bottom:var(--space-6)}
+    .kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-1)}
+    .kpi-label{font-size:var(--text-xs);color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px}
+    .kpi-value{font-size:var(--text-xl);font-weight:var(--weight-bold);font-family:var(--font-mono)}
+    .kpi-value.positive{color:var(--green)}.kpi-value.negative{color:var(--red)}.kpi-value.warn{color:var(--yellow)}
+    .narrative-section{margin-bottom:var(--space-4)}
+    .narrative-section h4{font-size:var(--text-sm);margin-bottom:var(--space-2);display:flex;align-items:center;gap:var(--space-2)}
+    .narrative-section ul{list-style:none;padding:0}
+    .narrative-section li{padding:var(--space-2) 0;border-bottom:1px solid var(--border);font-size:var(--text-sm);color:var(--text-secondary)}
+    .narrative-section li:last-child{border:none}
+    .recommendation-box{background:var(--accent-bg);border:1px solid var(--border-focus);border-radius:var(--radius);padding:var(--space-4);margin-bottom:var(--space-4);font-weight:var(--weight-medium)}
+    .trades-tbl{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+    .trades-tbl th{text-align:left;padding:var(--space-2) var(--space-3);color:var(--text-secondary);border-bottom:1px solid var(--border)}
+    .trades-tbl td{padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--border);font-family:var(--font-mono)}
+    .trades-tbl tr:hover{background:var(--bg-hover)}
+    .drift-badge{background:var(--red-bg);color:var(--red);padding:2px 8px;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:var(--weight-semibold)}
+    #bugsList{list-style:none;padding:0}
+    #bugsList li{padding:var(--space-2);color:var(--red);font-size:var(--text-sm);font-family:var(--font-mono)}
+    </style>
+
+    <script>
+    (function(){
+        const params=new URLSearchParams(location.search);
+        const profile=params.get('profile')||'vishal-live';
+        const API_BASE='../api/v2/'+profile+'/audit/';
+        const datePicker=document.getElementById('datePicker');
+
+        async function init(){
+            // Find available dates
+            const dates=[];
+            const now=new Date();
+            for(let i=0;i<30;i++){
+                const d=new Date(now);d.setDate(d.getDate()-i);
+                const ds=d.toISOString().slice(0,10);
+                try{const r=await fetch(API_BASE+ds+'.json',{method:'HEAD'});if(r.ok)dates.push(ds)}catch(e){}
+            }
+            dates.sort().reverse();
+            datePicker.innerHTML=dates.map(d=>`<option value="${d}">${d}</option>`).join('');
+
+            // Check URL date param
+            const urlDate=params.get('date');
+            if(urlDate&&dates.includes(urlDate))datePicker.value=urlDate;
+
+            if(dates.length)loadAudit(datePicker.value);
+            datePicker.addEventListener('change',()=>loadAudit(datePicker.value));
+        }
+
+        async function loadAudit(date){
+            try{
+                const audit=await(await fetch(API_BASE+date+'.json')).json();
+                const validation=await(await fetch(API_BASE+date+'.validation.json')).json().catch(()=>null);
+
+                // KPIs
+                const s=audit.summary||{};
+                setKpi('akTrades',s.trades_attempted||0);
+                const pnlEl=document.getElementById('akPnl');
+                pnlEl.textContent='₹'+(s.net_pnl_estimated||0).toFixed(0);
+                pnlEl.className='kpi-value '+(s.net_pnl_estimated>=0?'positive':'negative');
+                const wr=s.trades_attempted>0?Math.round(s.trades_won/s.trades_attempted*100):0;
+                document.getElementById('akWR').textContent=wr+'%';
+                document.getElementById('akCharges').textContent='₹'+(s.estimated_charges||0).toFixed(0);
+                const driftEl=document.getElementById('akDrift');
+                driftEl.textContent=s.drift_vs_db||'OK';
+                driftEl.className='kpi-value '+((s.drift_amount_rs||0)>5?'negative':'');
+
+                // Trust score
+                const trustEl=document.getElementById('akTrust');
+                if(validation){
+                    const ts=validation.trust_score;
+                    trustEl.textContent=(ts*100).toFixed(0)+'%';
+                    trustEl.className='kpi-value '+(ts>=0.9?'positive':ts>=0.7?'warn':'negative');
+                }else{trustEl.textContent='—'}
+
+                // Narrative
+                if(audit.narrative){
+                    document.getElementById('narrativeSection').style.display='block';
+                    renderNarrative(audit.narrative);
+                }else{document.getElementById('narrativeSection').style.display='none'}
+
+                // Bugs
+                if(audit.bugs_observed&&audit.bugs_observed.length){
+                    document.getElementById('bugsSection').style.display='block';
+                    document.getElementById('bugsList').innerHTML=audit.bugs_observed.map(b=>`<li>⚠️ ${b}</li>`).join('');
+                }else{document.getElementById('bugsSection').style.display='none'}
+
+                // Trades
+                if(audit.trades&&audit.trades.length)renderTrades(audit.trades);
+                else document.getElementById('auditTradesTable').innerHTML='<p class="text-muted">No trades this day</p>';
+            }catch(e){console.error(e);document.getElementById('auditTradesTable').innerHTML='<p class="text-red">Failed to load audit</p>'}
+        }
+
+        function renderNarrative(n){
+            let html='';
+            if(n.recommendation)html+=`<div class="recommendation-box">💡 ${n.recommendation}</div>`;
+            if(n.what_went_right&&n.what_went_right.length)html+=renderSection('✅ What went right',n.what_went_right);
+            if(n.what_went_wrong&&n.what_went_wrong.length)html+=renderSection('❌ What went wrong',n.what_went_wrong);
+            if(n.bugs_or_risks_flagged&&n.bugs_or_risks_flagged.length)html+=renderSection('🚨 Bugs/Risks',n.bugs_or_risks_flagged);
+            if(n.patterns_observed&&n.patterns_observed.length)html+=renderSection('📊 Patterns',n.patterns_observed);
+            document.getElementById('narrativeContent').innerHTML=html;
+        }
+
+        function renderSection(title,items){
+            return `<div class="narrative-section"><h4>${title}</h4><ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+        }
+
+        function renderTrades(trades){
+            let html='<table class="trades-tbl"><thead><tr><th>Symbol</th><th>Dir</th><th>Entry</th><th>Exit</th><th>Net P&L</th><th>Drift</th><th>Status</th></tr></thead><tbody>';
+            for(const t of trades){
+                const pnl=t.pnl_net_estimated||t.pnl_db||0;
+                const cls=pnl>=0?'text-green':'text-red';
+                const drift=t.qty_drift?`<span class="drift-badge">drift ${t.qty_drift}</span>`:'';
+                html+=`<tr><td>${t.tradingsymbol||t.symbol}</td><td>${t.direction||''}</td><td>₹${(t.entry_price||0).toFixed(2)}</td><td>₹${(t.exit_price||0).toFixed(2)}</td><td class="${cls}">₹${pnl.toFixed(2)}</td><td>${drift}</td><td>${t.outcome||''}</td></tr>`;
+            }
+            html+='</tbody></table>';
+            document.getElementById('auditTradesTable').innerHTML=html;
+        }
+
+        function setKpi(id,val){document.getElementById(id).textContent=val}
+
+        fetch('components/header.html').then(r=>r.text()).then(h=>{document.getElementById('header-slot').innerHTML=h;
+            const sw=document.getElementById('profileSwitcher');if(sw)sw.value=profile;
+        });
+        init();
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — Intraday Trader v2</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <link rel="stylesheet" href="css/design.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div id="header-slot"></div>
+    <main class="page-wrapper fade-in">
+        <div class="kpi-grid" id="kpiGrid">
+            <div class="kpi-card"><span class="kpi-label">Today P&L</span><span class="kpi-value" id="kpiPnl">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Win Rate (10d)</span><span class="kpi-value" id="kpiWR">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Trades This Month</span><span class="kpi-value" id="kpiTrades">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Capital Deployed</span><span class="kpi-value" id="kpiCapital">—</span></div>
+        </div>
+        <section class="card" id="tradesSection">
+            <h3 class="card-title">Today's Trades</h3>
+            <div id="tradesTable"><p class="text-muted">Loading...</p></div>
+        </section>
+        <footer class="text-muted" style="margin-top:var(--space-6);font-size:var(--text-xs)">
+            <span id="lastSync">Last sync: —</span> | Auto-refresh every 5 min during market hours
+        </footer>
+    </main>
+    <style>
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--space-4);margin-bottom:var(--space-6)}
+    .kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2)}
+    .kpi-label{font-size:var(--text-sm);color:var(--text-secondary);font-weight:var(--weight-medium)}
+    .kpi-value{font-size:var(--text-2xl);font-weight:var(--weight-bold);font-family:var(--font-mono)}
+    .kpi-value.positive{color:var(--green)}.kpi-value.negative{color:var(--red)}
+    .trades-tbl{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+    .trades-tbl th{text-align:left;padding:var(--space-2) var(--space-3);color:var(--text-secondary);border-bottom:1px solid var(--border);font-weight:var(--weight-medium)}
+    .trades-tbl td{padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--border);font-family:var(--font-mono)}
+    .trades-tbl tr:hover{background:var(--bg-hover)}
+    </style>
+    <script>
+    (function(){
+        const params=new URLSearchParams(location.search);
+        const profile=params.get('profile')||'vishal-live';
+        const API_BASE='../api/v2/'+profile;
+
+        async function loadData(){
+            try{
+                // Find latest daily_pnl
+                const dates=await fetchDates(API_BASE+'/daily_pnl/');
+                if(!dates.length){document.getElementById('kpiPnl').textContent='No data';return}
+                const latest=dates[dates.length-1];
+                const pnl=await(await fetch(API_BASE+'/daily_pnl/'+latest)).json();
+
+                // KPIs
+                const pnlEl=document.getElementById('kpiPnl');
+                pnlEl.textContent='₹'+pnl.daily_net_pnl.toFixed(0);
+                pnlEl.className='kpi-value '+(pnl.daily_net_pnl>=0?'positive':'negative');
+                document.getElementById('kpiCapital').textContent='₹'+pnl.capital_deployed_peak.toLocaleString('en-IN');
+                document.getElementById('kpiTrades').textContent=pnl.trade_count;
+
+                // Win rate from last 10 days
+                const last10=dates.slice(-10);
+                let wins=0,total=0;
+                for(const d of last10){
+                    const day=await(await fetch(API_BASE+'/daily_pnl/'+d)).json();
+                    wins+=day.wins;total+=day.trade_count;
+                }
+                const wr=total>0?Math.round(wins/total*100):0;
+                document.getElementById('kpiWR').textContent=wr+'%';
+
+                // Trades table
+                const audit=await(await fetch(API_BASE+'/audit/'+latest.replace('.json','')+ '.json')).json().catch(()=>null);
+                if(audit&&audit.trades&&audit.trades.length){
+                    renderTrades(audit.trades);
+                }else if(pnl.trades&&pnl.trades.length){
+                    renderTrades(pnl.trades);
+                }else{
+                    document.getElementById('tradesTable').innerHTML='<p class="text-muted">No trades today</p>';
+                }
+
+                document.getElementById('lastSync').textContent='Last sync: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+            }catch(e){
+                console.error('Load error:',e);
+                document.getElementById('kpiPnl').textContent='Error';
+            }
+        }
+
+        function renderTrades(trades){
+            let html='<table class="trades-tbl"><thead><tr><th>Symbol</th><th>Dir</th><th>Entry</th><th>Exit</th><th>Net P&L</th><th>Status</th></tr></thead><tbody>';
+            for(const t of trades){
+                const pnl=t.net_pnl||t.pnl_db||0;
+                const cls=pnl>=0?'text-green':'text-red';
+                html+=`<tr><td>${t.tradingsymbol||t.symbol}</td><td>${t.direction||''}</td><td class="mono">₹${(t.entry_price||0).toFixed(2)}</td><td class="mono">₹${(t.exit_price||0).toFixed(2)}</td><td class="${cls} mono">₹${pnl.toFixed(2)}</td><td>${t.outcome||t.status||''}</td></tr>`;
+            }
+            html+='</tbody></table>';
+            document.getElementById('tradesTable').innerHTML=html;
+        }
+
+        async function fetchDates(base){
+            // Try known dates pattern (last 14 days)
+            const dates=[];
+            const now=new Date();
+            for(let i=0;i<14;i++){
+                const d=new Date(now);d.setDate(d.getDate()-i);
+                const ds=d.toISOString().slice(0,10)+'.json';
+                try{const r=await fetch(base+ds,{method:'HEAD'});if(r.ok)dates.push(ds)}catch(e){}
+            }
+            return dates.sort();
+        }
+
+        // Load header
+        fetch('components/header.html').then(r=>r.text()).then(h=>{document.getElementById('header-slot').innerHTML=h;
+            const sw=document.getElementById('profileSwitcher');if(sw)sw.value=profile;
+        });
+
+        loadData();
+        // Auto-refresh every 5 min
+        setInterval(loadData,300000);
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance — Intraday Trader v2</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+    <link rel="stylesheet" href="css/design.css">
+    <link rel="stylesheet" href="css/components.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div id="header-slot"></div>
+    <main class="page-wrapper fade-in">
+        <h2 class="section-title">📈 Performance</h2>
+
+        <div class="kpi-grid">
+            <div class="kpi-card"><span class="kpi-label">Total Net P&L</span><span class="kpi-value" id="pkTotal">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Win Rate (all)</span><span class="kpi-value" id="pkWR">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Profit Factor</span><span class="kpi-value" id="pkPF">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Total Charges</span><span class="kpi-value" id="pkCharges">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Best Day</span><span class="kpi-value positive" id="pkBest">—</span></div>
+            <div class="kpi-card"><span class="kpi-label">Worst Day</span><span class="kpi-value negative" id="pkWorst">—</span></div>
+        </div>
+
+        <section class="card" style="margin-bottom:var(--space-6)">
+            <h3 class="card-title">Cumulative P&L</h3>
+            <canvas id="cumulativeChart" height="200"></canvas>
+        </section>
+
+        <section class="card" style="margin-bottom:var(--space-6)">
+            <h3 class="card-title">Daily P&L</h3>
+            <canvas id="dailyChart" height="150"></canvas>
+        </section>
+
+        <section class="card">
+            <h3 class="card-title">Rolling Stats</h3>
+            <table class="stats-tbl" id="rollingStats">
+                <thead><tr><th>Window</th><th>Trades</th><th>WR%</th><th>Net P&L</th><th>Avg Charges/Day</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </main>
+
+    <style>
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--space-3);margin-bottom:var(--space-6)}
+    .kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-1)}
+    .kpi-label{font-size:var(--text-xs);color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px}
+    .kpi-value{font-size:var(--text-xl);font-weight:var(--weight-bold);font-family:var(--font-mono)}
+    .kpi-value.positive{color:var(--green)}.kpi-value.negative{color:var(--red)}
+    .stats-tbl{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+    .stats-tbl th{text-align:left;padding:var(--space-2) var(--space-3);color:var(--text-secondary);border-bottom:1px solid var(--border)}
+    .stats-tbl td{padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--border);font-family:var(--font-mono)}
+    canvas{max-height:250px}
+    </style>
+
+    <script>
+    (function(){
+        const params=new URLSearchParams(location.search);
+        const profile=params.get('profile')||'vishal-live';
+        const API_BASE='../api/v2/'+profile+'/daily_pnl/';
+
+        async function loadPerformance(){
+            // Fetch all available daily_pnl files
+            const allData=[];
+            const now=new Date();
+            for(let i=0;i<30;i++){
+                const d=new Date(now);d.setDate(d.getDate()-i);
+                const ds=d.toISOString().slice(0,10)+'.json';
+                try{
+                    const r=await fetch(API_BASE+ds);
+                    if(r.ok){const data=await r.json();allData.push(data)}
+                }catch(e){}
+            }
+            allData.sort((a,b)=>a.date.localeCompare(b.date));
+
+            if(!allData.length){document.getElementById('pkTotal').textContent='No data';return}
+
+            // Compute aggregates
+            let totalNet=0,totalCharges=0,totalWins=0,totalTrades=0,best=-Infinity,worst=Infinity;
+            const dates=[],dailyPnl=[],cumPnl=[];
+            let cum=0;
+
+            for(const d of allData){
+                totalNet+=d.daily_net_pnl;
+                totalCharges+=d.daily_charges;
+                totalWins+=d.wins;
+                totalTrades+=d.trade_count;
+                if(d.daily_net_pnl>best)best=d.daily_net_pnl;
+                if(d.daily_net_pnl<worst)worst=d.daily_net_pnl;
+                cum+=d.daily_net_pnl;
+                dates.push(d.date.slice(5));// MM-DD
+                dailyPnl.push(d.daily_net_pnl);
+                cumPnl.push(cum);
+            }
+
+            const wr=totalTrades>0?Math.round(totalWins/totalTrades*100):0;
+            const grossWins=allData.reduce((s,d)=>s+(d.daily_net_pnl>0?d.daily_net_pnl:0),0);
+            const grossLosses=Math.abs(allData.reduce((s,d)=>s+(d.daily_net_pnl<0?d.daily_net_pnl:0),0));
+            const pf=grossLosses>0?(grossWins/grossLosses).toFixed(2):'∞';
+
+            // KPIs
+            const totalEl=document.getElementById('pkTotal');
+            totalEl.textContent='₹'+totalNet.toFixed(0);
+            totalEl.className='kpi-value '+(totalNet>=0?'positive':'negative');
+            document.getElementById('pkWR').textContent=wr+'%';
+            document.getElementById('pkPF').textContent=pf;
+            document.getElementById('pkCharges').textContent='₹'+totalCharges.toFixed(0);
+            document.getElementById('pkBest').textContent='₹'+best.toFixed(0);
+            document.getElementById('pkWorst').textContent='₹'+worst.toFixed(0);
+
+            // Charts
+            renderCumulativeChart(dates,cumPnl);
+            renderDailyChart(dates,dailyPnl);
+
+            // Rolling stats
+            renderRollingStats(allData);
+        }
+
+        function renderCumulativeChart(labels,data){
+            new Chart(document.getElementById('cumulativeChart'),{
+                type:'line',
+                data:{labels,datasets:[{label:'Cumulative P&L (₹)',data,
+                    borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,0.1)',
+                    fill:true,tension:0.3,pointRadius:3}]},
+                options:{responsive:true,plugins:{legend:{display:false}},
+                    scales:{y:{grid:{color:'#2a2d3a'},ticks:{color:'#9aa0b0',callback:v=>'₹'+v}},
+                            x:{grid:{display:false},ticks:{color:'#9aa0b0'}}}}
+            });
+        }
+
+        function renderDailyChart(labels,data){
+            const colors=data.map(v=>v>=0?'rgba(16,185,129,0.7)':'rgba(239,68,68,0.7)');
+            new Chart(document.getElementById('dailyChart'),{
+                type:'bar',
+                data:{labels,datasets:[{label:'Daily P&L (₹)',data,backgroundColor:colors}]},
+                options:{responsive:true,plugins:{legend:{display:false}},
+                    scales:{y:{grid:{color:'#2a2d3a'},ticks:{color:'#9aa0b0',callback:v=>'₹'+v}},
+                            x:{grid:{display:false},ticks:{color:'#9aa0b0'}}}}
+            });
+        }
+
+        function renderRollingStats(allData){
+            const windows=[{name:'Last 7 days',n:7},{name:'Last 14 days',n:14},{name:'All time',n:allData.length}];
+            let html='';
+            for(const w of windows){
+                const slice=allData.slice(-w.n);
+                const trades=slice.reduce((s,d)=>s+d.trade_count,0);
+                const wins=slice.reduce((s,d)=>s+d.wins,0);
+                const net=slice.reduce((s,d)=>s+d.daily_net_pnl,0);
+                const charges=slice.reduce((s,d)=>s+d.daily_charges,0);
+                const wr=trades>0?Math.round(wins/trades*100):0;
+                const avgCharges=slice.length>0?(charges/slice.length).toFixed(0):0;
+                const cls=net>=0?'text-green':'text-red';
+                html+=`<tr><td>${w.name}</td><td>${trades}</td><td>${wr}%</td><td class="${cls}">₹${net.toFixed(0)}</td><td>₹${avgCharges}</td></tr>`;
+            }
+            document.querySelector('#rollingStats tbody').innerHTML=html;
+        }
+
+        fetch('components/header.html').then(r=>r.text()).then(h=>{document.getElementById('header-slot').innerHTML=h;
+            const sw=document.getElementById('profileSwitcher');if(sw)sw.value=profile;
+        });
+        loadPerformance();
+    })();
+    </script>
+</body>
+</html>
