@@ -26,7 +26,7 @@ import logging
 from datetime import datetime, timedelta, timezone
 from typing import TYPE_CHECKING
 
-from backtest.rule_engine import generate_orb_signals, get_market_direction
+from backtest.rule_engine import generate_orb_signals, get_market_direction, generate_vwap_reclaim_signals, generate_trend_continuation_signals
 from intraday.models import TradeSetup
 
 if TYPE_CHECKING:
@@ -168,42 +168,119 @@ def select_trades_v2(
         "daily_loss_limit": getattr(config, "daily_loss_limit", 500),
     }
 
-    # Step 1: V6 signals (gap catalyst — best quality, 61% WR)
-    v6_signals = generate_orb_signals(
-        target_date=target_date,
-        historical_data=historical_data,
-        universe=universe,
-        config=orb_config,
-        strategy_variant="V6",
-        nifty_data=nifty_data,
-    )
-    # LONG only, positive gap only
-    v6_signals = [
-        s for s in v6_signals
-        if s.get("direction") == "LONG" and s.get("gap_pct", 0) > 0
-    ]
+    # ── Time-based strategy routing ──
+    # Strategy 1: ORB Gap (9:30-11:00)   V6+V4   61% WR
+    # Strategy 2: VWAP Reclaim (11:00-13:00)      ~55% WR expected
+    # Strategy 3: Trend Continuation (13:00-14:30) ~50% WR expected
+    # One capital pool. Max 3 trades/day total across all strategies.
+    # First strategy to fire claims the slots.
 
-    # Step 2: V4 fills remaining slots (47% WR, PF 1.37)
-    remaining = config.max_trades_per_day - len(v6_signals)
-    v4_signals = []
-    if remaining > 0:
-        v6_symbols = {s["symbol"] for s in v6_signals}
-        v4_config = {**orb_config, "max_trades_per_day": remaining + 3}
-        all_v4 = generate_orb_signals(
+    ist_hour = now.hour
+    ist_minute = now.minute
+    ist_time = ist_hour * 60 + ist_minute  # minutes since midnight IST
+
+    MORNING_START  = 9 * 60 + 30   # 9:30
+    MORNING_END    = 11 * 60        # 11:00
+    MIDDAY_START   = 11 * 60        # 11:00
+    MIDDAY_END     = 13 * 60        # 13:00
+    AFTERNOON_START= 13 * 60        # 13:00
+    AFTERNOON_END  = 14 * 60 + 30   # 14:30
+
+    logger.info(
+        "V2 time routing: IST %02d:%02d — morning=%s midday=%s afternoon=%s",
+        ist_hour, ist_minute,
+        MORNING_START <= ist_time < MORNING_END,
+        MIDDAY_START <= ist_time < MIDDAY_END,
+        AFTERNOON_START <= ist_time < AFTERNOON_END,
+    )
+
+    # Count trades already placed today (from DB or passed config)
+    trades_today = getattr(config, "_trades_placed_today", 0)
+    slots_remaining = config.max_trades_per_day - trades_today
+
+    if slots_remaining <= 0:
+        logger.info("V2: All %d slots used today — no more trades", config.max_trades_per_day)
+        return []
+
+    all_signals = []
+
+    # ── Strategy 1: Morning ORB (9:30-11:00) ──
+    if MORNING_START <= ist_time < MORNING_END:
+        logger.info("V2: Running Strategy 1 — Morning ORB (V6+V4)")
+
+        v6_signals = generate_orb_signals(
             target_date=target_date,
             historical_data=historical_data,
             universe=universe,
-            config=v4_config,
-            strategy_variant="V4",
+            config=orb_config,
+            strategy_variant="V6",
             nifty_data=nifty_data,
         )
-        v4_signals = [
-            s for s in all_v4
-            if s.get("direction") == "LONG"
-            and s["symbol"] not in v6_symbols
-        ][:remaining]
+        v6_signals = [
+            s for s in v6_signals
+            if s.get("direction") == "LONG" and s.get("gap_pct", 0) > 0
+        ]
 
-    all_signals = (v6_signals + v4_signals)[:config.max_trades_per_day]
+        remaining = slots_remaining - len(v6_signals)
+        v4_signals = []
+        if remaining > 0:
+            v6_symbols = {s["symbol"] for s in v6_signals}
+            v4_config = {**orb_config, "max_trades_per_day": remaining + 3}
+            all_v4 = generate_orb_signals(
+                target_date=target_date,
+                historical_data=historical_data,
+                universe=universe,
+                config=v4_config,
+                strategy_variant="V4",
+                nifty_data=nifty_data,
+            )
+            v4_signals = [
+                s for s in all_v4
+                if s.get("direction") == "LONG"
+                and s["symbol"] not in v6_symbols
+            ][:remaining]
+
+        all_signals = (v6_signals + v4_signals)[:slots_remaining]
+        logger.info("Strategy 1 signals: V6=%d V4=%d total=%d",
+                    len(v6_signals), len(v4_signals), len(all_signals))
+
+    # ── Strategy 2: Midday VWAP Reclaim (11:00-13:00) ──
+    elif MIDDAY_START <= ist_time < MIDDAY_END:
+        logger.info("V2: Running Strategy 2 — VWAP Reclaim (11:00-13:00)")
+
+        vwap_signals = generate_vwap_reclaim_signals(
+            target_date=target_date,
+            historical_data=historical_data,
+            universe=universe,
+            config=orb_config,
+            nifty_data=nifty_data,
+        )
+        all_signals = [
+            s for s in vwap_signals
+            if s.get("direction") == "LONG"
+        ][:slots_remaining]
+        logger.info("Strategy 2 signals: VWAP_RECLAIM=%d", len(all_signals))
+
+    # ── Strategy 3: Afternoon Trend Continuation (13:00-14:30) ──
+    elif AFTERNOON_START <= ist_time < AFTERNOON_END:
+        logger.info("V2: Running Strategy 3 — Trend Continuation (13:00-14:30)")
+
+        trend_signals = generate_trend_continuation_signals(
+            target_date=target_date,
+            historical_data=historical_data,
+            universe=universe,
+            config=orb_config,
+            nifty_data=nifty_data,
+        )
+        all_signals = [
+            s for s in trend_signals
+            if s.get("direction") == "LONG"
+        ][:slots_remaining]
+        logger.info("Strategy 3 signals: TREND_CONT=%d", len(all_signals))
+
+    else:
+        logger.info("V2: Outside trading windows (IST %02d:%02d) — no signals", ist_hour, ist_minute)
+        return []
 
     if not all_signals:
         market = get_market_direction(nifty_data, target_date) if nifty_data else {}

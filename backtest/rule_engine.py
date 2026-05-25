@@ -465,3 +465,361 @@ def generate_orb_signals(
     # Return top signals (respect max_trades limit)
     max_trades = config.get("max_trades_per_day", 3)
     return signals[:max_trades]
+
+
+def generate_vwap_reclaim_signals(
+    target_date: str,
+    historical_data: dict,
+    universe: dict,
+    config: dict,
+    nifty_data: dict = None,
+) -> list:
+    """
+    Strategy 2: VWAP Reclaim (11:00-13:00 IST window)
+
+    Logic: Stock gapped up in morning, pulled back to VWAP, now bouncing back above it.
+    This is institutional buying — they buy the dip to VWAP on strong stocks.
+
+    Rules:
+      - Stock up > 1% from prev close (morning strength confirmed)
+      - Price touched VWAP (within 0.5%) at some point after 11:00
+      - Price now ABOVE VWAP (reclaim confirmed on current candle)
+      - Volume on reclaim candle > 0.7x avg (not dead volume)
+      - Nifty BULL day (direction = BULL)
+      - RSI(14) between 35-70 (healthy range, not extreme)
+      - Only fires between 11:00-13:00 IST
+
+    Returns list of signal dicts compatible with select_trades_v2()
+    """
+    import logging
+    from datetime import datetime, timezone, timedelta
+
+    logger = logging.getLogger(__name__)
+    IST = timezone(timedelta(hours=5, minutes=30))
+    per_trade_cap = config.get("per_trade_max_capital", 10000)
+
+    # Market direction check
+    if nifty_data:
+        market = get_market_direction(nifty_data, target_date)
+        direction = market.get("direction", "FLAT")
+        if direction not in ("BULL", "BULL MODERATE", "BULL STRONG"):
+            logger.info("VWAP_RECLAIM: Skipping — market direction %s", direction)
+            return []
+
+    signals = []
+
+    for symbol, sec_id in universe.items():
+        ohlc = historical_data.get(symbol)
+        if not ohlc:
+            continue
+
+        candles = get_candles_for_date(ohlc, target_date)
+        if len(candles) < 8:
+            continue
+
+        prev_close = get_prev_close(ohlc, target_date)
+        if not prev_close or prev_close <= 0:
+            continue
+
+        vwap_values = calculate_vwap(candles)
+        atr_values = calculate_atr(candles)
+        rel_volume = calculate_relative_volume(candles, ohlc, target_date)
+
+        # Check morning strength — stock must be up > 1% from prev close
+        # Use first candle close as proxy for morning open
+        if not candles:
+            continue
+        first_close = candles[0]["close"]
+        gap_pct = ((first_close - prev_close) / prev_close) * 100
+        if gap_pct < 1.0:
+            continue  # No morning strength — skip
+
+        # Look for VWAP reclaim candle between 11:00-13:00 IST
+        reclaim_candle = None
+        reclaim_idx = None
+
+        for i, c in enumerate(candles):
+            hour = c["time"].hour
+            minute = c["time"].minute
+
+            # Only look in 11:00-13:00 window
+            if hour < 11:
+                continue
+            if hour >= 13:
+                break
+
+            if i >= len(vwap_values):
+                continue
+
+            vwap = vwap_values[i]
+            if vwap <= 0:
+                continue
+
+            price = c["close"]
+
+            # Price must be above VWAP now (reclaim)
+            if price <= vwap:
+                continue
+
+            # Price must be within 1.5% above VWAP (fresh reclaim, not already ran)
+            if price > vwap * 1.015:
+                continue
+
+            # Previous candle must have touched VWAP (touched from above or below)
+            if i > 0 and i - 1 < len(vwap_values):
+                prev_vwap = vwap_values[i - 1]
+                prev_low = candles[i - 1]["low"]
+                # Previous candle low must have been near or below VWAP
+                if prev_low > prev_vwap * 1.01:
+                    continue  # Did not touch VWAP — not a reclaim
+
+            # Volume check — candle volume vs avg
+            avg_vol = sum(x["volume"] for x in candles[:i]) / max(i, 1)
+            if avg_vol > 0 and c["volume"] < avg_vol * 0.7:
+                continue  # Too low volume on reclaim
+
+            reclaim_candle = c
+            reclaim_idx = i
+            break
+
+        if not reclaim_candle:
+            continue
+
+        entry_price = reclaim_candle["close"]
+        if entry_price <= 0:
+            continue
+
+        atr = atr_values[reclaim_idx] if reclaim_idx < len(atr_values) else 0
+        if atr == 0:
+            atr = entry_price * 0.005  # 0.5% fallback
+
+        # SL just below VWAP at entry
+        vwap_at_entry = vwap_values[reclaim_idx]
+        stop_loss = round(min(entry_price - atr, vwap_at_entry * 0.997), 2)
+        target = round(entry_price + (1.5 * atr), 2)
+
+        risk = entry_price - stop_loss
+        if risk <= 0:
+            continue
+        reward = target - entry_price
+        rr = reward / risk
+        if rr < 1.4:
+            continue
+
+        qty = max(1, int(per_trade_cap / entry_price))
+
+        # Score
+        score = 5  # Base score for VWAP reclaim
+        if gap_pct > 2.0:
+            score += 2
+        elif gap_pct > 1.5:
+            score += 1
+        if rel_volume > 1.2:
+            score += 1
+        if rr > 2.0:
+            score += 1
+
+        signals.append({
+            "symbol": symbol,
+            "security_id": sec_id,
+            "direction": "LONG",
+            "strategy_type": "VWAP_RECLAIM",
+            "entry_price": entry_price,
+            "stop_loss_price": stop_loss,
+            "target_price": target,
+            "quantity": qty,
+            "gap_pct": gap_pct,
+            "rel_volume": rel_volume,
+            "score": score,
+            "market_direction": market.get("direction", "") if nifty_data else "",
+            "market_strength": market.get("strength", "") if nifty_data else "",
+            "vwap_at_entry": vwap_at_entry,
+            "rr": round(rr, 2),
+        })
+        logger.info(
+            "VWAP_RECLAIM SIGNAL: %s @ %.2f SL %.2f T %.2f gap=%.1f%% RR=%.1f score=%d",
+            symbol, entry_price, stop_loss, target, gap_pct, rr, score
+        )
+
+    # Sort by score descending
+    signals.sort(key=lambda x: x["score"], reverse=True)
+    return signals
+
+
+def generate_trend_continuation_signals(
+    target_date: str,
+    historical_data: dict,
+    universe: dict,
+    config: dict,
+    nifty_data: dict = None,
+) -> list:
+    """
+    Strategy 3: Trend Continuation (13:00-14:30 IST window)
+
+    Logic: Stock that gapped AND held above VWAP all day.
+    These are the strongest stocks — institutions accumulating all day.
+    Late afternoon push as weak hands exit and strong hands add.
+
+    Rules:
+      - Stock up > 2% from prev close (strong gap — not marginal)
+      - Price ABOVE VWAP at 13:00 (held the morning move)
+      - Price within 2% of day high (not fading, near highs)
+      - Current candle volume > 0.6x avg (sustained)
+      - Nifty up > 0.3% (confirmed bull day)
+      - Only fires between 13:00-14:30 IST
+      - Tighter SL — less time to recover in afternoon
+
+    Returns list of signal dicts compatible with select_trades_v2()
+    """
+    import logging
+    from datetime import datetime, timezone, timedelta
+
+    logger = logging.getLogger(__name__)
+    IST = timezone(timedelta(hours=5, minutes=30))
+    per_trade_cap = config.get("per_trade_max_capital", 10000)
+
+    # Strong bull day required for trend continuation
+    if nifty_data:
+        market = get_market_direction(nifty_data, target_date)
+        direction = market.get("direction", "FLAT")
+        strength = market.get("strength", "")
+        # Need confirmed bull — not just marginal
+        if direction not in ("BULL", "BULL MODERATE", "BULL STRONG"):
+            logger.info("TREND_CONT: Skipping — market %s %s", direction, strength)
+            return []
+        # Also check Nifty is actually up on the day
+        nifty_change = market.get("change_pct", 0)
+        if nifty_change < 0.3:
+            logger.info("TREND_CONT: Skipping — Nifty only up %.2f%%", nifty_change)
+            return []
+    else:
+        market = {"direction": "UNKNOWN", "strength": "", "change_pct": 0}
+
+    signals = []
+
+    for symbol, sec_id in universe.items():
+        ohlc = historical_data.get(symbol)
+        if not ohlc:
+            continue
+
+        candles = get_candles_for_date(ohlc, target_date)
+        if len(candles) < 12:  # Need enough candles for 13:00 check
+            continue
+
+        prev_close = get_prev_close(ohlc, target_date)
+        if not prev_close or prev_close <= 0:
+            continue
+
+        vwap_values = calculate_vwap(candles)
+        atr_values = calculate_atr(candles)
+
+        # Morning gap must be > 2%
+        first_close = candles[0]["close"]
+        gap_pct = ((first_close - prev_close) / prev_close) * 100
+        if gap_pct < 2.0:
+            continue
+
+        # Find the 13:00 candle and check conditions
+        trigger_candle = None
+        trigger_idx = None
+        day_high = max(c["high"] for c in candles)
+
+        for i, c in enumerate(candles):
+            hour = c["time"].hour
+            minute = c["time"].minute
+
+            # Only look in 13:00-14:30 window
+            if hour < 13:
+                continue
+            if hour > 14 or (hour == 14 and minute > 30):
+                break
+
+            if i >= len(vwap_values):
+                continue
+
+            vwap = vwap_values[i]
+            if vwap <= 0:
+                continue
+
+            price = c["close"]
+
+            # Must be above VWAP (held the trend)
+            if price <= vwap:
+                continue
+
+            # Must be within 2% of day high (near highs, not fading)
+            if price < day_high * 0.98:
+                continue
+
+            # Volume check
+            avg_vol = sum(x["volume"] for x in candles[:i]) / max(i, 1)
+            if avg_vol > 0 and c["volume"] < avg_vol * 0.6:
+                continue
+
+            trigger_candle = c
+            trigger_idx = i
+            break
+
+        if not trigger_candle:
+            continue
+
+        entry_price = trigger_candle["close"]
+        if entry_price <= 0:
+            continue
+
+        atr = atr_values[trigger_idx] if trigger_idx < len(atr_values) else 0
+        if atr == 0:
+            atr = entry_price * 0.005
+
+        # Tighter SL for afternoon — less time to recover
+        vwap_at_entry = vwap_values[trigger_idx]
+        stop_loss = round(entry_price - (0.7 * atr), 2)
+        target = round(entry_price + (1.2 * atr), 2)
+
+        risk = entry_price - stop_loss
+        if risk <= 0:
+            continue
+        reward = target - entry_price
+        rr = reward / risk
+        if rr < 1.4:
+            continue
+
+        qty = max(1, int(per_trade_cap / entry_price))
+
+        # Score
+        score = 5
+        if gap_pct > 3.0:
+            score += 2
+        elif gap_pct > 2.5:
+            score += 1
+        if price >= day_high * 0.99:  # Within 1% of high
+            score += 2
+        if rr > 2.0:
+            score += 1
+
+        signals.append({
+            "symbol": symbol,
+            "security_id": sec_id,
+            "direction": "LONG",
+            "strategy_type": "TREND_CONT",
+            "entry_price": entry_price,
+            "stop_loss_price": stop_loss,
+            "target_price": target,
+            "quantity": qty,
+            "gap_pct": gap_pct,
+            "rel_volume": 1.0,
+            "score": score,
+            "market_direction": market.get("direction", ""),
+            "market_strength": market.get("strength", ""),
+            "vwap_at_entry": vwap_at_entry,
+            "day_high": day_high,
+            "rr": round(rr, 2),
+        })
+        logger.info(
+            "TREND_CONT SIGNAL: %s @ %.2f SL %.2f T %.2f gap=%.1f%% near_high=%.1f%% RR=%.1f score=%d",
+            symbol, entry_price, stop_loss, target, gap_pct,
+            (price / day_high) * 100, rr, score
+        )
+
+    signals.sort(key=lambda x: x["score"], reverse=True)
+    return signals
