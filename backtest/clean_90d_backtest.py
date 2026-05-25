@@ -402,7 +402,7 @@ def run():
                     status = "❌"
 
                 row = (vname, strat, cap, fire_days, len(trades),
-                       wr, pf, total, monthly, status, hits=hit)
+                       wr, pf, total, monthly, status)
 
                 # Print non-losers and combined
                 if status != "❌" or (strat == 'COMBINED' and cap in [30000,100000]):
