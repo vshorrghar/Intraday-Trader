@@ -1285,3 +1285,118 @@ Profit by accident: +Rs.36.58 because HFCL drifted down (favorable for SHORT)
 - Not adding F&O live, swing live, positional
 - Not scaling capital until 14 consecutive bug-free days
 - Not trusting commit messages without running the code
+
+---
+
+### 2026-05-25 — Dhan API Limits Verified (Critical Infrastructure Learning)
+
+#### What We Discovered
+Tested Dhan API limits empirically — not from docs, from actual API responses.
+
+**15-min intraday (/v2/charts/intraday):**
+- 30 cal days = 20 trading days ✅
+- 60 cal days = 38 trading days ✅
+- 75 cal days = 48 trading days ✅
+- 90 cal days = 58 trading days ✅ ← MAXIMUM
+- 100 cal days = DH-905 hard error ❌
+- 120 cal days = DH-904 rate limit ❌
+
+**Daily OHLC (/v2/charts/historical):**
+- Testing in progress (rate limited, needs 3s delay between calls)
+
+**Token management:**
+- Dhan tokens expire daily
+- Saved session token (config/.broker_session_*.json) only valid during market hours
+- Off-hours: must re-authenticate via TOTP
+- TOTP requires .venv/bin/python3 NOT system python
+- pyotp only installed in .venv (not system python)
+- Correct attribute: broker.access_token (not broker._access_token)
+
+**Rate limits:**
+- Rapid sequential calls trigger DH-904 (HTTP 429)
+- Add 2-3 second delay between calls when testing
+
+#### Business Impact
+- Backtest can use max 58 trading days of 15-min data
+- This is ~2.5 months — enough for initial validation but not 6-month proof
+- For longer validation: use daily OHLC (/v2/charts/historical) — no limit found yet
+- Strategy V6 backtest used 49 days (within limit) — results are valid
+
+#### Action Items
+- [ ] Test daily OHLC limits (with 3s delay)
+- [ ] Update backtest scripts to use 90 cal days (currently using 75)
+- [ ] Add this to master resume Section 16 (Dhan API facts)
+
+
+---
+
+### 2026-05-25 — Strategy Analysis + Capital Size Discovery
+
+#### The Most Important Finding of This Session
+
+**vishal-live was NOT losing because of V1 vs V2. It was losing because of capital size.**
+
+| Profile | Per Trade | Charges | Break-even |
+|---------|-----------|---------|------------|
+| vishal-live V1 | Rs.4,000 | Rs.60 | 1.5% move needed |
+| vishal-paper V1 | Rs.35,000 | Rs.60 | 0.14% move needed |
+
+Same LLM. Same strategy. Same stocks. Different capital = completely different outcomes.
+At Rs.4K/trade you need stock to move 1.5% just to break even on charges alone.
+
+#### What Works (from actual DB data)
+
+vishal-paper strategy breakdown:
+- VWAP: 5 trades, **80% WR**, +Rs.2,851 ← best
+- ORB: 6 trades, **83% WR**, +Rs.2,049 ← best  
+- MOMENTUM: 42 trades, 69% WR, +Rs.1,421 ← works
+- SHORT_MOMENTUM: 10 trades, **20% WR**, -Rs.1,227 ← killer
+
+neha-paper losing because:
+- SHORT_MOMENTUM: 20 trades, **10% WR**, -Rs.885
+- Same system, different stock/strategy mix
+
+**SHORT strategies are consistently 10-20% WR. Always disable.**
+
+#### Backtest Learnings
+
+1. ATR from daily candles = 2.4% of price → targets at 3x ATR = 7.2% → impossible intraday
+   Fix: use fixed % targets (1-3% range)
+
+2. HDFCBANK appeared in 14/23 V6 signal days — blacklisted but was polluting backtest
+   Fix: apply blacklist to backtest scripts too
+
+3. Consistent winners across all strategies at Rs.100K:
+   CHENNAIPETRO (100%WR), HINDALCO (100%WR), BHARTIARTL (100%WR), RAILTEL (100%WR)
+
+4. Consistent losers — permanent blacklist additions:
+   WIPRO (24%WR, 33 trades), MPHASIS (0%WR), RALLIS (0%WR), SBIN (20%WR)
+
+#### Dhan API Limits (verified empirically)
+
+- 15-min intraday: max 90 calendar days = 58 trading days
+- Daily OHLC: 730+ calendar days = 2 years available
+- Token: expires daily, re-auth via TOTP needed off-hours
+- Use .venv/bin/python3 (not system python — pyotp only in venv)
+- broker.access_token (not broker._access_token)
+- Add 3s delay between rapid API calls to avoid DH-904
+
+#### Config Change Approved (2026-05-25)
+
+vishal-live-v2 updated:
+- per_trade_max_capital: 10000 → **25000** (charges drop 1.5% → 0.24%)
+- max_trades_per_day: 3 → **1** (quality over quantity)
+- daily_loss_limit: 1000 → **1500** (5% of Rs.30K capital)
+
+#### V2 Status
+
+- First real V2 run: tomorrow May 26 (fix deployed after market close today)
+- V2 runs V6 ONLY (V4 disabled — dilutes edge)
+- V6 fires on ~20-25% of days after blacklist applied
+- After 11 AM: Strategy 2 (VWAP) and 3 (Trend) wired but need backtest validation
+- 90-day clean backtest running tonight — will confirm which after-11AM strategy to add
+
+#### Decision: Do NOT go back to V1
+
+V1 lost on live because of capital size (Rs.4K/trade), not because LLM is bad.
+V2 at Rs.25K/trade has never traded — give it 10 clean trades before judging.
