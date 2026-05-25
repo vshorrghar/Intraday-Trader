@@ -1,0 +1,64 @@
+nohup: ignoring input
+=================================================================
+  THREE STRATEGY BACKTEST — V2 Full Day Coverage
+=================================================================
+Loaded 195 stocks from cache
+Trading dates found: 49
+Range: 2026-03-11 to 2026-05-25
+Universe: 156 stocks (after blacklist)
+
+Running Rs30K_live...
+
+=================================================================
+  Rs30K_live — 49 trading days
+=================================================================
+Strategy                Trades     WR%     PF    Net P&L   Per Day
+-----------------------------------------------------------------
+S1_ORB                      38   47.4%   1.10       188        4  ❌ WEAK
+S2_VWAP_RECLAIM              4   25.0%   0.25      -179       -4  ❌ WEAK
+S3_TREND_CONT                0     N/A    N/A        N/A       N/A
+COMBINED                    42   45.2%   1.00         8        0  
+
+  Monthly projection (22 days): Rs.4
+  Total trades: 42
+  Best day:  2026-05-04 Rs.435 (3 trades)
+  Worst day: 2026-03-30 Rs.-336 (3 trades)
+
+Running Rs1L_paper...
+
+=================================================================
+  Rs1L_paper — 49 trading days
+=================================================================
+Strategy                Trades     WR%     PF    Net P&L   Per Day
+-----------------------------------------------------------------
+S1_ORB                      48   47.9%   1.09       539       11  ❌ WEAK
+S2_VWAP_RECLAIM              8   12.5%   0.12     -1359      -28  ❌ WEAK
+S3_TREND_CONT                0     N/A    N/A        N/A       N/A
+COMBINED                    56   42.9%   0.89      -821      -17  
+
+  Monthly projection (22 days): Rs.-369
+  Total trades: 56
+  Best day:  2026-03-20 Rs.764 (4 trades)
+  Worst day: 2026-03-30 Rs.-1,274 (4 trades)
+
+Running Rs3L_paper...
+
+=================================================================
+  Rs3L_paper — 49 trading days
+=================================================================
+Strategy                Trades     WR%     PF    Net P&L   Per Day
+-----------------------------------------------------------------
+S1_ORB                      48   47.9%   1.08      1472       30  ❌ WEAK
+S2_VWAP_RECLAIM              8   12.5%   0.13     -4112      -84  ❌ WEAK
+S3_TREND_CONT                0     N/A    N/A        N/A       N/A
+COMBINED                    56   42.9%   0.89     -2640      -54  
+
+  Monthly projection (22 days): Rs.-1,185
+  Total trades: 56
+  Best day:  2026-03-20 Rs.2,438 (4 trades)
+  Worst day: 2026-03-30 Rs.-3,937 (4 trades)
+
+
+Full results saved: backtest/results/three_strategy_backtest.json
+
+DONE.

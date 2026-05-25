@@ -139,7 +139,7 @@ def fetch_and_cache_historical(
             logger.warning("Failed to fetch %s (sec_id=%s)", symbol, sec_id)
 
         # Rate limit: 200ms between calls
-        time.sleep(0.2)
+        time.sleep(1.0)
 
     return results
 
@@ -244,7 +244,7 @@ def fetch_universe_for_dates(
             logger.warning("No data for %s (sec_id=%s)", symbol, sec_id)
 
         # Rate limit: 200ms between API calls
-        time.sleep(0.2)
+        time.sleep(1.0)
 
         # Progress every 50 stocks
         if idx % 50 == 0:
@@ -336,3 +336,25 @@ def load_nifty500_universe(min_volume_check: bool = False) -> dict[str, str]:
             universe[sym] = sid
 
     return universe
+
+
+def fetch_with_retry(broker, security_id, exchange_segment, instrument,
+                     interval, from_date, to_date, max_retries=3) -> dict:
+    """Fetch OHLC with exponential backoff on 429."""
+    import time
+    for attempt in range(max_retries):
+        data = broker.get_historical_ohlc(
+            security_id=security_id,
+            exchange_segment=exchange_segment,
+            instrument=instrument,
+            interval=interval,
+            from_date=from_date,
+            to_date=to_date,
+        )
+        if data and data.get("open"):
+            return data
+        # If failed, wait longer before retry
+        wait = (attempt + 1) * 3  # 3s, 6s, 9s
+        print(f"  Retry {attempt+1}/{max_retries} for {security_id}, waiting {wait}s...")
+        time.sleep(wait)
+    return None

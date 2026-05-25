@@ -1,0 +1,1531 @@
+nohup: ignoring input
+======================================================================
+FULL 6-MONTH BACKTEST FRAMEWORK
+======================================================================
+Started: 2026-05-23 12:55:40 IST
+Strategies: ['V1', 'V2', 'V3', 'V4', 'V6']
+Universes: ['nifty50', 'next50', 'tier1']
+Position sizes: [15000, 50000]
+
+[1] Authenticating broker...
+  ✓ Broker ready
+
+[2] Fetching Nifty index data...
+  ✓ Nifty data: 2955 candles
+
+Fetching data for 48 stocks in nifty50...
+  Chunk: 2025-12-01 to 2026-03-01
+  Chunk: 2026-03-01 to 2026-05-23
+  Data ready for 48 stocks
+
+  Universe nifty50: 117 trading days
+
+[Running] V1_nifty50_cap15000
+  Day 10/117: cumulative ₹-490
+  Day 20/117: cumulative ₹-1,522
+  Day 30/117: cumulative ₹-2,590
+  Day 40/117: cumulative ₹-3,238
+  Day 50/117: cumulative ₹-3,165
+  Day 60/117: cumulative ₹-2,984
+  Day 70/117: cumulative ₹-1,991
+  Day 80/117: cumulative ₹-1,632
+  Day 90/117: cumulative ₹-2,051
+  Day 100/117: cumulative ₹-1,540
+  Day 110/117: cumulative ₹-1,849
+
+[Running] V1_nifty50_cap50000
+  Day 10/117: cumulative ₹-1,635
+  Day 20/117: cumulative ₹-5,226
+  Day 30/117: cumulative ₹-9,268
+  Day 40/117: cumulative ₹-11,518
+  Day 50/117: cumulative ₹-11,504
+  Day 60/117: cumulative ₹-10,740
+  Day 70/117: cumulative ₹-7,336
+  Day 80/117: cumulative ₹-5,866
+  Day 90/117: cumulative ₹-7,258
+  Day 100/117: cumulative ₹-5,509
+  Day 110/117: cumulative ₹-6,617
+
+[Running] V2_nifty50_cap15000
+  Day 10/117: cumulative ₹-400
+  Day 20/117: cumulative ₹-1,432
+  Day 30/117: cumulative ₹-2,515
+  Day 40/117: cumulative ₹-3,164
+  Day 50/117: cumulative ₹-2,901
+  Day 60/117: cumulative ₹-2,507
+  Day 70/117: cumulative ₹-1,461
+  Day 80/117: cumulative ₹-1,466
+  Day 90/117: cumulative ₹-1,885
+  Day 100/117: cumulative ₹-1,375
+  Day 110/117: cumulative ₹-1,242
+
+[Running] V2_nifty50_cap50000
+  Day 10/117: cumulative ₹-1,354
+  Day 20/117: cumulative ₹-4,945
+  Day 30/117: cumulative ₹-9,053
+  Day 40/117: cumulative ₹-11,304
+  Day 50/117: cumulative ₹-10,598
+  Day 60/117: cumulative ₹-9,079
+  Day 70/117: cumulative ₹-5,483
+  Day 80/117: cumulative ₹-5,488
+  Day 90/117: cumulative ₹-6,880
+  Day 100/117: cumulative ₹-5,131
+  Day 110/117: cumulative ₹-4,654
+
+[Running] V3_nifty50_cap15000
+  Day 10/117: cumulative ₹-400
+  Day 20/117: cumulative ₹-1,432
+  Day 30/117: cumulative ₹-2,515
+  Day 40/117: cumulative ₹-3,164
+  Day 50/117: cumulative ₹-2,901
+  Day 60/117: cumulative ₹-2,507
+  Day 70/117: cumulative ₹-1,461
+  Day 80/117: cumulative ₹-1,466
+  Day 90/117: cumulative ₹-1,885
+  Day 100/117: cumulative ₹-1,375
+  Day 110/117: cumulative ₹-1,242
+
+[Running] V3_nifty50_cap50000
+  Day 10/117: cumulative ₹-1,354
+  Day 20/117: cumulative ₹-4,945
+  Day 30/117: cumulative ₹-9,053
+  Day 40/117: cumulative ₹-11,304
+  Day 50/117: cumulative ₹-10,598
+  Day 60/117: cumulative ₹-9,079
+  Day 70/117: cumulative ₹-5,483
+  Day 80/117: cumulative ₹-5,488
+  Day 90/117: cumulative ₹-6,880
+  Day 100/117: cumulative ₹-5,131
+  Day 110/117: cumulative ₹-4,654
+
+[Running] V4_nifty50_cap15000
+  Day 10/117: cumulative ₹-545
+  Day 20/117: cumulative ₹-593
+  Day 30/117: cumulative ₹-983
+  Day 40/117: cumulative ₹-1,420
+  Day 50/117: cumulative ₹-1,877
+  Day 60/117: cumulative ₹-1,302
+  Day 70/117: cumulative ₹-502
+  Day 80/117: cumulative ₹716
+  Day 90/117: cumulative ₹957
+  Day 100/117: cumulative ₹2,105
+  Day 110/117: cumulative ₹1,521
+
+[Running] V4_nifty50_cap50000
+  Day 10/117: cumulative ₹-1,852
+  Day 20/117: cumulative ₹-2,029
+  Day 30/117: cumulative ₹-3,319
+  Day 40/117: cumulative ₹-4,732
+  Day 50/117: cumulative ₹-6,412
+  Day 60/117: cumulative ₹-4,355
+  Day 70/117: cumulative ₹-1,439
+  Day 80/117: cumulative ₹2,758
+  Day 90/117: cumulative ₹3,582
+  Day 100/117: cumulative ₹7,487
+  Day 110/117: cumulative ₹5,329
+
+[Running] V6_nifty50_cap15000
+  Day 10/117: cumulative ₹0
+  Day 20/117: cumulative ₹58
+  Day 30/117: cumulative ₹58
+  Day 40/117: cumulative ₹-220
+  Day 50/117: cumulative ₹-71
+  Day 60/117: cumulative ₹275
+  Day 70/117: cumulative ₹652
+  Day 80/117: cumulative ₹1,074
+  Day 90/117: cumulative ₹1,647
+  Day 100/117: cumulative ₹1,803
+  Day 110/117: cumulative ₹1,803
+
+[Running] V6_nifty50_cap50000
+  Day 10/117: cumulative ₹0
+  Day 20/117: cumulative ₹194
+  Day 30/117: cumulative ₹194
+  Day 40/117: cumulative ₹-746
+  Day 50/117: cumulative ₹-244
+  Day 60/117: cumulative ₹995
+  Day 70/117: cumulative ₹2,208
+  Day 80/117: cumulative ₹3,686
+  Day 90/117: cumulative ₹5,626
+  Day 100/117: cumulative ₹6,136
+  Day 110/117: cumulative ₹6,136
+
+Fetching data for 49 stocks in next50...
+  Chunk: 2025-12-01 to 2026-03-01
+  Chunk: 2026-03-01 to 2026-05-23
+  Data ready for 49 stocks
+
+  Universe next50: 117 trading days
+
+[Running] V1_next50_cap15000
+  Day 10/117: cumulative ₹-240
+  Day 20/117: cumulative ₹-1,762
+  Day 30/117: cumulative ₹-2,748
+  Day 40/117: cumulative ₹-2,559
+  Day 50/117: cumulative ₹-3,026
+  Day 60/117: cumulative ₹-2,139
+  Day 70/117: cumulative ₹-2,786
+  Day 80/117: cumulative ₹-3,910
+  Day 90/117: cumulative ₹-3,239
+  Day 100/117: cumulative ₹-3,647
+  Day 110/117: cumulative ₹-3,262
+
+[Running] V1_next50_cap50000
+  Day 10/117: cumulative ₹-259
+  Day 20/117: cumulative ₹-5,685
+  Day 30/117: cumulative ₹-9,175
+  Day 40/117: cumulative ₹-8,855
+  Day 50/117: cumulative ₹-10,172
+  Day 60/117: cumulative ₹-7,063
+  Day 70/117: cumulative ₹-10,393
+  Day 80/117: cumulative ₹-13,447
+  Day 90/117: cumulative ₹-10,439
+  Day 100/117: cumulative ₹-11,900
+  Day 110/117: cumulative ₹-10,644
+
+[Running] V2_next50_cap15000
+  Day 10/117: cumulative ₹-72
+  Day 20/117: cumulative ₹-1,593
+  Day 30/117: cumulative ₹-2,579
+  Day 40/117: cumulative ₹-2,391
+  Day 50/117: cumulative ₹-2,421
+  Day 60/117: cumulative ₹-1,534
+  Day 70/117: cumulative ₹-2,182
+  Day 80/117: cumulative ₹-3,306
+  Day 90/117: cumulative ₹-2,310
+  Day 100/117: cumulative ₹-3,067
+  Day 110/117: cumulative ₹-2,490
+
+[Running] V2_next50_cap50000
+  Day 10/117: cumulative ₹305
+  Day 20/117: cumulative ₹-5,121
+  Day 30/117: cumulative ₹-8,611
+  Day 40/117: cumulative ₹-8,291
+  Day 50/117: cumulative ₹-8,145
+  Day 60/117: cumulative ₹-5,035
+  Day 70/117: cumulative ₹-8,366
+  Day 80/117: cumulative ₹-11,420
+  Day 90/117: cumulative ₹-8,281
+  Day 100/117: cumulative ₹-10,917
+  Day 110/117: cumulative ₹-8,988
+
+[Running] V3_next50_cap15000
+  Day 10/117: cumulative ₹-72
+  Day 20/117: cumulative ₹-1,593
+  Day 30/117: cumulative ₹-2,579
+  Day 40/117: cumulative ₹-2,391
+  Day 50/117: cumulative ₹-2,421
+  Day 60/117: cumulative ₹-1,534
+  Day 70/117: cumulative ₹-2,182
+  Day 80/117: cumulative ₹-3,306
+  Day 90/117: cumulative ₹-2,310
+  Day 100/117: cumulative ₹-3,067
+  Day 110/117: cumulative ₹-2,490
+
+[Running] V3_next50_cap50000
+  Day 10/117: cumulative ₹305
+  Day 20/117: cumulative ₹-5,121
+  Day 30/117: cumulative ₹-8,611
+  Day 40/117: cumulative ₹-8,291
+  Day 50/117: cumulative ₹-8,145
+  Day 60/117: cumulative ₹-5,035
+  Day 70/117: cumulative ₹-8,366
+  Day 80/117: cumulative ₹-11,420
+  Day 90/117: cumulative ₹-8,281
+  Day 100/117: cumulative ₹-10,917
+  Day 110/117: cumulative ₹-8,988
+
+[Running] V4_next50_cap15000
+  Day 10/117: cumulative ₹-483
+  Day 20/117: cumulative ₹-434
+  Day 30/117: cumulative ₹431
+  Day 40/117: cumulative ₹659
+  Day 50/117: cumulative ₹750
+  Day 60/117: cumulative ₹323
+  Day 70/117: cumulative ₹902
+  Day 80/117: cumulative ₹-670
+  Day 90/117: cumulative ₹295
+  Day 100/117: cumulative ₹179
+  Day 110/117: cumulative ₹398
+
+[Running] V4_next50_cap50000
+  Day 10/117: cumulative ₹-1,247
+  Day 20/117: cumulative ₹-1,087
+  Day 30/117: cumulative ₹-494
+  Day 40/117: cumulative ₹-811
+  Day 50/117: cumulative ₹-506
+  Day 60/117: cumulative ₹-1,258
+  Day 70/117: cumulative ₹216
+  Day 80/117: cumulative ₹-4,088
+  Day 90/117: cumulative ₹-1,039
+  Day 100/117: cumulative ₹-1,448
+  Day 110/117: cumulative ₹-895
+
+[Running] V6_next50_cap15000
+  Day 10/117: cumulative ₹0
+  Day 20/117: cumulative ₹0
+  Day 30/117: cumulative ₹0
+  Day 40/117: cumulative ₹-87
+  Day 50/117: cumulative ₹41
+  Day 60/117: cumulative ₹-575
+  Day 70/117: cumulative ₹-1,412
+  Day 80/117: cumulative ₹-1,317
+  Day 90/117: cumulative ₹-158
+  Day 100/117: cumulative ₹-77
+  Day 110/117: cumulative ₹-77
+
+[Running] V6_next50_cap50000
+  Day 10/117: cumulative ₹0
+  Day 20/117: cumulative ₹0
+  Day 30/117: cumulative ₹0
+  Day 40/117: cumulative ₹-555
+  Day 50/117: cumulative ₹-126
+  Day 60/117: cumulative ₹-2,237
+  Day 70/117: cumulative ₹-5,063
+  Day 80/117: cumulative ₹-4,707
+  Day 90/117: cumulative ₹-778
+  Day 100/117: cumulative ₹-486
+  Day 110/117: cumulative ₹-486
+
+Fetching data for 95 stocks in tier1...
+  Chunk: 2025-12-01 to 2026-03-01
+  Chunk: 2026-03-01 to 2026-05-23
+  Data ready for 95 stocks
+
+  Universe tier1: 117 trading days
+
+[Running] V1_tier1_cap15000
+  Day 10/117: cumulative ₹-865
+  Day 20/117: cumulative ₹-2,125
+  Day 30/117: cumulative ₹-3,704
+  Day 40/117: cumulative ₹-4,309
+  Day 50/117: cumulative ₹-4,786
+  Day 60/117: cumulative ₹-3,719
+  Day 70/117: cumulative ₹-3,445
+  Day 80/117: cumulative ₹-3,782
+  Day 90/117: cumulative ₹-3,966
+  Day 100/117: cumulative ₹-4,271
+  Day 110/117: cumulative ₹-4,003
+
+[Running] V1_tier1_cap50000
+  Day 10/117: cumulative ₹-2,352
+  Day 20/117: cumulative ₹-6,816
+  Day 30/117: cumulative ₹-11,286
+  Day 40/117: cumulative ₹-13,644
+  Day 50/117: cumulative ₹-15,541
+  Day 60/117: cumulative ₹-11,531
+  Day 70/117: cumulative ₹-10,536
+  Day 80/117: cumulative ₹-10,689
+  Day 90/117: cumulative ₹-11,357
+  Day 100/117: cumulative ₹-12,191
+  Day 110/117: cumulative ₹-11,370
+
+[Running] V2_tier1_cap15000
+  Day 10/117: cumulative ₹-606
+  Day 20/117: cumulative ₹-1,866
+  Day 30/117: cumulative ₹-3,461
+  Day 40/117: cumulative ₹-4,065
+  Day 50/117: cumulative ₹-4,031
+  Day 60/117: cumulative ₹-2,994
+  Day 70/117: cumulative ₹-2,696
+  Day 80/117: cumulative ₹-3,397
+  Day 90/117: cumulative ₹-3,582
+  Day 100/117: cumulative ₹-4,235
+  Day 110/117: cumulative ₹-3,524
+
+[Running] V2_tier1_cap50000
+  Day 10/117: cumulative ₹-1,507
+  Day 20/117: cumulative ₹-5,971
+  Day 30/117: cumulative ₹-10,508
+  Day 40/117: cumulative ₹-12,866
+  Day 50/117: cumulative ₹-12,993
+  Day 60/117: cumulative ₹-9,326
+  Day 70/117: cumulative ₹-8,246
+  Day 80/117: cumulative ₹-9,874
+  Day 90/117: cumulative ₹-10,542
+  Day 100/117: cumulative ₹-12,550
+  Day 110/117: cumulative ₹-10,144
+
+[Running] V3_tier1_cap15000
+  Day 10/117: cumulative ₹-606
+  Day 20/117: cumulative ₹-1,866
+  Day 30/117: cumulative ₹-3,461
+  Day 40/117: cumulative ₹-4,065
+  Day 50/117: cumulative ₹-4,031
+  Day 60/117: cumulative ₹-2,994
+  Day 70/117: cumulative ₹-2,696
+  Day 80/117: cumulative ₹-3,397
+  Day 90/117: cumulative ₹-3,582
+  Day 100/117: cumulative ₹-4,235
+  Day 110/117: cumulative ₹-3,524
+
+[Running] V3_tier1_cap50000
+  Day 10/117: cumulative ₹-1,507
+  Day 20/117: cumulative ₹-5,971
+  Day 30/117: cumulative ₹-10,508
+  Day 40/117: cumulative ₹-12,866
+  Day 50/117: cumulative ₹-12,993
+  Day 60/117: cumulative ₹-9,326
+  Day 70/117: cumulative ₹-8,246
+  Day 80/117: cumulative ₹-9,874
+  Day 90/117: cumulative ₹-10,542
+  Day 100/117: cumulative ₹-12,550
+  Day 110/117: cumulative ₹-10,144
+
+[Running] V4_tier1_cap15000
+  Day 10/117: cumulative ₹-116
+  Day 20/117: cumulative ₹-240
+  Day 30/117: cumulative ₹-451
+  Day 40/117: cumulative ₹-531
+  Day 50/117: cumulative ₹-949
+  Day 60/117: cumulative ₹-606
+  Day 70/117: cumulative ₹134
+  Day 80/117: cumulative ₹656
+  Day 90/117: cumulative ₹1,016
+  Day 100/117: cumulative ₹1,921
+  Day 110/117: cumulative ₹1,805
+
+[Running] V4_tier1_cap50000
+  Day 10/117: cumulative ₹-499
+  Day 20/117: cumulative ₹-981
+  Day 30/117: cumulative ₹-1,747
+  Day 40/117: cumulative ₹-3,278
+  Day 50/117: cumulative ₹-4,841
+  Day 60/117: cumulative ₹-3,537
+  Day 70/117: cumulative ₹-829
+  Day 80/117: cumulative ₹1,744
+  Day 90/117: cumulative ₹2,935
+  Day 100/117: cumulative ₹6,012
+  Day 110/117: cumulative ₹5,274
+
+[Running] V6_tier1_cap15000
+  Day 10/117: cumulative ₹0
+  Day 20/117: cumulative ₹58
+  Day 30/117: cumulative ₹58
+  Day 40/117: cumulative ₹-321
+  Day 50/117: cumulative ₹-43
+  Day 60/117: cumulative ₹-315
+  Day 70/117: cumulative ₹-595
+  Day 80/117: cumulative ₹-78
+  Day 90/117: cumulative ₹614
+  Day 100/117: cumulative ₹851
+  Day 110/117: cumulative ₹851
+
+[Running] V6_tier1_cap50000
+  Day 10/117: cumulative ₹0
+  Day 20/117: cumulative ₹194
+  Day 30/117: cumulative ₹194
+  Day 40/117: cumulative ₹-1,352
+  Day 50/117: cumulative ₹-420
+  Day 60/117: cumulative ₹-1,293
+  Day 70/117: cumulative ₹-3,012
+  Day 80/117: cumulative ₹-1,178
+  Day 90/117: cumulative ₹1,133
+  Day 100/117: cumulative ₹1,935
+  Day 110/117: cumulative ₹1,935
+
+[Final] Generating report...
+======================================================================
+BACKTEST REPORT — 6 Month Strategy Analysis
+Generated: 2026-05-23 13:40 IST
+======================================================================
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V1 | Universe: nifty50 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   100 active / 17 skipped
+  Total trades:   209
+  Win rate:       44.5%  (93W / 116L)
+  Profit factor:  0.72
+  Total gross:    ₹2,217.89
+  Total charges:  ₹3,064.77
+  Total net:      ₹-846.88
+  Avg net/day:    ₹-8.47
+  Avg net/trade:  ₹-4.05
+  Best trade:     BHARTIARTL ₹477.51 (TIME_STOP_1430)
+  Worst trade:    INFY ₹-328.71 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 209 trades, 44% WR, ₹-847
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :  10 trades, 60% WR, ₹1,102
+    MARUTI         :   4 trades, 75% WR, ₹577
+    DRREDDY        :   5 trades, 60% WR, ₹360
+    NTPC           :   6 trades, 67% WR, ₹337
+    ULTRACEMCO     :   3 trades, 100% WR, ₹325
+
+  Bottom 5 stocks by P&L:
+    BAJAJFINSV     :   4 trades, 0% WR, ₹-539
+    BAJFINANCE     :   6 trades, 17% WR, ₹-453
+    HDFCLIFE       :   5 trades, 40% WR, ₹-383
+    JSWSTEEL       :   3 trades, 0% WR, ₹-368
+    HEROMOTOCO     :   5 trades, 20% WR, ₹-365
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V1 | Universe: nifty50 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   100 active / 17 skipped
+  Total trades:   209
+  Win rate:       44.5%  (93W / 116L)
+  Profit factor:  0.75
+  Total gross:    ₹8,124.13
+  Total charges:  ₹10,829.92
+  Total net:      ₹-2,705.79
+  Avg net/day:    ₹-27.06
+  Avg net/trade:  ₹-12.95
+  Best trade:     MARUTI ₹1,562.07 (TIME_STOP_1430)
+  Worst trade:    SBILIFE ₹-1,117.27 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 209 trades, 44% WR, ₹-2,706
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :  10 trades, 60% WR, ₹3,674
+    MARUTI         :   4 trades, 75% WR, ₹2,175
+    ULTRACEMCO     :   3 trades, 100% WR, ₹1,301
+    DRREDDY        :   5 trades, 60% WR, ₹1,265
+    TECHM          :   6 trades, 50% WR, ₹1,211
+
+  Bottom 5 stocks by P&L:
+    BAJAJFINSV     :   4 trades, 0% WR, ₹-1,844
+    BAJFINANCE     :   6 trades, 17% WR, ₹-1,551
+    HEROMOTOCO     :   5 trades, 20% WR, ₹-1,468
+    BAJAJ-AUTO     :   5 trades, 20% WR, ₹-1,364
+    HDFCLIFE       :   5 trades, 40% WR, ₹-1,306
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V2 | Universe: nifty50 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   97 active / 20 skipped
+  Total trades:   203
+  Win rate:       45.3%  (92W / 111L)
+  Profit factor:  0.92
+  Total gross:    ₹2,742.04
+  Total charges:  ₹2,981.20
+  Total net:      ₹-239.16
+  Avg net/day:    ₹-2.47
+  Avg net/trade:  ₹-1.18
+  Best trade:     BHARTIARTL ₹477.51 (TIME_STOP_1430)
+  Worst trade:    INFY ₹-328.71 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 203 trades, 45% WR, ₹-239
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :   9 trades, 67% WR, ₹1,277
+    DRREDDY        :   5 trades, 60% WR, ₹360
+    ULTRACEMCO     :   3 trades, 100% WR, ₹325
+    NTPC           :   5 trades, 60% WR, ₹322
+    TECHM          :   6 trades, 50% WR, ₹318
+
+  Bottom 5 stocks by P&L:
+    BAJFINANCE     :   6 trades, 17% WR, ₹-453
+    HDFCLIFE       :   5 trades, 40% WR, ₹-383
+    JSWSTEEL       :   3 trades, 0% WR, ₹-368
+    HEROMOTOCO     :   5 trades, 20% WR, ₹-365
+    BAJAJ-AUTO     :   5 trades, 20% WR, ₹-295
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V2 | Universe: nifty50 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   97 active / 20 skipped
+  Total trades:   203
+  Win rate:       45.3%  (92W / 111L)
+  Profit factor:  0.93
+  Total gross:    ₹9,776.88
+  Total charges:  ₹10,519.29
+  Total net:      ₹-742.41
+  Avg net/day:    ₹-7.65
+  Avg net/trade:  ₹-3.66
+  Best trade:     BHARTIARTL ₹1,551.91 (TIME_STOP_1430)
+  Worst trade:    SBILIFE ₹-1,117.27 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 203 trades, 45% WR, ₹-742
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :   9 trades, 67% WR, ₹4,322
+    ULTRACEMCO     :   3 trades, 100% WR, ₹1,301
+    DRREDDY        :   5 trades, 60% WR, ₹1,265
+    TECHM          :   6 trades, 50% WR, ₹1,211
+    NTPC           :   5 trades, 60% WR, ₹1,070
+
+  Bottom 5 stocks by P&L:
+    BAJFINANCE     :   6 trades, 17% WR, ₹-1,551
+    HEROMOTOCO     :   5 trades, 20% WR, ₹-1,468
+    BAJAJ-AUTO     :   5 trades, 20% WR, ₹-1,364
+    HDFCLIFE       :   5 trades, 40% WR, ₹-1,306
+    JSWSTEEL       :   3 trades, 0% WR, ₹-1,292
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V3 | Universe: nifty50 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   97 active / 20 skipped
+  Total trades:   203
+  Win rate:       45.3%  (92W / 111L)
+  Profit factor:  0.92
+  Total gross:    ₹2,742.04
+  Total charges:  ₹2,981.20
+  Total net:      ₹-239.16
+  Avg net/day:    ₹-2.47
+  Avg net/trade:  ₹-1.18
+  Best trade:     BHARTIARTL ₹477.51 (TIME_STOP_1430)
+  Worst trade:    INFY ₹-328.71 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 203 trades, 45% WR, ₹-239
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :   9 trades, 67% WR, ₹1,277
+    DRREDDY        :   5 trades, 60% WR, ₹360
+    ULTRACEMCO     :   3 trades, 100% WR, ₹325
+    NTPC           :   5 trades, 60% WR, ₹322
+    TECHM          :   6 trades, 50% WR, ₹318
+
+  Bottom 5 stocks by P&L:
+    BAJFINANCE     :   6 trades, 17% WR, ₹-453
+    HDFCLIFE       :   5 trades, 40% WR, ₹-383
+    JSWSTEEL       :   3 trades, 0% WR, ₹-368
+    HEROMOTOCO     :   5 trades, 20% WR, ₹-365
+    BAJAJ-AUTO     :   5 trades, 20% WR, ₹-295
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V3 | Universe: nifty50 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   97 active / 20 skipped
+  Total trades:   203
+  Win rate:       45.3%  (92W / 111L)
+  Profit factor:  0.93
+  Total gross:    ₹9,776.88
+  Total charges:  ₹10,519.29
+  Total net:      ₹-742.41
+  Avg net/day:    ₹-7.65
+  Avg net/trade:  ₹-3.66
+  Best trade:     BHARTIARTL ₹1,551.91 (TIME_STOP_1430)
+  Worst trade:    SBILIFE ₹-1,117.27 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 203 trades, 45% WR, ₹-742
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :   9 trades, 67% WR, ₹4,322
+    ULTRACEMCO     :   3 trades, 100% WR, ₹1,301
+    DRREDDY        :   5 trades, 60% WR, ₹1,265
+    TECHM          :   6 trades, 50% WR, ₹1,211
+    NTPC           :   5 trades, 60% WR, ₹1,070
+
+  Bottom 5 stocks by P&L:
+    BAJFINANCE     :   6 trades, 17% WR, ₹-1,551
+    HEROMOTOCO     :   5 trades, 20% WR, ₹-1,468
+    BAJAJ-AUTO     :   5 trades, 20% WR, ₹-1,364
+    HDFCLIFE       :   5 trades, 40% WR, ₹-1,306
+    JSWSTEEL       :   3 trades, 0% WR, ₹-1,292
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V4 | Universe: nifty50 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   62 active / 55 skipped
+  Total trades:   138
+  Win rate:       47.1%  (65W / 73L)
+  Profit factor:  1.22
+  Total gross:    ₹2,520.11
+  Total charges:  ₹2,061.65
+  Total net:      ₹458.46
+  Avg net/day:    ₹7.39
+  Avg net/trade:  ₹3.32
+  Best trade:     INFY ₹446.96 (TIME_STOP_1430)
+  Worst trade:    INFY ₹-328.71 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  73 trades, 41% WR, ₹-1,301
+    BULL    :  65 trades, 54% WR, ₹1,760
+
+  Top 5 stocks by P&L:
+    LT             :   3 trades, 100% WR, ₹673
+    HCLTECH        :   4 trades, 75% WR, ₹581
+    ULTRACEMCO     :   4 trades, 100% WR, ₹520
+    SHRIRAMFIN     :   3 trades, 100% WR, ₹450
+    NESTLEIND      :   1 trades, 100% WR, ₹418
+
+  Bottom 5 stocks by P&L:
+    TATACONSUM     :   4 trades, 0% WR, ₹-529
+    HDFCLIFE       :   5 trades, 20% WR, ₹-371
+    ADANIENT       :   3 trades, 0% WR, ₹-369
+    BEL            :   2 trades, 0% WR, ₹-331
+    TATASTEEL      :   2 trades, 0% WR, ₹-329
+
+  VERDICT:
+  ⚠️  PAPER ONLY — Marginal edge. Test in paper before live deployment.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V4 | Universe: nifty50 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   62 active / 55 skipped
+  Total trades:   137
+  Win rate:       47.4%  (65W / 72L)
+  Profit factor:  1.37
+  Total gross:    ₹9,727.05
+  Total charges:  ₹7,104.26
+  Total net:      ₹2,622.79
+  Avg net/day:    ₹42.30
+  Avg net/trade:  ₹19.14
+  Best trade:     INFY ₹1,527.11 (TIME_STOP_1430)
+  Worst trade:    INFY ₹-1,105.65 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  72 trades, 42% WR, ₹-3,706
+    BULL    :  65 trades, 54% WR, ₹6,328
+
+  Top 5 stocks by P&L:
+    LT             :   3 trades, 100% WR, ₹2,369
+    ULTRACEMCO     :   4 trades, 100% WR, ₹2,079
+    HCLTECH        :   4 trades, 75% WR, ₹2,053
+    SHRIRAMFIN     :   3 trades, 100% WR, ₹1,533
+    NESTLEIND      :   1 trades, 100% WR, ₹1,443
+
+  Bottom 5 stocks by P&L:
+    TATACONSUM     :   4 trades, 0% WR, ₹-1,811
+    HDFCLIFE       :   5 trades, 20% WR, ₹-1,273
+    ADANIENT       :   3 trades, 0% WR, ₹-1,271
+    BEL            :   2 trades, 0% WR, ₹-1,123
+    SBIN           :   3 trades, 0% WR, ₹-1,104
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed. Win rate and profit factor meet criteria.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V6 | Universe: nifty50 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   25 active / 92 skipped
+  Total trades:   36
+  Win rate:       61.1%  (22W / 14L)
+  Profit factor:  3.61
+  Total gross:    ₹1,958.58
+  Total charges:  ₹543.11
+  Total net:      ₹1,415.47
+  Avg net/day:    ₹56.62
+  Avg net/trade:  ₹39.32
+  Best trade:     INFY ₹446.96 (TIME_STOP_1430)
+  Worst trade:    TATASTEEL ₹-328.49 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  20 trades, 55% WR, ₹441
+    BULL    :  16 trades, 69% WR, ₹974
+
+  Top 5 stocks by P&L:
+    BAJFINANCE     :   2 trades, 100% WR, ₹561
+    SHRIRAMFIN     :   3 trades, 100% WR, ₹450
+    INFY           :   1 trades, 100% WR, ₹447
+    HCLTECH        :   2 trades, 100% WR, ₹436
+    GRASIM         :   1 trades, 100% WR, ₹210
+
+  Bottom 5 stocks by P&L:
+    TATASTEEL      :   1 trades, 0% WR, ₹-328
+    TECHM          :   1 trades, 0% WR, ₹-291
+    BPCL           :   2 trades, 0% WR, ₹-235
+    ASIANPAINT     :   1 trades, 0% WR, ₹-201
+    HINDUNILVR     :   1 trades, 0% WR, ₹-177
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed. Win rate and profit factor meet criteria.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V6 | Universe: nifty50 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   25 active / 92 skipped
+  Total trades:   36
+  Win rate:       61.1%  (22W / 14L)
+  Profit factor:  3.64
+  Total gross:    ₹6,865.48
+  Total charges:  ₹1,886.14
+  Total net:      ₹4,979.34
+  Avg net/day:    ₹199.17
+  Avg net/trade:  ₹138.31
+  Best trade:     INFY ₹1,527.11 (TIME_STOP_1430)
+  Worst trade:    TATASTEEL ₹-1,093.48 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  20 trades, 55% WR, ₹1,472
+    BULL    :  16 trades, 69% WR, ₹3,508
+
+  Top 5 stocks by P&L:
+    BAJFINANCE     :   2 trades, 100% WR, ₹1,874
+    HCLTECH        :   2 trades, 100% WR, ₹1,569
+    SHRIRAMFIN     :   3 trades, 100% WR, ₹1,533
+    INFY           :   1 trades, 100% WR, ₹1,527
+    GRASIM         :   1 trades, 100% WR, ₹841
+
+  Bottom 5 stocks by P&L:
+    TATASTEEL      :   1 trades, 0% WR, ₹-1,093
+    TECHM          :   1 trades, 0% WR, ₹-1,017
+    BPCL           :   2 trades, 0% WR, ₹-795
+    ASIANPAINT     :   1 trades, 0% WR, ₹-770
+    HINDUNILVR     :   1 trades, 0% WR, ₹-607
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed. Win rate and profit factor meet criteria.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V1 | Universe: next50 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   79 active / 38 skipped
+  Total trades:   165
+  Win rate:       46.1%  (76W / 89L)
+  Profit factor:  0.17
+  Total gross:    ₹-454.96
+  Total charges:  ₹2,683.70
+  Total net:      ₹-3,138.66
+  Avg net/day:    ₹-39.73
+  Avg net/trade:  ₹-19.02
+  Best trade:     BOSCHLTD ₹925.22 (TARGET_HIT)
+  Worst trade:    BOSCHLTD ₹-489.70 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 165 trades, 46% WR, ₹-3,139
+
+  Top 5 stocks by P&L:
+    PAGEIND        :   5 trades, 100% WR, ₹972
+    ADANIENT       :   7 trades, 71% WR, ₹591
+    TORNTPHARM     :   5 trades, 80% WR, ₹528
+    ADANIGREEN     :   4 trades, 100% WR, ₹428
+    PFC            :   5 trades, 40% WR, ₹367
+
+  Bottom 5 stocks by P&L:
+    IREDA          :   3 trades, 0% WR, ₹-882
+    ADANIPOWER     :   5 trades, 20% WR, ₹-806
+    NAUKRI         :   3 trades, 0% WR, ₹-800
+    CANBK          :   5 trades, 0% WR, ₹-711
+    MAZDOCK        :   3 trades, 33% WR, ₹-531
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V1 | Universe: next50 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   79 active / 38 skipped
+  Total trades:   161
+  Win rate:       47.2%  (76W / 85L)
+  Profit factor:  0.24
+  Total gross:    ₹-1,961.34
+  Total charges:  ₹8,263.11
+  Total net:      ₹-10,224.45
+  Avg net/day:    ₹-129.42
+  Avg net/trade:  ₹-63.51
+  Best trade:     BHEL ₹1,904.81 (TARGET_HIT)
+  Worst trade:    BHEL ₹-1,442.49 (TIME_STOP_1430)
+
+  By Market Direction:
+    BULL    : 161 trades, 47% WR, ₹-10,224
+
+  Top 5 stocks by P&L:
+    TORNTPHARM     :   5 trades, 80% WR, ₹2,070
+    ADANIENT       :   7 trades, 71% WR, ₹2,049
+    ADANIGREEN     :   4 trades, 100% WR, ₹1,472
+    PFC            :   5 trades, 40% WR, ₹1,233
+    VOLTAS         :   5 trades, 100% WR, ₹1,155
+
+  Bottom 5 stocks by P&L:
+    IREDA          :   3 trades, 0% WR, ₹-2,958
+    NAUKRI         :   3 trades, 0% WR, ₹-2,734
+    ADANIPOWER     :   5 trades, 20% WR, ₹-2,698
+    CANBK          :   5 trades, 0% WR, ₹-2,387
+    BDL            :   3 trades, 0% WR, ₹-1,878
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V2 | Universe: next50 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   78 active / 39 skipped
+  Total trades:   159
+  Win rate:       47.2%  (75W / 84L)
+  Profit factor:  0.09
+  Total gross:    ₹224.28
+  Total charges:  ₹2,590.06
+  Total net:      ₹-2,365.78
+  Avg net/day:    ₹-30.33
+  Avg net/trade:  ₹-14.88
+  Best trade:     BOSCHLTD ₹925.22 (TARGET_HIT)
+  Worst trade:    BOSCHLTD ₹-489.70 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 159 trades, 47% WR, ₹-2,366
+
+  Top 5 stocks by P&L:
+    PAGEIND        :   5 trades, 100% WR, ₹972
+    ADANIENT       :   7 trades, 71% WR, ₹591
+    TORNTPHARM     :   5 trades, 80% WR, ₹528
+    ADANIGREEN     :   4 trades, 100% WR, ₹428
+    VOLTAS         :   5 trades, 100% WR, ₹331
+
+  Bottom 5 stocks by P&L:
+    IREDA          :   3 trades, 0% WR, ₹-882
+    ADANIPOWER     :   5 trades, 20% WR, ₹-806
+    NAUKRI         :   2 trades, 0% WR, ₹-607
+    MAZDOCK        :   3 trades, 33% WR, ₹-531
+    BDL            :   3 trades, 0% WR, ₹-518
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V2 | Universe: next50 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   78 active / 39 skipped
+  Total trades:   156
+  Win rate:       48.1%  (75W / 81L)
+  Profit factor:  0.07
+  Total gross:    ₹-569.32
+  Total charges:  ₹7,998.76
+  Total net:      ₹-8,568.08
+  Avg net/day:    ₹-109.85
+  Avg net/trade:  ₹-54.92
+  Best trade:     BHEL ₹1,904.81 (TARGET_HIT)
+  Worst trade:    BHEL ₹-1,442.49 (TIME_STOP_1430)
+
+  By Market Direction:
+    BULL    : 156 trades, 48% WR, ₹-8,568
+
+  Top 5 stocks by P&L:
+    TORNTPHARM     :   5 trades, 80% WR, ₹2,070
+    ADANIENT       :   7 trades, 71% WR, ₹2,049
+    ADANIGREEN     :   4 trades, 100% WR, ₹1,472
+    VOLTAS         :   5 trades, 100% WR, ₹1,155
+    LTTS           :   3 trades, 67% WR, ₹1,077
+
+  Bottom 5 stocks by P&L:
+    IREDA          :   3 trades, 0% WR, ₹-2,958
+    ADANIPOWER     :   5 trades, 20% WR, ₹-2,698
+    NAUKRI         :   2 trades, 0% WR, ₹-2,061
+    BDL            :   3 trades, 0% WR, ₹-1,878
+    CONCOR         :   6 trades, 33% WR, ₹-1,567
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V3 | Universe: next50 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   78 active / 39 skipped
+  Total trades:   159
+  Win rate:       47.2%  (75W / 84L)
+  Profit factor:  0.09
+  Total gross:    ₹224.28
+  Total charges:  ₹2,590.06
+  Total net:      ₹-2,365.78
+  Avg net/day:    ₹-30.33
+  Avg net/trade:  ₹-14.88
+  Best trade:     BOSCHLTD ₹925.22 (TARGET_HIT)
+  Worst trade:    BOSCHLTD ₹-489.70 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 159 trades, 47% WR, ₹-2,366
+
+  Top 5 stocks by P&L:
+    PAGEIND        :   5 trades, 100% WR, ₹972
+    ADANIENT       :   7 trades, 71% WR, ₹591
+    TORNTPHARM     :   5 trades, 80% WR, ₹528
+    ADANIGREEN     :   4 trades, 100% WR, ₹428
+    VOLTAS         :   5 trades, 100% WR, ₹331
+
+  Bottom 5 stocks by P&L:
+    IREDA          :   3 trades, 0% WR, ₹-882
+    ADANIPOWER     :   5 trades, 20% WR, ₹-806
+    NAUKRI         :   2 trades, 0% WR, ₹-607
+    MAZDOCK        :   3 trades, 33% WR, ₹-531
+    BDL            :   3 trades, 0% WR, ₹-518
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V3 | Universe: next50 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   78 active / 39 skipped
+  Total trades:   156
+  Win rate:       48.1%  (75W / 81L)
+  Profit factor:  0.07
+  Total gross:    ₹-569.32
+  Total charges:  ₹7,998.76
+  Total net:      ₹-8,568.08
+  Avg net/day:    ₹-109.85
+  Avg net/trade:  ₹-54.92
+  Best trade:     BHEL ₹1,904.81 (TARGET_HIT)
+  Worst trade:    BHEL ₹-1,442.49 (TIME_STOP_1430)
+
+  By Market Direction:
+    BULL    : 156 trades, 48% WR, ₹-8,568
+
+  Top 5 stocks by P&L:
+    TORNTPHARM     :   5 trades, 80% WR, ₹2,070
+    ADANIENT       :   7 trades, 71% WR, ₹2,049
+    ADANIGREEN     :   4 trades, 100% WR, ₹1,472
+    VOLTAS         :   5 trades, 100% WR, ₹1,155
+    LTTS           :   3 trades, 67% WR, ₹1,077
+
+  Bottom 5 stocks by P&L:
+    IREDA          :   3 trades, 0% WR, ₹-2,958
+    ADANIPOWER     :   5 trades, 20% WR, ₹-2,698
+    NAUKRI         :   2 trades, 0% WR, ₹-2,061
+    BDL            :   3 trades, 0% WR, ₹-1,878
+    CONCOR         :   6 trades, 33% WR, ₹-1,567
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V4 | Universe: next50 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   54 active / 63 skipped
+  Total trades:   112
+  Win rate:       47.3%  (53W / 59L)
+  Profit factor:  1.26
+  Total gross:    ₹2,313.98
+  Total charges:  ₹1,837.36
+  Total net:      ₹476.62
+  Avg net/day:    ₹8.83
+  Avg net/trade:  ₹4.26
+  Best trade:     BOSCHLTD ₹925.22 (TARGET_HIT)
+  Worst trade:    SUZLON ₹-350.72 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  60 trades, 43% WR, ₹-545
+    BULL    :  52 trades, 52% WR, ₹1,021
+
+  Top 5 stocks by P&L:
+    BOSCHLTD       :   2 trades, 100% WR, ₹956
+    PAGEIND        :   5 trades, 80% WR, ₹641
+    ZOMATO         :   2 trades, 100% WR, ₹488
+    PFC            :   4 trades, 75% WR, ₹368
+    CHOLAFIN       :   5 trades, 80% WR, ₹365
+
+  Bottom 5 stocks by P&L:
+    ADANIPOWER     :   4 trades, 25% WR, ₹-694
+    JIOFIN         :   5 trades, 20% WR, ₹-358
+    COFORGE        :   2 trades, 0% WR, ₹-354
+    SUZLON         :   1 trades, 0% WR, ₹-351
+    CONCOR         :   3 trades, 33% WR, ₹-322
+
+  VERDICT:
+  ⚠️  PAPER ONLY — Marginal edge. Test in paper before live deployment.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V4 | Universe: next50 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   54 active / 63 skipped
+  Total trades:   109
+  Win rate:       48.6%  (53W / 56L)
+  Profit factor:  0.89
+  Total gross:    ₹4,933.09
+  Total charges:  ₹5,560.74
+  Total net:      ₹-627.65
+  Avg net/day:    ₹-11.62
+  Avg net/trade:  ₹-5.76
+  Best trade:     BHEL ₹1,904.81 (TARGET_HIT)
+  Worst trade:    SUZLON ₹-1,170.08 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  58 trades, 45% WR, ₹-1,559
+    BULL    :  51 trades, 53% WR, ₹932
+
+  Top 5 stocks by P&L:
+    BHEL           :   2 trades, 50% WR, ₹1,796
+    ZOMATO         :   2 trades, 100% WR, ₹1,661
+    PFC            :   4 trades, 75% WR, ₹1,231
+    CHOLAFIN       :   5 trades, 80% WR, ₹1,229
+    HUDCO          :   2 trades, 100% WR, ₹1,198
+
+  Bottom 5 stocks by P&L:
+    ADANIPOWER     :   4 trades, 25% WR, ₹-2,326
+    JIOFIN         :   5 trades, 20% WR, ₹-1,207
+    COFORGE        :   2 trades, 0% WR, ₹-1,190
+    SUZLON         :   1 trades, 0% WR, ₹-1,170
+    ABB            :   2 trades, 0% WR, ₹-1,110
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V6 | Universe: next50 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   21 active / 96 skipped
+  Total trades:   32
+  Win rate:       46.9%  (15W / 17L)
+  Profit factor:  0.84
+  Total gross:    ₹405.00
+  Total charges:  ₹481.54
+  Total net:      ₹-76.54
+  Avg net/day:    ₹-3.64
+  Avg net/trade:  ₹-2.39
+  Best trade:     ADANIENT ₹493.62 (TARGET_HIT)
+  Worst trade:    COFORGE ₹-343.00 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  18 trades, 44% WR, ₹-635
+    BULL    :  14 trades, 50% WR, ₹559
+
+  Top 5 stocks by P&L:
+    ADANIENT       :   3 trades, 67% WR, ₹459
+    UNIONBANK      :   1 trades, 100% WR, ₹359
+    HUDCO          :   2 trades, 100% WR, ₹359
+    RVNL           :   1 trades, 100% WR, ₹238
+    CHOLAFIN       :   2 trades, 100% WR, ₹225
+
+  Bottom 5 stocks by P&L:
+    OFSS           :   2 trades, 0% WR, ₹-375
+    COFORGE        :   2 trades, 0% WR, ₹-354
+    INDIGO         :   1 trades, 0% WR, ₹-287
+    CANBK          :   2 trades, 0% WR, ₹-286
+    COCHINSHIP     :   1 trades, 0% WR, ₹-263
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V6 | Universe: next50 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   21 active / 96 skipped
+  Total trades:   31
+  Win rate:       48.4%  (15W / 16L)
+  Profit factor:  0.70
+  Total gross:    ₹1,136.15
+  Total charges:  ₹1,622.39
+  Total net:      ₹-486.24
+  Avg net/day:    ₹-23.15
+  Avg net/trade:  ₹-15.69
+  Best trade:     ADANIENT ₹1,692.41 (TARGET_HIT)
+  Worst trade:    COFORGE ₹-1,153.71 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  17 trades, 47% WR, ₹-2,179
+    BULL    :  14 trades, 50% WR, ₹1,692
+
+  Top 5 stocks by P&L:
+    ADANIENT       :   3 trades, 67% WR, ₹1,579
+    UNIONBANK      :   1 trades, 100% WR, ₹1,200
+    HUDCO          :   2 trades, 100% WR, ₹1,198
+    CHOLAFIN       :   2 trades, 100% WR, ₹803
+    RVNL           :   1 trades, 100% WR, ₹791
+
+  Bottom 5 stocks by P&L:
+    OFSS           :   2 trades, 0% WR, ₹-1,564
+    COFORGE        :   2 trades, 0% WR, ₹-1,190
+    INDIGO         :   1 trades, 0% WR, ₹-1,053
+    COCHINSHIP     :   1 trades, 0% WR, ₹-932
+    CANBK          :   1 trades, 0% WR, ₹-878
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V1 | Universe: tier1 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   108 active / 9 skipped
+  Total trades:   262
+  Win rate:       43.5%  (114W / 148L)
+  Profit factor:  0.28
+  Total gross:    ₹1,100.55
+  Total charges:  ₹3,977.49
+  Total net:      ₹-2,876.94
+  Avg net/day:    ₹-26.64
+  Avg net/trade:  ₹-10.98
+  Best trade:     BHEL ₹570.05 (TARGET_HIT)
+  Worst trade:    BOSCHLTD ₹-489.70 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 262 trades, 44% WR, ₹-2,877
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :  10 trades, 60% WR, ₹1,102
+    MARUTI         :   3 trades, 100% WR, ₹631
+    TORNTPHARM     :   3 trades, 100% WR, ₹402
+    PFC            :   4 trades, 50% WR, ₹379
+    NTPC           :   5 trades, 80% WR, ₹366
+
+  Bottom 5 stocks by P&L:
+    ADANIPOWER     :   5 trades, 20% WR, ₹-806
+    BOSCHLTD       :   4 trades, 25% WR, ₹-787
+    NAUKRI         :   2 trades, 0% WR, ₹-607
+    BAJAJFINSV     :   4 trades, 0% WR, ₹-539
+    BDL            :   2 trades, 0% WR, ₹-491
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V1 | Universe: tier1 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   108 active / 9 skipped
+  Total trades:   259
+  Win rate:       44.0%  (114W / 145L)
+  Profit factor:  0.48
+  Total gross:    ₹6,372.43
+  Total charges:  ₹13,411.58
+  Total net:      ₹-7,039.15
+  Avg net/day:    ₹-65.18
+  Avg net/trade:  ₹-27.18
+  Best trade:     BHEL ₹1,904.81 (TARGET_HIT)
+  Worst trade:    BHEL ₹-1,442.49 (TIME_STOP_1430)
+
+  By Market Direction:
+    BULL    : 259 trades, 44% WR, ₹-7,039
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :  10 trades, 60% WR, ₹3,674
+    MARUTI         :   3 trades, 100% WR, ₹2,283
+    TORNTPHARM     :   3 trades, 100% WR, ₹1,565
+    APOLLOHOSP     :   7 trades, 57% WR, ₹1,413
+    PFC            :   4 trades, 50% WR, ₹1,275
+
+  Bottom 5 stocks by P&L:
+    ADANIPOWER     :   5 trades, 20% WR, ₹-2,698
+    NAUKRI         :   2 trades, 0% WR, ₹-2,061
+    BAJAJFINSV     :   4 trades, 0% WR, ₹-1,844
+    BDL            :   2 trades, 0% WR, ₹-1,783
+    BAJAJ-AUTO     :   4 trades, 0% WR, ₹-1,503
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V2 | Universe: tier1 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   107 active / 10 skipped
+  Total trades:   255
+  Win rate:       44.3%  (113W / 142L)
+  Profit factor:  0.38
+  Total gross:    ₹1,475.74
+  Total charges:  ₹3,873.76
+  Total net:      ₹-2,398.02
+  Avg net/day:    ₹-22.41
+  Avg net/trade:  ₹-9.40
+  Best trade:     BHEL ₹570.05 (TARGET_HIT)
+  Worst trade:    BOSCHLTD ₹-489.70 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 255 trades, 44% WR, ₹-2,398
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :   9 trades, 67% WR, ₹1,277
+    TORNTPHARM     :   3 trades, 100% WR, ₹402
+    DRREDDY        :   5 trades, 60% WR, ₹360
+    NTPC           :   4 trades, 75% WR, ₹351
+    PAGEIND        :   1 trades, 100% WR, ₹342
+
+  Bottom 5 stocks by P&L:
+    ADANIPOWER     :   5 trades, 20% WR, ₹-806
+    BOSCHLTD       :   4 trades, 25% WR, ₹-787
+    NAUKRI         :   2 trades, 0% WR, ₹-607
+    BDL            :   2 trades, 0% WR, ₹-491
+    WHIRLPOOL      :   2 trades, 0% WR, ₹-425
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V2 | Universe: tier1 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   107 active / 10 skipped
+  Total trades:   252
+  Win rate:       44.8%  (113W / 139L)
+  Profit factor:  0.55
+  Total gross:    ₹7,232.27
+  Total charges:  ₹13,045.22
+  Total net:      ₹-5,812.95
+  Avg net/day:    ₹-54.33
+  Avg net/trade:  ₹-23.07
+  Best trade:     BHEL ₹1,904.81 (TARGET_HIT)
+  Worst trade:    BHEL ₹-1,442.49 (TIME_STOP_1430)
+
+  By Market Direction:
+    BULL    : 252 trades, 45% WR, ₹-5,813
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :   9 trades, 67% WR, ₹4,322
+    TORNTPHARM     :   3 trades, 100% WR, ₹1,565
+    DRREDDY        :   5 trades, 60% WR, ₹1,265
+    TECHM          :   6 trades, 50% WR, ₹1,211
+    NTPC           :   4 trades, 75% WR, ₹1,171
+
+  Bottom 5 stocks by P&L:
+    ADANIPOWER     :   5 trades, 20% WR, ₹-2,698
+    NAUKRI         :   2 trades, 0% WR, ₹-2,061
+    BDL            :   2 trades, 0% WR, ₹-1,783
+    BAJAJ-AUTO     :   4 trades, 0% WR, ₹-1,503
+    HEROMOTOCO     :   5 trades, 20% WR, ₹-1,468
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V3 | Universe: tier1 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   107 active / 10 skipped
+  Total trades:   255
+  Win rate:       44.3%  (113W / 142L)
+  Profit factor:  0.38
+  Total gross:    ₹1,475.74
+  Total charges:  ₹3,873.76
+  Total net:      ₹-2,398.02
+  Avg net/day:    ₹-22.41
+  Avg net/trade:  ₹-9.40
+  Best trade:     BHEL ₹570.05 (TARGET_HIT)
+  Worst trade:    BOSCHLTD ₹-489.70 (STOPPED_OUT)
+
+  By Market Direction:
+    BULL    : 255 trades, 44% WR, ₹-2,398
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :   9 trades, 67% WR, ₹1,277
+    TORNTPHARM     :   3 trades, 100% WR, ₹402
+    DRREDDY        :   5 trades, 60% WR, ₹360
+    NTPC           :   4 trades, 75% WR, ₹351
+    PAGEIND        :   1 trades, 100% WR, ₹342
+
+  Bottom 5 stocks by P&L:
+    ADANIPOWER     :   5 trades, 20% WR, ₹-806
+    BOSCHLTD       :   4 trades, 25% WR, ₹-787
+    NAUKRI         :   2 trades, 0% WR, ₹-607
+    BDL            :   2 trades, 0% WR, ₹-491
+    WHIRLPOOL      :   2 trades, 0% WR, ₹-425
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V3 | Universe: tier1 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   107 active / 10 skipped
+  Total trades:   252
+  Win rate:       44.8%  (113W / 139L)
+  Profit factor:  0.55
+  Total gross:    ₹7,232.27
+  Total charges:  ₹13,045.22
+  Total net:      ₹-5,812.95
+  Avg net/day:    ₹-54.33
+  Avg net/trade:  ₹-23.07
+  Best trade:     BHEL ₹1,904.81 (TARGET_HIT)
+  Worst trade:    BHEL ₹-1,442.49 (TIME_STOP_1430)
+
+  By Market Direction:
+    BULL    : 252 trades, 45% WR, ₹-5,813
+
+  Top 5 stocks by P&L:
+    BHARTIARTL     :   9 trades, 67% WR, ₹4,322
+    TORNTPHARM     :   3 trades, 100% WR, ₹1,565
+    DRREDDY        :   5 trades, 60% WR, ₹1,265
+    TECHM          :   6 trades, 50% WR, ₹1,211
+    NTPC           :   4 trades, 75% WR, ₹1,171
+
+  Bottom 5 stocks by P&L:
+    ADANIPOWER     :   5 trades, 20% WR, ₹-2,698
+    NAUKRI         :   2 trades, 0% WR, ₹-2,061
+    BDL            :   2 trades, 0% WR, ₹-1,783
+    BAJAJ-AUTO     :   4 trades, 0% WR, ₹-1,503
+    HEROMOTOCO     :   5 trades, 20% WR, ₹-1,468
+
+  VERDICT:
+  ❌ DO NOT DEPLOY — No consistent edge found.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V4 | Universe: tier1 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   67 active / 50 skipped
+  Total trades:   168
+  Win rate:       48.2%  (81W / 87L)
+  Profit factor:  1.41
+  Total gross:    ₹3,604.66
+  Total charges:  ₹2,562.10
+  Total net:      ₹1,042.56
+  Avg net/day:    ₹15.56
+  Avg net/trade:  ₹6.21
+  Best trade:     BHEL ₹570.05 (TARGET_HIT)
+  Worst trade:    COFORGE ₹-343.00 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  87 trades, 46% WR, ₹-110
+    BULL    :  81 trades, 51% WR, ₹1,153
+
+  Top 5 stocks by P&L:
+    LT             :   3 trades, 100% WR, ₹673
+    BHEL           :   1 trades, 100% WR, ₹570
+    ULTRACEMCO     :   3 trades, 100% WR, ₹468
+    SHRIRAMFIN     :   3 trades, 100% WR, ₹450
+    PAGEIND        :   1 trades, 100% WR, ₹424
+
+  Bottom 5 stocks by P&L:
+    ADANIPOWER     :   3 trades, 33% WR, ₹-393
+    HDFCLIFE       :   5 trades, 20% WR, ₹-371
+    TATACONSUM     :   3 trades, 0% WR, ₹-344
+    COFORGE        :   1 trades, 0% WR, ₹-343
+    BEL            :   2 trades, 0% WR, ₹-331
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed. Win rate and profit factor meet criteria.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V4 | Universe: tier1 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   67 active / 50 skipped
+  Total trades:   166
+  Win rate:       48.8%  (81W / 85L)
+  Profit factor:  1.36
+  Total gross:    ₹11,717.48
+  Total charges:  ₹8,594.20
+  Total net:      ₹3,123.28
+  Avg net/day:    ₹46.62
+  Avg net/trade:  ₹18.81
+  Best trade:     BHEL ₹1,904.81 (TARGET_HIT)
+  Worst trade:    COFORGE ₹-1,153.71 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  86 trades, 47% WR, ₹-1,342
+    BULL    :  80 trades, 51% WR, ₹4,465
+
+  Top 5 stocks by P&L:
+    LT             :   3 trades, 100% WR, ₹2,369
+    BHEL           :   1 trades, 100% WR, ₹1,905
+    ULTRACEMCO     :   3 trades, 100% WR, ₹1,874
+    SHRIRAMFIN     :   3 trades, 100% WR, ₹1,533
+    NESTLEIND      :   1 trades, 100% WR, ₹1,443
+
+  Bottom 5 stocks by P&L:
+    ADANIPOWER     :   3 trades, 33% WR, ₹-1,317
+    HDFCLIFE       :   5 trades, 20% WR, ₹-1,273
+    TATACONSUM     :   3 trades, 0% WR, ₹-1,176
+    COFORGE        :   1 trades, 0% WR, ₹-1,154
+    BEL            :   2 trades, 0% WR, ₹-1,123
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed. Win rate and profit factor meet criteria.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V6 | Universe: tier1 | Cap: ₹15,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   34 active / 83 skipped
+  Total trades:   58
+  Win rate:       53.4%  (31W / 27L)
+  Profit factor:  1.53
+  Total gross:    ₹1,335.05
+  Total charges:  ₹871.28
+  Total net:      ₹463.77
+  Avg net/day:    ₹13.64
+  Avg net/trade:  ₹8.00
+  Best trade:     INFY ₹446.96 (TIME_STOP_1430)
+  Worst trade:    COFORGE ₹-343.00 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  34 trades, 50% WR, ₹-416
+    BULL    :  24 trades, 58% WR, ₹880
+
+  Top 5 stocks by P&L:
+    SHRIRAMFIN     :   3 trades, 100% WR, ₹450
+    INFY           :   1 trades, 100% WR, ₹447
+    HCLTECH        :   2 trades, 100% WR, ₹436
+    UNIONBANK      :   1 trades, 100% WR, ₹359
+    HUDCO          :   2 trades, 100% WR, ₹359
+
+  Bottom 5 stocks by P&L:
+    OFSS           :   2 trades, 0% WR, ₹-375
+    COFORGE        :   2 trades, 0% WR, ₹-354
+    TATASTEEL      :   1 trades, 0% WR, ₹-328
+    TECHM          :   1 trades, 0% WR, ₹-291
+    INDIGO         :   1 trades, 0% WR, ₹-287
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed. Win rate and profit factor meet criteria.
+
+──────────────────────────────────────────────────────────────────────
+Strategy: V6 | Universe: tier1 | Cap: ₹50,000
+──────────────────────────────────────────────────────────────────────
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Trading days:   34 active / 83 skipped
+  Total trades:   57
+  Win rate:       52.6%  (30W / 27L)
+  Profit factor:  1.26
+  Total gross:    ₹3,760.58
+  Total charges:  ₹2,982.40
+  Total net:      ₹778.18
+  Avg net/day:    ₹22.89
+  Avg net/trade:  ₹13.65
+  Best trade:     INFY ₹1,527.11 (TIME_STOP_1430)
+  Worst trade:    COFORGE ₹-1,153.71 (STOPPED_OUT)
+
+  By Market Direction:
+    BEAR    :  33 trades, 48% WR, ₹-2,155
+    BULL    :  24 trades, 58% WR, ₹2,933
+
+  Top 5 stocks by P&L:
+    HCLTECH        :   2 trades, 100% WR, ₹1,569
+    SHRIRAMFIN     :   3 trades, 100% WR, ₹1,533
+    INFY           :   1 trades, 100% WR, ₹1,527
+    UNIONBANK      :   1 trades, 100% WR, ₹1,200
+    HUDCO          :   2 trades, 100% WR, ₹1,198
+
+  Bottom 5 stocks by P&L:
+    OFSS           :   2 trades, 0% WR, ₹-1,564
+    COFORGE        :   2 trades, 0% WR, ₹-1,190
+    TATASTEEL      :   1 trades, 0% WR, ₹-1,093
+    INDIGO         :   1 trades, 0% WR, ₹-1,053
+    TECHM          :   1 trades, 0% WR, ₹-1,017
+
+  VERDICT:
+  ⚠️  PAPER ONLY — Marginal edge. Test in paper before live deployment.
+
+======================================================================
+END OF REPORT
+======================================================================
+
+Completed in 45.0 minutes
+Report: backtest/results/backtest_report_20260523_134039.txt
+Data:   backtest/results/backtest_full_20260523_134039.json

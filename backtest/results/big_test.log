@@ -1,0 +1,137 @@
+nohup: ignoring input
+======================================================================
+BIG TEST — Intraday + F&O Simulation
+Intraday capital: ₹200,000 | F&O capital: ₹200,000
+======================================================================
+Broker ready
+
+Fetching Nifty index data...
+Nifty: 2955 candles
+
+Fetching 188 stocks (fno)...
+  2025-12-01 → 2026-03-01
+  2026-03-01 → 2026-05-23
+  Got data for 188 stocks
+
+Trading days found: 117
+
+Running Test A (Intraday) + Test B (F&O) simultaneously...
+  Day 10/117: Intraday ₹+1,165 | F&O ₹+1,521 | Combined ₹+2,686
+  Day 20/117: Intraday ₹+1,358 | F&O ₹+1,625 | Combined ₹+2,983
+  Day 30/117: Intraday ₹+1,027 | F&O ₹-2,920 | Combined ₹-1,893
+  Day 40/117: Intraday ₹-16 | F&O ₹-20,843 | Combined ₹-20,859
+  Day 50/117: Intraday ₹+1,054 | F&O ₹-24,659 | Combined ₹-23,605
+  Day 60/117: Intraday ₹+1,054 | F&O ₹-24,659 | Combined ₹-23,605
+  Day 70/117: Intraday ₹+2,427 | F&O ₹-38,251 | Combined ₹-35,824
+  Day 80/117: Intraday ₹+2,413 | F&O ₹-38,273 | Combined ₹-35,859
+  Day 90/117: Intraday ₹+2,595 | F&O ₹-51,646 | Combined ₹-49,050
+  Day 100/117: Intraday ₹+5,226 | F&O ₹-50,133 | Combined ₹-44,907
+  Day 110/117: Intraday ₹+5,228 | F&O ₹-50,144 | Combined ₹-44,916
+
+Generating report...
+======================================================================
+BIG TEST REPORT — Intraday + F&O Simulation
+Capital: Intraday ₹200,000 | F&O ₹200,000
+Generated: 2026-05-23 16:34 IST
+======================================================================
+
+──────────────────────────────────────────────────────────────────────
+TEST A — INTRADAY (V6 Strategy, F&O Universe)
+──────────────────────────────────────────────────────────────────────
+  Capital:        ₹200,000
+  Per trade:      ₹50,000
+  Max positions:  4 simultaneous
+  Period:         Dec 2025 — May 2026 (~6 months)
+  Total days:     117
+  Active days:    15 (signal fired)
+  Skipped days:   102 (no catalyst gap)
+  Total trades:   35
+  Win rate:       60.0%  (21W / 14L)
+  Profit factor:  3.72
+  Total gross:    ₹6,814.65
+  Total charges:  ₹1,831.82
+  Total net 6m:   ₹4,982.83
+  Monthly avg:    ₹830.47
+  Per trade avg:  ₹142.37
+  Annual proj:    ₹9,965.66
+
+  Monthly breakdown:
+    2025-12: ₹  +1,358  (2 trades)
+    2026-01: ₹  -1,374  (7 trades)
+    2026-02: ₹  +1,069  (4 trades)
+    2026-03: ₹  +1,359  (4 trades)
+    2026-04: ₹  +2,813  (14 trades)
+    2026-05: ₹    -243  (4 trades)
+
+  Top 10 stocks:
+    HINDZINC       :   2 trades, 100% WR, ₹  +2,249
+    SHRIRAMFIN     :   2 trades, 100% WR, ₹  +1,446
+    GRASIM         :   1 trades, 100% WR, ₹    +841
+    POWERGRID      :   1 trades, 100% WR, ₹    +534
+    LODHA          :   1 trades, 100% WR, ₹    +489
+    TATACHEM       :   1 trades, 100% WR, ₹    +489
+    IIFLSEC        :   1 trades, 100% WR, ₹    +460
+    ULTRACEMCO     :   1 trades, 100% WR, ₹    +442
+    ADANIENSOL     :   1 trades, 100% WR, ₹    +433
+    TIINDIA        :   1 trades, 100% WR, ₹    +403
+
+  Bottom 5 stocks (consider blacklisting):
+    HAL            :   1 trades, 0% WR, ₹  -1,004
+    ASTRAL         :   1 trades, 0% WR, ₹    -689
+    FEDERALBNK     :   1 trades, 0% WR, ₹    -613
+    OFSS           :   1 trades, 0% WR, ₹    -606
+    NAUKRI         :   1 trades, 0% WR, ₹    -453
+
+──────────────────────────────────────────────────────────────────────
+TEST B — F&O SIMULATION (Options proxy model)
+──────────────────────────────────────────────────────────────────────
+  Capital:        ₹200,000
+  Per lot cost:   ₹15,000 (ATM option estimate)
+  Leverage model: 5x stock move
+  ⚠️  NOTE: This is a PROXY model, not real options pricing
+  ⚠️  Real options affected by IV, Greeks, theta decay
+  ⚠️  Use this for direction only, not exact numbers
+
+  Active days:    15
+  Total trades:   35 lots
+  Win rate:       54.3%  (19W / 16L)
+  Premium used:   ₹525,000.00
+  Total net 6m:   ₹-69,236.95
+  Monthly avg:    ₹-11,539.49
+  Annual proj:    ₹-138,473.90
+
+  Monthly breakdown:
+    2025-12: ₹  +1,625  (2 lots)
+    2026-01: ₹ -22,468  (7 lots)
+    2026-02: ₹  -3,816  (4 lots)
+    2026-03: ₹ -13,613  (4 lots)
+    2026-04: ₹ -11,860  (14 lots)
+    2026-05: ₹ -19,104  (4 lots)
+
+======================================================================
+COMBINED RESULTS — Both streams together
+======================================================================
+  Total capital deployed: ₹400,000
+  Intraday net 6m:        ₹ +4,982.83
+  F&O net 6m:             ₹-69,236.95
+  Combined net 6m:        ₹-64,254.12
+  Combined monthly avg:   ₹-10,709.02
+  Combined annual proj:   ₹-128,508.24
+  Return on ₹4L capital:  -16.1% in 6 months
+
+  ⚠️  BELOW TARGET: ₹-10,709/month
+  Need: More signals, larger capital, or add swing stream
+
+======================================================================
+WHAT TO DO NEXT
+======================================================================
+  1. Paper trade intraday V6 for 2 weeks (validate backtest)
+  2. Paper trade F&O alongside (learn real options behavior)
+  3. After 30 paper trades: deploy intraday live at ₹2L
+  4. After 30 more: deploy F&O live at ₹1L (reduced)
+  5. Add swing trading as 3rd stream (₹2L more)
+  6. Combined target: ₹1L/month within 6-9 months
+======================================================================
+
+Completed in 7.4 minutes
+Report: backtest/results/big_test_report_20260523_163405.txt

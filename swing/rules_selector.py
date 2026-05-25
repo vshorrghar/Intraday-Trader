@@ -65,7 +65,8 @@ def select_swing_trades(
     filtered = [c for c in filtered if -2.0 <= c.get("delta_from_20dma", 99) <= 1.0]
     logger.info("rules_selector: %d pass delta_from_20dma filter [-2%%, +1%%]", len(filtered))
 
-    # Step 3: Filter by RSI(2) < 30
+    # Step 3: Filter by RSI(2) < 30 (oversold confirmation per SONNET_LOGICS spec)
+    # Scanner already awards 0-3 pts for RSI2 signal, this is the hard gate
     filtered = [c for c in filtered if c.get("rsi2", 100) < 30]
     logger.info("rules_selector: %d pass rsi2 < 30", len(filtered))
 

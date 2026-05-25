@@ -1,0 +1,390 @@
+{
+  "generated_at": "2026-05-24T17:16:56.032068+05:30",
+  "config": {
+    "months": 2,
+    "capital": 100000,
+    "per_trade_max": 10000,
+    "max_positions": 5,
+    "min_score": 8,
+    "min_rr": 2.0,
+    "max_holding_days": 15
+  },
+  "stats": {
+    "total_trades": 20,
+    "winners": 7,
+    "losers": 13,
+    "win_rate_pct": 35.0,
+    "profit_factor": 1.03,
+    "total_gross_pnl": 1311.5,
+    "total_charges": 1175.84,
+    "total_net_pnl": 135.66,
+    "avg_win": 602.78,
+    "avg_loss": -314.14,
+    "avg_days_held": 9.3,
+    "by_exit_reason": {
+      "STOPPED_OUT": {
+        "count": 6,
+        "net_pnl": -2990.08
+      },
+      "TIME_EXIT": {
+        "count": 7,
+        "net_pnl": 1768.28
+      },
+      "TARGET_HIT": {
+        "count": 2,
+        "net_pnl": 1933.2
+      },
+      "BACKTEST_END": {
+        "count": 5,
+        "net_pnl": -575.74
+      }
+    },
+    "top_10_stocks": [
+      {
+        "symbol": "AUROPHARMA",
+        "net_pnl": 1600.62
+      },
+      {
+        "symbol": "COALINDIA",
+        "net_pnl": 927.34
+      },
+      {
+        "symbol": "ONGC",
+        "net_pnl": 501.91
+      },
+      {
+        "symbol": "POWERGRID",
+        "net_pnl": 406.36
+      },
+      {
+        "symbol": "RBLBANK",
+        "net_pnl": 183.44
+      },
+      {
+        "symbol": "INDUSINDBK",
+        "net_pnl": -57.66
+      },
+      {
+        "symbol": "NESTLEIND",
+        "net_pnl": -86.94
+      },
+      {
+        "symbol": "TATACONSUM",
+        "net_pnl": -141.95
+      },
+      {
+        "symbol": "CHENNPETRO",
+        "net_pnl": -237.93
+      },
+      {
+        "symbol": "LUPIN",
+        "net_pnl": -377.33
+      }
+    ],
+    "bottom_5_stocks": [
+      {
+        "symbol": "LUPIN",
+        "net_pnl": -377.33
+      },
+      {
+        "symbol": "TITAN",
+        "net_pnl": -409.28
+      },
+      {
+        "symbol": "NTPC",
+        "net_pnl": -673.36
+      },
+      {
+        "symbol": "SUNPHARMA",
+        "net_pnl": -697.71
+      },
+      {
+        "symbol": "NATIONALUM",
+        "net_pnl": -801.85
+      }
+    ],
+    "verdict": "DO_NOT_DEPLOY"
+  },
+  "trades": [
+    {
+      "symbol": "NATIONALUM",
+      "entry_price": 392.0,
+      "exit_price": 363.42,
+      "quantity": 26,
+      "days_held": 3,
+      "gross_pnl": -743.08,
+      "charges": 58.77,
+      "net_pnl": -801.85,
+      "exit_reason": "STOPPED_OUT",
+      "score": 12,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "SUNPHARMA",
+      "entry_price": 1799.6,
+      "exit_price": 1727.61,
+      "quantity": 5,
+      "days_held": 9,
+      "gross_pnl": -359.95,
+      "charges": 57.72,
+      "net_pnl": -417.67,
+      "exit_reason": "STOPPED_OUT",
+      "score": 12,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "NTPC",
+      "entry_price": 385.0,
+      "exit_price": 368.49,
+      "quantity": 26,
+      "days_held": 9,
+      "gross_pnl": -429.26,
+      "charges": 58.87,
+      "net_pnl": -488.13,
+      "exit_reason": "STOPPED_OUT",
+      "score": 12,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "LUPIN",
+      "entry_price": 2295.3,
+      "exit_price": 2203.48,
+      "quantity": 4,
+      "days_held": 10,
+      "gross_pnl": -367.28,
+      "charges": 57.93,
+      "net_pnl": -425.21,
+      "exit_reason": "STOPPED_OUT",
+      "score": 12,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "AUROPHARMA",
+      "entry_price": 1291.6,
+      "exit_price": 1386.5,
+      "quantity": 8,
+      "days_held": 15,
+      "gross_pnl": 759.2,
+      "charges": 60.48,
+      "net_pnl": 698.72,
+      "exit_reason": "TIME_EXIT",
+      "score": 13,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "POWERGRID",
+      "entry_price": 292.05,
+      "exit_price": 319.75,
+      "quantity": 33,
+      "days_held": 15,
+      "gross_pnl": 914.1,
+      "charges": 59.8,
+      "net_pnl": 854.3,
+      "exit_reason": "TIME_EXIT",
+      "score": 10,
+      "rr": 2.5,
+      "strategy_type": "REVERSAL"
+    },
+    {
+      "symbol": "SUNPHARMA",
+      "entry_price": 1665.0,
+      "exit_price": 1620.4,
+      "quantity": 5,
+      "days_held": 15,
+      "gross_pnl": -223.0,
+      "charges": 57.04,
+      "net_pnl": -280.04,
+      "exit_reason": "TIME_EXIT",
+      "score": 13,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "COALINDIA",
+      "entry_price": 435.0,
+      "exit_price": 484.6,
+      "quantity": 22,
+      "days_held": 12,
+      "gross_pnl": 1091.2,
+      "charges": 59.9,
+      "net_pnl": 1031.3,
+      "exit_reason": "TARGET_HIT",
+      "score": 9,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "LUPIN",
+      "entry_price": 2316.7,
+      "exit_price": 2343.3,
+      "quantity": 4,
+      "days_held": 15,
+      "gross_pnl": 106.4,
+      "charges": 58.52,
+      "net_pnl": 47.88,
+      "exit_reason": "TIME_EXIT",
+      "score": 9,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "AUROPHARMA",
+      "entry_price": 1373.9,
+      "exit_price": 1511.29,
+      "quantity": 7,
+      "days_held": 4,
+      "gross_pnl": 961.73,
+      "charges": 59.83,
+      "net_pnl": 901.9,
+      "exit_reason": "TARGET_HIT",
+      "score": 10,
+      "rr": 2.5,
+      "strategy_type": "REVERSAL"
+    },
+    {
+      "symbol": "TITAN",
+      "entry_price": 4397.5,
+      "exit_price": 4221.6,
+      "quantity": 2,
+      "days_held": 3,
+      "gross_pnl": -351.8,
+      "charges": 57.48,
+      "net_pnl": -409.28,
+      "exit_reason": "STOPPED_OUT",
+      "score": 13,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "POWERGRID",
+      "entry_price": 313.95,
+      "exit_price": 301.39,
+      "quantity": 31,
+      "days_held": 3,
+      "gross_pnl": -389.36,
+      "charges": 58.58,
+      "net_pnl": -447.94,
+      "exit_reason": "STOPPED_OUT",
+      "score": 13,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "ONGC",
+      "entry_price": 284.85,
+      "exit_price": 300.9,
+      "quantity": 35,
+      "days_held": 15,
+      "gross_pnl": 561.75,
+      "charges": 59.84,
+      "net_pnl": 501.91,
+      "exit_reason": "TIME_EXIT",
+      "score": 8,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "RBLBANK",
+      "entry_price": 318.0,
+      "exit_price": 325.6,
+      "quantity": 32,
+      "days_held": 15,
+      "gross_pnl": 243.2,
+      "charges": 59.76,
+      "net_pnl": 183.44,
+      "exit_reason": "TIME_EXIT",
+      "score": 10,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "CHENNPETRO",
+      "entry_price": 1002.4,
+      "exit_price": 982.4,
+      "quantity": 9,
+      "days_held": 15,
+      "gross_pnl": -180.0,
+      "charges": 57.93,
+      "net_pnl": -237.93,
+      "exit_reason": "TIME_EXIT",
+      "score": 9,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "TATACONSUM",
+      "entry_price": 1202.2,
+      "exit_price": 1191.8,
+      "quantity": 8,
+      "days_held": 10,
+      "gross_pnl": -83.2,
+      "charges": 58.75,
+      "net_pnl": -141.95,
+      "exit_reason": "BACKTEST_END",
+      "score": 13,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "NTPC",
+      "entry_price": 393.7,
+      "exit_price": 388.65,
+      "quantity": 25,
+      "days_held": 7,
+      "gross_pnl": -126.25,
+      "charges": 58.98,
+      "net_pnl": -185.23,
+      "exit_reason": "BACKTEST_END",
+      "score": 11,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "INDUSINDBK",
+      "entry_price": 910.0,
+      "exit_price": 910.15,
+      "quantity": 11,
+      "days_held": 6,
+      "gross_pnl": 1.65,
+      "charges": 59.31,
+      "net_pnl": -57.66,
+      "exit_reason": "BACKTEST_END",
+      "score": 8,
+      "rr": 2.5,
+      "strategy_type": "REVERSAL"
+    },
+    {
+      "symbol": "NESTLEIND",
+      "entry_price": 1428.0,
+      "exit_price": 1423.1,
+      "quantity": 6,
+      "days_held": 4,
+      "gross_pnl": -29.4,
+      "charges": 57.54,
+      "net_pnl": -86.94,
+      "exit_reason": "BACKTEST_END",
+      "score": 8,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    },
+    {
+      "symbol": "COALINDIA",
+      "entry_price": 458.7,
+      "exit_price": 456.55,
+      "quantity": 21,
+      "days_held": 2,
+      "gross_pnl": -45.15,
+      "charges": 58.81,
+      "net_pnl": -103.96,
+      "exit_reason": "BACKTEST_END",
+      "score": 8,
+      "rr": 2.5,
+      "strategy_type": "PULLBACK"
+    }
+  ]
+}

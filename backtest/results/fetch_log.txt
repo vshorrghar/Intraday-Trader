@@ -1,0 +1,5 @@
+nohup: ignoring input
+Fetching 195 stocks from 2026-03-11 to 2026-05-25
+This will take 30-40 minutes...
+DONE. Cached 195 stocks.
+Status saved to backtest/results/fetch_status.json

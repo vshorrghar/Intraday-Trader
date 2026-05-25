@@ -526,13 +526,17 @@ def generate_vwap_reclaim_signals(
         rel_volume = calculate_relative_volume(candles, ohlc, target_date)
 
         # Check morning strength — stock must be up > 1% from prev close
-        # Use first candle close as proxy for morning open
         if not candles:
             continue
         first_close = candles[0]["close"]
         gap_pct = ((first_close - prev_close) / prev_close) * 100
         if gap_pct < 1.0:
             continue  # No morning strength — skip
+
+        # GAP HELD FILTER — must still be holding 50% of gap at reclaim time
+        # Fading gaps = wrong direction = losing trades
+        # Only enter if stock is still up > 0.5% from prev close at entry
+        gap_held_min = prev_close * 1.005  # Must be 0.5% above prev close
 
         # Look for VWAP reclaim candle between 11:00-13:00 IST
         reclaim_candle = None
@@ -557,6 +561,11 @@ def generate_vwap_reclaim_signals(
 
             price = c["close"]
 
+            # GAP HELD: stock must still be above 0.5% of prev close
+            # If it faded below this — it is a failing gap, not a reclaim
+            if price < gap_held_min:
+                continue  # Gap faded — skip
+
             # Price must be above VWAP now (reclaim)
             if price <= vwap:
                 continue
@@ -565,13 +574,22 @@ def generate_vwap_reclaim_signals(
             if price > vwap * 1.015:
                 continue
 
-            # Previous candle must have touched VWAP (touched from above or below)
-            if i > 0 and i - 1 < len(vwap_values):
-                prev_vwap = vwap_values[i - 1]
-                prev_low = candles[i - 1]["low"]
-                # Previous candle low must have been near or below VWAP
-                if prev_low > prev_vwap * 1.01:
-                    continue  # Did not touch VWAP — not a reclaim
+            # QUALITY FILTER: Need 2 consecutive candles above VWAP
+            # Single candle above VWAP = noise, 2 candles = confirmed reclaim
+            if i < 2:
+                continue
+            prev_price = candles[i-1]["close"]
+            prev_vwap = vwap_values[i-1]
+            if prev_price <= prev_vwap:
+                continue  # Previous candle was below VWAP — not confirmed
+
+            # Previous candle must have touched VWAP (came from below)
+            if i > 1 and i - 2 < len(vwap_values):
+                prev2_vwap = vwap_values[i - 2]
+                prev2_low = candles[i - 2]["low"]
+                # Two candles ago must have been at or below VWAP
+                if prev2_low > prev2_vwap * 1.005:
+                    continue  # Did not touch VWAP — not a real reclaim
 
             # Volume check — candle volume vs avg
             avg_vol = sum(x["volume"] for x in candles[:i]) / max(i, 1)
@@ -713,10 +731,13 @@ def generate_trend_continuation_signals(
         vwap_values = calculate_vwap(candles)
         atr_values = calculate_atr(candles)
 
-        # Morning gap must be > 2%
-        first_close = candles[0]["close"]
+        # Morning gap must be > 1.0% (relaxed further — more firing days)
+        # Focus on stocks holding VWAP all day regardless of gap size
+        first_close = candles[0]["close"] if candles else 0
+        if first_close == 0:
+            continue
         gap_pct = ((first_close - prev_close) / prev_close) * 100
-        if gap_pct < 2.0:
+        if gap_pct < 1.0:
             continue
 
         # Find the 13:00 candle and check conditions
@@ -748,7 +769,7 @@ def generate_trend_continuation_signals(
                 continue
 
             # Must be within 2% of day high (near highs, not fading)
-            if price < day_high * 0.98:
+            if price < day_high * 0.97:
                 continue
 
             # Volume check

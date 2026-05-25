@@ -208,6 +208,9 @@ def select_trades_v2(
     if MORNING_START <= ist_time < MORNING_END:
         logger.info("V2: Running Strategy 1 — Morning ORB (V6+V4)")
 
+        # V6 ONLY — 61% WR proven edge
+        # V4 removed — 47% WR dilutes combined performance
+        # At Rs.50K/trade charges matter — quality over quantity
         v6_signals = generate_orb_signals(
             target_date=target_date,
             historical_data=historical_data,
@@ -216,33 +219,11 @@ def select_trades_v2(
             strategy_variant="V6",
             nifty_data=nifty_data,
         )
-        v6_signals = [
+        all_signals = [
             s for s in v6_signals
             if s.get("direction") == "LONG" and s.get("gap_pct", 0) > 0
-        ]
-
-        remaining = slots_remaining - len(v6_signals)
-        v4_signals = []
-        if remaining > 0:
-            v6_symbols = {s["symbol"] for s in v6_signals}
-            v4_config = {**orb_config, "max_trades_per_day": remaining + 3}
-            all_v4 = generate_orb_signals(
-                target_date=target_date,
-                historical_data=historical_data,
-                universe=universe,
-                config=v4_config,
-                strategy_variant="V4",
-                nifty_data=nifty_data,
-            )
-            v4_signals = [
-                s for s in all_v4
-                if s.get("direction") == "LONG"
-                and s["symbol"] not in v6_symbols
-            ][:remaining]
-
-        all_signals = (v6_signals + v4_signals)[:slots_remaining]
-        logger.info("Strategy 1 signals: V6=%d V4=%d total=%d",
-                    len(v6_signals), len(v4_signals), len(all_signals))
+        ][:slots_remaining]
+        logger.info("Strategy 1 signals: V6=%d (V4 disabled)", len(all_signals))
 
     # ── Strategy 2: Midday VWAP Reclaim (11:00-13:00) ──
     elif MIDDAY_START <= ist_time < MIDDAY_END:

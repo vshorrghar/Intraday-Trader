@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-05-24T16:28:21.201249+05:30",
+  "config": {
+    "months": 2,
+    "capital": 100000,
+    "per_trade_max": 10000,
+    "max_positions": 5,
+    "min_score": 8,
+    "min_rr": 2.0,
+    "max_holding_days": 15
+  },
+  "stats": {
+    "total_trades": 0,
+    "verdict": "NO_DATA"
+  },
+  "trades": []
+}

@@ -1,0 +1,2391 @@
+{
+  "Rs30K_live": {
+    "results": {
+      "S1_ORB": {
+        "trades": [
+          -615.6699999999996,
+          131.71000000000183,
+          355.72999999999826,
+          -463.43999999999784,
+          80.81000000000141,
+          96.81999999999918,
+          -62.489999999999995,
+          -206.75999999999812
+        ],
+        "wins": 4,
+        "losses": 4,
+        "total_pnl": -683.2899999999948
+      },
+      "S2_VWAP_RECLAIM": {
+        "trades": [
+          -291.07,
+          -321.4799999999985,
+          323.0500000000016,
+          69.73000000000152,
+          -268.5099999999987,
+          -249.66000000000147
+        ],
+        "wins": 2,
+        "losses": 4,
+        "total_pnl": -737.9399999999955
+      },
+      "S3_TREND_CONT": {
+        "trades": [],
+        "wins": 0,
+        "losses": 0,
+        "total_pnl": 0
+      },
+      "COMBINED": {
+        "trades": [
+          -291.07,
+          -321.4799999999985,
+          -615.6699999999996,
+          131.71000000000183,
+          355.72999999999826,
+          323.0500000000016,
+          -463.43999999999784,
+          80.81000000000141,
+          69.73000000000152,
+          96.81999999999918,
+          -62.489999999999995,
+          -268.5099999999987,
+          -206.75999999999812,
+          -249.66000000000147
+        ],
+        "wins": 6,
+        "losses": 8,
+        "total_pnl": -1421.2299999999905
+      }
+    },
+    "daily_pnl": [
+      {
+        "date": "2026-03-11",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-12",
+        "trades": [
+          {
+            "sym": "CRAFTSMAN",
+            "strategy": "S2_VWAP",
+            "entry": 7368.5,
+            "exit": 7279.25,
+            "qty": 3,
+            "pnl": -291.07,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -291.07,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-03-13",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-16",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-17",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-18",
+        "trades": [
+          {
+            "sym": "CANFINHOME",
+            "strategy": "S2_VWAP",
+            "entry": 873.3,
+            "exit": 862.74,
+            "qty": 28,
+            "pnl": -321.48,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -321.48,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-03-19",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-20",
+        "trades": [
+          {
+            "sym": "UJJIVANSFB",
+            "strategy": "S1_ORB",
+            "entry": 54.6,
+            "exit": 53.31,
+            "qty": 457,
+            "pnl": -615.67,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -615.67,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-03-23",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-24",
+        "trades": [
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S1_ORB",
+            "entry": 616.05,
+            "exit": 620.0,
+            "qty": 40,
+            "pnl": 131.71,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": 131.71,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-03-25",
+        "trades": [
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S1_ORB",
+            "entry": 641.95,
+            "exit": 652.0,
+            "qty": 38,
+            "pnl": 355.73,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": 355.73,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-03-27",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-30",
+        "trades": [
+          {
+            "sym": "NAVINFLUOR",
+            "strategy": "S2_VWAP",
+            "entry": 6108.5,
+            "exit": 6195.81,
+            "qty": 4,
+            "pnl": 323.05,
+            "reason": "TARGET"
+          }
+        ],
+        "pnl": 323.05,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-04-01",
+        "trades": [
+          {
+            "sym": "HAL",
+            "strategy": "S1_ORB",
+            "entry": 3657.7,
+            "exit": 3584.3,
+            "qty": 6,
+            "pnl": -463.44,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -463.44,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-04-02",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-06",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-07",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-08",
+        "trades": [
+          {
+            "sym": "LICI",
+            "strategy": "S1_ORB",
+            "entry": 791.4,
+            "exit": 794.85,
+            "qty": 31,
+            "pnl": 80.81,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": 80.81,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-04-09",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-10",
+        "trades": [
+          {
+            "sym": "APTUS",
+            "strategy": "S2_VWAP",
+            "entry": 222.85,
+            "exit": 223.71,
+            "qty": 112,
+            "pnl": 69.73,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": 69.73,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-04-13",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-15",
+        "trades": [
+          {
+            "sym": "CDSL",
+            "strategy": "S1_ORB",
+            "entry": 1333.0,
+            "exit": 1339.8,
+            "qty": 18,
+            "pnl": 96.82,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": 96.82,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-04-16",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-17",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-20",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-21",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-22",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-23",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-24",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-27",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-28",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-29",
+        "trades": [
+          {
+            "sym": "MAHLIFE",
+            "strategy": "S1_ORB",
+            "entry": 346.5,
+            "exit": 346.0,
+            "qty": 72,
+            "pnl": -62.49,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": -62.49,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-04-30",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-04",
+        "trades": [
+          {
+            "sym": "BLUEDART",
+            "strategy": "S2_VWAP",
+            "entry": 5699.0,
+            "exit": 5637.89,
+            "qty": 4,
+            "pnl": -268.51,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -268.51,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-05-05",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-06",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-07",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-08",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-11",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-12",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-13",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-14",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-15",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-18",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-19",
+        "trades": [
+          {
+            "sym": "IOC",
+            "strategy": "S1_ORB",
+            "entry": 135.79,
+            "exit": 134.81,
+            "qty": 184,
+            "pnl": -206.76,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": -206.76,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-05-20",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-21",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-22",
+        "trades": [
+          {
+            "sym": "ADANIENSOL",
+            "strategy": "S2_VWAP",
+            "entry": 1381.0,
+            "exit": 1368.59,
+            "qty": 18,
+            "pnl": -249.66,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -249.66,
+        "trades_count": 1
+      },
+      {
+        "date": "2026-05-25",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      }
+    ]
+  },
+  "Rs2L_paper": {
+    "results": {
+      "S1_ORB": {
+        "trades": [
+          -1232.6899999999991,
+          266.7100000000037,
+          720.8199999999965,
+          -1004.1199999999952,
+          36.91,
+          -217.61999999999756,
+          625.22,
+          164.22000000000287,
+          630.44,
+          441.760000000005,
+          724.0,
+          -23.58,
+          -619.8599999999988,
+          199.01999999999833,
+          317.66999999999683,
+          -474.7100000000021,
+          762.5400000000019,
+          -124.97999999999999,
+          -413.51999999999623
+        ],
+        "wins": 11,
+        "losses": 8,
+        "total_pnl": 778.230000000016
+      },
+      "S2_VWAP_RECLAIM": {
+        "trades": [
+          -582.14,
+          -654.4399999999969,
+          481.32999999999475,
+          -695.9800000000022,
+          -365.3200000000088,
+          -877.5800000000008,
+          -753.0500000000004,
+          -401.3600000000022,
+          -450.6900000000002,
+          734.2000000000022,
+          734.1700000000047,
+          26.480000000003017,
+          482.3100000000005,
+          -573.5100000000032,
+          646.0900000000032,
+          -501.58,
+          139.46000000000305,
+          -740.0900000000003,
+          -367.74000000000143,
+          -168.9700000000044,
+          368.699999999996,
+          -537.0199999999974,
+          -1168.1499999999992,
+          822.2000000000007,
+          -815.5400000000021,
+          -792.5399999999972,
+          -233.76000000000334,
+          -60.75,
+          -499.31000000000296,
+          -473.34999999999627,
+          396.65999999999997
+        ],
+        "wins": 10,
+        "losses": 21,
+        "total_pnl": -6881.270000000011
+      },
+      "S3_TREND_CONT": {
+        "trades": [
+          -340.5900000000039,
+          -356.56999999999937,
+          -317.78000000000327,
+          -348.5299999999997,
+          -317.4099999999985
+        ],
+        "wins": 0,
+        "losses": 5,
+        "total_pnl": -1680.8800000000047
+      },
+      "COMBINED": {
+        "trades": [
+          -582.14,
+          -340.5900000000039,
+          -356.56999999999937,
+          -654.4399999999969,
+          481.32999999999475,
+          -695.9800000000022,
+          -365.3200000000088,
+          -1232.6899999999991,
+          -877.5800000000008,
+          -753.0500000000004,
+          -401.3600000000022,
+          266.7100000000037,
+          -450.6900000000002,
+          734.2000000000022,
+          734.1700000000047,
+          720.8199999999965,
+          26.480000000003017,
+          482.3100000000005,
+          -573.5100000000032,
+          646.0900000000032,
+          -501.58,
+          -317.78000000000327,
+          -348.5299999999997,
+          -1004.1199999999952,
+          36.91,
+          -217.61999999999756,
+          625.22,
+          164.22000000000287,
+          630.44,
+          441.760000000005,
+          724.0,
+          -23.58,
+          -619.8599999999988,
+          139.46000000000305,
+          -740.0900000000003,
+          199.01999999999833,
+          317.66999999999683,
+          -474.7100000000021,
+          762.5400000000019,
+          -124.97999999999999,
+          -367.74000000000143,
+          -168.9700000000044,
+          368.699999999996,
+          -537.0199999999974,
+          -1168.1499999999992,
+          822.2000000000007,
+          -815.5400000000021,
+          -413.51999999999623,
+          -792.5399999999972,
+          -233.76000000000334,
+          -60.75,
+          -499.31000000000296,
+          -473.34999999999627,
+          396.65999999999997,
+          -317.4099999999985
+        ],
+        "wins": 21,
+        "losses": 34,
+        "total_pnl": -7783.919999999996
+      }
+    },
+    "daily_pnl": [
+      {
+        "date": "2026-03-11",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-12",
+        "trades": [
+          {
+            "sym": "CRAFTSMAN",
+            "strategy": "S2_VWAP",
+            "entry": 7368.5,
+            "exit": 7279.25,
+            "qty": 6,
+            "pnl": -582.14,
+            "reason": "SL"
+          },
+          {
+            "sym": "TATAPOWER",
+            "strategy": "S3_TREND",
+            "entry": 405.1,
+            "exit": 402.76,
+            "qty": 123,
+            "pnl": -340.59,
+            "reason": "SL"
+          },
+          {
+            "sym": "CRAFTSMAN",
+            "strategy": "S3_TREND",
+            "entry": 7377.5,
+            "exit": 7325.88,
+            "qty": 6,
+            "pnl": -356.57,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -1279.3,
+        "trades_count": 3
+      },
+      {
+        "date": "2026-03-13",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-16",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-17",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-18",
+        "trades": [
+          {
+            "sym": "CANFINHOME",
+            "strategy": "S2_VWAP",
+            "entry": 873.3,
+            "exit": 862.74,
+            "qty": 57,
+            "pnl": -654.44,
+            "reason": "SL"
+          },
+          {
+            "sym": "FLUOROCHEM",
+            "strategy": "S2_VWAP",
+            "entry": 3063.3,
+            "exit": 3096.66,
+            "qty": 16,
+            "pnl": 481.33,
+            "reason": "TARGET"
+          },
+          {
+            "sym": "KTKBANK",
+            "strategy": "S2_VWAP",
+            "entry": 234.72,
+            "exit": 231.7,
+            "qty": 213,
+            "pnl": -695.98,
+            "reason": "SL"
+          },
+          {
+            "sym": "LTIM",
+            "strategy": "S2_VWAP",
+            "entry": 4337.1,
+            "exit": 4308.48,
+            "qty": 11,
+            "pnl": -365.32,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -1234.41,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-03-19",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-20",
+        "trades": [
+          {
+            "sym": "UJJIVANSFB",
+            "strategy": "S1_ORB",
+            "entry": 54.6,
+            "exit": 53.31,
+            "qty": 915,
+            "pnl": -1232.69,
+            "reason": "SL"
+          },
+          {
+            "sym": "ABFRL",
+            "strategy": "S2_VWAP",
+            "entry": 62.35,
+            "exit": 61.32,
+            "qty": 801,
+            "pnl": -877.58,
+            "reason": "SL"
+          },
+          {
+            "sym": "CHENNPETRO",
+            "strategy": "S2_VWAP",
+            "entry": 1073.0,
+            "exit": 1057.76,
+            "qty": 46,
+            "pnl": -753.05,
+            "reason": "SL"
+          },
+          {
+            "sym": "COALINDIA",
+            "strategy": "S2_VWAP",
+            "entry": 469.05,
+            "exit": 465.76,
+            "qty": 106,
+            "pnl": -401.36,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -3264.68,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-03-23",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-24",
+        "trades": [
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S1_ORB",
+            "entry": 616.05,
+            "exit": 620.0,
+            "qty": 81,
+            "pnl": 266.71,
+            "reason": "EOD"
+          },
+          {
+            "sym": "ADANIENT",
+            "strategy": "S2_VWAP",
+            "entry": 1845.9,
+            "exit": 1831.16,
+            "qty": 27,
+            "pnl": -450.69,
+            "reason": "SL"
+          },
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S2_VWAP",
+            "entry": 611.15,
+            "exit": 620.87,
+            "qty": 81,
+            "pnl": 734.2,
+            "reason": "TARGET"
+          },
+          {
+            "sym": "DHANUKA",
+            "strategy": "S2_VWAP",
+            "entry": 961.3,
+            "exit": 976.45,
+            "qty": 52,
+            "pnl": 734.17,
+            "reason": "TARGET"
+          }
+        ],
+        "pnl": 1284.39,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-03-25",
+        "trades": [
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S1_ORB",
+            "entry": 641.95,
+            "exit": 652.0,
+            "qty": 77,
+            "pnl": 720.82,
+            "reason": "EOD"
+          },
+          {
+            "sym": "APTUS",
+            "strategy": "S2_VWAP",
+            "entry": 206.92,
+            "exit": 207.25,
+            "qty": 241,
+            "pnl": 26.48,
+            "reason": "EOD"
+          },
+          {
+            "sym": "AUBANK",
+            "strategy": "S2_VWAP",
+            "entry": 907.4,
+            "exit": 917.14,
+            "qty": 55,
+            "pnl": 482.31,
+            "reason": "TARGET"
+          },
+          {
+            "sym": "AVALON",
+            "strategy": "S2_VWAP",
+            "entry": 985.1,
+            "exit": 974.67,
+            "qty": 50,
+            "pnl": -573.51,
+            "reason": "SL"
+          }
+        ],
+        "pnl": 656.1,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-03-27",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-30",
+        "trades": [
+          {
+            "sym": "NAVINFLUOR",
+            "strategy": "S2_VWAP",
+            "entry": 6108.5,
+            "exit": 6195.81,
+            "qty": 8,
+            "pnl": 646.09,
+            "reason": "TARGET"
+          },
+          {
+            "sym": "GAIL",
+            "strategy": "S2_VWAP",
+            "entry": 139.21,
+            "exit": 137.96,
+            "qty": 359,
+            "pnl": -501.58,
+            "reason": "SL"
+          },
+          {
+            "sym": "GAIL",
+            "strategy": "S3_TREND",
+            "entry": 139.37,
+            "exit": 138.63,
+            "qty": 358,
+            "pnl": -317.78,
+            "reason": "SL"
+          },
+          {
+            "sym": "NAVINFLUOR",
+            "strategy": "S3_TREND",
+            "entry": 6163.0,
+            "exit": 6125.96,
+            "qty": 8,
+            "pnl": -348.53,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -521.8,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-01",
+        "trades": [
+          {
+            "sym": "HAL",
+            "strategy": "S1_ORB",
+            "entry": 3657.7,
+            "exit": 3584.3,
+            "qty": 13,
+            "pnl": -1004.12,
+            "reason": "SL"
+          },
+          {
+            "sym": "TATACOMM",
+            "strategy": "S1_ORB",
+            "entry": 1386.0,
+            "exit": 1388.5,
+            "qty": 36,
+            "pnl": 36.91,
+            "reason": "EOD"
+          },
+          {
+            "sym": "ADANIENT",
+            "strategy": "S1_ORB",
+            "entry": 1848.0,
+            "exit": 1841.9,
+            "qty": 27,
+            "pnl": -217.62,
+            "reason": "EOD"
+          },
+          {
+            "sym": "ADANIGREEN",
+            "strategy": "S1_ORB",
+            "entry": 842.7,
+            "exit": 854.2,
+            "qty": 59,
+            "pnl": 625.22,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": -559.61,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-02",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-06",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-07",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-08",
+        "trades": [
+          {
+            "sym": "LICI",
+            "strategy": "S1_ORB",
+            "entry": 791.4,
+            "exit": 794.85,
+            "qty": 63,
+            "pnl": 164.22,
+            "reason": "EOD"
+          },
+          {
+            "sym": "AXISBANK",
+            "strategy": "S1_ORB",
+            "entry": 1315.4,
+            "exit": 1333.4,
+            "qty": 38,
+            "pnl": 630.44,
+            "reason": "EOD"
+          },
+          {
+            "sym": "BANKBARODA",
+            "strategy": "S1_ORB",
+            "entry": 273.78,
+            "exit": 276.5,
+            "qty": 182,
+            "pnl": 441.76,
+            "reason": "EOD"
+          },
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S1_ORB",
+            "entry": 667.5,
+            "exit": 678.0,
+            "qty": 74,
+            "pnl": 724.0,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": 1960.42,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-09",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-10",
+        "trades": [
+          {
+            "sym": "EMAMILTD",
+            "strategy": "S1_ORB",
+            "entry": 424.7,
+            "exit": 424.95,
+            "qty": 117,
+            "pnl": -23.58,
+            "reason": "EOD"
+          },
+          {
+            "sym": "GODREJPROP",
+            "strategy": "S1_ORB",
+            "entry": 1741.6,
+            "exit": 1721.3,
+            "qty": 28,
+            "pnl": -619.86,
+            "reason": "EOD"
+          },
+          {
+            "sym": "APTUS",
+            "strategy": "S2_VWAP",
+            "entry": 222.85,
+            "exit": 223.71,
+            "qty": 224,
+            "pnl": 139.46,
+            "reason": "EOD"
+          },
+          {
+            "sym": "ZEEL",
+            "strategy": "S2_VWAP",
+            "entry": 82.88,
+            "exit": 81.74,
+            "qty": 603,
+            "pnl": -740.09,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -1244.07,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-13",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-15",
+        "trades": [
+          {
+            "sym": "CDSL",
+            "strategy": "S1_ORB",
+            "entry": 1333.0,
+            "exit": 1339.8,
+            "qty": 37,
+            "pnl": 199.02,
+            "reason": "EOD"
+          },
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S1_ORB",
+            "entry": 713.7,
+            "exit": 719.0,
+            "qty": 70,
+            "pnl": 317.67,
+            "reason": "EOD"
+          },
+          {
+            "sym": "GODFRYPHLP",
+            "strategy": "S1_ORB",
+            "entry": 2118.4,
+            "exit": 2100.0,
+            "qty": 23,
+            "pnl": -474.71,
+            "reason": "EOD"
+          },
+          {
+            "sym": "IIFLSEC",
+            "strategy": "S1_ORB",
+            "entry": 293.0,
+            "exit": 297.8,
+            "qty": 170,
+            "pnl": 762.54,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": 804.52,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-16",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-17",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-20",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-21",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-22",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-23",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-24",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-27",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-28",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-29",
+        "trades": [
+          {
+            "sym": "MAHLIFE",
+            "strategy": "S1_ORB",
+            "entry": 346.5,
+            "exit": 346.0,
+            "qty": 144,
+            "pnl": -124.98,
+            "reason": "EOD"
+          },
+          {
+            "sym": "SUPREMEIND",
+            "strategy": "S2_VWAP",
+            "entry": 3691.3,
+            "exit": 3666.92,
+            "qty": 13,
+            "pnl": -367.74,
+            "reason": "SL"
+          },
+          {
+            "sym": "ESAFSFB",
+            "strategy": "S2_VWAP",
+            "entry": 25.87,
+            "exit": 25.81,
+            "qty": 1932,
+            "pnl": -168.97,
+            "reason": "EOD"
+          },
+          {
+            "sym": "IOB",
+            "strategy": "S2_VWAP",
+            "entry": 35.53,
+            "exit": 35.83,
+            "qty": 1407,
+            "pnl": 368.7,
+            "reason": "TARGET"
+          }
+        ],
+        "pnl": -292.99,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-30",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-04",
+        "trades": [
+          {
+            "sym": "BLUEDART",
+            "strategy": "S2_VWAP",
+            "entry": 5699.0,
+            "exit": 5637.89,
+            "qty": 8,
+            "pnl": -537.02,
+            "reason": "SL"
+          },
+          {
+            "sym": "CESC",
+            "strategy": "S2_VWAP",
+            "entry": 197.6,
+            "exit": 193.19,
+            "qty": 253,
+            "pnl": -1168.15,
+            "reason": "SL"
+          },
+          {
+            "sym": "POONAWALLA",
+            "strategy": "S2_VWAP",
+            "entry": 435.45,
+            "exit": 443.13,
+            "qty": 114,
+            "pnl": 822.2,
+            "reason": "TARGET"
+          },
+          {
+            "sym": "TNPL",
+            "strategy": "S2_VWAP",
+            "entry": 158.84,
+            "exit": 156.41,
+            "qty": 314,
+            "pnl": -815.54,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -1698.51,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-05-05",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-06",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-07",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-08",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-11",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-12",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-13",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-14",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-15",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-18",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-19",
+        "trades": [
+          {
+            "sym": "IOC",
+            "strategy": "S1_ORB",
+            "entry": 135.79,
+            "exit": 134.81,
+            "qty": 368,
+            "pnl": -413.52,
+            "reason": "EOD"
+          },
+          {
+            "sym": "DHANUKA",
+            "strategy": "S2_VWAP",
+            "entry": 1132.0,
+            "exit": 1115.18,
+            "qty": 44,
+            "pnl": -792.54,
+            "reason": "SL"
+          },
+          {
+            "sym": "IOC",
+            "strategy": "S2_VWAP",
+            "entry": 135.3,
+            "exit": 134.81,
+            "qty": 369,
+            "pnl": -233.76,
+            "reason": "EOD"
+          },
+          {
+            "sym": "LTIM",
+            "strategy": "S2_VWAP",
+            "entry": 4256.0,
+            "exit": 4255.0,
+            "qty": 11,
+            "pnl": -60.75,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": -1500.57,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-05-20",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-21",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-22",
+        "trades": [
+          {
+            "sym": "ADANIENSOL",
+            "strategy": "S2_VWAP",
+            "entry": 1381.0,
+            "exit": 1368.59,
+            "qty": 36,
+            "pnl": -499.31,
+            "reason": "SL"
+          },
+          {
+            "sym": "AVALON",
+            "strategy": "S2_VWAP",
+            "entry": 1467.8,
+            "exit": 1455.43,
+            "qty": 34,
+            "pnl": -473.35,
+            "reason": "SL"
+          },
+          {
+            "sym": "RBLBANK",
+            "strategy": "S2_VWAP",
+            "entry": 332.75,
+            "exit": 335.75,
+            "qty": 150,
+            "pnl": 396.66,
+            "reason": "EOD"
+          },
+          {
+            "sym": "AVALON",
+            "strategy": "S3_TREND",
+            "entry": 1480.7,
+            "exit": 1472.65,
+            "qty": 33,
+            "pnl": -317.41,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -893.41,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-05-25",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      }
+    ]
+  },
+  "Rs3L_paper": {
+    "results": {
+      "S1_ORB": {
+        "trades": [
+          -1844.459999999999,
+          404.1600000000055,
+          1091.8399999999947,
+          -1540.7299999999927,
+          61.209999999999994,
+          -317.3599999999964,
+          938.2,
+          250.61000000000428,
+          951.9,
+          668.6300000000074,
+          1101.94,
+          -29.730000000000004,
+          -946.419999999998,
+          306.99999999999744,
+          482.54999999999524,
+          -717.3200000000031,
+          1149.940000000003,
+          -181.72,
+          -614.5999999999943
+        ],
+        "wins": 11,
+        "losses": 8,
+        "total_pnl": 1215.640000000024
+      },
+      "S2_VWAP_RECLAIM": {
+        "trades": [
+          -965.59,
+          -970.8799999999953,
+          727.1199999999922,
+          -1036.8700000000033,
+          -559.7600000000136,
+          -1311.5000000000014,
+          -1124.7300000000007,
+          -596.6200000000033,
+          -662.8300000000004,
+          1111.8400000000033,
+          1107.560000000007,
+          45.650000000004525,
+          724.8500000000007,
+          -866.2200000000048,
+          974.2100000000048,
+          -746.08,
+          215.1100000000046,
+          -1104.0500000000004,
+          -560.8500000000022,
+          -247.70000000000658,
+          559.019999999994,
+          -867.6899999999957,
+          -1744.6799999999987,
+          1246.810000000001,
+          -1220.4300000000032,
+          -1183.509999999996,
+          -345.18000000000507,
+          -89.87,
+          -743.6100000000044,
+          -704.4499999999945,
+          601.04
+        ],
+        "wins": 10,
+        "losses": 21,
+        "total_pnl": -10339.890000000018
+      },
+      "S3_TREND_CONT": {
+        "trades": [
+          -506.5700000000059,
+          -589.4299999999989,
+          -471.8100000000049,
+          -517.7899999999995,
+          -475.84999999999775
+        ],
+        "wins": 0,
+        "losses": 5,
+        "total_pnl": -2561.450000000007
+      },
+      "COMBINED": {
+        "trades": [
+          -965.59,
+          -506.5700000000059,
+          -589.4299999999989,
+          -970.8799999999953,
+          727.1199999999922,
+          -1036.8700000000033,
+          -559.7600000000136,
+          -1844.459999999999,
+          -1311.5000000000014,
+          -1124.7300000000007,
+          -596.6200000000033,
+          404.1600000000055,
+          -662.8300000000004,
+          1111.8400000000033,
+          1107.560000000007,
+          1091.8399999999947,
+          45.650000000004525,
+          724.8500000000007,
+          -866.2200000000048,
+          974.2100000000048,
+          -746.08,
+          -471.8100000000049,
+          -517.7899999999995,
+          -1540.7299999999927,
+          61.209999999999994,
+          -317.3599999999964,
+          938.2,
+          250.61000000000428,
+          951.9,
+          668.6300000000074,
+          1101.94,
+          -29.730000000000004,
+          -946.419999999998,
+          215.1100000000046,
+          -1104.0500000000004,
+          306.99999999999744,
+          482.54999999999524,
+          -717.3200000000031,
+          1149.940000000003,
+          -181.72,
+          -560.8500000000022,
+          -247.70000000000658,
+          559.019999999994,
+          -867.6899999999957,
+          -1744.6799999999987,
+          1246.810000000001,
+          -1220.4300000000032,
+          -614.5999999999943,
+          -1183.509999999996,
+          -345.18000000000507,
+          -89.87,
+          -743.6100000000044,
+          -704.4499999999945,
+          601.04,
+          -475.84999999999775
+        ],
+        "wins": 21,
+        "losses": 34,
+        "total_pnl": -11685.700000000004
+      }
+    },
+    "daily_pnl": [
+      {
+        "date": "2026-03-11",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-12",
+        "trades": [
+          {
+            "sym": "CRAFTSMAN",
+            "strategy": "S2_VWAP",
+            "entry": 7368.5,
+            "exit": 7279.25,
+            "qty": 10,
+            "pnl": -965.59,
+            "reason": "SL"
+          },
+          {
+            "sym": "TATAPOWER",
+            "strategy": "S3_TREND",
+            "entry": 405.1,
+            "exit": 402.76,
+            "qty": 185,
+            "pnl": -506.57,
+            "reason": "SL"
+          },
+          {
+            "sym": "CRAFTSMAN",
+            "strategy": "S3_TREND",
+            "entry": 7377.5,
+            "exit": 7325.88,
+            "qty": 10,
+            "pnl": -589.43,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -2061.59,
+        "trades_count": 3
+      },
+      {
+        "date": "2026-03-13",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-16",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-17",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-18",
+        "trades": [
+          {
+            "sym": "CANFINHOME",
+            "strategy": "S2_VWAP",
+            "entry": 873.3,
+            "exit": 862.74,
+            "qty": 85,
+            "pnl": -970.88,
+            "reason": "SL"
+          },
+          {
+            "sym": "FLUOROCHEM",
+            "strategy": "S2_VWAP",
+            "entry": 3063.3,
+            "exit": 3096.66,
+            "qty": 24,
+            "pnl": 727.12,
+            "reason": "TARGET"
+          },
+          {
+            "sym": "KTKBANK",
+            "strategy": "S2_VWAP",
+            "entry": 234.72,
+            "exit": 231.7,
+            "qty": 319,
+            "pnl": -1036.87,
+            "reason": "SL"
+          },
+          {
+            "sym": "LTIM",
+            "strategy": "S2_VWAP",
+            "entry": 4337.1,
+            "exit": 4308.48,
+            "qty": 17,
+            "pnl": -559.76,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -1840.39,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-03-19",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-20",
+        "trades": [
+          {
+            "sym": "UJJIVANSFB",
+            "strategy": "S1_ORB",
+            "entry": 54.6,
+            "exit": 53.31,
+            "qty": 1373,
+            "pnl": -1844.46,
+            "reason": "SL"
+          },
+          {
+            "sym": "ABFRL",
+            "strategy": "S2_VWAP",
+            "entry": 62.35,
+            "exit": 61.32,
+            "qty": 1202,
+            "pnl": -1311.5,
+            "reason": "SL"
+          },
+          {
+            "sym": "CHENNPETRO",
+            "strategy": "S2_VWAP",
+            "entry": 1073.0,
+            "exit": 1057.76,
+            "qty": 69,
+            "pnl": -1124.73,
+            "reason": "SL"
+          },
+          {
+            "sym": "COALINDIA",
+            "strategy": "S2_VWAP",
+            "entry": 469.05,
+            "exit": 465.76,
+            "qty": 159,
+            "pnl": -596.62,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -4877.31,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-03-23",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-24",
+        "trades": [
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S1_ORB",
+            "entry": 616.05,
+            "exit": 620.0,
+            "qty": 121,
+            "pnl": 404.16,
+            "reason": "EOD"
+          },
+          {
+            "sym": "ADANIENT",
+            "strategy": "S2_VWAP",
+            "entry": 1845.9,
+            "exit": 1831.16,
+            "qty": 40,
+            "pnl": -662.83,
+            "reason": "SL"
+          },
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S2_VWAP",
+            "entry": 611.15,
+            "exit": 620.87,
+            "qty": 122,
+            "pnl": 1111.84,
+            "reason": "TARGET"
+          },
+          {
+            "sym": "DHANUKA",
+            "strategy": "S2_VWAP",
+            "entry": 961.3,
+            "exit": 976.45,
+            "qty": 78,
+            "pnl": 1107.56,
+            "reason": "TARGET"
+          }
+        ],
+        "pnl": 1960.73,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-03-25",
+        "trades": [
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S1_ORB",
+            "entry": 641.95,
+            "exit": 652.0,
+            "qty": 116,
+            "pnl": 1091.84,
+            "reason": "EOD"
+          },
+          {
+            "sym": "APTUS",
+            "strategy": "S2_VWAP",
+            "entry": 206.92,
+            "exit": 207.25,
+            "qty": 362,
+            "pnl": 45.65,
+            "reason": "EOD"
+          },
+          {
+            "sym": "AUBANK",
+            "strategy": "S2_VWAP",
+            "entry": 907.4,
+            "exit": 917.14,
+            "qty": 82,
+            "pnl": 724.85,
+            "reason": "TARGET"
+          },
+          {
+            "sym": "AVALON",
+            "strategy": "S2_VWAP",
+            "entry": 985.1,
+            "exit": 974.67,
+            "qty": 76,
+            "pnl": -866.22,
+            "reason": "SL"
+          }
+        ],
+        "pnl": 996.12,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-03-27",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-03-30",
+        "trades": [
+          {
+            "sym": "NAVINFLUOR",
+            "strategy": "S2_VWAP",
+            "entry": 6108.5,
+            "exit": 6195.81,
+            "qty": 12,
+            "pnl": 974.21,
+            "reason": "TARGET"
+          },
+          {
+            "sym": "GAIL",
+            "strategy": "S2_VWAP",
+            "entry": 139.21,
+            "exit": 137.96,
+            "qty": 538,
+            "pnl": -746.08,
+            "reason": "SL"
+          },
+          {
+            "sym": "GAIL",
+            "strategy": "S3_TREND",
+            "entry": 139.37,
+            "exit": 138.63,
+            "qty": 538,
+            "pnl": -471.81,
+            "reason": "SL"
+          },
+          {
+            "sym": "NAVINFLUOR",
+            "strategy": "S3_TREND",
+            "entry": 6163.0,
+            "exit": 6125.96,
+            "qty": 12,
+            "pnl": -517.79,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -761.47,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-01",
+        "trades": [
+          {
+            "sym": "HAL",
+            "strategy": "S1_ORB",
+            "entry": 3657.7,
+            "exit": 3584.3,
+            "qty": 20,
+            "pnl": -1540.73,
+            "reason": "SL"
+          },
+          {
+            "sym": "TATACOMM",
+            "strategy": "S1_ORB",
+            "entry": 1386.0,
+            "exit": 1388.5,
+            "qty": 54,
+            "pnl": 61.21,
+            "reason": "EOD"
+          },
+          {
+            "sym": "ADANIENT",
+            "strategy": "S1_ORB",
+            "entry": 1848.0,
+            "exit": 1841.9,
+            "qty": 40,
+            "pnl": -317.36,
+            "reason": "EOD"
+          },
+          {
+            "sym": "ADANIGREEN",
+            "strategy": "S1_ORB",
+            "entry": 842.7,
+            "exit": 854.2,
+            "qty": 88,
+            "pnl": 938.2,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": -858.68,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-02",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-06",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-07",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-08",
+        "trades": [
+          {
+            "sym": "LICI",
+            "strategy": "S1_ORB",
+            "entry": 791.4,
+            "exit": 794.85,
+            "qty": 94,
+            "pnl": 250.61,
+            "reason": "EOD"
+          },
+          {
+            "sym": "AXISBANK",
+            "strategy": "S1_ORB",
+            "entry": 1315.4,
+            "exit": 1333.4,
+            "qty": 57,
+            "pnl": 951.9,
+            "reason": "EOD"
+          },
+          {
+            "sym": "BANKBARODA",
+            "strategy": "S1_ORB",
+            "entry": 273.78,
+            "exit": 276.5,
+            "qty": 273,
+            "pnl": 668.63,
+            "reason": "EOD"
+          },
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S1_ORB",
+            "entry": 667.5,
+            "exit": 678.0,
+            "qty": 112,
+            "pnl": 1101.94,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": 2973.08,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-09",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-10",
+        "trades": [
+          {
+            "sym": "EMAMILTD",
+            "strategy": "S1_ORB",
+            "entry": 424.7,
+            "exit": 424.95,
+            "qty": 176,
+            "pnl": -29.73,
+            "reason": "EOD"
+          },
+          {
+            "sym": "GODREJPROP",
+            "strategy": "S1_ORB",
+            "entry": 1741.6,
+            "exit": 1721.3,
+            "qty": 43,
+            "pnl": -946.42,
+            "reason": "EOD"
+          },
+          {
+            "sym": "APTUS",
+            "strategy": "S2_VWAP",
+            "entry": 222.85,
+            "exit": 223.71,
+            "qty": 336,
+            "pnl": 215.11,
+            "reason": "EOD"
+          },
+          {
+            "sym": "ZEEL",
+            "strategy": "S2_VWAP",
+            "entry": 82.88,
+            "exit": 81.74,
+            "qty": 904,
+            "pnl": -1104.05,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -1865.09,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-13",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-15",
+        "trades": [
+          {
+            "sym": "CDSL",
+            "strategy": "S1_ORB",
+            "entry": 1333.0,
+            "exit": 1339.8,
+            "qty": 56,
+            "pnl": 307.0,
+            "reason": "EOD"
+          },
+          {
+            "sym": "CHOICEIN",
+            "strategy": "S1_ORB",
+            "entry": 713.7,
+            "exit": 719.0,
+            "qty": 105,
+            "pnl": 482.55,
+            "reason": "EOD"
+          },
+          {
+            "sym": "GODFRYPHLP",
+            "strategy": "S1_ORB",
+            "entry": 2118.4,
+            "exit": 2100.0,
+            "qty": 35,
+            "pnl": -717.32,
+            "reason": "EOD"
+          },
+          {
+            "sym": "IIFLSEC",
+            "strategy": "S1_ORB",
+            "entry": 293.0,
+            "exit": 297.8,
+            "qty": 255,
+            "pnl": 1149.94,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": 1222.17,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-16",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-17",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-20",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-21",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-22",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-23",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-24",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-27",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-28",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-04-29",
+        "trades": [
+          {
+            "sym": "MAHLIFE",
+            "strategy": "S1_ORB",
+            "entry": 346.5,
+            "exit": 346.0,
+            "qty": 216,
+            "pnl": -181.72,
+            "reason": "EOD"
+          },
+          {
+            "sym": "SUPREMEIND",
+            "strategy": "S2_VWAP",
+            "entry": 3691.3,
+            "exit": 3666.92,
+            "qty": 20,
+            "pnl": -560.85,
+            "reason": "SL"
+          },
+          {
+            "sym": "ESAFSFB",
+            "strategy": "S2_VWAP",
+            "entry": 25.87,
+            "exit": 25.81,
+            "qty": 2899,
+            "pnl": -247.7,
+            "reason": "EOD"
+          },
+          {
+            "sym": "IOB",
+            "strategy": "S2_VWAP",
+            "entry": 35.53,
+            "exit": 35.83,
+            "qty": 2110,
+            "pnl": 559.02,
+            "reason": "TARGET"
+          }
+        ],
+        "pnl": -431.25,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-04-30",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-04",
+        "trades": [
+          {
+            "sym": "BLUEDART",
+            "strategy": "S2_VWAP",
+            "entry": 5699.0,
+            "exit": 5637.89,
+            "qty": 13,
+            "pnl": -867.69,
+            "reason": "SL"
+          },
+          {
+            "sym": "CESC",
+            "strategy": "S2_VWAP",
+            "entry": 197.6,
+            "exit": 193.19,
+            "qty": 379,
+            "pnl": -1744.68,
+            "reason": "SL"
+          },
+          {
+            "sym": "POONAWALLA",
+            "strategy": "S2_VWAP",
+            "entry": 435.45,
+            "exit": 443.13,
+            "qty": 172,
+            "pnl": 1246.81,
+            "reason": "TARGET"
+          },
+          {
+            "sym": "TNPL",
+            "strategy": "S2_VWAP",
+            "entry": 158.84,
+            "exit": 156.41,
+            "qty": 472,
+            "pnl": -1220.43,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -2585.99,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-05-05",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-06",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-07",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-08",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-11",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-12",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-13",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-14",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-15",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-18",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-19",
+        "trades": [
+          {
+            "sym": "IOC",
+            "strategy": "S1_ORB",
+            "entry": 135.79,
+            "exit": 134.81,
+            "qty": 552,
+            "pnl": -614.6,
+            "reason": "EOD"
+          },
+          {
+            "sym": "DHANUKA",
+            "strategy": "S2_VWAP",
+            "entry": 1132.0,
+            "exit": 1115.18,
+            "qty": 66,
+            "pnl": -1183.51,
+            "reason": "SL"
+          },
+          {
+            "sym": "IOC",
+            "strategy": "S2_VWAP",
+            "entry": 135.3,
+            "exit": 134.81,
+            "qty": 554,
+            "pnl": -345.18,
+            "reason": "EOD"
+          },
+          {
+            "sym": "LTIM",
+            "strategy": "S2_VWAP",
+            "entry": 4256.0,
+            "exit": 4255.0,
+            "qty": 17,
+            "pnl": -89.87,
+            "reason": "EOD"
+          }
+        ],
+        "pnl": -2233.16,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-05-20",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-21",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      },
+      {
+        "date": "2026-05-22",
+        "trades": [
+          {
+            "sym": "ADANIENSOL",
+            "strategy": "S2_VWAP",
+            "entry": 1381.0,
+            "exit": 1368.59,
+            "qty": 54,
+            "pnl": -743.61,
+            "reason": "SL"
+          },
+          {
+            "sym": "AVALON",
+            "strategy": "S2_VWAP",
+            "entry": 1467.8,
+            "exit": 1455.43,
+            "qty": 51,
+            "pnl": -704.45,
+            "reason": "SL"
+          },
+          {
+            "sym": "RBLBANK",
+            "strategy": "S2_VWAP",
+            "entry": 332.75,
+            "exit": 335.75,
+            "qty": 225,
+            "pnl": 601.04,
+            "reason": "EOD"
+          },
+          {
+            "sym": "AVALON",
+            "strategy": "S3_TREND",
+            "entry": 1480.7,
+            "exit": 1472.65,
+            "qty": 50,
+            "pnl": -475.85,
+            "reason": "SL"
+          }
+        ],
+        "pnl": -1322.87,
+        "trades_count": 4
+      },
+      {
+        "date": "2026-05-25",
+        "trades": [],
+        "pnl": 0.0,
+        "trades_count": 0
+      }
+    ]
+  }
+}

@@ -3,7 +3,9 @@
 
 # === Intraday continuous scan (every 15 min, 9:30 AM - 1:00 PM IST) ===
 # vishal-live --live RE-ENABLED 2026-05-21 (Bug A patched commit 5131cd6)
-*/15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal-live --live >> logs/cron_vishal_live.log 2>&1
+# PAUSED 2026-05-24 — V2 rules replacing V1 LLM
+# */15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal-live --live >> logs/cron_vishal_live.log 2>&1
+*/15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal-live-v2 --live >> logs/cron_vishal_live_v2.log 2>&1
 */15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal >> logs/cron_vishal.log 2>&1
 */15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile neha >> logs/cron_neha.log 2>&1
 

@@ -133,12 +133,12 @@ def main():
     args = parser.parse_args()
 
     # Initialize broker
-    from intraday.auth_server import get_authenticated_broker
+    from intraday.auth_server import authenticate_broker
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
     print(f"Authenticating as profile: {args.profile}")
-    broker = get_authenticated_broker(args.profile)
+    import yaml; cfg = yaml.safe_load(open(f"config/profiles/{args.profile}.yaml")); broker = authenticate_broker("dhan", cfg.get("dhan", cfg), dry_run=False, profile=args.profile)
     if broker is None:
         print("ERROR: Could not authenticate broker. Check profile config.")
         sys.exit(1)

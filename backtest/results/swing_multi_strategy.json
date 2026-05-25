@@ -1,0 +1,590 @@
+[
+  {
+    "strategy": "CRABEL_RSI2",
+    "description": "Larry Connors RSI(2) < 5 \u2014 extreme oversold bounce",
+    "stats": {
+      "total_trades": 33,
+      "winners": 14,
+      "losers": 19,
+      "win_rate_pct": 42.4,
+      "profit_factor": 1.16,
+      "total_gross_pnl": 4892.25,
+      "total_charges": 2737.1,
+      "total_net_pnl": 2155.15,
+      "avg_win": 1096.15,
+      "avg_loss": -694.26,
+      "avg_days_held": 4.4,
+      "by_exit_reason": {
+        "STOPPED_OUT": {
+          "count": 6,
+          "net_pnl": -7801.83
+        },
+        "TIME_EXIT": {
+          "count": 22,
+          "net_pnl": 7575.78
+        },
+        "BACKTEST_END": {
+          "count": 5,
+          "net_pnl": 2381.2
+        }
+      },
+      "top_10_stocks": [
+        {
+          "symbol": "AUROPHARMA",
+          "net_pnl": 2282.15
+        },
+        {
+          "symbol": "CHENNPETRO",
+          "net_pnl": 2162.13
+        },
+        {
+          "symbol": "ONGC",
+          "net_pnl": 2156.98
+        },
+        {
+          "symbol": "HINDALCO",
+          "net_pnl": 1897.98
+        },
+        {
+          "symbol": "RBLBANK",
+          "net_pnl": 1085.85
+        },
+        {
+          "symbol": "SONACOMS",
+          "net_pnl": 1049.25
+        },
+        {
+          "symbol": "LUPIN",
+          "net_pnl": 952.08
+        },
+        {
+          "symbol": "TATACONSUM",
+          "net_pnl": 740.93
+        },
+        {
+          "symbol": "FEDERALBNK",
+          "net_pnl": 676.42
+        },
+        {
+          "symbol": "GICRE",
+          "net_pnl": 277.31
+        }
+      ],
+      "bottom_5_stocks": [
+        {
+          "symbol": "TITAN",
+          "net_pnl": -941.04
+        },
+        {
+          "symbol": "NTPC",
+          "net_pnl": -998.19
+        },
+        {
+          "symbol": "COALINDIA",
+          "net_pnl": -1268.32
+        },
+        {
+          "symbol": "IPCALAB",
+          "net_pnl": -1577.29
+        },
+        {
+          "symbol": "SUNTV",
+          "net_pnl": -1726.59
+        }
+      ],
+      "verdict": "PAPER_ONLY"
+    }
+  },
+  {
+    "strategy": "PULLBACK_TIGHT",
+    "description": "Tight SL (1\u00d7ATR), wide target (3:1), selective",
+    "stats": {
+      "total_trades": 37,
+      "winners": 10,
+      "losers": 27,
+      "win_rate_pct": 27.0,
+      "profit_factor": 0.68,
+      "total_gross_pnl": -4466.0,
+      "total_charges": 3053.71,
+      "total_net_pnl": -7519.71,
+      "avg_win": 1607.63,
+      "avg_loss": -873.93,
+      "avg_days_held": 3.9,
+      "by_exit_reason": {
+        "STOPPED_OUT": {
+          "count": 24,
+          "net_pnl": -22433.28
+        },
+        "TIME_EXIT": {
+          "count": 3,
+          "net_pnl": 3064.91
+        },
+        "TARGET_HIT": {
+          "count": 5,
+          "net_pnl": 11468.61
+        },
+        "BACKTEST_END": {
+          "count": 5,
+          "net_pnl": 380.05
+        }
+      },
+      "top_10_stocks": [
+        {
+          "symbol": "CHENNPETRO",
+          "net_pnl": 3737.74
+        },
+        {
+          "symbol": "ONGC",
+          "net_pnl": 2021.79
+        },
+        {
+          "symbol": "POWERGRID",
+          "net_pnl": 1975.39
+        },
+        {
+          "symbol": "TATACONSUM",
+          "net_pnl": 1917.44
+        },
+        {
+          "symbol": "DRREDDY",
+          "net_pnl": 1333.48
+        },
+        {
+          "symbol": "AUROPHARMA",
+          "net_pnl": 949.26
+        },
+        {
+          "symbol": "LUPIN",
+          "net_pnl": 268.3
+        },
+        {
+          "symbol": "HINDALCO",
+          "net_pnl": 209.27
+        },
+        {
+          "symbol": "COALINDIA",
+          "net_pnl": -228.03
+        },
+        {
+          "symbol": "ADANIPOWER",
+          "net_pnl": -488.64
+        }
+      ],
+      "bottom_5_stocks": [
+        {
+          "symbol": "SUNTV",
+          "net_pnl": -1420.12
+        },
+        {
+          "symbol": "NATIONALUM",
+          "net_pnl": -1607.58
+        },
+        {
+          "symbol": "MUTHOOTFIN",
+          "net_pnl": -1798.22
+        },
+        {
+          "symbol": "SUNPHARMA",
+          "net_pnl": -2087.89
+        },
+        {
+          "symbol": "NTPC",
+          "net_pnl": -2696.62
+        }
+      ],
+      "verdict": "DO_NOT_DEPLOY"
+    }
+  },
+  {
+    "strategy": "PULLBACK_WIDE",
+    "description": "Wide SL (2\u00d7ATR), moderate target (2:1), higher WR",
+    "stats": {
+      "total_trades": 20,
+      "winners": 8,
+      "losers": 12,
+      "win_rate_pct": 40.0,
+      "profit_factor": 0.98,
+      "total_gross_pnl": 1461.02,
+      "total_charges": 1652.57,
+      "total_net_pnl": -191.55,
+      "avg_win": 1495.89,
+      "avg_loss": -1013.22,
+      "avg_days_held": 10.1,
+      "by_exit_reason": {
+        "STOPPED_OUT": {
+          "count": 6,
+          "net_pnl": -9215.86
+        },
+        "TIME_EXIT": {
+          "count": 7,
+          "net_pnl": 3008.78
+        },
+        "TARGET_HIT": {
+          "count": 2,
+          "net_pnl": 5580.91
+        },
+        "BACKTEST_END": {
+          "count": 5,
+          "net_pnl": 434.62
+        }
+      },
+      "top_10_stocks": [
+        {
+          "symbol": "LAURUSLABS",
+          "net_pnl": 3022.89
+        },
+        {
+          "symbol": "AUROPHARMA",
+          "net_pnl": 2558.02
+        },
+        {
+          "symbol": "HINDALCO",
+          "net_pnl": 1897.98
+        },
+        {
+          "symbol": "POWERGRID",
+          "net_pnl": 1727.09
+        },
+        {
+          "symbol": "RBLBANK",
+          "net_pnl": 644.71
+        },
+        {
+          "symbol": "COALINDIA",
+          "net_pnl": 506.31
+        },
+        {
+          "symbol": "NESTLEIND",
+          "net_pnl": -179.66
+        },
+        {
+          "symbol": "NHPC",
+          "net_pnl": -264.2
+        },
+        {
+          "symbol": "TATACONSUM",
+          "net_pnl": -355.14
+        },
+        {
+          "symbol": "IPCALAB",
+          "net_pnl": -529.07
+        }
+      ],
+      "bottom_5_stocks": [
+        {
+          "symbol": "LUPIN",
+          "net_pnl": -1133.15
+        },
+        {
+          "symbol": "TITAN",
+          "net_pnl": -1228.32
+        },
+        {
+          "symbol": "TORNTPHARM",
+          "net_pnl": -1631.39
+        },
+        {
+          "symbol": "NTPC",
+          "net_pnl": -1799.33
+        },
+        {
+          "symbol": "SUNPHARMA",
+          "net_pnl": -2123.35
+        }
+      ],
+      "verdict": "DO_NOT_DEPLOY"
+    }
+  },
+  {
+    "strategy": "DEFENSIVE_SECTORS",
+    "description": "Only PHARMA/FMCG/IT/HEALTHCARE \u2014 proven winners",
+    "stats": {
+      "total_trades": 15,
+      "winners": 6,
+      "losers": 9,
+      "win_rate_pct": 40.0,
+      "profit_factor": 0.9,
+      "total_gross_pnl": 398.58,
+      "total_charges": 1234.27,
+      "total_net_pnl": -835.69,
+      "avg_win": 1285.58,
+      "avg_loss": -949.91,
+      "avg_days_held": 7.9,
+      "by_exit_reason": {
+        "STOPPED_OUT": {
+          "count": 7,
+          "net_pnl": -7822.02
+        },
+        "TIME_EXIT": {
+          "count": 2,
+          "net_pnl": 1738.59
+        },
+        "TARGET_HIT": {
+          "count": 2,
+          "net_pnl": 5119.95
+        },
+        "BACKTEST_END": {
+          "count": 4,
+          "net_pnl": 127.79
+        }
+      },
+      "top_10_stocks": [
+        {
+          "symbol": "AUROPHARMA",
+          "net_pnl": 3528.73
+        },
+        {
+          "symbol": "TATACONSUM",
+          "net_pnl": 2158.76
+        },
+        {
+          "symbol": "NESTLEIND",
+          "net_pnl": -179.66
+        },
+        {
+          "symbol": "DRREDDY",
+          "net_pnl": -763.1
+        },
+        {
+          "symbol": "TORNTPHARM",
+          "net_pnl": -956.97
+        },
+        {
+          "symbol": "TITAN",
+          "net_pnl": -1126.53
+        },
+        {
+          "symbol": "LUPIN",
+          "net_pnl": -1556.81
+        },
+        {
+          "symbol": "SUNPHARMA",
+          "net_pnl": -1940.11
+        }
+      ],
+      "bottom_5_stocks": [
+        {
+          "symbol": "DRREDDY",
+          "net_pnl": -763.1
+        },
+        {
+          "symbol": "TORNTPHARM",
+          "net_pnl": -956.97
+        },
+        {
+          "symbol": "TITAN",
+          "net_pnl": -1126.53
+        },
+        {
+          "symbol": "LUPIN",
+          "net_pnl": -1556.81
+        },
+        {
+          "symbol": "SUNPHARMA",
+          "net_pnl": -1940.11
+        }
+      ],
+      "verdict": "DO_NOT_DEPLOY"
+    }
+  },
+  {
+    "strategy": "HIGH_SCORE",
+    "description": "Score >= 10 only \u2014 highest quality setups",
+    "stats": {
+      "total_trades": 21,
+      "winners": 6,
+      "losers": 15,
+      "win_rate_pct": 28.6,
+      "profit_factor": 1.15,
+      "total_gross_pnl": 3603.36,
+      "total_charges": 1742.28,
+      "total_net_pnl": 1861.08,
+      "avg_win": 2400.66,
+      "avg_loss": -836.19,
+      "avg_days_held": 7.2,
+      "by_exit_reason": {
+        "STOPPED_OUT": {
+          "count": 9,
+          "net_pnl": -10769.22
+        },
+        "TIME_EXIT": {
+          "count": 4,
+          "net_pnl": 3615.99
+        },
+        "TARGET_HIT": {
+          "count": 3,
+          "net_pnl": 9223.96
+        },
+        "BACKTEST_END": {
+          "count": 5,
+          "net_pnl": -209.65
+        }
+      },
+      "top_10_stocks": [
+        {
+          "symbol": "CHENNPETRO",
+          "net_pnl": 4124.58
+        },
+        {
+          "symbol": "AUROPHARMA",
+          "net_pnl": 3694.19
+        },
+        {
+          "symbol": "TATACONSUM",
+          "net_pnl": 2706.25
+        },
+        {
+          "symbol": "POWERGRID",
+          "net_pnl": 2545.45
+        },
+        {
+          "symbol": "DRREDDY",
+          "net_pnl": 1333.48
+        },
+        {
+          "symbol": "NESTLEIND",
+          "net_pnl": -179.66
+        },
+        {
+          "symbol": "NHPC",
+          "net_pnl": -264.2
+        },
+        {
+          "symbol": "COALINDIA",
+          "net_pnl": -632.46
+        },
+        {
+          "symbol": "TITAN",
+          "net_pnl": -932.4
+        },
+        {
+          "symbol": "FEDERALBNK",
+          "net_pnl": -1279.81
+        }
+      ],
+      "bottom_5_stocks": [
+        {
+          "symbol": "SONACOMS",
+          "net_pnl": -1553.67
+        },
+        {
+          "symbol": "RBLBANK",
+          "net_pnl": -1560.82
+        },
+        {
+          "symbol": "NTPC",
+          "net_pnl": -1836.8
+        },
+        {
+          "symbol": "SUNPHARMA",
+          "net_pnl": -2130.92
+        },
+        {
+          "symbol": "LUPIN",
+          "net_pnl": -2172.13
+        }
+      ],
+      "verdict": "DO_NOT_DEPLOY"
+    }
+  },
+  {
+    "strategy": "VOLUME_SURGE",
+    "description": "High turnover (>20Cr) + near DMA \u2014 institutional interest",
+    "stats": {
+      "total_trades": 25,
+      "winners": 7,
+      "losers": 18,
+      "win_rate_pct": 28.0,
+      "profit_factor": 0.75,
+      "total_gross_pnl": -3182.28,
+      "total_charges": 2079.56,
+      "total_net_pnl": -5261.84,
+      "avg_win": 2235.93,
+      "avg_loss": -1161.85,
+      "avg_days_held": 7.6,
+      "by_exit_reason": {
+        "STOPPED_OUT": {
+          "count": 14,
+          "net_pnl": -19850.2
+        },
+        "TARGET_HIT": {
+          "count": 3,
+          "net_pnl": 10560.04
+        },
+        "TIME_EXIT": {
+          "count": 4,
+          "net_pnl": 3605.51
+        },
+        "BACKTEST_END": {
+          "count": 4,
+          "net_pnl": 422.81
+        }
+      },
+      "top_10_stocks": [
+        {
+          "symbol": "ADANIPOWER",
+          "net_pnl": 4542.52
+        },
+        {
+          "symbol": "LAURUSLABS",
+          "net_pnl": 2829.23
+        },
+        {
+          "symbol": "COALINDIA",
+          "net_pnl": 1728.09
+        },
+        {
+          "symbol": "AUROPHARMA",
+          "net_pnl": 1622.44
+        },
+        {
+          "symbol": "DRREDDY",
+          "net_pnl": 1333.48
+        },
+        {
+          "symbol": "POWERGRID",
+          "net_pnl": 763.92
+        },
+        {
+          "symbol": "SONACOMS",
+          "net_pnl": 413.5
+        },
+        {
+          "symbol": "NESTLEIND",
+          "net_pnl": -179.66
+        },
+        {
+          "symbol": "NHPC",
+          "net_pnl": -264.2
+        },
+        {
+          "symbol": "FEDERALBNK",
+          "net_pnl": -1279.81
+        }
+      ],
+      "bottom_5_stocks": [
+        {
+          "symbol": "SUNPHARMA",
+          "net_pnl": -1940.11
+        },
+        {
+          "symbol": "SUNTV",
+          "net_pnl": -1958.08
+        },
+        {
+          "symbol": "NATIONALUM",
+          "net_pnl": -1965.61
+        },
+        {
+          "symbol": "CHENNPETRO",
+          "net_pnl": -2028.4
+        },
+        {
+          "symbol": "LUPIN",
+          "net_pnl": -2172.13
+        }
+      ],
+      "verdict": "DO_NOT_DEPLOY"
+    }
+  }
+]

@@ -109,7 +109,7 @@ def run(
     # Determine backtest period
     # Use the shortest data series to find common date range
     min_candles = min(len(d["close"]) for d in universe_data.values())
-    backtest_days = min(months * 22, min_candles - 250)  # Need 250 for lookback
+    backtest_days = min(months * 22, min_candles - 200)  # Need 200 for lookback (scanner uses 200-DMA)
 
     if backtest_days <= 0:
         print("ERROR: Insufficient data for backtest. Need > 250 + backtest_days candles.")
@@ -132,7 +132,7 @@ def run(
         for symbol, ohlc in universe_data.items():
             # Slice data up to current day
             end_idx = len(ohlc["close"]) + day_idx
-            if end_idx < 250:
+            if end_idx < 200:
                 continue
 
             daily_slice = {
@@ -315,7 +315,11 @@ def run(
 def _compute_stats(trades: list[dict], config: SwingConfig) -> dict:
     """Compute backtest statistics."""
     if not trades:
-        return {"total_trades": 0, "verdict": "NO_DATA"}
+        return {"total_trades": 0, "verdict": "NO_DATA", "win_rate_pct": 0,
+                "profit_factor": 0, "total_net_pnl": 0, "total_gross_pnl": 0,
+                "total_charges": 0, "avg_win": 0, "avg_loss": 0, "avg_days_held": 0,
+                "winners": 0, "losers": 0, "by_exit_reason": {},
+                "top_10_stocks": [], "bottom_5_stocks": []}
 
     total = len(trades)
     winners = [t for t in trades if t["net_pnl"] > 0]
@@ -381,6 +385,10 @@ def _compute_stats(trades: list[dict], config: SwingConfig) -> dict:
 
 def _print_report(stats: dict, trades: list[dict]):
     """Print human-readable backtest report."""
+    if stats.get("total_trades", 0) == 0:
+        print("\n  NO TRADES generated. Strategy too selective for this period.")
+        print("  Try: lower min_score, widen delta filter, or longer period.")
+        return
     print("\n" + "=" * 60)
     print("SWING BACKTEST REPORT — 20-DMA Pullback Strategy")
     print("=" * 60)

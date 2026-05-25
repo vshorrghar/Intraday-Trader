@@ -1,0 +1,743 @@
+========================================================================
+NIFTY 500 COMPREHENSIVE BACKTEST REPORT
+Strategies: V4, V6, V4+V6 Combined
+Universe: Nifty 500 (blacklist applied)
+Generated: 2026-05-24 02:37 IST
+========================================================================
+
+📊 SUMMARY TABLE
+────────────────────────────────────────────────────────────────────────
+Strategy            Capital  Trades     WR     PF       Net 6m    Monthly Verdict
+────────────────────────────────────────────────────────────────────────
+V4V6_COMBINED    ₹  10.0L     146  59.6%   1.60 ₹   +52,951 ₹  +8,825  ✅ DEPLOY
+V4V6_COMBINED    ₹   3.0L     126  52.4%   1.31 ₹    +4,012 ₹    +669  ✅ DEPLOY
+V4V6_COMBINED    ₹   5.0L     146  57.5%   1.52 ₹   +19,517 ₹  +3,253  ✅ DEPLOY
+V4               ₹  10.0L     146  61.0%   1.68 ₹   +60,636 ₹ +10,106  ✅ DEPLOY
+V4               ₹   3.0L     126  54.0%   1.40 ₹    +7,478 ₹  +1,246  ✅ DEPLOY
+V4               ₹   5.0L     146  58.9%   1.59 ₹   +23,267 ₹  +3,878  ✅ DEPLOY
+V6               ₹  10.0L      34  79.4%   4.86 ₹   +35,908 ₹  +5,985  ✅ DEPLOY
+V6               ₹   3.0L      31  67.7%   4.34 ₹   +10,645 ₹  +1,774  ✅ DEPLOY
+V6               ₹   5.0L      34  70.6%   4.84 ₹   +17,069 ₹  +2,845  ✅ DEPLOY
+────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────
+Strategy: V4V6_COMBINED | Per trade: ₹200,000 | Max: 5 trades
+Total capital: ₹1,000,000 | Period: Dec 2025 — May 2026
+────────────────────────────────────────────────────────────────────────
+  Trading days:    35 active / 82 skipped
+  Total trades:    146
+  Win rate:        59.6%  (87W / 59L)
+  Profit factor:   1.60
+  Total gross:     ₹  +70,092.70
+  Total charges:   ₹   17,141.78
+  Total net 6m:    ₹  +52,950.92
+  Monthly avg:     ₹   +8,825.15
+  Per trade avg:   ₹     +362.68
+  ROI on capital:  5.3% in 6 months
+  Annualised ROI:  10.6%
+
+  📈 SCALING PROJECTION:
+  ₹10L capital  → ₹  +8,825/month
+  ₹20L capital  → ₹ +17,650/month
+  ₹50L capital  → ₹ +44,126/month
+  Capital needed for ₹1L/month → ₹113.3L
+
+  Monthly breakdown:
+    2025-12: ₹  +9,763  (13 trades, 62% WR)
+    2026-01: ₹  +8,275  (15 trades, 60% WR)
+    2026-02: ₹     -59  (27 trades, 52% WR)
+    2026-03: ₹  +3,943  (32 trades, 62% WR)
+    2026-04: ₹ +19,255  (37 trades, 70% WR)
+    2026-05: ₹ +11,774  (22 trades, 45% WR)
+
+  Exit reason breakdown:
+    TIME_STOP      :  109 trades,  70.6% WR, ₹ +81,923
+    STOPPED_OUT    :   27 trades,   0.0% WR, ₹ -77,260
+    TARGET_HIT     :   10 trades, 100.0% WR, ₹ +48,288
+
+  V6 vs V4 split:
+    V6 signals:   34 trades, 79.4% WR, ₹ +35,908
+    V4 signals:  112 trades, 53.6% WR, ₹ +17,043
+
+  By market direction:
+    BULL    :  146 trades,  59.6% WR, ₹ +52,951
+
+  Top 15 stocks (add to whitelist):
+    HINDZINC        :   2 trades, 100.0% WR, ₹  +9,239
+    NESTLEIND       :   2 trades, 100.0% WR, ₹  +7,891
+    PNBHOUSING      :   3 trades, 100.0% WR, ₹  +7,841
+    BHEL            :   1 trades, 100.0% WR, ₹  +7,730
+    ADANIENSOL      :   3 trades, 100.0% WR, ₹  +6,906
+    NTPC            :   4 trades, 100.0% WR, ₹  +6,497
+    SHRIRAMFIN      :   3 trades, 100.0% WR, ₹  +6,474
+    GRANULES        :   1 trades, 100.0% WR, ₹  +6,086
+    ULTRACEMCO      :   3 trades, 100.0% WR, ₹  +5,914
+    GRASIM          :   4 trades,  75.0% WR, ₹  +5,656
+    GAIL            :   1 trades, 100.0% WR, ₹  +5,247
+    BOSCHLTD        :   2 trades, 100.0% WR, ₹  +4,948
+    DRREDDY         :   2 trades, 100.0% WR, ₹  +4,345
+    MOTHERSON       :   3 trades,  66.7% WR, ₹  +4,270
+    PFC             :   2 trades, 100.0% WR, ₹  +4,009
+
+  Bottom 15 stocks (add to blacklist):
+    MRF             :   3 trades,   0.0% WR, ₹  -5,831
+    SAIL            :   3 trades,  33.3% WR, ₹  -5,260
+    LAURUSLABS      :   2 trades,   0.0% WR, ₹  -4,851
+    INFY            :   1 trades,   0.0% WR, ₹  -4,420
+    IPCALAB         :   1 trades,   0.0% WR, ₹  -4,209
+    CONCOR          :   3 trades,  66.7% WR, ₹  -4,145
+    PRESTIGE        :   1 trades,   0.0% WR, ₹  -4,098
+    UNIONBANK       :   1 trades,   0.0% WR, ₹  -3,594
+    SONACOMS        :   2 trades,   0.0% WR, ₹  -3,568
+    BSE             :   1 trades,   0.0% WR, ₹  -3,539
+    GNFC            :   2 trades,  50.0% WR, ₹  -3,309
+    UBL             :   1 trades,   0.0% WR, ₹  -3,150
+    ANGELONE        :   1 trades,   0.0% WR, ₹  -3,054
+    PIIND           :   1 trades,   0.0% WR, ₹  -2,865
+    PVRINOX         :   2 trades,   0.0% WR, ₹  -2,804
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed.
+     Win rate 59.6% and PF 1.60 meet criteria.
+
+────────────────────────────────────────────────────────────────────────
+Strategy: V4V6_COMBINED | Per trade: ₹75,000 | Max: 4 trades
+Total capital: ₹300,000 | Period: Dec 2025 — May 2026
+────────────────────────────────────────────────────────────────────────
+  Trading days:    35 active / 82 skipped
+  Total trades:    126
+  Win rate:        52.4%  (66W / 60L)
+  Profit factor:   1.31
+  Total gross:     ₹  +13,335.82
+  Total charges:   ₹    9,324.30
+  Total net 6m:    ₹   +4,011.52
+  Monthly avg:     ₹     +668.59
+  Per trade avg:   ₹      +31.84
+  ROI on capital:  1.3% in 6 months
+  Annualised ROI:  2.7%
+
+  📈 SCALING PROJECTION:
+  ₹10L capital  → ₹  +2,229/month
+  ₹20L capital  → ₹  +4,457/month
+  ₹50L capital  → ₹ +11,143/month
+  Capital needed for ₹1L/month → ₹448.7L
+
+  Monthly breakdown:
+    2025-12: ₹  +1,844  (11 trades, 45% WR)
+    2026-01: ₹     -34  (12 trades, 42% WR)
+    2026-02: ₹  -1,250  (24 trades, 50% WR)
+    2026-03: ₹  -3,507  (28 trades, 54% WR)
+    2026-04: ₹  +2,651  (31 trades, 65% WR)
+    2026-05: ₹  +4,307  (20 trades, 45% WR)
+
+  Exit reason breakdown:
+    TIME_STOP      :   93 trades,  62.4% WR, ₹ +19,145
+    STOPPED_OUT    :   25 trades,   0.0% WR, ₹ -29,885
+    TARGET_HIT     :    8 trades, 100.0% WR, ₹ +14,751
+
+  V6 vs V4 split:
+    V6 signals:   31 trades, 67.7% WR, ₹ +10,645
+    V4 signals:   95 trades, 47.4% WR, ₹  -6,633
+
+  By market direction:
+    BULL    :  126 trades,  52.4% WR, ₹  +4,012
+
+  Top 15 stocks (add to whitelist):
+    HINDZINC        :   2 trades, 100.0% WR, ₹  +3,392
+    BHEL            :   1 trades, 100.0% WR, ₹  +2,857
+    ADANIENSOL      :   3 trades,  66.7% WR, ₹  +2,484
+    SHRIRAMFIN      :   3 trades, 100.0% WR, ₹  +2,319
+    GRANULES        :   1 trades, 100.0% WR, ₹  +2,236
+    NESTLEIND       :   1 trades, 100.0% WR, ₹  +2,171
+    GRASIM          :   4 trades,  75.0% WR, ₹  +1,997
+    ULTRACEMCO      :   3 trades, 100.0% WR, ₹  +1,957
+    GAIL            :   1 trades, 100.0% WR, ₹  +1,936
+    NTPC            :   2 trades, 100.0% WR, ₹  +1,772
+    LUPIN           :   1 trades, 100.0% WR, ₹  +1,768
+    DRREDDY         :   2 trades,  50.0% WR, ₹  +1,567
+    PFC             :   2 trades, 100.0% WR, ₹  +1,444
+    LT              :   1 trades, 100.0% WR, ₹  +1,401
+    VOLTAS          :   3 trades, 100.0% WR, ₹  +1,335
+
+  Bottom 15 stocks (add to blacklist):
+    MRF             :   3 trades,   0.0% WR, ₹  -5,831
+    SAIL            :   2 trades,   0.0% WR, ₹  -2,242
+    LAURUSLABS      :   2 trades,   0.0% WR, ₹  -1,869
+    CONCOR          :   3 trades,  33.3% WR, ₹  -1,637
+    GNFC            :   1 trades,   0.0% WR, ₹  -1,628
+    IPCALAB         :   1 trades,   0.0% WR, ₹  -1,591
+    SONACOMS        :   2 trades,   0.0% WR, ₹  -1,392
+    UNIONBANK       :   1 trades,   0.0% WR, ₹  -1,375
+    BSE             :   1 trades,   0.0% WR, ₹  -1,310
+    UBL             :   1 trades,   0.0% WR, ₹  -1,189
+    ANGELONE        :   1 trades,   0.0% WR, ₹  -1,175
+    PVRINOX         :   2 trades,   0.0% WR, ₹  -1,112
+    PIIND           :   1 trades,   0.0% WR, ₹  -1,104
+    GODREJCP        :   2 trades,   0.0% WR, ₹  -1,081
+    HUDCO           :   1 trades,   0.0% WR, ₹  -1,074
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed.
+     Win rate 52.4% and PF 1.31 meet criteria.
+
+────────────────────────────────────────────────────────────────────────
+Strategy: V4V6_COMBINED | Per trade: ₹100,000 | Max: 5 trades
+Total capital: ₹500,000 | Period: Dec 2025 — May 2026
+────────────────────────────────────────────────────────────────────────
+  Trading days:    35 active / 82 skipped
+  Total trades:    146
+  Win rate:        57.5%  (84W / 62L)
+  Profit factor:   1.52
+  Total gross:     ₹  +31,564.18
+  Total charges:   ₹   12,047.10
+  Total net 6m:    ₹  +19,517.08
+  Monthly avg:     ₹   +3,252.85
+  Per trade avg:   ₹     +133.68
+  ROI on capital:  3.9% in 6 months
+  Annualised ROI:  7.8%
+
+  📈 SCALING PROJECTION:
+  ₹10L capital  → ₹  +6,506/month
+  ₹20L capital  → ₹ +13,011/month
+  ₹50L capital  → ₹ +32,528/month
+  Capital needed for ₹1L/month → ₹153.7L
+
+  Monthly breakdown:
+    2025-12: ₹  +4,541  (13 trades, 62% WR)
+    2026-01: ₹  +3,330  (15 trades, 53% WR)
+    2026-02: ₹    -659  (27 trades, 52% WR)
+    2026-03: ₹     -13  (32 trades, 59% WR)
+    2026-04: ₹  +6,913  (37 trades, 68% WR)
+    2026-05: ₹  +5,406  (22 trades, 45% WR)
+
+  Exit reason breakdown:
+    TIME_STOP      :  109 trades,  67.9% WR, ₹ +37,608
+    STOPPED_OUT    :   27 trades,   0.0% WR, ₹ -41,408
+    TARGET_HIT     :   10 trades, 100.0% WR, ₹ +23,317
+
+  V6 vs V4 split:
+    V6 signals:   34 trades, 70.6% WR, ₹ +17,069
+    V4 signals:  112 trades, 53.6% WR, ₹  +2,448
+
+  By market direction:
+    BULL    :  146 trades,  57.5% WR, ₹ +19,517
+
+  Top 15 stocks (add to whitelist):
+    HINDZINC        :   2 trades, 100.0% WR, ₹  +4,559
+    NESTLEIND       :   2 trades, 100.0% WR, ₹  +3,898
+    PNBHOUSING      :   3 trades, 100.0% WR, ₹  +3,841
+    BHEL            :   1 trades, 100.0% WR, ₹  +3,834
+    ADANIENSOL      :   3 trades, 100.0% WR, ₹  +3,362
+    SHRIRAMFIN      :   3 trades, 100.0% WR, ₹  +3,163
+    NTPC            :   4 trades, 100.0% WR, ₹  +3,149
+    GRANULES        :   1 trades, 100.0% WR, ₹  +3,020
+    ULTRACEMCO      :   3 trades, 100.0% WR, ₹  +2,827
+    GRASIM          :   4 trades,  75.0% WR, ₹  +2,726
+    GAIL            :   1 trades, 100.0% WR, ₹  +2,598
+    DRREDDY         :   2 trades,  50.0% WR, ₹  +2,111
+    MOTHERSON       :   3 trades,  66.7% WR, ₹  +2,064
+    LT              :   1 trades, 100.0% WR, ₹  +1,965
+    PFC             :   2 trades, 100.0% WR, ₹  +1,955
+
+  Bottom 15 stocks (add to blacklist):
+    MRF             :   3 trades,   0.0% WR, ₹  -5,831
+    SAIL            :   3 trades,  33.3% WR, ₹  -2,698
+    LAURUSLABS      :   2 trades,   0.0% WR, ₹  -2,469
+    INFY            :   1 trades,   0.0% WR, ₹  -2,219
+    CONCOR          :   3 trades,  33.3% WR, ₹  -2,139
+    IPCALAB         :   1 trades,   0.0% WR, ₹  -2,128
+    PRESTIGE        :   1 trades,   0.0% WR, ₹  -2,072
+    SONACOMS        :   2 trades,   0.0% WR, ₹  -1,827
+    UNIONBANK       :   1 trades,   0.0% WR, ₹  -1,819
+    BSE             :   1 trades,   0.0% WR, ₹  -1,756
+    GNFC            :   2 trades,  50.0% WR, ₹  -1,702
+    UBL             :   1 trades,   0.0% WR, ₹  -1,586
+    ANGELONE        :   1 trades,   0.0% WR, ₹  -1,549
+    PIIND           :   1 trades,   0.0% WR, ₹  -1,456
+    PVRINOX         :   2 trades,   0.0% WR, ₹  -1,449
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed.
+     Win rate 57.5% and PF 1.52 meet criteria.
+
+────────────────────────────────────────────────────────────────────────
+Strategy: V4 | Per trade: ₹200,000 | Max: 5 trades
+Total capital: ₹1,000,000 | Period: Dec 2025 — May 2026
+────────────────────────────────────────────────────────────────────────
+  Trading days:    35 active / 82 skipped
+  Total trades:    146
+  Win rate:        61.0%  (89W / 57L)
+  Profit factor:   1.68
+  Total gross:     ₹  +77,779.51
+  Total charges:   ₹   17,143.25
+  Total net 6m:    ₹  +60,636.26
+  Monthly avg:     ₹  +10,106.04
+  Per trade avg:   ₹     +415.32
+  ROI on capital:  6.1% in 6 months
+  Annualised ROI:  12.1%
+
+  📈 SCALING PROJECTION:
+  ₹10L capital  → ₹ +10,106/month
+  ₹20L capital  → ₹ +20,212/month
+  ₹50L capital  → ₹ +50,530/month
+  Capital needed for ₹1L/month → ₹99.0L
+
+  Monthly breakdown:
+    2025-12: ₹  +9,763  (13 trades, 62% WR)
+    2026-01: ₹  +9,808  (15 trades, 67% WR)
+    2026-02: ₹  +5,859  (27 trades, 56% WR)
+    2026-03: ₹  +3,943  (32 trades, 62% WR)
+    2026-04: ₹ +19,489  (37 trades, 70% WR)
+    2026-05: ₹ +11,774  (22 trades, 45% WR)
+
+  Exit reason breakdown:
+    TIME_STOP      :  109 trades,  72.5% WR, ₹ +89,608
+    STOPPED_OUT    :   27 trades,   0.0% WR, ₹ -77,260
+    TARGET_HIT     :   10 trades, 100.0% WR, ₹ +48,288
+
+  By market direction:
+    BULL    :  146 trades,  61.0% WR, ₹ +60,636
+
+  Top 15 stocks (add to whitelist):
+    HINDZINC        :   2 trades, 100.0% WR, ₹  +9,239
+    NESTLEIND       :   2 trades, 100.0% WR, ₹  +7,891
+    PNBHOUSING      :   3 trades, 100.0% WR, ₹  +7,841
+    BHEL            :   1 trades, 100.0% WR, ₹  +7,730
+    ADANIENSOL      :   3 trades, 100.0% WR, ₹  +6,906
+    NTPC            :   4 trades, 100.0% WR, ₹  +6,497
+    SHRIRAMFIN      :   3 trades, 100.0% WR, ₹  +6,474
+    GRANULES        :   1 trades, 100.0% WR, ₹  +6,086
+    ULTRACEMCO      :   3 trades, 100.0% WR, ₹  +5,914
+    GRASIM          :   4 trades,  75.0% WR, ₹  +5,656
+    GAIL            :   1 trades, 100.0% WR, ₹  +5,247
+    AMBER           :   1 trades, 100.0% WR, ₹  +5,217
+    DRREDDY         :   3 trades, 100.0% WR, ₹  +5,069
+    BOSCHLTD        :   2 trades, 100.0% WR, ₹  +4,948
+    MOTHERSON       :   3 trades,  66.7% WR, ₹  +4,270
+
+  Bottom 15 stocks (add to blacklist):
+    MRF             :   3 trades,   0.0% WR, ₹  -5,831
+    SAIL            :   3 trades,  33.3% WR, ₹  -5,260
+    LAURUSLABS      :   2 trades,   0.0% WR, ₹  -4,851
+    INFY            :   1 trades,   0.0% WR, ₹  -4,420
+    IPCALAB         :   1 trades,   0.0% WR, ₹  -4,209
+    CONCOR          :   3 trades,  66.7% WR, ₹  -4,145
+    PRESTIGE        :   1 trades,   0.0% WR, ₹  -4,098
+    UNIONBANK       :   1 trades,   0.0% WR, ₹  -3,594
+    BSE             :   1 trades,   0.0% WR, ₹  -3,539
+    GNFC            :   2 trades,  50.0% WR, ₹  -3,309
+    UBL             :   1 trades,   0.0% WR, ₹  -3,150
+    ANGELONE        :   1 trades,   0.0% WR, ₹  -3,054
+    PIIND           :   1 trades,   0.0% WR, ₹  -2,865
+    HUDCO           :   1 trades,   0.0% WR, ₹  -2,785
+    GODREJCP        :   2 trades,   0.0% WR, ₹  -2,739
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed.
+     Win rate 61.0% and PF 1.68 meet criteria.
+
+────────────────────────────────────────────────────────────────────────
+Strategy: V4 | Per trade: ₹75,000 | Max: 4 trades
+Total capital: ₹300,000 | Period: Dec 2025 — May 2026
+────────────────────────────────────────────────────────────────────────
+  Trading days:    35 active / 82 skipped
+  Total trades:    126
+  Win rate:        54.0%  (68W / 58L)
+  Profit factor:   1.40
+  Total gross:     ₹  +16,802.63
+  Total charges:   ₹    9,325.06
+  Total net 6m:    ₹   +7,477.57
+  Monthly avg:     ₹   +1,246.26
+  Per trade avg:   ₹      +59.35
+  ROI on capital:  2.5% in 6 months
+  Annualised ROI:  5.0%
+
+  📈 SCALING PROJECTION:
+  ₹10L capital  → ₹  +4,154/month
+  ₹20L capital  → ₹  +8,308/month
+  ₹50L capital  → ₹ +20,771/month
+  Capital needed for ₹1L/month → ₹240.7L
+
+  Monthly breakdown:
+    2025-12: ₹  +1,844  (11 trades, 45% WR)
+    2026-01: ₹  +2,314  (12 trades, 50% WR)
+    2026-02: ₹     +65  (24 trades, 54% WR)
+    2026-03: ₹  -3,069  (28 trades, 54% WR)
+    2026-04: ₹  +2,017  (31 trades, 65% WR)
+    2026-05: ₹  +4,307  (20 trades, 45% WR)
+
+  Exit reason breakdown:
+    TIME_STOP      :   92 trades,  64.1% WR, ₹ +20,755
+    STOPPED_OUT    :   25 trades,   0.0% WR, ₹ -29,885
+    TARGET_HIT     :    9 trades, 100.0% WR, ₹ +16,607
+
+  By market direction:
+    BULL    :  126 trades,  54.0% WR, ₹  +7,478
+
+  Top 15 stocks (add to whitelist):
+    HINDZINC        :   2 trades, 100.0% WR, ₹  +3,392
+    BHEL            :   1 trades, 100.0% WR, ₹  +2,857
+    SHRIRAMFIN      :   3 trades, 100.0% WR, ₹  +2,319
+    GRANULES        :   1 trades, 100.0% WR, ₹  +2,236
+    NESTLEIND       :   1 trades, 100.0% WR, ₹  +2,171
+    GRASIM          :   4 trades,  75.0% WR, ₹  +1,997
+    ULTRACEMCO      :   3 trades, 100.0% WR, ₹  +1,957
+    GAIL            :   1 trades, 100.0% WR, ₹  +1,936
+    BOSCHLTD        :   2 trades, 100.0% WR, ₹  +1,922
+    ADANIENSOL      :   2 trades,  50.0% WR, ₹  +1,825
+    DRREDDY         :   3 trades,  66.7% WR, ₹  +1,804
+    NTPC            :   2 trades, 100.0% WR, ₹  +1,772
+    LUPIN           :   1 trades, 100.0% WR, ₹  +1,768
+    PNBHOUSING      :   2 trades, 100.0% WR, ₹  +1,616
+    PFC             :   2 trades, 100.0% WR, ₹  +1,444
+
+  Bottom 15 stocks (add to blacklist):
+    MRF             :   3 trades,   0.0% WR, ₹  -5,831
+    SAIL            :   3 trades,  33.3% WR, ₹  -2,060
+    LAURUSLABS      :   2 trades,   0.0% WR, ₹  -1,869
+    CONCOR          :   3 trades,  33.3% WR, ₹  -1,637
+    GNFC            :   1 trades,   0.0% WR, ₹  -1,628
+    IPCALAB         :   1 trades,   0.0% WR, ₹  -1,591
+    UNIONBANK       :   1 trades,   0.0% WR, ₹  -1,375
+    BSE             :   1 trades,   0.0% WR, ₹  -1,310
+    UBL             :   1 trades,   0.0% WR, ₹  -1,189
+    ANGELONE        :   1 trades,   0.0% WR, ₹  -1,175
+    PIIND           :   1 trades,   0.0% WR, ₹  -1,104
+    SONACOMS        :   1 trades,   0.0% WR, ₹  -1,099
+    GODREJCP        :   2 trades,   0.0% WR, ₹  -1,081
+    HUDCO           :   1 trades,   0.0% WR, ₹  -1,074
+    CDSL            :   2 trades,  50.0% WR, ₹  -1,036
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed.
+     Win rate 54.0% and PF 1.40 meet criteria.
+
+────────────────────────────────────────────────────────────────────────
+Strategy: V4 | Per trade: ₹100,000 | Max: 5 trades
+Total capital: ₹500,000 | Period: Dec 2025 — May 2026
+────────────────────────────────────────────────────────────────────────
+  Trading days:    35 active / 82 skipped
+  Total trades:    146
+  Win rate:        58.9%  (86W / 60L)
+  Profit factor:   1.59
+  Total gross:     ₹  +35,313.65
+  Total charges:   ₹   12,046.40
+  Total net 6m:    ₹  +23,267.25
+  Monthly avg:     ₹   +3,877.88
+  Per trade avg:   ₹     +159.36
+  ROI on capital:  4.7% in 6 months
+  Annualised ROI:  9.3%
+
+  📈 SCALING PROJECTION:
+  ₹10L capital  → ₹  +7,756/month
+  ₹20L capital  → ₹ +15,512/month
+  ₹50L capital  → ₹ +38,779/month
+  Capital needed for ₹1L/month → ₹128.9L
+
+  Monthly breakdown:
+    2025-12: ₹  +4,541  (13 trades, 62% WR)
+    2026-01: ₹  +4,097  (15 trades, 60% WR)
+    2026-02: ₹  +2,209  (27 trades, 56% WR)
+    2026-03: ₹     -13  (32 trades, 59% WR)
+    2026-04: ₹  +7,028  (37 trades, 68% WR)
+    2026-05: ₹  +5,406  (22 trades, 45% WR)
+
+  Exit reason breakdown:
+    TIME_STOP      :  109 trades,  69.7% WR, ₹ +41,358
+    STOPPED_OUT    :   27 trades,   0.0% WR, ₹ -41,408
+    TARGET_HIT     :   10 trades, 100.0% WR, ₹ +23,317
+
+  By market direction:
+    BULL    :  146 trades,  58.9% WR, ₹ +23,267
+
+  Top 15 stocks (add to whitelist):
+    HINDZINC        :   2 trades, 100.0% WR, ₹  +4,559
+    NESTLEIND       :   2 trades, 100.0% WR, ₹  +3,898
+    PNBHOUSING      :   3 trades, 100.0% WR, ₹  +3,841
+    BHEL            :   1 trades, 100.0% WR, ₹  +3,834
+    ADANIENSOL      :   3 trades, 100.0% WR, ₹  +3,362
+    SHRIRAMFIN      :   3 trades, 100.0% WR, ₹  +3,163
+    NTPC            :   4 trades, 100.0% WR, ₹  +3,149
+    GRANULES        :   1 trades, 100.0% WR, ₹  +3,020
+    ULTRACEMCO      :   3 trades, 100.0% WR, ₹  +2,827
+    GRASIM          :   4 trades,  75.0% WR, ₹  +2,726
+    GAIL            :   1 trades, 100.0% WR, ₹  +2,598
+    AMBER           :   1 trades, 100.0% WR, ₹  +2,494
+    DRREDDY         :   3 trades,  66.7% WR, ₹  +2,447
+    MOTHERSON       :   3 trades,  66.7% WR, ₹  +2,064
+    LT              :   1 trades, 100.0% WR, ₹  +1,965
+
+  Bottom 15 stocks (add to blacklist):
+    MRF             :   3 trades,   0.0% WR, ₹  -5,831
+    SAIL            :   3 trades,  33.3% WR, ₹  -2,698
+    LAURUSLABS      :   2 trades,   0.0% WR, ₹  -2,469
+    INFY            :   1 trades,   0.0% WR, ₹  -2,219
+    CONCOR          :   3 trades,  33.3% WR, ₹  -2,139
+    IPCALAB         :   1 trades,   0.0% WR, ₹  -2,128
+    PRESTIGE        :   1 trades,   0.0% WR, ₹  -2,072
+    UNIONBANK       :   1 trades,   0.0% WR, ₹  -1,819
+    BSE             :   1 trades,   0.0% WR, ₹  -1,756
+    GNFC            :   2 trades,  50.0% WR, ₹  -1,702
+    UBL             :   1 trades,   0.0% WR, ₹  -1,586
+    ANGELONE        :   1 trades,   0.0% WR, ₹  -1,549
+    PIIND           :   1 trades,   0.0% WR, ₹  -1,456
+    HUDCO           :   1 trades,   0.0% WR, ₹  -1,415
+    GODREJCP        :   2 trades,   0.0% WR, ₹  -1,413
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed.
+     Win rate 58.9% and PF 1.59 meet criteria.
+
+────────────────────────────────────────────────────────────────────────
+Strategy: V6 | Per trade: ₹200,000 | Max: 5 trades
+Total capital: ₹1,000,000 | Period: Dec 2025 — May 2026
+────────────────────────────────────────────────────────────────────────
+  Trading days:    15 active / 102 skipped
+  Total trades:    34
+  Win rate:        79.4%  (27W / 7L)
+  Profit factor:   4.86
+  Total gross:     ₹  +39,927.13
+  Total charges:   ₹    4,019.39
+  Total net 6m:    ₹  +35,907.74
+  Monthly avg:     ₹   +5,984.62
+  Per trade avg:   ₹   +1,056.11
+  ROI on capital:  3.6% in 6 months
+  Annualised ROI:  7.2%
+
+  📈 SCALING PROJECTION:
+  ₹10L capital  → ₹  +5,985/month
+  ₹20L capital  → ₹ +11,969/month
+  ₹50L capital  → ₹ +29,923/month
+  Capital needed for ₹1L/month → ₹167.1L
+
+  Monthly breakdown:
+    2025-12: ₹  +5,665  (2 trades, 100% WR)
+    2026-01: ₹     +86  (4 trades, 50% WR)
+    2026-02: ₹  +4,678  (4 trades, 75% WR)
+    2026-03: ₹  +5,874  (4 trades, 75% WR)
+    2026-04: ₹ +17,541  (17 trades, 88% WR)
+    2026-05: ₹  +2,065  (3 trades, 67% WR)
+
+  Exit reason breakdown:
+    TIME_STOP      :   32 trades,  81.2% WR, ₹ +34,786
+    TARGET_HIT     :    1 trades, 100.0% WR, ₹  +4,792
+    STOPPED_OUT    :    1 trades,   0.0% WR, ₹  -3,670
+
+  By market direction:
+    BULL    :   34 trades,  79.4% WR, ₹ +35,908
+
+  Top 15 stocks (add to whitelist):
+    HINDZINC        :   2 trades, 100.0% WR, ₹  +9,239
+    SHRIRAMFIN      :   2 trades, 100.0% WR, ₹  +6,030
+    GRASIM          :   1 trades, 100.0% WR, ₹  +3,459
+    POWERGRID       :   1 trades, 100.0% WR, ₹  +2,237
+    CHOLAFIN        :   1 trades, 100.0% WR, ₹  +2,195
+    LODHA           :   1 trades, 100.0% WR, ₹  +2,069
+    TATACHEM        :   1 trades, 100.0% WR, ₹  +2,056
+    ULTRACEMCO      :   1 trades, 100.0% WR, ₹  +1,973
+    IIFLSEC         :   1 trades, 100.0% WR, ₹  +1,941
+    ADANIENSOL      :   1 trades, 100.0% WR, ₹  +1,852
+    TIINDIA         :   1 trades, 100.0% WR, ₹  +1,706
+    IRCON           :   1 trades, 100.0% WR, ₹  +1,632
+    LICI            :   2 trades, 100.0% WR, ₹  +1,468
+    MARUTI          :   1 trades, 100.0% WR, ₹  +1,439
+    AXISBANK        :   2 trades,  50.0% WR, ₹  +1,318
+
+  Bottom 15 stocks (add to blacklist):
+    SAIL            :   1 trades,   0.0% WR, ₹  -3,670
+    MCDOWELL-N      :   1 trades,   0.0% WR, ₹  -2,152
+    MOTHERSON       :   1 trades,   0.0% WR, ₹  -1,498
+    PVRINOX         :   1 trades,   0.0% WR, ₹  -1,231
+    GODREJCP        :   1 trades,   0.0% WR, ₹  -1,174
+    SONACOMS        :   1 trades,   0.0% WR, ₹    -701
+    DRREDDY         :   1 trades, 100.0% WR, ₹     +13
+    CONCOR          :   1 trades, 100.0% WR, ₹     +39
+    VEDL            :   1 trades, 100.0% WR, ₹    +104
+    ADANIPORTS      :   1 trades, 100.0% WR, ₹    +621
+    MCX             :   1 trades, 100.0% WR, ₹    +694
+    BAJAJHFL        :   1 trades, 100.0% WR, ₹    +954
+    CDSL            :   1 trades, 100.0% WR, ₹    +962
+    VOLTAS          :   1 trades, 100.0% WR, ₹  +1,043
+    RECLTD          :   1 trades, 100.0% WR, ₹  +1,290
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed.
+     Win rate 79.4% and PF 4.86 meet criteria.
+
+────────────────────────────────────────────────────────────────────────
+Strategy: V6 | Per trade: ₹75,000 | Max: 4 trades
+Total capital: ₹300,000 | Period: Dec 2025 — May 2026
+────────────────────────────────────────────────────────────────────────
+  Trading days:    15 active / 102 skipped
+  Total trades:    31
+  Win rate:        67.7%  (21W / 10L)
+  Profit factor:   4.34
+  Total gross:     ₹  +12,927.56
+  Total charges:   ₹    2,283.03
+  Total net 6m:    ₹  +10,644.53
+  Monthly avg:     ₹   +1,774.09
+  Per trade avg:   ₹     +343.37
+  ROI on capital:  3.5% in 6 months
+  Annualised ROI:  7.1%
+
+  📈 SCALING PROJECTION:
+  ₹10L capital  → ₹  +5,914/month
+  ₹20L capital  → ₹ +11,827/month
+  ₹50L capital  → ₹ +29,568/month
+  Capital needed for ₹1L/month → ₹169.1L
+
+  Monthly breakdown:
+    2025-12: ₹  +2,064  (2 trades, 100% WR)
+    2026-01: ₹     -82  (4 trades, 25% WR)
+    2026-02: ₹  +1,633  (4 trades, 75% WR)
+    2026-03: ₹  +2,059  (4 trades, 50% WR)
+    2026-04: ₹  +4,284  (14 trades, 79% WR)
+    2026-05: ₹    +685  (3 trades, 67% WR)
+
+  Exit reason breakdown:
+    TIME_STOP      :   29 trades,  69.0% WR, ₹ +10,285
+    TARGET_HIT     :    1 trades, 100.0% WR, ₹  +1,766
+    STOPPED_OUT    :    1 trades,   0.0% WR, ₹  -1,406
+
+  By market direction:
+    BULL    :   31 trades,  67.7% WR, ₹ +10,645
+
+  Top 15 stocks (add to whitelist):
+    HINDZINC        :   2 trades, 100.0% WR, ₹  +3,392
+    SHRIRAMFIN      :   2 trades, 100.0% WR, ₹  +2,182
+    GRASIM          :   1 trades, 100.0% WR, ₹  +1,268
+    POWERGRID       :   1 trades, 100.0% WR, ₹    +810
+    LODHA           :   1 trades, 100.0% WR, ₹    +749
+    TATACHEM        :   1 trades, 100.0% WR, ₹    +742
+    IIFLSEC         :   1 trades, 100.0% WR, ₹    +696
+    ULTRACEMCO      :   1 trades, 100.0% WR, ₹    +666
+    ADANIENSOL      :   1 trades, 100.0% WR, ₹    +659
+    TIINDIA         :   1 trades, 100.0% WR, ₹    +610
+    LICI            :   2 trades,  50.0% WR, ₹    +488
+    MARUTI          :   1 trades, 100.0% WR, ₹    +484
+    RECLTD          :   1 trades, 100.0% WR, ₹    +455
+    AXISBANK        :   2 trades,  50.0% WR, ₹    +438
+    VOLTAS          :   1 trades, 100.0% WR, ₹    +358
+
+  Bottom 15 stocks (add to blacklist):
+    SAIL            :   1 trades,   0.0% WR, ₹  -1,406
+    MCDOWELL-N      :   1 trades,   0.0% WR, ₹    -831
+    MOTHERSON       :   1 trades,   0.0% WR, ₹    -591
+    PVRINOX         :   1 trades,   0.0% WR, ₹    -491
+    GODREJCP        :   1 trades,   0.0% WR, ₹    -469
+    SONACOMS        :   1 trades,   0.0% WR, ₹    -292
+    DRREDDY         :   1 trades,   0.0% WR, ₹     -25
+    CONCOR          :   1 trades,   0.0% WR, ₹     -15
+    VEDL            :   1 trades, 100.0% WR, ₹      +9
+    ADANIPORTS      :   1 trades, 100.0% WR, ₹    +202
+    MCX             :   1 trades, 100.0% WR, ₹    +228
+    CDSL            :   1 trades, 100.0% WR, ₹    +329
+    VOLTAS          :   1 trades, 100.0% WR, ₹    +358
+    AXISBANK        :   2 trades,  50.0% WR, ₹    +438
+    RECLTD          :   1 trades, 100.0% WR, ₹    +455
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed.
+     Win rate 67.7% and PF 4.34 meet criteria.
+
+────────────────────────────────────────────────────────────────────────
+Strategy: V6 | Per trade: ₹100,000 | Max: 5 trades
+Total capital: ₹500,000 | Period: Dec 2025 — May 2026
+────────────────────────────────────────────────────────────────────────
+  Trading days:    15 active / 102 skipped
+  Total trades:    34
+  Win rate:        70.6%  (24W / 10L)
+  Profit factor:   4.84
+  Total gross:     ₹  +19,877.73
+  Total charges:   ₹    2,808.43
+  Total net 6m:    ₹  +17,069.30
+  Monthly avg:     ₹   +2,844.88
+  Per trade avg:   ₹     +502.04
+  ROI on capital:  3.4% in 6 months
+  Annualised ROI:  6.8%
+
+  📈 SCALING PROJECTION:
+  ₹10L capital  → ₹  +5,690/month
+  ₹20L capital  → ₹ +11,380/month
+  ₹50L capital  → ₹ +28,449/month
+  Capital needed for ₹1L/month → ₹175.8L
+
+  Monthly breakdown:
+    2025-12: ₹  +2,777  (2 trades, 100% WR)
+    2026-01: ₹     -53  (4 trades, 25% WR)
+    2026-02: ₹  +2,241  (4 trades, 75% WR)
+    2026-03: ₹  +2,841  (4 trades, 50% WR)
+    2026-04: ₹  +8,301  (17 trades, 82% WR)
+    2026-05: ₹    +962  (3 trades, 67% WR)
+
+  Exit reason breakdown:
+    TIME_STOP      :   32 trades,  71.9% WR, ₹ +16,560
+    TARGET_HIT     :    1 trades, 100.0% WR, ₹  +2,366
+    STOPPED_OUT    :    1 trades,   0.0% WR, ₹  -1,857
+
+  By market direction:
+    BULL    :   34 trades,  70.6% WR, ₹ +17,069
+
+  Top 15 stocks (add to whitelist):
+    HINDZINC        :   2 trades, 100.0% WR, ₹  +4,559
+    SHRIRAMFIN      :   2 trades, 100.0% WR, ₹  +2,965
+    GRASIM          :   1 trades, 100.0% WR, ₹  +1,706
+    POWERGRID       :   1 trades, 100.0% WR, ₹  +1,095
+    CHOLAFIN        :   1 trades, 100.0% WR, ₹  +1,074
+    LODHA           :   1 trades, 100.0% WR, ₹  +1,011
+    TATACHEM        :   1 trades, 100.0% WR, ₹  +1,001
+    IIFLSEC         :   1 trades, 100.0% WR, ₹    +947
+    ULTRACEMCO      :   1 trades, 100.0% WR, ₹    +904
+    ADANIENSOL      :   1 trades, 100.0% WR, ₹    +897
+    TIINDIA         :   1 trades, 100.0% WR, ₹    +829
+    IRCON           :   1 trades, 100.0% WR, ₹    +792
+    MARUTI          :   1 trades, 100.0% WR, ₹    +696
+    LICI            :   2 trades,  50.0% WR, ₹    +684
+    RECLTD          :   1 trades, 100.0% WR, ₹    +621
+
+  Bottom 15 stocks (add to blacklist):
+    SAIL            :   1 trades,   0.0% WR, ₹  -1,857
+    MCDOWELL-N      :   1 trades,   0.0% WR, ₹  -1,100
+    MOTHERSON       :   1 trades,   0.0% WR, ₹    -772
+    PVRINOX         :   1 trades,   0.0% WR, ₹    -639
+    GODREJCP        :   1 trades,   0.0% WR, ₹    -607
+    SONACOMS        :   1 trades,   0.0% WR, ₹    -374
+    DRREDDY         :   1 trades,   0.0% WR, ₹     -17
+    CONCOR          :   1 trades,   0.0% WR, ₹      -4
+    VEDL            :   1 trades, 100.0% WR, ₹     +28
+    ADANIPORTS      :   1 trades, 100.0% WR, ₹    +285
+    MCX             :   1 trades, 100.0% WR, ₹    +323
+    BAJAJHFL        :   1 trades, 100.0% WR, ₹    +453
+    CDSL            :   1 trades, 100.0% WR, ₹    +457
+    VOLTAS          :   1 trades, 100.0% WR, ₹    +498
+    AXISBANK        :   2 trades,  50.0% WR, ₹    +614
+
+  VERDICT:
+  ✅ DEPLOY — Edge confirmed.
+     Win rate 70.6% and PF 4.84 meet criteria.
+
+========================================================================
+FINAL RECOMMENDATION — PATH TO ₹1L/MONTH
+========================================================================
+
+  Best proven strategy: V4
+  Win rate: 61.0% | PF: 1.68
+  At ₹10L capital: ₹10,106/month
+  Monthly per ₹1L deployed: ₹1,011
+
+  Capital needed for ₹1L/month: ₹99.0L
+
+  Deployment roadmap:
+    Month 1-2: Paper trade, validate signal accuracy
+    Month 3:   ₹5L live → ₹5,053/month
+    Month 4-5: Scale to ₹49L → ₹50,000/month
+    Month 6+:  Full ₹99L → ₹1,00,000/month
+
+  Add swing + F&O streams for faster path:
+    Swing (if backtested): ₹40L → ₹40K/month target
+    F&O Iron Condor:       ₹30L → ₹30K/month target
+    Combined capital:      ₹168L → ₹1L+/month
+
+========================================================================
+END OF REPORT
+========================================================================

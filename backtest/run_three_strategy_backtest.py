@@ -46,8 +46,8 @@ BLACKLIST = {
 }
 
 CAPITAL_CONFIGS = [
-    {"name": "Rs30K_live",  "total": 30_000,  "per_trade": 10_000, "max_trades": 3},
-    {"name": "Rs1L_paper",  "total": 100_000, "per_trade": 25_000, "max_trades": 4},
+    {"name": "Rs30K_live",  "total": 30_000,  "per_trade": 25_000, "max_trades": 1},
+    {"name": "Rs2L_paper",  "total": 200_000, "per_trade": 50_000, "max_trades": 4},
     {"name": "Rs3L_paper",  "total": 300_000, "per_trade": 75_000, "max_trades": 4},
 ]
 
@@ -70,21 +70,21 @@ def load_all_cached_data(cache_dir: str = "cache/historical_v2") -> dict:
 
 
 def get_all_trading_dates(historical_data: dict) -> list:
-    """Extract all unique trading dates."""
+    """Extract all unique trading dates from cached data."""
     dates = set()
     for symbol, ohlc in historical_data.items():
         if not ohlc or not ohlc.get("timestamp"):
             continue
         for ts in ohlc["timestamp"]:
             try:
-                if isinstance(ts, str):
-                    dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                # Handle both epoch float and ISO string
+                if isinstance(ts, (int, float)):
+                    dt = datetime.fromtimestamp(float(ts), tz=IST)
                 else:
-                    dt = datetime.fromtimestamp(ts, tz=timezone.utc)
-                dt_ist = dt.astimezone(IST)
-                # Only market days 9:15 - 15:30
-                if dt_ist.weekday() < 5:
-                    dates.add(dt_ist.strftime("%Y-%m-%d"))
+                    dt = datetime.fromisoformat(str(ts).replace("Z", "+00:00")).astimezone(IST)
+                # Only weekdays, only 9:15-9:16 candles (one per day marker)
+                if dt.weekday() < 5 and dt.hour == 9 and dt.minute == 15:
+                    dates.add(dt.strftime("%Y-%m-%d"))
             except Exception:
                 continue
     return sorted(dates)
@@ -151,6 +151,8 @@ def run_backtest_for_config(
         active_universe = {
             sym: sid for sym, sid in universe.items()
             if sym not in BLACKLIST and sym in historical_data
+            and historical_data[sym] is not None
+            and historical_data[sym].get("open")
         }
 
         # Nifty data proxy — use NIFTY50 member with most data
@@ -172,23 +174,7 @@ def run_backtest_for_config(
                               if s.get("direction") == "LONG"
                               and s.get("gap_pct", 0) > 0][:slots]
 
-                remaining = slots - len(v6_signals)
-                v4_signals = []
-                if remaining > 0:
-                    v6_syms = {s["symbol"] for s in v6_signals}
-                    all_v4 = generate_orb_signals(
-                        target_date=date_str,
-                        historical_data=historical_data,
-                        universe=active_universe,
-                        config={**orb_config, "max_trades_per_day": remaining + 3},
-                        strategy_variant="V4",
-                        nifty_data=nifty_proxy,
-                    )
-                    v4_signals = [s for s in all_v4
-                                  if s.get("direction") == "LONG"
-                                  and s["symbol"] not in v6_syms][:remaining]
-
-                for sig in (v6_signals + v4_signals)[:slots]:
+                for sig in v6_signals[:slots]:
                     sym = sig["symbol"]
                     candles = get_candles_for_date(historical_data[sym], date_str)
                     if not candles:
@@ -196,8 +182,12 @@ def run_backtest_for_config(
 
                     # Find entry candle index
                     entry_price = sig["entry_price"]
-                    entry_idx = 0
+                    # Find breakout candle AFTER 9:30 — not opening candle
+                    entry_idx = len(candles) - 1  # default last candle
                     for i, c in enumerate(candles):
+                        h, m = c["time"].hour, c["time"].minute
+                        if h == 9 and m < 31:
+                            continue  # skip opening range candles
                         if c["close"] >= entry_price * 0.998:
                             entry_idx = i
                             break
@@ -431,7 +421,11 @@ if __name__ == "__main__":
         print(f"Range: {trading_dates[0]} to {trading_dates[-1]}")
 
     # Clean universe
-    universe = {sym: sid for sym, sid in NIFTY500.items()
+    # Load expanded 281-stock universe
+    import json as _json
+    with open("backtest/universe_500.json") as _f:
+        _full = _json.load(_f)
+    universe = {sym: sid for sym, sid in _full.items()
                 if sym not in BLACKLIST}
     print(f"Universe: {len(universe)} stocks (after blacklist)")
 

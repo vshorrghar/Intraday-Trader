@@ -1,0 +1,3241 @@
+{
+  "intraday": [
+    {
+      "date": "2025-12-01",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-02",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-03",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-04",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-05",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-08",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-09",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-10",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-11",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-12",
+      "trades": [
+        {
+          "symbol": "HINDZINC",
+          "entry": 539.0,
+          "exit": 552.24,
+          "qty": 92,
+          "gross": 1218.08,
+          "charges": 53.48,
+          "net": 1164.6,
+          "exit_reason": "TARGET_HIT",
+          "gap_pct": 1.912,
+          "score": 5
+        }
+      ],
+      "gross": 1218.08,
+      "charges": 53.48,
+      "net": 1164.6,
+      "winners": 1,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2025-12-15",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-16",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-17",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-18",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-19",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-22",
+      "trades": [
+        {
+          "symbol": "SHRIRAMFIN",
+          "entry": 935.15,
+          "exit": 939.8,
+          "qty": 53,
+          "gross": 246.45,
+          "charges": 52.83,
+          "net": 193.62,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.525,
+          "score": 8
+        }
+      ],
+      "gross": 246.45,
+      "charges": 52.83,
+      "net": 193.62,
+      "winners": 1,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2025-12-23",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-24",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-26",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-29",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-30",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-31",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-01",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-02",
+      "trades": [
+        {
+          "symbol": "PVRINOX",
+          "entry": 1039.9,
+          "exit": 1034.1,
+          "qty": 48,
+          "gross": -278.4,
+          "charges": 52.87,
+          "net": -331.27,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.745,
+          "score": 5
+        }
+      ],
+      "gross": -278.4,
+      "charges": 52.87,
+      "net": -331.27,
+      "winners": 0,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-01-05",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-06",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-07",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-08",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-09",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-12",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-13",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-14",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-16",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-19",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-20",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-21",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-22",
+      "trades": [
+        {
+          "symbol": "DRREDDY",
+          "entry": 1217.2,
+          "exit": 1218.0,
+          "qty": 41,
+          "gross": 32.8,
+          "charges": 53.06,
+          "net": -20.26,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 3.374,
+          "score": 9
+        },
+        {
+          "symbol": "OFSS",
+          "entry": 7995.5,
+          "exit": 7903.0,
+          "qty": 6,
+          "gross": -555.0,
+          "charges": 50.63,
+          "net": -605.63,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.89,
+          "score": 8
+        },
+        {
+          "symbol": "FEDERALBNK",
+          "entry": 285.4,
+          "exit": 282.2,
+          "qty": 175,
+          "gross": -560.0,
+          "charges": 52.72,
+          "net": -612.72,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.504,
+          "score": 7
+        },
+        {
+          "symbol": "CHENNPETRO",
+          "entry": 859.85,
+          "exit": 844.45,
+          "qty": 58,
+          "gross": -893.2,
+          "charges": 52.43,
+          "net": -945.63,
+          "exit_reason": "STOPPED_OUT",
+          "gap_pct": 1.605,
+          "score": 6
+        }
+      ],
+      "gross": -1975.4,
+      "charges": 208.84,
+      "net": -2184.24,
+      "winners": 0,
+      "losers": 4,
+      "skipped": false
+    },
+    {
+      "date": "2026-01-23",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-27",
+      "trades": [
+        {
+          "symbol": "AXISBANK",
+          "entry": 1317.0,
+          "exit": 1312.8,
+          "qty": 37,
+          "gross": -155.4,
+          "charges": 51.69,
+          "net": -207.09,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.783,
+          "score": 8
+        },
+        {
+          "symbol": "BPCL",
+          "entry": 358.85,
+          "exit": 353.74,
+          "qty": 139,
+          "gross": -710.29,
+          "charges": 52.56,
+          "net": -762.85,
+          "exit_reason": "STOPPED_OUT",
+          "gap_pct": 2.373,
+          "score": 7
+        },
+        {
+          "symbol": "ADANIENT",
+          "entry": 1957.6,
+          "exit": 1961.7,
+          "qty": 25,
+          "gross": 102.5,
+          "charges": 52.08,
+          "net": 50.42,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.856,
+          "score": 6
+        },
+        {
+          "symbol": "JSWSTEEL",
+          "entry": 1209.3,
+          "exit": 1208.5,
+          "qty": 41,
+          "gross": -32.8,
+          "charges": 52.67,
+          "net": -85.47,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.712,
+          "score": 6
+        }
+      ],
+      "gross": -795.99,
+      "charges": 209.0,
+      "net": -1004.99,
+      "winners": 1,
+      "losers": 3,
+      "skipped": false
+    },
+    {
+      "date": "2026-01-28",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-29",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-30",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-01",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-02",
+      "trades": [
+        {
+          "symbol": "HINDPETRO",
+          "entry": 444.5,
+          "exit": 448.55,
+          "qty": 112,
+          "gross": 453.6,
+          "charges": 53.2,
+          "net": 400.4,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.621,
+          "score": 7
+        }
+      ],
+      "gross": 453.6,
+      "charges": 53.2,
+      "net": 400.4,
+      "winners": 1,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2026-02-03",
+      "trades": [
+        {
+          "symbol": "POWERGRID",
+          "entry": 279.8,
+          "exit": 283.1,
+          "qty": 178,
+          "gross": 587.4,
+          "charges": 53.31,
+          "net": 534.09,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.241,
+          "score": 9
+        },
+        {
+          "symbol": "TIINDIA",
+          "entry": 2478.1,
+          "exit": 2500.9,
+          "qty": 20,
+          "gross": 456.0,
+          "charges": 52.97,
+          "net": 403.03,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 4.575,
+          "score": 8
+        },
+        {
+          "symbol": "LICI",
+          "entry": 833.5,
+          "exit": 840.0,
+          "qty": 59,
+          "gross": 383.5,
+          "charges": 52.51,
+          "net": 330.99,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.109,
+          "score": 8
+        }
+      ],
+      "gross": 1426.9,
+      "charges": 158.79,
+      "net": 1268.11,
+      "winners": 3,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2026-02-04",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-05",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-06",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-09",
+      "trades": [
+        {
+          "symbol": "SONACOMS",
+          "entry": 531.8,
+          "exit": 530.25,
+          "qty": 94,
+          "gross": -145.7,
+          "charges": 53.04,
+          "net": -198.74,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.53,
+          "score": 4
+        }
+      ],
+      "gross": -145.7,
+      "charges": 53.04,
+      "net": -198.74,
+      "winners": 0,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-02-10",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-11",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-12",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-13",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-16",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-17",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-18",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-19",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-20",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-23",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-24",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-25",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-26",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-27",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-02",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-04",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-05",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-06",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-09",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-10",
+      "trades": [
+        {
+          "symbol": "SHRIRAMFIN",
+          "entry": 1029.0,
+          "exit": 1056.2,
+          "qty": 48,
+          "gross": 1305.6,
+          "charges": 53.33,
+          "net": 1252.27,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.031,
+          "score": 7
+        },
+        {
+          "symbol": "GODREJCP",
+          "entry": 1114.7,
+          "exit": 1108.8,
+          "qty": 44,
+          "gross": -259.6,
+          "charges": 51.96,
+          "net": -311.56,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.357,
+          "score": 7
+        },
+        {
+          "symbol": "ADANIENSOL",
+          "entry": 1002.1,
+          "exit": 1012.0,
+          "qty": 49,
+          "gross": 485.1,
+          "charges": 52.5,
+          "net": 432.6,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.762,
+          "score": 6
+        },
+        {
+          "symbol": "APLAPOLLO",
+          "entry": 2163.4,
+          "exit": 2126.25,
+          "qty": 23,
+          "gross": -854.45,
+          "charges": 52.34,
+          "net": -906.79,
+          "exit_reason": "STOPPED_OUT",
+          "gap_pct": 1.805,
+          "score": 6
+        }
+      ],
+      "gross": 676.65,
+      "charges": 210.13,
+      "net": 466.52,
+      "winners": 2,
+      "losers": 2,
+      "skipped": false
+    },
+    {
+      "date": "2026-03-11",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-12",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-13",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-16",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-17",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-18",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-19",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-20",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-23",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-24",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-25",
+      "trades": [
+        {
+          "symbol": "HINDPETRO",
+          "entry": 346.5,
+          "exit": 338.9,
+          "qty": 144,
+          "gross": -1094.4,
+          "charges": 52.33,
+          "net": -1146.73,
+          "exit_reason": "STOPPED_OUT",
+          "gap_pct": 2.648,
+          "score": 7
+        },
+        {
+          "symbol": "CONCOR",
+          "entry": 445.65,
+          "exit": 446.0,
+          "qty": 112,
+          "gross": 39.2,
+          "charges": 53.07,
+          "net": -13.87,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.629,
+          "score": 6
+        }
+      ],
+      "gross": -1055.2,
+      "charges": 105.4,
+      "net": -1160.6,
+      "winners": 0,
+      "losers": 2,
+      "skipped": false
+    },
+    {
+      "date": "2026-03-27",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-30",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-01",
+      "trades": [
+        {
+          "symbol": "ADANIENT",
+          "entry": 1848.0,
+          "exit": 1843.9,
+          "qty": 27,
+          "gross": -110.7,
+          "charges": 52.96,
+          "net": -163.66,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 3.458,
+          "score": 7
+        },
+        {
+          "symbol": "ADANIPORTS",
+          "entry": 1378.6,
+          "exit": 1383.7,
+          "qty": 36,
+          "gross": 183.6,
+          "charges": 52.86,
+          "net": 130.74,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.988,
+          "score": 7
+        },
+        {
+          "symbol": "ADANIPOWER",
+          "entry": 155.27,
+          "exit": 156.0,
+          "qty": 322,
+          "gross": 235.06,
+          "charges": 53.29,
+          "net": 181.77,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 3.127,
+          "score": 7
+        },
+        {
+          "symbol": "ADANIGREEN",
+          "entry": 842.7,
+          "exit": 848.35,
+          "qty": 59,
+          "gross": 333.35,
+          "charges": 53.06,
+          "net": 280.29,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.869,
+          "score": 7
+        }
+      ],
+      "gross": 641.31,
+      "charges": 212.17,
+      "net": 429.14,
+      "winners": 3,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-02",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-06",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-07",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-08",
+      "trades": [
+        {
+          "symbol": "LICI",
+          "entry": 791.4,
+          "exit": 792.0,
+          "qty": 63,
+          "gross": 37.8,
+          "charges": 53.01,
+          "net": -15.21,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 5.334,
+          "score": 9
+        },
+        {
+          "symbol": "AXISBANK",
+          "entry": 1315.4,
+          "exit": 1329.8,
+          "qty": 38,
+          "gross": 547.2,
+          "charges": 53.48,
+          "net": 493.72,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 4.258,
+          "score": 8
+        },
+        {
+          "symbol": "MARUTI",
+          "entry": 13600.0,
+          "exit": 13711.0,
+          "qty": 3,
+          "gross": 333.0,
+          "charges": 43.58,
+          "net": 289.42,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 4.297,
+          "score": 8
+        },
+        {
+          "symbol": "ULTRACEMCO",
+          "entry": 11593.0,
+          "exit": 11716.0,
+          "qty": 4,
+          "gross": 492.0,
+          "charges": 49.6,
+          "net": 442.4,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 4.52,
+          "score": 8
+        }
+      ],
+      "gross": 1410.0,
+      "charges": 199.67,
+      "net": 1210.33,
+      "winners": 3,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-09",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-10",
+      "trades": [
+        {
+          "symbol": "GODREJPROP",
+          "entry": 1741.6,
+          "exit": 1707.6,
+          "qty": 28,
+          "gross": -952.0,
+          "charges": 51.22,
+          "net": -1003.22,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.603,
+          "score": 6
+        }
+      ],
+      "gross": -952.0,
+      "charges": 51.22,
+      "net": -1003.22,
+      "winners": 0,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-13",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-15",
+      "trades": [
+        {
+          "symbol": "LODHA",
+          "entry": 851.7,
+          "exit": 861.05,
+          "qty": 58,
+          "gross": 542.3,
+          "charges": 52.85,
+          "net": 489.45,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.796,
+          "score": 7
+        },
+        {
+          "symbol": "MCX",
+          "entry": 2852.3,
+          "exit": 2863.9,
+          "qty": 17,
+          "gross": 197.2,
+          "charges": 51.66,
+          "net": 145.54,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.556,
+          "score": 7
+        },
+        {
+          "symbol": "CDSL",
+          "entry": 1333.0,
+          "exit": 1340.2,
+          "qty": 37,
+          "gross": 266.4,
+          "charges": 52.59,
+          "net": 213.81,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.32,
+          "score": 7
+        },
+        {
+          "symbol": "IIFLSEC",
+          "entry": 293.0,
+          "exit": 296.02,
+          "qty": 170,
+          "gross": 513.4,
+          "charges": 53.27,
+          "net": 460.13,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.261,
+          "score": 7
+        }
+      ],
+      "gross": 1519.3,
+      "charges": 210.37,
+      "net": 1308.93,
+      "winners": 4,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-16",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-17",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-20",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-21",
+      "trades": [
+        {
+          "symbol": "OBEROIRLTY",
+          "entry": 1733.6,
+          "exit": 1720.9,
+          "qty": 28,
+          "gross": -355.6,
+          "charges": 51.36,
+          "net": -406.96,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.711,
+          "score": 7
+        },
+        {
+          "symbol": "ADANIPOWER",
+          "entry": 205.8,
+          "exit": 203.51,
+          "qty": 242,
+          "gross": -554.18,
+          "charges": 52.58,
+          "net": -606.76,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.726,
+          "score": 6
+        }
+      ],
+      "gross": -909.78,
+      "charges": 103.94,
+      "net": -1013.72,
+      "winners": 0,
+      "losers": 2,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-22",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-23",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-24",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-27",
+      "trades": [
+        {
+          "symbol": "HINDZINC",
+          "entry": 614.95,
+          "exit": 629.0,
+          "qty": 81,
+          "gross": 1138.05,
+          "charges": 53.67,
+          "net": 1084.38,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.938,
+          "score": 7
+        },
+        {
+          "symbol": "VOLTAS",
+          "entry": 1508.8,
+          "exit": 1517.6,
+          "qty": 33,
+          "gross": 290.4,
+          "charges": 53.1,
+          "net": 237.3,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.814,
+          "score": 5
+        }
+      ],
+      "gross": 1428.45,
+      "charges": 106.77,
+      "net": 1321.68,
+      "winners": 2,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-28",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-29",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-30",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-04",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-05",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-06",
+      "trades": [
+        {
+          "symbol": "VEDL",
+          "entry": 315.45,
+          "exit": 315.8,
+          "qty": 158,
+          "gross": 55.3,
+          "charges": 53.01,
+          "net": 2.29,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.556,
+          "score": 6
+        }
+      ],
+      "gross": 55.3,
+      "charges": 53.01,
+      "net": 2.29,
+      "winners": 1,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2026-05-07",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-08",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-11",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-12",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-13",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-14",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-15",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-18",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-19",
+      "trades": [
+        {
+          "symbol": "IOC",
+          "entry": 135.79,
+          "exit": 135.24,
+          "qty": 368,
+          "gross": -202.4,
+          "charges": 52.98,
+          "net": -255.38,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 1.591,
+          "score": 6
+        }
+      ],
+      "gross": -202.4,
+      "charges": 52.98,
+      "net": -255.38,
+      "winners": 0,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-05-20",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-21",
+      "trades": [
+        {
+          "symbol": "GRASIM",
+          "entry": 3091.9,
+          "exit": 3147.8,
+          "qty": 16,
+          "gross": 894.4,
+          "charges": 53.15,
+          "net": 841.25,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 2.605,
+          "score": 9
+        },
+        {
+          "symbol": "MOTHERSON",
+          "entry": 137.6,
+          "exit": 136.65,
+          "qty": 363,
+          "gross": -344.85,
+          "charges": 52.86,
+          "net": -397.71,
+          "exit_reason": "TIME_STOP",
+          "gap_pct": 3.532,
+          "score": 9
+        },
+        {
+          "symbol": "ASTRAL",
+          "entry": 1486.0,
+          "exit": 1466.69,
+          "qty": 33,
+          "gross": -637.23,
+          "charges": 51.71,
+          "net": -688.94,
+          "exit_reason": "STOPPED_OUT",
+          "gap_pct": 1.592,
+          "score": 6
+        }
+      ],
+      "gross": -87.68,
+      "charges": 157.72,
+      "net": -245.4,
+      "winners": 1,
+      "losers": 2,
+      "skipped": false
+    },
+    {
+      "date": "2026-05-22",
+      "trades": [],
+      "gross": 0,
+      "charges": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    }
+  ],
+  "fno": [
+    {
+      "date": "2025-12-01",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-02",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-03",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-04",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-05",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-08",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-09",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-10",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-11",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-12",
+      "trades": [
+        {
+          "symbol": "HINDZINC",
+          "lot_cost": 15000,
+          "stock_outcome": "WIN",
+          "stock_pnl_pct": 2.46,
+          "option_pnl": 1565.96,
+          "charges": 45.0,
+          "net": 1520.96,
+          "exit_reason": "TARGET_HIT"
+        }
+      ],
+      "premium_deployed": 15000,
+      "net": 1520.96,
+      "winners": 1,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2025-12-15",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-16",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-17",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-18",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-19",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-22",
+      "trades": [
+        {
+          "symbol": "SHRIRAMFIN",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.5,
+          "option_pnl": 149.17,
+          "charges": 45.0,
+          "net": 104.17,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 15000,
+      "net": 104.17,
+      "winners": 1,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2025-12-23",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-24",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-26",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-29",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-30",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2025-12-31",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-01",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-02",
+      "trades": [
+        {
+          "symbol": "PVRINOX",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -0.56,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 15000,
+      "net": -4545.0,
+      "winners": 0,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-01-05",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-06",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-07",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-08",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-09",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-12",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-13",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-14",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-16",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-19",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-20",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-21",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-22",
+      "trades": [
+        {
+          "symbol": "DRREDDY",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.07,
+          "option_pnl": 19.72,
+          "charges": 45.0,
+          "net": -25.28,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "OFSS",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -1.16,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "FEDERALBNK",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -1.12,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "CHENNPETRO",
+          "lot_cost": 15000,
+          "stock_outcome": "LOSS",
+          "stock_pnl_pct": -1.79,
+          "option_pnl": -9750.0,
+          "charges": 45.0,
+          "net": -9795.0,
+          "exit_reason": "STOPPED_OUT"
+        }
+      ],
+      "premium_deployed": 60000,
+      "net": -18910.28,
+      "winners": 0,
+      "losers": 4,
+      "skipped": false
+    },
+    {
+      "date": "2026-01-23",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-27",
+      "trades": [
+        {
+          "symbol": "AXISBANK",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -0.32,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "BPCL",
+          "lot_cost": 15000,
+          "stock_outcome": "LOSS",
+          "stock_pnl_pct": -1.42,
+          "option_pnl": -9750.0,
+          "charges": 45.0,
+          "net": -9795.0,
+          "exit_reason": "STOPPED_OUT"
+        },
+        {
+          "symbol": "ADANIENT",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.21,
+          "option_pnl": 62.83,
+          "charges": 45.0,
+          "net": 17.83,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "JSWSTEEL",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -0.07,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 60000,
+      "net": -18867.17,
+      "winners": 1,
+      "losers": 3,
+      "skipped": false
+    },
+    {
+      "date": "2026-01-28",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-29",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-01-30",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-01",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-02",
+      "trades": [
+        {
+          "symbol": "HINDPETRO",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.91,
+          "option_pnl": 273.34,
+          "charges": 45.0,
+          "net": 228.34,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 15000,
+      "net": 228.34,
+      "winners": 1,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2026-02-03",
+      "trades": [
+        {
+          "symbol": "POWERGRID",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 1.18,
+          "option_pnl": 353.82,
+          "charges": 45.0,
+          "net": 308.82,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "TIINDIA",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.92,
+          "option_pnl": 276.02,
+          "charges": 45.0,
+          "net": 231.02,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "LICI",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.78,
+          "option_pnl": 233.95,
+          "charges": 45.0,
+          "net": 188.95,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 45000,
+      "net": 728.79,
+      "winners": 3,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2026-02-04",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-05",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-06",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-09",
+      "trades": [
+        {
+          "symbol": "SONACOMS",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -0.29,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 15000,
+      "net": -4545.0,
+      "winners": 0,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-02-10",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-11",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-12",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-13",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-16",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-17",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-18",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-19",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-20",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-23",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-24",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-25",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-26",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-02-27",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-02",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-04",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-05",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-06",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-09",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-10",
+      "trades": [
+        {
+          "symbol": "SHRIRAMFIN",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 2.64,
+          "option_pnl": 793.0,
+          "charges": 45.0,
+          "net": 748.0,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "GODREJCP",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -0.53,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "ADANIENSOL",
+          "lot_cost": 15000,
+          "stock_outcome": "LOSS",
+          "stock_pnl_pct": -1.4,
+          "option_pnl": -9750.0,
+          "charges": 45.0,
+          "net": -9795.0,
+          "exit_reason": "STOPPED_OUT"
+        },
+        {
+          "symbol": "APLAPOLLO",
+          "lot_cost": 15000,
+          "stock_outcome": "LOSS",
+          "stock_pnl_pct": -1.72,
+          "option_pnl": -9750.0,
+          "charges": 45.0,
+          "net": -9795.0,
+          "exit_reason": "STOPPED_OUT"
+        }
+      ],
+      "premium_deployed": 60000,
+      "net": -23387.0,
+      "winners": 1,
+      "losers": 3,
+      "skipped": false
+    },
+    {
+      "date": "2026-03-11",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-12",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-13",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-16",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-17",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-18",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-19",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-20",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-23",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-24",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-25",
+      "trades": [
+        {
+          "symbol": "HINDPETRO",
+          "lot_cost": 15000,
+          "stock_outcome": "LOSS",
+          "stock_pnl_pct": -2.19,
+          "option_pnl": -9750.0,
+          "charges": 45.0,
+          "net": -9795.0,
+          "exit_reason": "STOPPED_OUT"
+        },
+        {
+          "symbol": "CONCOR",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.08,
+          "option_pnl": 23.56,
+          "charges": 45.0,
+          "net": -21.44,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 30000,
+      "net": -9816.44,
+      "winners": 0,
+      "losers": 2,
+      "skipped": false
+    },
+    {
+      "date": "2026-03-27",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-03-30",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-01",
+      "trades": [
+        {
+          "symbol": "ADANIENT",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -0.22,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "ADANIPORTS",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.37,
+          "option_pnl": 110.98,
+          "charges": 45.0,
+          "net": 65.98,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "ADANIPOWER",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.47,
+          "option_pnl": 141.04,
+          "charges": 45.0,
+          "net": 96.04,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "ADANIGREEN",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.67,
+          "option_pnl": 201.14,
+          "charges": 45.0,
+          "net": 156.14,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 60000,
+      "net": -4226.84,
+      "winners": 3,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-02",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-06",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-07",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-08",
+      "trades": [
+        {
+          "symbol": "LICI",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.08,
+          "option_pnl": 22.74,
+          "charges": 45.0,
+          "net": -22.26,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "AXISBANK",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 1.09,
+          "option_pnl": 328.42,
+          "charges": 45.0,
+          "net": 283.42,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "MARUTI",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.82,
+          "option_pnl": 244.85,
+          "charges": 45.0,
+          "net": 199.85,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "ULTRACEMCO",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 1.06,
+          "option_pnl": 318.3,
+          "charges": 45.0,
+          "net": 273.3,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 60000,
+      "net": 734.31,
+      "winners": 3,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-09",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-10",
+      "trades": [
+        {
+          "symbol": "GODREJPROP",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -1.95,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 15000,
+      "net": -4545.0,
+      "winners": 0,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-13",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-15",
+      "trades": [
+        {
+          "symbol": "LODHA",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 1.1,
+          "option_pnl": 329.34,
+          "charges": 45.0,
+          "net": 284.34,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "MCX",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.41,
+          "option_pnl": 122.01,
+          "charges": 45.0,
+          "net": 77.01,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "CDSL",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.54,
+          "option_pnl": 162.04,
+          "charges": 45.0,
+          "net": 117.04,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "IIFLSEC",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 1.03,
+          "option_pnl": 309.22,
+          "charges": 45.0,
+          "net": 264.22,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 60000,
+      "net": 742.61,
+      "winners": 4,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-16",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-17",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-20",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-21",
+      "trades": [
+        {
+          "symbol": "OBEROIRLTY",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -0.73,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "ADANIPOWER",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -1.11,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 30000,
+      "net": -9090.0,
+      "winners": 0,
+      "losers": 2,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-22",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-23",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-24",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-27",
+      "trades": [
+        {
+          "symbol": "HINDZINC",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 2.28,
+          "option_pnl": 685.42,
+          "charges": 45.0,
+          "net": 640.42,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "VOLTAS",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.58,
+          "option_pnl": 174.97,
+          "charges": 45.0,
+          "net": 129.97,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 30000,
+      "net": 770.39,
+      "winners": 2,
+      "losers": 0,
+      "skipped": false
+    },
+    {
+      "date": "2026-04-28",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-29",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-04-30",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-04",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-05",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-06",
+      "trades": [
+        {
+          "symbol": "VEDL",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 0.11,
+          "option_pnl": 33.29,
+          "charges": 45.0,
+          "net": -11.71,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 15000,
+      "net": -11.71,
+      "winners": 0,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-05-07",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-08",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-11",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-12",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-13",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-14",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-15",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-18",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-19",
+      "trades": [
+        {
+          "symbol": "IOC",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": -0.41,
+          "option_pnl": -4500.0,
+          "charges": 45.0,
+          "net": -4545.0,
+          "exit_reason": "TIME_STOP"
+        }
+      ],
+      "premium_deployed": 15000,
+      "net": -4545.0,
+      "winners": 0,
+      "losers": 1,
+      "skipped": false
+    },
+    {
+      "date": "2026-05-20",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    },
+    {
+      "date": "2026-05-21",
+      "trades": [
+        {
+          "symbol": "GRASIM",
+          "lot_cost": 15000,
+          "stock_outcome": "TIME",
+          "stock_pnl_pct": 1.81,
+          "option_pnl": 542.38,
+          "charges": 45.0,
+          "net": 497.38,
+          "exit_reason": "TIME_STOP"
+        },
+        {
+          "symbol": "MOTHERSON",
+          "lot_cost": 15000,
+          "stock_outcome": "LOSS",
+          "stock_pnl_pct": -1.71,
+          "option_pnl": -9750.0,
+          "charges": 45.0,
+          "net": -9795.0,
+          "exit_reason": "STOPPED_OUT"
+        },
+        {
+          "symbol": "ASTRAL",
+          "lot_cost": 15000,
+          "stock_outcome": "LOSS",
+          "stock_pnl_pct": -1.3,
+          "option_pnl": -9750.0,
+          "charges": 45.0,
+          "net": -9795.0,
+          "exit_reason": "STOPPED_OUT"
+        }
+      ],
+      "premium_deployed": 45000,
+      "net": -19092.62,
+      "winners": 1,
+      "losers": 2,
+      "skipped": false
+    },
+    {
+      "date": "2026-05-22",
+      "trades": [],
+      "premium_deployed": 0,
+      "net": 0,
+      "winners": 0,
+      "losers": 0,
+      "skipped": true
+    }
+  ],
+  "config": {
+    "intraday_capital": 200000,
+    "intraday_per_trade": 50000,
+    "fno_capital": 200000,
+    "fno_per_lot": 15000
+  }
+}
