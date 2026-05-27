@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intraday Trader - Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        surface: { DEFAULT: '#1a1a2e', card: '#252540', sidebar: '#1e1e35', topbar: '#0d0d1a' },
+        profit: '#00c853',
+        loss: '#ff1744',
+        muted: '#8b8b9e',
+        border: 'rgba(255,255,255,0.06)'
+      }
+    }
+  }
+}
+</script>
+<style>
+body { background: #1a1a2e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.mono { font-family: 'SF Mono', 'Fira Code', monospace; }
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: #3a3a5c; border-radius: 2px; }
+.tab-active { color: #fff; border-bottom: 2px solid #00c853; }
+.tab-inactive { color: #8b8b9e; border-bottom: 2px solid transparent; }
+.tab-inactive:hover { color: #ccc; }
+.fade-in { animation: fadeIn 0.2s ease-in; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.profile-live { border-left: 3px solid #00c853; }
+.profile-paper { border-left: 3px solid #ffc107; }
+.profile-stopped { border-left: 3px solid #ff1744; }
+</style>
+</head>
+<body class="text-white min-h-screen">
+
+<!-- TOP BAR: Market Ticker -->
+<header class="bg-surface-topbar border-b border-border sticky top-0 z-50">
+  <div class="flex items-center justify-between px-4 py-2">
+    <div class="flex items-center gap-6 text-sm">
+      <span id="ticker-nifty" class="flex items-center gap-1">
+        <span class="text-muted">NIFTY 50</span>
+        <span class="mono font-bold">--</span>
+        <span class="text-xs">--</span>
+      </span>
+      <span id="ticker-banknifty" class="flex items-center gap-1">
+        <span class="text-muted">BANK NIFTY</span>
+        <span class="mono font-bold">--</span>
+        <span class="text-xs">--</span>
+      </span>
+      <span id="ticker-vix" class="flex items-center gap-1">
+        <span class="text-muted">INDIA VIX</span>
+        <span class="mono font-bold">--</span>
+      </span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span id="market-status" class="flex items-center gap-1 text-xs">
+        <span class="w-2 h-2 rounded-full bg-loss"></span>
+        <span class="text-muted">Market Closed</span>
+      </span>
+      <span id="staleness" class="text-xs text-muted"></span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV BAR -->
+<nav class="bg-surface-topbar border-b border-border">
+  <div class="flex items-center justify-between px-4 py-2">
+    <div class="flex items-center gap-4">
+      <span class="text-lg font-bold text-profit">&#x1F4C8; Intraday Trader</span>
+      <div class="flex gap-1 ml-6" id="main-tabs">
+        <button data-tab="overview" class="px-3 py-2 text-sm tab-active transition-all">Overview</button>
+        <button data-tab="intraday" class="px-3 py-2 text-sm tab-inactive transition-all">Intraday</button>
+        <button data-tab="fno" class="px-3 py-2 text-sm tab-inactive transition-all">F&O</button>
+        <button data-tab="swing" class="px-3 py-2 text-sm tab-inactive transition-all">Swing</button>
+        <button data-tab="audit" class="px-3 py-2 text-sm tab-inactive transition-all">Audit</button>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <select id="profile-select" class="bg-surface-card border border-border rounded px-3 py-1.5 text-sm focus:outline-none focus:border-profit">
+        <option value="vishal-live">vishal-live ● LIVE</option>
+        <option value="vishal">vishal ● PAPER</option>
+        <option value="neha">neha ● PAPER</option>
+        <option value="neha-live">neha-live ● STOPPED</option>
+      </select>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN LAYOUT -->
+<div class="flex h-[calc(100vh-88px)]">
+
+<!-- LEFT SIDEBAR: Today's Trades -->
+<aside id="sidebar" class="w-64 bg-surface-sidebar border-r border-border overflow-y-auto scrollbar-thin hidden lg:block">
+  <div class="p-3">
+    <h3 class="text-xs text-muted uppercase tracking-wider mb-3">Today's Trades</h3>
+    <div id="sidebar-trades" class="space-y-2">
+      <p class="text-xs text-muted">Loading...</p>
+    </div>
+  </div>
+  <div class="p-3 border-t border-border">
+    <h3 class="text-xs text-muted uppercase tracking-wider mb-2">Profile Info</h3>
+    <div id="sidebar-profile-info" class="text-xs space-y-1"></div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="flex-1 overflow-y-auto scrollbar-thin p-4 lg:p-6">
+
+<!-- TAB: OVERVIEW -->
+<div id="tab-overview" class="tab-content fade-in">
+<!-- overview-main: hidden when drill-down is open -->
+<div id="overview-main">
+  <!-- Portfolio Value Bar -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="bg-surface-card rounded-lg p-4 border border-border">
+      <p class="text-xs text-muted uppercase">Capital Invested</p>
+      <p id="ov-capital" class="text-xl font-bold mono mt-1">--</p>
+    </div>
+    <div class="bg-surface-card rounded-lg p-4 border border-border">
+      <p class="text-xs text-muted uppercase">Available Balance</p>
+      <p id="ov-balance" class="text-xl font-bold mono mt-1">--</p>
+    </div>
+    <div class="bg-surface-card rounded-lg p-4 border border-border">
+      <p class="text-xs text-muted uppercase">Overall P&L</p>
+      <p id="ov-overall-pnl" class="text-xl font-bold mono mt-1">--</p>
+    </div>
+    <div class="bg-surface-card rounded-lg p-4 border border-border">
+      <p class="text-xs text-muted uppercase">Today's P&L</p>
+      <p id="ov-today-pnl" class="text-xl font-bold mono mt-1">--</p>
+    </div>
+  </div>
+
+  <!-- Margin Bar -->
+  <div class="bg-surface-card rounded-lg p-4 border border-border mb-6">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-xs text-muted uppercase">Margin Utilization</span>
+      <span id="ov-margin-pct" class="text-xs mono text-muted">0%</span>
+    </div>
+    <div class="w-full bg-surface rounded-full h-1.5">
+      <div id="ov-margin-bar" class="bg-profit h-1.5 rounded-full transition-all" style="width:0%"></div>
+    </div>
+    <div class="flex justify-between mt-2 text-xs text-muted">
+      <span>Available: <span id="ov-margin-avail" class="text-white mono">--</span></span>
+      <span>Used: <span id="ov-margin-used" class="text-white mono">--</span></span>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+    <div class="bg-surface-card rounded-lg p-4 border border-border">
+      <h3 class="text-sm text-muted mb-3">Cumulative P&L</h3>
+      <canvas id="chart-cumulative" height="200"></canvas>
+    </div>
+    <div class="bg-surface-card rounded-lg p-4 border border-border">
+      <h3 class="text-sm text-muted mb-3">Daily P&L</h3>
+      <canvas id="chart-daily" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Daily P&L Table -->
+  <div class="bg-surface-card rounded-lg border border-border mb-6">
+    <div class="p-4 border-b border-border">
+      <h3 class="text-sm font-medium">Daily P&L History</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-xs text-muted uppercase border-b border-border">
+            <th class="px-4 py-2 text-left">Date</th>
+            <th class="px-4 py-2 text-right">Trades</th>
+            <th class="px-4 py-2 text-right">Net P&L</th>
+            <th class="px-4 py-2 text-right">Win Rate</th>
+            <th class="px-4 py-2 text-right">Capital Used</th>
+          </tr>
+        </thead>
+        <tbody id="ov-daily-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- AI Postmortem -->
+  <div class="bg-surface-card rounded-lg border border-border">
+    <div class="p-4 border-b border-border flex items-center justify-between">
+      <h3 class="text-sm font-medium">AI Postmortem (Latest)</h3>
+      <span id="ov-narrative-date" class="text-xs text-muted"></span>
+    </div>
+    <div id="ov-narrative" class="p-4 text-sm space-y-3">
+      <p class="text-muted">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Quick Actions: Drill-Down Buttons -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+    <button onclick="openDrill('performance')" class="bg-surface-card rounded-lg p-5 border border-border hover:border-profit/50 transition-all text-left group">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-2xl">📊</span>
+        <h4 class="text-sm font-medium group-hover:text-profit transition-colors">Performance Detail</h4>
+      </div>
+      <p class="text-xs text-muted">Strategy breakdown, charge analysis, win rate trends, rolling stats</p>
+    </button>
+    <button onclick="openDrill('risk')" class="bg-surface-card rounded-lg p-5 border border-border hover:border-yellow-500/50 transition-all text-left group">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-2xl">⚠️</span>
+        <h4 class="text-sm font-medium group-hover:text-yellow-400 transition-colors">Risk Status</h4>
+      </div>
+      <p class="text-xs text-muted">Trip wires, VIX gate, capital deployment, daily loss tracking</p>
+    </button>
+    <button onclick="openDrill('universe')" class="bg-surface-card rounded-lg p-5 border border-border hover:border-blue-500/50 transition-all text-left group">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-2xl">🌐</span>
+        <h4 class="text-sm font-medium group-hover:text-blue-400 transition-colors">Universe View</h4>
+      </div>
+      <p class="text-xs text-muted">Nifty 500 stocks, sector breakdown, priority & suspended lists</p>
+    </button>
+  </div>
+
+</div><!-- end overview-main -->
+
+<!-- DRILL-DOWN: Performance Detail -->
+<div id="drill-performance" class="drill-section hidden fade-in">
+  <button onclick="closeDrill()" class="flex items-center gap-2 text-sm text-muted hover:text-white mb-4 transition-colors">
+    <span>←</span> Back to Overview
+  </button>
+  <h2 class="text-lg font-bold mb-4">📊 Performance Detail</h2>
+  <div class="bg-surface-card rounded-lg p-6 border border-border">
+    <p class="text-muted text-sm">Performance analytics coming in Phase 3. Will include: profit factor, rolling stats, charge analysis, best/worst days, strategy breakdown.</p>
+  </div>
+</div>
+
+<!-- DRILL-DOWN: Risk Status -->
+<div id="drill-risk" class="drill-section hidden fade-in">
+  <button onclick="closeDrill()" class="flex items-center gap-2 text-sm text-muted hover:text-white mb-4 transition-colors">
+    <span>←</span> Back to Overview
+  </button>
+  <h2 class="text-lg font-bold mb-4">⚠️ Risk Status</h2>
+  <div class="bg-surface-card rounded-lg p-6 border border-border">
+    <p class="text-muted text-sm">Risk dashboard coming in Phase 4. Will include: trip wires, VIX gate status, capital deployment, drawdown tracker, profile configs.</p>
+  </div>
+</div>
+
+<!-- DRILL-DOWN: Universe View -->
+<div id="drill-universe" class="drill-section hidden fade-in">
+  <button onclick="closeDrill()" class="flex items-center gap-2 text-sm text-muted hover:text-white mb-4 transition-colors">
+    <span>←</span> Back to Overview
+  </button>
+  <h2 class="text-lg font-bold mb-4">🌐 Universe View</h2>
+  <div class="bg-surface-card rounded-lg p-6 border border-border">
+    <p class="text-muted text-sm">Universe browser coming in Phase 5. Will include: 504 Nifty 500 stocks, sector breakdown chart, filterable table, priority/suspended lists.</p>
+  </div>
+</div>
+
+</div><!-- end tab-overview -->
+
+<!-- TAB: INTRADAY -->
+<div id="tab-intraday" class="tab-content fade-in hidden">
+  <!-- Config Card -->
+  <div class="bg-surface-card rounded-lg p-4 border border-border mb-6">
+    <h3 class="text-sm font-medium mb-3">Strategy Configuration</h3>
+    <div id="intra-config" class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm"></div>
+  </div>
+
+  <!-- Per-Day Trade Table -->
+  <div class="bg-surface-card rounded-lg border border-border mb-6">
+    <div class="p-4 border-b border-border flex items-center justify-between">
+      <h3 class="text-sm font-medium">Trade History</h3>
+      <select id="intra-date-select" class="bg-surface border border-border rounded px-2 py-1 text-xs"></select>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-xs text-muted uppercase border-b border-border">
+            <th class="px-3 py-2 text-left">Symbol</th>
+            <th class="px-3 py-2 text-left">Dir</th>
+            <th class="px-3 py-2 text-right">Entry</th>
+            <th class="px-3 py-2 text-right">Exit</th>
+            <th class="px-3 py-2 text-right">Qty</th>
+            <th class="px-3 py-2 text-right">Net P&L</th>
+            <th class="px-3 py-2 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody id="intra-trades-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Expanded Rationale -->
+  <div id="intra-rationale-panel" class="bg-surface-card rounded-lg border border-border hidden">
+    <div class="p-4 border-b border-border flex items-center justify-between">
+      <h3 class="text-sm font-medium">Trade Rationale</h3>
+      <button onclick="document.getElementById('intra-rationale-panel').classList.add('hidden')" class="text-muted hover:text-white text-xs">Close</button>
+    </div>
+    <div id="intra-rationale-content" class="p-4 text-sm text-muted"></div>
+  </div>
+</div>
+
+<!-- TAB: F&O -->
+<div id="tab-fno" class="tab-content fade-in hidden">
+  <div class="flex items-center gap-3 mb-6">
+    <span id="fno-status-badge" class="px-3 py-1 rounded-full text-xs font-medium bg-yellow-900 text-yellow-300">PAPER MODE</span>
+    <span id="fno-strategy-count" class="text-sm text-muted"></span>
+  </div>
+
+  <!-- FnO Summary Cards -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="bg-surface-card rounded-lg p-4 border border-border">
+      <p class="text-xs text-muted uppercase">Cumulative P&L</p>
+      <p id="fno-cum-pnl" class="text-xl font-bold mono mt-1">--</p>
+    </div>
+    <div class="bg-surface-card rounded-lg p-4 border border-border">
+      <p class="text-xs text-muted uppercase">Win Rate</p>
+      <p id="fno-win-rate" class="text-xl font-bold mono mt-1">--</p>
+    </div>
+    <div class="bg-surface-card rounded-lg p-4 border border-border">
+      <p class="text-xs text-muted uppercase">Today's P&L</p>
+      <p id="fno-today-pnl" class="text-xl font-bold mono mt-1">--</p>
+    </div>
+    <div class="bg-surface-card rounded-lg p-4 border border-border">
+      <p class="text-xs text-muted uppercase">Trading Days</p>
+      <p id="fno-days" class="text-xl font-bold mono mt-1">--</p>
+    </div>
+  </div>
+
+  <!-- FnO Strategies Table -->
+  <div class="bg-surface-card rounded-lg border border-border mb-6">
+    <div class="p-4 border-b border-border">
+      <h3 class="text-sm font-medium">Today's Strategies</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-xs text-muted uppercase border-b border-border">
+            <th class="px-3 py-2 text-left">Type</th>
+            <th class="px-3 py-2 text-left">Index</th>
+            <th class="px-3 py-2 text-left">Legs</th>
+            <th class="px-3 py-2 text-right">Premium</th>
+            <th class="px-3 py-2 text-right">P&L</th>
+            <th class="px-3 py-2 text-right">Confluence</th>
+            <th class="px-3 py-2 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody id="fno-strategies-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- FnO Daily History -->
+  <div class="bg-surface-card rounded-lg border border-border">
+    <div class="p-4 border-b border-border">
+      <h3 class="text-sm font-medium">Daily History</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-xs text-muted uppercase border-b border-border">
+            <th class="px-3 py-2 text-left">Date</th>
+            <th class="px-3 py-2 text-right">Strategies</th>
+            <th class="px-3 py-2 text-right">Winners</th>
+            <th class="px-3 py-2 text-right">Losers</th>
+            <th class="px-3 py-2 text-right">P&L</th>
+          </tr>
+        </thead>
+        <tbody id="fno-history-table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: SWING -->
+<div id="tab-swing" class="tab-content fade-in hidden">
+  <div class="flex items-center gap-3 mb-6">
+    <span class="px-3 py-1 rounded-full text-xs font-medium bg-red-900 text-red-300">NOT DEPLOYED</span>
+    <span class="text-sm text-muted">Paper positions from scanner (DRY_RUN mode)</span>
+  </div>
+
+  <!-- Swing Positions -->
+  <div class="bg-surface-card rounded-lg border border-border mb-6">
+    <div class="p-4 border-b border-border">
+      <h3 class="text-sm font-medium">Open Positions (Paper)</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-xs text-muted uppercase border-b border-border">
+            <th class="px-3 py-2 text-left">Symbol</th>
+            <th class="px-3 py-2 text-left">Strategy</th>
+            <th class="px-3 py-2 text-right">Entry</th>
+            <th class="px-3 py-2 text-right">Target</th>
+            <th class="px-3 py-2 text-right">SL</th>
+            <th class="px-3 py-2 text-right">Qty</th>
+            <th class="px-3 py-2 text-right">Unrealized</th>
+            <th class="px-3 py-2 text-right">Conf</th>
+          </tr>
+        </thead>
+        <tbody id="swing-positions-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Swing Summary -->
+  <div class="bg-surface-card rounded-lg p-4 border border-border">
+    <h3 class="text-sm font-medium mb-3">Summary</h3>
+    <div id="swing-summary" class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm"></div>
+  </div>
+</div>
+
+<!-- TAB: AUDIT -->
+<div id="tab-audit" class="tab-content fade-in hidden">
+  <div class="flex items-center gap-3 mb-6">
+    <select id="audit-date-select" class="bg-surface-card border border-border rounded px-3 py-1.5 text-sm"></select>
+    <span id="audit-meta" class="text-xs text-muted"></span>
+  </div>
+
+  <!-- Audit Summary -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6" id="audit-summary-cards"></div>
+
+  <!-- Audit Trades -->
+  <div class="bg-surface-card rounded-lg border border-border mb-6">
+    <div class="p-4 border-b border-border">
+      <h3 class="text-sm font-medium">Trades Detail</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-xs text-muted uppercase border-b border-border">
+            <th class="px-3 py-2 text-left">Symbol</th>
+            <th class="px-3 py-2 text-left">Dir</th>
+            <th class="px-3 py-2 text-right">Entry</th>
+            <th class="px-3 py-2 text-right">Exit</th>
+            <th class="px-3 py-2 text-right">Qty (DB/Dhan)</th>
+            <th class="px-3 py-2 text-right">P&L (Dhan)</th>
+            <th class="px-3 py-2 text-left">Outcome</th>
+            <th class="px-3 py-2 text-left">Drift</th>
+          </tr>
+        </thead>
+        <tbody id="audit-trades-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- AI Narrative -->
+  <div class="bg-surface-card rounded-lg border border-border mb-6">
+    <div class="p-4 border-b border-border flex items-center justify-between">
+      <h3 class="text-sm font-medium">AI Narrative</h3>
+      <span id="audit-narrative-model" class="text-xs text-muted"></span>
+    </div>
+    <div id="audit-narrative" class="p-4 text-sm space-y-4"></div>
+  </div>
+
+  <!-- Bugs -->
+  <div class="bg-surface-card rounded-lg border border-border">
+    <div class="p-4 border-b border-border">
+      <h3 class="text-sm font-medium">Bugs Observed</h3>
+    </div>
+    <div id="audit-bugs" class="p-4 text-sm"></div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+// ===== STATE =====
+const BASE = '../api';
+let currentProfile = localStorage.getItem('dashboard_profile') || 'vishal-live';
+let dailyPnlData = [];
+let auditDates = [];
+let chartCumulative = null;
+let chartDaily = null;
+
+const PROFILES = {
+  'vishal-live': { type: 'LIVE', capital: 15000, maxTrades: 3, lossLimit: 900, modules: ['intraday'], color: 'profit' },
+  'vishal': { type: 'PAPER', capital: 300000, maxTrades: 6, lossLimit: 9000, modules: ['intraday', 'fno'], color: 'yellow-400' },
+  'neha': { type: 'PAPER', capital: 300000, maxTrades: 6, lossLimit: 9000, modules: ['intraday', 'fno'], color: 'yellow-400' },
+  'neha-live': { type: 'STOPPED', capital: 10000, maxTrades: 3, lossLimit: 900, modules: [], color: 'loss' }
+};
+
+// ===== UTILS =====
+function fmt(n, decimals=2) {
+  if (n == null || isNaN(n)) return '--';
+  const sign = n >= 0 ? '+' : '';
+  return sign + '₹' + Math.abs(n).toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+function fmtPlain(n) {
+  if (n == null || isNaN(n)) return '--';
+  return '₹' + Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+function pnlClass(n) { return n >= 0 ? 'text-profit' : 'text-loss'; }
+function pnlBg(n) { return n >= 0 ? 'bg-profit/10 text-profit' : 'bg-loss/10 text-loss'; }
+function statusBadge(s) {
+  const colors = { 'TARGET_HIT': 'bg-profit/20 text-profit', 'STOPPED_OUT': 'bg-loss/20 text-loss', 'FORCE_EXITED': 'bg-yellow-900/50 text-yellow-300', 'OPEN': 'bg-blue-900/50 text-blue-300' };
+  return `<span class="px-2 py-0.5 rounded text-xs ${colors[s] || 'bg-surface text-muted'}">${s || '--'}</span>`;
+}
+function timeAgo(ts) {
+  if (!ts) return '';
+  const diff = (Date.now() - new Date(ts).getTime()) / 1000;
+  if (diff < 60) return 'Just now';
+  if (diff < 3600) return Math.floor(diff/60) + ' min ago';
+  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+  return Math.floor(diff/86400) + ' days ago';
+}
+
+async function fetchJSON(url) {
+  try {
+    const r = await fetch(url);
+    if (!r.ok) return null;
+    return await r.json();
+  } catch(e) { return null; }
+}
+
+// ===== TAB SWITCHING =====
+document.querySelectorAll('#main-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#main-tabs button').forEach(b => { b.className = 'px-3 py-2 text-sm tab-inactive transition-all'; });
+    btn.className = 'px-3 py-2 text-sm tab-active transition-all';
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+    document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+  });
+});
+
+// ===== PROFILE SWITCHING =====
+const profileSelect = document.getElementById('profile-select');
+profileSelect.value = currentProfile;
+profileSelect.addEventListener('change', () => {
+  currentProfile = profileSelect.value;
+  localStorage.setItem('dashboard_profile', currentProfile);
+  loadAll();
+});
+
+// ===== LOAD ALL DATA =====
+async function loadAll() {
+  const p = PROFILES[currentProfile];
+  if (p.type === 'STOPPED') {
+    document.querySelector('main').innerHTML = `
+      <div class="flex items-center justify-center h-full">
+        <div class="text-center">
+          <span class="text-4xl">&#x1F6D1;</span>
+          <h2 class="text-xl font-bold mt-4">Trading Stopped</h2>
+          <p class="text-muted mt-2">${currentProfile} is currently paused. No active trading.</p>
+        </div>
+      </div>`;
+    return;
+  }
+  await Promise.all([loadOverview(), loadFnO(), loadSwing(), loadAudit()]);
+}
+
+// ===== OVERVIEW TAB =====
+async function loadOverview() {
+  const p = PROFILES[currentProfile];
+  // Load dhan_live for balance (only vishal-live has it)
+  const dhan = await fetchJSON(`${BASE}/${currentProfile}/dhan_live.json`);
+  const balance = dhan?.funds?.availabelBalance || dhan?.summary?.available_balance || null;
+
+  // Load all daily_pnl files
+  dailyPnlData = [];
+  const dates = await discoverDates(`${BASE}/v2/${currentProfile}/daily_pnl/`);
+  for (const d of dates) {
+    const data = await fetchJSON(`${BASE}/v2/${currentProfile}/daily_pnl/${d}.json`);
+    if (data) dailyPnlData.push(data);
+  }
+  dailyPnlData.sort((a,b) => a.date.localeCompare(b.date));
+
+  // Compute totals
+  const totalNetPnl = dailyPnlData.reduce((s, d) => s + (d.daily_net_pnl || 0), 0);
+  const todayData = dailyPnlData[dailyPnlData.length - 1];
+  const todayPnl = todayData?.daily_net_pnl || 0;
+
+  // Update cards
+  document.getElementById('ov-capital').textContent = fmtPlain(p.capital);
+  document.getElementById('ov-balance').textContent = balance ? fmtPlain(balance) : '--';
+  document.getElementById('ov-balance').className = 'text-xl font-bold mono mt-1';
+
+  const ovPnl = document.getElementById('ov-overall-pnl');
+  ovPnl.textContent = fmt(totalNetPnl);
+  ovPnl.className = `text-xl font-bold mono mt-1 ${pnlClass(totalNetPnl)}`;
+
+  const ovToday = document.getElementById('ov-today-pnl');
+  ovToday.textContent = fmt(todayPnl);
+  ovToday.className = `text-xl font-bold mono mt-1 ${pnlClass(todayPnl)}`;
+
+  // Margin
+  if (dhan?.funds) {
+    const used = dhan.funds.utilizedAmount || 0;
+    const avail = dhan.funds.availabelBalance || 0;
+    const total = used + avail;
+    const pct = total > 0 ? ((used / total) * 100).toFixed(1) : 0;
+    document.getElementById('ov-margin-pct').textContent = pct + '%';
+    document.getElementById('ov-margin-bar').style.width = pct + '%';
+    document.getElementById('ov-margin-avail').textContent = fmtPlain(avail);
+    document.getElementById('ov-margin-used').textContent = fmtPlain(used);
+  }
+
+  // Staleness
+  const ts = dhan?.timestamp || todayData?.generated_at;
+  document.getElementById('staleness').textContent = ts ? 'Updated ' + timeAgo(ts) : '';
+
+  // Daily table
+  const tbody = document.getElementById('ov-daily-table');
+  tbody.innerHTML = dailyPnlData.slice().reverse().map(d => `
+    <tr class="border-b border-border hover:bg-surface-card/50 cursor-pointer">
+      <td class="px-4 py-2 mono text-xs">${d.date}</td>
+      <td class="px-4 py-2 text-right">${d.trade_count || 0}</td>
+      <td class="px-4 py-2 text-right mono ${pnlClass(d.daily_net_pnl)}">${fmt(d.daily_net_pnl)}</td>
+      <td class="px-4 py-2 text-right">${d.wins != null && d.trade_count ? Math.round((d.wins/d.trade_count)*100) + '%' : '--'}</td>
+      <td class="px-4 py-2 text-right mono text-muted">${d.capital_deployed_peak ? fmtPlain(d.capital_deployed_peak) : '--'}</td>
+    </tr>
+  `).join('');
+
+  // Charts
+  renderCharts();
+
+  // Sidebar trades
+  renderSidebar(todayData);
+
+  // Narrative
+  await loadLatestNarrative();
+
+  // Intraday tab date selector
+  populateIntraDates();
+}
+
+function renderCharts() {
+  const labels = dailyPnlData.map(d => d.date.slice(5));
+  const netPnls = dailyPnlData.map(d => d.daily_net_pnl || 0);
+  let cumulative = 0;
+  const cumPnls = netPnls.map(v => { cumulative += v; return cumulative; });
+
+  // Cumulative
+  if (chartCumulative) chartCumulative.destroy();
+  const ctx1 = document.getElementById('chart-cumulative').getContext('2d');
+  chartCumulative = new Chart(ctx1, {
+    type: 'line',
+    data: { labels, datasets: [{ data: cumPnls, borderColor: '#00c853', backgroundColor: 'rgba(0,200,83,0.1)', fill: true, tension: 0.3, pointRadius: 3 }] },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8b8b9e', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.03)' } }, y: { ticks: { color: '#8b8b9e', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.03)' } } } }
+  });
+
+  // Daily bar
+  if (chartDaily) chartDaily.destroy();
+  const ctx2 = document.getElementById('chart-daily').getContext('2d');
+  chartDaily = new Chart(ctx2, {
+    type: 'bar',
+    data: { labels, datasets: [{ data: netPnls, backgroundColor: netPnls.map(v => v >= 0 ? 'rgba(0,200,83,0.7)' : 'rgba(255,23,68,0.7)') }] },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8b8b9e', font: { size: 10 } }, grid: { display: false } }, y: { ticks: { color: '#8b8b9e', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.03)' } } } }
+  });
+}
+
+function renderSidebar(todayData) {
+  const el = document.getElementById('sidebar-trades');
+  if (!todayData?.trades?.length) {
+    el.innerHTML = '<p class="text-xs text-muted">No trades today</p>';
+    return;
+  }
+  el.innerHTML = todayData.trades.map(t => `
+    <div class="p-2 rounded bg-surface hover:bg-surface-card cursor-pointer transition-all">
+      <div class="flex justify-between items-center">
+        <span class="font-medium text-xs">${t.symbol}</span>
+        <span class="text-xs ${pnlClass(t.net_pnl)}">${fmt(t.net_pnl)}</span>
+      </div>
+      <div class="flex justify-between mt-1">
+        <span class="text-xs text-muted">${t.direction} x${t.qty}</span>
+        <span class="text-xs text-muted">${t.status}</span>
+      </div>
+    </div>
+  `).join('');
+
+  // Profile info
+  const p = PROFILES[currentProfile];
+  document.getElementById('sidebar-profile-info').innerHTML = `
+    <div class="flex justify-between"><span class="text-muted">Type</span><span class="${p.type === 'LIVE' ? 'text-profit' : 'text-yellow-400'}">${p.type}</span></div>
+    <div class="flex justify-between"><span class="text-muted">Capital</span><span>${fmtPlain(p.capital)}</span></div>
+    <div class="flex justify-between"><span class="text-muted">Max Trades</span><span>${p.maxTrades}</span></div>
+    <div class="flex justify-between"><span class="text-muted">Loss Limit</span><span>${fmtPlain(p.lossLimit)}</span></div>
+  `;
+}
+
+async function loadLatestNarrative() {
+  const dates = await discoverDates(`${BASE}/v2/${currentProfile}/audit/`);
+  if (!dates.length) { document.getElementById('ov-narrative').innerHTML = '<p class="text-muted">No audit data available</p>'; return; }
+  const latest = dates[dates.length - 1];
+  const audit = await fetchJSON(`${BASE}/v2/${currentProfile}/audit/${latest}.json`);
+  if (!audit?.narrative) { document.getElementById('ov-narrative').innerHTML = '<p class="text-muted">No narrative available</p>'; return; }
+
+  document.getElementById('ov-narrative-date').textContent = latest;
+  const n = audit.narrative;
+  document.getElementById('ov-narrative').innerHTML = `
+    ${n.recommendation ? `<div class="p-3 rounded bg-profit/10 border border-profit/20"><span class="font-medium">&#x1F4A1; Recommendation:</span> <span class="text-muted">${n.recommendation}</span></div>` : ''}
+    ${n.what_went_right?.length ? `<div><span class="font-medium text-profit">&#x2705; What went right:</span><ul class="mt-1 ml-4 list-disc text-muted space-y-1">${n.what_went_right.map(x=>`<li>${x}</li>`).join('')}</ul></div>` : ''}
+    ${n.what_went_wrong?.length ? `<div><span class="font-medium text-loss">&#x274C; What went wrong:</span><ul class="mt-1 ml-4 list-disc text-muted space-y-1">${n.what_went_wrong.map(x=>`<li>${x}</li>`).join('')}</ul></div>` : ''}
+    ${n.bugs_or_risks_flagged?.length ? `<div><span class="font-medium text-yellow-400">&#x1F6A8; Bugs/Risks:</span><ul class="mt-1 ml-4 list-disc text-muted space-y-1">${n.bugs_or_risks_flagged.map(x=>`<li>${x}</li>`).join('')}</ul></div>` : ''}
+  `;
+}
+
+// ===== INTRADAY TAB =====
+function populateIntraDates() {
+  const sel = document.getElementById('intra-date-select');
+  sel.innerHTML = dailyPnlData.slice().reverse().map(d => `<option value="${d.date}">${d.date}</option>`).join('');
+  sel.addEventListener('change', () => loadIntraDay(sel.value));
+  if (dailyPnlData.length) loadIntraDay(dailyPnlData[dailyPnlData.length-1].date);
+
+  // Config
+  const p = PROFILES[currentProfile];
+  document.getElementById('intra-config').innerHTML = `
+    <div><span class="text-muted text-xs block">Capital</span><span class="mono font-bold">${fmtPlain(p.capital)}</span></div>
+    <div><span class="text-muted text-xs block">Per Trade Max</span><span class="mono font-bold">${fmtPlain(p.capital === 15000 ? 4500 : 50000)}</span></div>
+    <div><span class="text-muted text-xs block">Max Trades/Day</span><span class="mono font-bold">${p.maxTrades}</span></div>
+    <div><span class="text-muted text-xs block">Daily Loss Limit</span><span class="mono font-bold">${fmtPlain(p.lossLimit)}</span></div>
+  `;
+}
+
+async function loadIntraDay(date) {
+  const data = dailyPnlData.find(d => d.date === date);
+  const tbody = document.getElementById('intra-trades-table');
+  if (!data?.trades?.length) {
+    tbody.innerHTML = '<tr><td colspan="7" class="px-3 py-4 text-center text-muted">No trades on this date</td></tr>';
+    return;
+  }
+  // Also try to load audit for rationale
+  const audit = await fetchJSON(`${BASE}/v2/${currentProfile}/audit/${date}.json`);
+  const auditTrades = audit?.trades || [];
+
+  tbody.innerHTML = data.trades.map((t, i) => {
+    const auditT = auditTrades.find(at => at.trade_id === t.trade_id) || {};
+    return `
+    <tr class="border-b border-border hover:bg-surface-card/50 cursor-pointer" onclick="showRationale(${JSON.stringify(auditT.rationale_llm || '').replace(/"/g, '&quot;')})">
+      <td class="px-3 py-2 font-medium">${t.symbol}</td>
+      <td class="px-3 py-2"><span class="${t.direction === 'LONG' ? 'text-profit' : 'text-loss'}">${t.direction}</span></td>
+      <td class="px-3 py-2 text-right mono">${t.entry_price?.toFixed(2) || '--'}</td>
+      <td class="px-3 py-2 text-right mono">${t.exit_price?.toFixed(2) || '--'}</td>
+      <td class="px-3 py-2 text-right">${t.qty || '--'}</td>
+      <td class="px-3 py-2 text-right mono ${pnlClass(t.net_pnl)}">${fmt(t.net_pnl)}</td>
+      <td class="px-3 py-2">${statusBadge(t.status)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function showRationale(text) {
+  const panel = document.getElementById('intra-rationale-panel');
+  const content = document.getElementById('intra-rationale-content');
+  if (!text) { content.textContent = 'No rationale available for this trade.'; }
+  else { content.textContent = text; }
+  panel.classList.remove('hidden');
+}
+
+// ===== F&O TAB =====
+async function loadFnO() {
+  const p = PROFILES[currentProfile];
+  if (!p.modules.includes('fno')) {
+    document.getElementById('tab-fno').querySelector('.grid')?.remove();
+    document.getElementById('fno-strategy-count').textContent = 'F&O not active for this profile';
+    document.getElementById('fno-strategies-table').innerHTML = '<tr><td colspan="7" class="px-3 py-4 text-center text-muted">No F&O data for this profile</td></tr>';
+    document.getElementById('fno-history-table').innerHTML = '';
+    return;
+  }
+
+  const fno = await fetchJSON(`${BASE}/${currentProfile}/fno_latest.json`);
+  if (!fno) {
+    document.getElementById('fno-strategy-count').textContent = 'No F&O data available';
+    return;
+  }
+
+  const history = fno.history || {};
+  const today = fno.today || {};
+
+  document.getElementById('fno-cum-pnl').textContent = fmt(history.cumulative_pnl || 0);
+  document.getElementById('fno-cum-pnl').className = `text-xl font-bold mono mt-1 ${pnlClass(history.cumulative_pnl)}`;
+  document.getElementById('fno-win-rate').textContent = (history.win_rate || 0).toFixed(1) + '%';
+  document.getElementById('fno-today-pnl').textContent = fmt(today.total_pnl || 0);
+  document.getElementById('fno-today-pnl').className = `text-xl font-bold mono mt-1 ${pnlClass(today.total_pnl)}`;
+  document.getElementById('fno-days').textContent = history.total_days || 0;
+
+  // Strategies table
+  const strategies = today.strategies || [];
+  document.getElementById('fno-strategy-count').textContent = `${strategies.length} strategies today | ${(history.daily_pnl || []).reduce((s,d) => s + d.strategies, 0)} total`;
+  document.getElementById('fno-strategies-table').innerHTML = strategies.length ? strategies.map(s => `
+    <tr class="border-b border-border">
+      <td class="px-3 py-2 font-medium text-xs">${s.strategy_type}</td>
+      <td class="px-3 py-2">${s.index}</td>
+      <td class="px-3 py-2 text-xs text-muted">${s.legs_summary || '--'}</td>
+      <td class="px-3 py-2 text-right mono">${s.entry_premium?.toFixed(0) || '--'}</td>
+      <td class="px-3 py-2 text-right mono ${pnlClass(s.unrealized_pnl)}">${fmt(s.unrealized_pnl)}</td>
+      <td class="px-3 py-2 text-right">${s.confluence_score || '--'}</td>
+      <td class="px-3 py-2">${statusBadge(s.status)}</td>
+    </tr>
+  `).join('') : '<tr><td colspan="7" class="px-3 py-4 text-center text-muted">No strategies today</td></tr>';
+
+  // History table
+  const hist = (history.daily_pnl || []).slice().reverse();
+  document.getElementById('fno-history-table').innerHTML = hist.map(d => `
+    <tr class="border-b border-border">
+      <td class="px-3 py-2 mono text-xs">${d.date}</td>
+      <td class="px-3 py-2 text-right">${d.strategies}</td>
+      <td class="px-3 py-2 text-right text-profit">${d.winners}</td>
+      <td class="px-3 py-2 text-right text-loss">${d.losers}</td>
+      <td class="px-3 py-2 text-right mono ${pnlClass(d.pnl)}">${fmt(d.pnl)}</td>
+    </tr>
+  `).join('');
+}
+
+// ===== SWING TAB =====
+async function loadSwing() {
+  const swing = await fetchJSON(`${BASE}/swing_latest.json`);
+  if (!swing) {
+    document.getElementById('swing-positions-table').innerHTML = '<tr><td colspan="8" class="px-3 py-4 text-center text-muted">No swing data available</td></tr>';
+    return;
+  }
+
+  const positions = swing.open_positions || [];
+  document.getElementById('swing-positions-table').innerHTML = positions.length ? positions.map(p => `
+    <tr class="border-b border-border">
+      <td class="px-3 py-2 font-medium">${p.symbol}</td>
+      <td class="px-3 py-2 text-xs">${p.strategy_type}</td>
+      <td class="px-3 py-2 text-right mono">${p.entry_price?.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right mono text-profit">${p.target_price?.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right mono text-loss">${p.stop_loss_price?.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right">${p.quantity}</td>
+      <td class="px-3 py-2 text-right mono ${pnlClass(p.unrealized_pnl)}">${fmt(p.unrealized_pnl)}</td>
+      <td class="px-3 py-2 text-right">${p.confidence_score}</td>
+    </tr>
+  `).join('') : '<tr><td colspan="8" class="px-3 py-4 text-center text-muted">No open positions</td></tr>';
+
+  const s = swing.summary || {};
+  document.getElementById('swing-summary').innerHTML = `
+    <div><span class="text-muted text-xs block">Open</span><span class="mono font-bold">${s.total_open || 0}</span></div>
+    <div><span class="text-muted text-xs block">Closed</span><span class="mono font-bold">${s.total_closed || 0}</span></div>
+    <div><span class="text-muted text-xs block">Realized P&L</span><span class="mono font-bold ${pnlClass(s.realized_pnl)}">${fmt(s.realized_pnl || 0)}</span></div>
+    <div><span class="text-muted text-xs block">Mode</span><span class="mono font-bold text-yellow-400">${swing.mode || 'DRY_RUN'}</span></div>
+  `;
+}
+
+// ===== AUDIT TAB =====
+async function loadAudit() {
+  const dates = await discoverDates(`${BASE}/v2/${currentProfile}/audit/`);
+  auditDates = dates.filter(d => !d.includes('validation'));
+  const sel = document.getElementById('audit-date-select');
+  sel.innerHTML = auditDates.slice().reverse().map(d => `<option value="${d}">${d}</option>`).join('');
+  sel.addEventListener('change', () => loadAuditDate(sel.value));
+  if (auditDates.length) loadAuditDate(auditDates[auditDates.length - 1]);
+}
+
+async function loadAuditDate(date) {
+  const audit = await fetchJSON(`${BASE}/v2/${currentProfile}/audit/${date}.json`);
+  if (!audit) { document.getElementById('audit-narrative').innerHTML = '<p class="text-muted">No data</p>'; return; }
+
+  // Load validation data for trust score (from standalone audit.html feature)
+  const validation = await fetchJSON(`${BASE}/v2/${currentProfile}/audit/${date}.validation.json`);
+
+  const s = audit.summary || {};
+  const trustHtml = validation ? (() => {
+    const ts = validation.trust_score || 0;
+    const cls = ts >= 0.9 ? 'text-profit' : ts >= 0.7 ? 'text-yellow-400' : 'text-loss';
+    return `<div class="bg-surface-card rounded-lg p-3 border border-border"><p class="text-xs text-muted">Trust Score</p><p class="text-lg font-bold mono ${cls}">${(ts*100).toFixed(0)}%</p></div>`;
+  })() : '';
+
+  document.getElementById('audit-summary-cards').innerHTML = `
+    <div class="bg-surface-card rounded-lg p-3 border border-border"><p class="text-xs text-muted">Trades</p><p class="text-lg font-bold mono">${s.trades_executed || 0}</p></div>
+    <div class="bg-surface-card rounded-lg p-3 border border-border"><p class="text-xs text-muted">Gross P&L (Dhan)</p><p class="text-lg font-bold mono ${pnlClass(s.gross_pnl_dhan)}">${fmt(s.gross_pnl_dhan)}</p></div>
+    <div class="bg-surface-card rounded-lg p-3 border border-border"><p class="text-xs text-muted">Net P&L (est)</p><p class="text-lg font-bold mono ${pnlClass(s.net_pnl_estimated)}">${fmt(s.net_pnl_estimated)}</p></div>
+    <div class="bg-surface-card rounded-lg p-3 border border-border"><p class="text-xs text-muted">Phase</p><p class="text-lg font-bold mono">${s.phase_progress || '--'}</p></div>
+    ${trustHtml}
+  `;
+
+  // Trades
+  const trades = audit.trades || [];
+  document.getElementById('audit-trades-table').innerHTML = trades.map(t => `
+    <tr class="border-b border-border hover:bg-surface-card/50">
+      <td class="px-3 py-2 font-medium">${t.tradingsymbol || t.symbol}</td>
+      <td class="px-3 py-2 ${t.direction === 'LONG' ? 'text-profit' : 'text-loss'}">${t.direction}</td>
+      <td class="px-3 py-2 text-right mono">${t.entry_price?.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right mono">${t.exit_price?.toFixed(2) || '--'}</td>
+      <td class="px-3 py-2 text-right">${t.qty_intended || '--'} / ${t.qty_actual_dhan || '--'}</td>
+      <td class="px-3 py-2 text-right mono ${pnlClass(t.pnl_dhan)}">${fmt(t.pnl_dhan)}</td>
+      <td class="px-3 py-2">${statusBadge(t.outcome)}</td>
+      <td class="px-3 py-2">${t.qty_drift > 0 ? `<span class="text-xs text-loss">+${t.qty_drift}</span>` : '<span class="text-xs text-muted">OK</span>'}</td>
+    </tr>
+  `).join('') || '<tr><td colspan="8" class="text-center text-muted py-4">No trades</td></tr>';
+
+  // Narrative
+  const n = audit.narrative;
+  if (n) {
+    document.getElementById('audit-narrative-model').textContent = audit.narrative_meta?.model || '';
+    document.getElementById('audit-narrative').innerHTML = `
+      ${n.recommendation ? `<div class="p-3 rounded bg-profit/10 border border-profit/20"><span class="font-medium">&#x1F4A1;</span> ${n.recommendation}</div>` : ''}
+      ${n.what_went_right?.length ? `<div><p class="font-medium text-profit mb-1">&#x2705; What went right</p><ul class="ml-4 list-disc text-muted space-y-1">${n.what_went_right.map(x=>`<li>${x}</li>`).join('')}</ul></div>` : ''}
+      ${n.what_went_wrong?.length ? `<div><p class="font-medium text-loss mb-1">&#x274C; What went wrong</p><ul class="ml-4 list-disc text-muted space-y-1">${n.what_went_wrong.map(x=>`<li>${x}</li>`).join('')}</ul></div>` : ''}
+      ${n.patterns_observed?.length ? `<div><p class="font-medium text-yellow-400 mb-1">&#x1F50D; Patterns</p><ul class="ml-4 list-disc text-muted space-y-1">${n.patterns_observed.map(x=>`<li>${x}</li>`).join('')}</ul></div>` : ''}
+      ${n.bugs_or_risks_flagged?.length ? `<div><p class="font-medium text-loss mb-1">&#x1F6A8; Bugs/Risks</p><ul class="ml-4 list-disc text-muted space-y-1">${n.bugs_or_risks_flagged.map(x=>`<li>${x}</li>`).join('')}</ul></div>` : ''}
+    `;
+  } else {
+    document.getElementById('audit-narrative').innerHTML = '<p class="text-muted">No AI narrative for this date</p>';
+  }
+
+  // Bugs
+  const bugs = audit.bugs_observed || [];
+  document.getElementById('audit-bugs').innerHTML = bugs.length
+    ? bugs.map(b => `<div class="flex items-start gap-2 mb-2"><span class="text-loss">&#x26A0;</span><span class="text-muted">${b}</span></div>`).join('')
+    : '<p class="text-muted">No bugs observed</p>';
+}
+
+// ===== DATE DISCOVERY =====
+// Since we can't list directories via fetch, we try known date range with GET
+async function discoverDates(basePath) {
+  const dates = [];
+  const start = new Date('2026-05-05');
+  const end = new Date('2026-05-26');
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+    const ds = d.toISOString().slice(0, 10);
+    const dow = d.getDay();
+    if (dow === 0 || dow === 6) continue;
+    dates.push(ds);
+  }
+  // Filter to ones that actually exist — use GET (HEAD often blocked by S3/CF)
+  const existing = [];
+  const checks = dates.map(async ds => {
+    try {
+      const r = await fetch(basePath + ds + '.json');
+      if (r.ok) {
+        existing.push(ds);
+        // consume body to avoid connection leak
+        await r.text();
+      }
+    } catch(e) {}
+  });
+  await Promise.all(checks);
+  existing.sort();
+  return existing;
+}
+
+// ===== MARKET STATUS =====
+function updateMarketStatus() {
+  const now = new Date();
+  const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+  const h = ist.getHours(), m = ist.getMinutes();
+  const dow = ist.getDay();
+  const isOpen = dow >= 1 && dow <= 5 && ((h === 9 && m >= 15) || (h > 9 && h < 15) || (h === 15 && m <= 30));
+  const el = document.getElementById('market-status');
+  if (isOpen) {
+    el.innerHTML = '<span class="w-2 h-2 rounded-full bg-profit animate-pulse"></span><span class="text-profit">Market Open</span>';
+  } else {
+    el.innerHTML = '<span class="w-2 h-2 rounded-full bg-loss"></span><span class="text-muted">Market Closed</span>';
+  }
+}
+
+// ===== DRILL-DOWN NAVIGATION =====
+function openDrill(name) {
+  document.getElementById('overview-main').classList.add('hidden');
+  document.querySelectorAll('.drill-section').forEach(d => d.classList.add('hidden'));
+  document.getElementById('drill-' + name).classList.remove('hidden');
+}
+function closeDrill() {
+  document.querySelectorAll('.drill-section').forEach(d => d.classList.add('hidden'));
+  document.getElementById('overview-main').classList.remove('hidden');
+}
+
+// ===== INIT =====
+updateMarketStatus();
+setInterval(updateMarketStatus, 60000);
+loadAll();
+</script>
+</body>
+</html>
