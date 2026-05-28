@@ -828,3 +828,116 @@ This is NOT optional infrastructure — it is the foundation of all strategy wor
 - Monthly: re-run all backtests on latest data to check if edge is degrading
 
 This is how institutional traders work. Data first. Proof first. Then deploy.
+
+### Rule 27: Module Ownership (since 2026-05-28)
+
+Each module owns its directory exclusively. Cross-module file modifications cause silent data loss when multiple Kiro sessions run in parallel.
+
+#### Module Ownership Map
+
+| Module | Owned Files |
+|--------|-------------|
+| **intraday/v3/** | `intraday/v3/**/*` (all V3 strategy files, regime, trip wires, orchestrator, ranker, fallback) |
+| **fno/** | `fno/**/*` (all F&O strategy/execution files) |
+| **swing/** | `swing/**/*` (all swing strategy files) |
+| **dashboard/v2/** | `dashboard/v2/**/*` (HTML/CSS/JS for dashboard) |
+| **tests/v3/** | V3 module tests |
+| **tests/fno/** | F&O module tests |
+| **tests/swing/** | Swing module tests |
+
+#### Module-Owned Scripts
+
+| Module | Scripts |
+|--------|---------|
+| **intraday/v3/** | `scripts/build_universe.py`, `scripts/validate_universe.py`, `scripts/backtest_vwap_mr.py`, `scripts/backtest_v3_full.py` |
+| **fno/** | `scripts/fno_revalidate_pnl.py`, `scripts/fno_paper_validation_tracker.py` |
+| **swing/** | `backtest/fetch_swing_data.py`, `backtest/run_swing_backtest.py`, `scripts/swing_smoke_test.py`, `scripts/swing_paper_status.py`, `scripts/print_swing_backtest_summary.py` |
+
+#### Shared Files (Read-Only For Most Sessions)
+
+These files are imported by multiple modules. Modifications require explicit user approval and ATOMIC changes (halt all sessions, modify, resume):
+
+- `intraday/dhan_broker.py` — Dhan API wrapper
+- `intraday/auth_server.py` — Authentication flow
+- `intraday/executor.py` — Order placement (Bug A fix stable, DO NOT MODIFY)
+- `intraday/monitor.py` — Position monitoring (Bug B fix stable, DO NOT MODIFY)
+- `intraday/risk_manager.py` — Risk calculations
+- `intraday/charges.py` — Brokerage calculator
+- `intraday/database/db_manager.py` — SQLite manager
+- `backtest/rule_engine.py` — V6/V4 signals (V3-owned for modifications, others read-only)
+- `config/profiles/*.yaml` — Profile configs
+- `config/nifty500_official.csv` — Static universe data (READ-ONLY, manual quarterly refresh)
+- `config/nse_security_ids.json` — Symbol → Dhan ID mapping
+
+#### Enforcement
+
+- Every Kiro prompt must specify which module is being worked on
+- Modifications outside module boundaries require explicit user approval
+- If a session sees newer modification timestamps on shared files than expected, STOP and report cross-session activity rather than overwriting
+
+---
+
+### Rule 28: Cross-Session Coordination (since 2026-05-28)
+
+When multiple Kiro sessions run in parallel, file conflicts cause silent data loss. The "last write wins" semantics of SCP-based deployment have no merge logic.
+
+#### What Caused This Rule
+
+On 2026-05-28, a "Universal Relaxation" cross-cutting session modified `intraday/v3/regime.py` while V3 Phase 7 was actively building Phase 7 against it. Result:
+- V3 Phase 7 tests broke (9 of 9 in test_regime.py)
+- API contract changed silently (detect_regime function deleted)
+- 1 hour lost to merge fix
+
+#### Allowed Patterns
+
+✅ **Module-isolated work**: Each session works only within its owned module directory
+
+✅ **Document-based coordination**: Sessions read shared documents (e.g., `vishal-docs/FNO_RELAXED_PARAMS.md`) and apply values within their own files
+
+✅ **Sequential atomic changes**: Halt all sessions → modify shared file → resume sessions
+
+#### Forbidden Patterns
+
+❌ **Universal/cross-cutting refactor sessions** while other sessions are active
+- Reason: Cannot detect what other sessions are doing
+- Reason: Silent file overwrites cause data loss
+- Reason: API contracts can be changed unilaterally
+
+❌ **Same shared file modified by 2+ active sessions simultaneously**
+
+❌ **Session A modifies a file that Session B is currently building against**
+
+#### When Cross-Module Changes Are Genuinely Needed
+
+If a pattern needs to apply across modules (e.g., "loosen filters everywhere"):
+
+1. **Document the change** in `vishal-docs/CHANGE_NAME_PARAMS.md`
+2. **Each module's session** reads the document and applies values within its own files
+3. **No session modifies shared code** — only their own module's code
+
+This is what F&O Phase 3 did successfully on 2026-05-28: read `FNO_RELAXED_PARAMS.md`, applied values within fno/ directory only. No conflicts.
+
+#### Conflict Detection Protocol
+
+If a session reads a file and sees:
+- Modification timestamp newer than session start
+- Comment markers from another session ("Universal Relaxation", "2026-05-28", etc.)
+- API/interface different from what session built against
+
+Then session must:
+1. STOP and report findings to user
+2. NOT proceed with modifications
+3. Wait for user to provide reconciliation instructions
+
+#### Documentation Placement
+
+| Doc Type | Location |
+|----------|----------|
+| Permanent rules (this doc) | `.kiro/steering/` |
+| Formal specs | `.kiro/specs/{module}/` |
+| Working state, prompts, audits | `vishal-docs/` |
+| Forensic audits | `audit/` |
+| Legacy formal docs | `docs/` |
+
+DO NOT create new doc folders. Use existing structure.
+
