@@ -91,12 +91,74 @@ def get_trading_dates(profile, limit=14):
         con.close()
 
 
+
+def _extract_skip_reasons(profile, date):
+    """Extract skip/rejection reasons from the intraday log for a given date."""
+    import re as _re
+    log_dir = Path(__file__).parent.parent / "logs"
+    log_file = log_dir / f"intraday_{profile}_{date}.log"
+
+    result = {
+        "system_ran": False,
+        "scans_attempted": 0,
+        "vix": None,
+        "market_direction": None,
+        "strategies_skipped": [],
+        "errors": [],
+        "no_trade_reason_summary": "Unknown",
+    }
+
+    if not log_file.exists():
+        result["no_trade_reason_summary"] = "No log file - cron did not fire or profile not scheduled"
+        return result
+
+    result["system_ran"] = True
+    content = log_file.read_text()
+    lines = content.split("\n")
+
+    scan_lines = [l for l in lines if "Scan:" in l and "candidates" in l]
+    result["scans_attempted"] = len(scan_lines)
+
+    vix_matches = _re.findall(r"VIX[:\s]+([\d.]+)", content)
+    if vix_matches:
+        result["vix"] = float(vix_matches[-1])
+
+    direction_matches = _re.findall(r"market (?:direction |)(FLAT|BULLISH|BEARISH|SIDEWAYS|FLAT SIDEWAYS)", content)
+    if direction_matches:
+        result["market_direction"] = direction_matches[-1]
+
+    skip_patterns = _re.findall(r"(\w+(?:_\w+)*): Skipping", content)
+    seen = set()
+    for strategy in skip_patterns:
+        if strategy not in seen:
+            seen.add(strategy)
+            # Find the full reason
+            match = _re.search(strategy + r": Skipping[^\n]*?([A-Z][^\n]{3,50})", content)
+            reason = match.group(1).strip() if match else "unknown"
+            result["strategies_skipped"].append({"strategy": strategy, "reason": reason})
+
+    error_lines = [l for l in lines if "[ERROR]" in l]
+    result["errors"] = [l.strip()[-100:] for l in error_lines[-3:]]
+
+    if result["scans_attempted"] == 0:
+        result["no_trade_reason_summary"] = "Log exists but no scans completed"
+    elif result["strategies_skipped"]:
+        reasons = list(set(s["reason"] for s in result["strategies_skipped"]))[:3]
+        result["no_trade_reason_summary"] = f"Scanned {result['scans_attempted']}x, strategies skipped: {'; '.join(reasons)}"
+    elif result["vix"] and result["vix"] > 25:
+        result["no_trade_reason_summary"] = f"VIX too high ({result['vix']}) - session skipped"
+    else:
+        result["no_trade_reason_summary"] = f"Scanned {result['scans_attempted']}x but no valid setups found"
+
+    return result
+
 def compute_metrics(profile, date):
     """Compute all daily metrics for a profile/date."""
     trades = fetch_closed_trades(profile, date)
     capital_configured = CAPITAL_CONFIGURED.get(profile, 15000)
 
     if not trades:
+        skip_info = _extract_skip_reasons(profile, date)
         return {
             "profile": profile,
             "date": date,
@@ -113,6 +175,7 @@ def compute_metrics(profile, date):
             "wins": 0,
             "losses": 0,
             "trades": [],
+            "no_trade_reason": skip_info,
         }
 
     # Compute per-trade metrics
