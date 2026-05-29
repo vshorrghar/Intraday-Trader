@@ -83,10 +83,10 @@ body { background: #1a1a2e; font-family: -apple-system, BlinkMacSystemFont, 'Seg
     </div>
     <div class="flex items-center gap-3">
       <select id="profile-select" class="bg-surface-card border border-border rounded px-3 py-1.5 text-sm focus:outline-none focus:border-profit">
-        <option value="vishal-live">vishal-live ● LIVE</option>
+        <option value="vishal-live-v2">vishal-live-v2 ● LIVE</option>
+        <option value="vishal-live">vishal-live ● PAUSED</option>
         <option value="vishal">vishal ● PAPER</option>
         <option value="neha">neha ● PAPER</option>
-        <option value="neha-live">neha-live ● STOPPED</option>
       </select>
     </div>
   </div>
@@ -173,10 +173,11 @@ body { background: #1a1a2e; font-family: -apple-system, BlinkMacSystemFont, 'Seg
         <thead>
           <tr class="text-xs text-muted uppercase border-b border-border">
             <th class="px-4 py-2 text-left">Date</th>
+            <th class="px-4 py-2 text-center">Status</th>
             <th class="px-4 py-2 text-right">Trades</th>
             <th class="px-4 py-2 text-right">Net P&L</th>
             <th class="px-4 py-2 text-right">Win Rate</th>
-            <th class="px-4 py-2 text-right">Capital Used</th>
+            <th class="px-4 py-2 text-left">Reason / Strategy</th>
           </tr>
         </thead>
         <tbody id="ov-daily-table"></tbody>
@@ -467,17 +468,17 @@ body { background: #1a1a2e; font-family: -apple-system, BlinkMacSystemFont, 'Seg
 <script>
 // ===== STATE =====
 const BASE = '../api';
-let currentProfile = localStorage.getItem('dashboard_profile') || 'vishal-live';
+let currentProfile = localStorage.getItem('dashboard_profile') || 'vishal-live-v2';
 let dailyPnlData = [];
 let auditDates = [];
 let chartCumulative = null;
 let chartDaily = null;
 
 const PROFILES = {
-  'vishal-live': { type: 'LIVE', capital: 15000, maxTrades: 3, lossLimit: 900, modules: ['intraday'], color: 'profit' },
+  'vishal-live-v2': { type: 'LIVE', capital: 30000, maxTrades: 3, lossLimit: 5000, modules: ['intraday'], color: 'profit' },
+  'vishal-live': { type: 'PAUSED', capital: 15000, maxTrades: 3, lossLimit: 900, modules: ['intraday'], color: 'yellow-400' },
   'vishal': { type: 'PAPER', capital: 300000, maxTrades: 6, lossLimit: 9000, modules: ['intraday', 'fno'], color: 'yellow-400' },
   'neha': { type: 'PAPER', capital: 300000, maxTrades: 6, lossLimit: 9000, modules: ['intraday', 'fno'], color: 'yellow-400' },
-  'neha-live': { type: 'STOPPED', capital: 10000, maxTrades: 3, lossLimit: 900, modules: [], color: 'loss' }
 };
 
 // ===== UTILS =====
@@ -541,7 +542,7 @@ async function loadAll() {
         <div class="text-center">
           <span class="text-4xl">&#x1F6D1;</span>
           <h2 class="text-xl font-bold mt-4">Trading Stopped</h2>
-          <p class="text-muted mt-2">${currentProfile} is currently paused. No active trading.</p>
+          <p class="text-muted mt-2">${currentProfile} is currently stopped. No active trading.</p>
         </div>
       </div>`;
     return;
@@ -601,15 +602,24 @@ async function loadOverview() {
 
   // Daily table
   const tbody = document.getElementById('ov-daily-table');
-  tbody.innerHTML = dailyPnlData.slice().reverse().map(d => `
-    <tr class="border-b border-border hover:bg-surface-card/50 cursor-pointer">
+  tbody.innerHTML = dailyPnlData.slice().reverse().map(d => {
+    const traded = d.trade_count > 0;
+    const statusBadge = traded
+      ? '<span class="px-2 py-0.5 rounded text-xs bg-profit/20 text-profit">🟢 Traded</span>'
+      : '<span class="px-2 py-0.5 rounded text-xs bg-yellow-900/50 text-yellow-300">🟡 No Trade</span>';
+    const reason = traded
+      ? (d.trades?.map(t => t.status).filter((v,i,a) => a.indexOf(v)===i).join(', ') || `${d.wins}W/${d.losses}L`)
+      : (d.no_trade_reason?.no_trade_reason_summary || 'No data');
+    return `
+    <tr class="border-b border-border hover:bg-surface-card/50">
       <td class="px-4 py-2 mono text-xs">${d.date}</td>
+      <td class="px-4 py-2 text-center">${statusBadge}</td>
       <td class="px-4 py-2 text-right">${d.trade_count || 0}</td>
       <td class="px-4 py-2 text-right mono ${pnlClass(d.daily_net_pnl)}">${fmt(d.daily_net_pnl)}</td>
-      <td class="px-4 py-2 text-right">${d.wins != null && d.trade_count ? Math.round((d.wins/d.trade_count)*100) + '%' : '--'}</td>
-      <td class="px-4 py-2 text-right mono text-muted">${d.capital_deployed_peak ? fmtPlain(d.capital_deployed_peak) : '--'}</td>
-    </tr>
-  `).join('');
+      <td class="px-4 py-2 text-right">${traded && d.trade_count ? Math.round((d.wins/d.trade_count)*100) + '%' : '--'}</td>
+      <td class="px-4 py-2 text-xs text-muted max-w-[200px] truncate" title="${reason}">${reason}</td>
+    </tr>`;
+  }).join('');
 
   // Charts
   renderCharts();
@@ -902,30 +912,24 @@ async function loadAuditDate(date) {
 }
 
 // ===== DATE DISCOVERY =====
-// Since we can't list directories via fetch, we try known date range with GET
+// Dynamic: probe last 60 weekdays from today, keep dates that return 200
 async function discoverDates(basePath) {
-  const dates = [];
-  const start = new Date('2026-05-05');
-  const end = new Date('2026-05-26');
-  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-    const ds = d.toISOString().slice(0, 10);
+  const today = new Date();
+  const candidates = [];
+  for (let i = 0; i < 60; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
     const dow = d.getDay();
-    if (dow === 0 || dow === 6) continue;
-    dates.push(ds);
+    if (dow === 0 || dow === 6) continue; // skip weekends
+    candidates.push(d.toISOString().slice(0, 10));
   }
-  // Filter to ones that actually exist — use GET (HEAD often blocked by S3/CF)
-  const existing = [];
-  const checks = dates.map(async ds => {
-    try {
-      const r = await fetch(basePath + ds + '.json');
-      if (r.ok) {
-        existing.push(ds);
-        // consume body to avoid connection leak
-        await r.text();
-      }
-    } catch(e) {}
-  });
-  await Promise.all(checks);
+  // Parallel fetch to find which dates have data
+  const results = await Promise.allSettled(
+    candidates.map(ds => fetch(basePath + ds + '.json').then(r => ({ok: r.ok, ds})).catch(() => ({ok: false, ds})))
+  );
+  const existing = results
+    .filter(r => r.status === 'fulfilled' && r.value.ok)
+    .map(r => r.value.ds);
   existing.sort();
   return existing;
 }
