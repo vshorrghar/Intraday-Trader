@@ -84,7 +84,7 @@ body { background: #1a1a2e; font-family: -apple-system, BlinkMacSystemFont, 'Seg
     <div class="flex items-center gap-3">
       <select id="profile-select" class="bg-surface-card border border-border rounded px-3 py-1.5 text-sm focus:outline-none focus:border-profit">
         <option value="vishal-live-v2">vishal-live-v2 ● LIVE</option>
-        <option value="vishal-live">vishal-live ● PAUSED</option>
+        <option value="vishal-live">vishal-live ● LIVE (V1)</option>
         <option value="vishal">vishal ● PAPER</option>
         <option value="neha">neha ● PAPER</option>
       </select>
@@ -476,7 +476,7 @@ let chartDaily = null;
 
 const PROFILES = {
   'vishal-live-v2': { type: 'LIVE', capital: 30000, maxTrades: 3, lossLimit: 5000, modules: ['intraday'], color: 'profit' },
-  'vishal-live': { type: 'PAUSED', capital: 15000, maxTrades: 3, lossLimit: 900, modules: ['intraday'], color: 'yellow-400' },
+  'vishal-live': { type: 'LIVE', capital: 30000, maxTrades: 3, lossLimit: 900, modules: ['intraday'], color: 'profit' },
   'vishal': { type: 'PAPER', capital: 300000, maxTrades: 6, lossLimit: 9000, modules: ['intraday', 'fno'], color: 'yellow-400' },
   'neha': { type: 'PAPER', capital: 300000, maxTrades: 6, lossLimit: 9000, modules: ['intraday', 'fno'], color: 'yellow-400' },
 };
@@ -571,8 +571,9 @@ async function loadOverview() {
   const todayData = dailyPnlData[dailyPnlData.length - 1];
   const todayPnl = todayData?.daily_net_pnl || 0;
 
-  // Update cards
-  document.getElementById('ov-capital').textContent = fmtPlain(p.capital);
+  // Update cards — use Dhan live data if available, else hardcoded
+  const totalCapital = dhan?.summary?.total_capital || p.capital;
+  document.getElementById('ov-capital').textContent = fmtPlain(totalCapital);
   document.getElementById('ov-balance').textContent = balance ? fmtPlain(balance) : '--';
   document.getElementById('ov-balance').className = 'text-xl font-bold mono mt-1';
 
