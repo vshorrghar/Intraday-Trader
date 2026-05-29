@@ -1,0 +1,4538 @@
+{
+  "360ONE": {
+    "security_id": "13061",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE466L01038",
+    "company": "360 ONE WAM Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "3MINDIA": {
+    "security_id": "474",
+    "sector": "Diversified",
+    "mcap_bucket": "LARGE",
+    "isin": "INE470A01017",
+    "company": "3M India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ABB": {
+    "security_id": "13",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE117A01022",
+    "company": "ABB India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ACC": {
+    "security_id": "22",
+    "sector": "Construction Materials",
+    "mcap_bucket": "LARGE",
+    "isin": "INE012A01025",
+    "company": "ACC Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ACMESOLAR": {
+    "security_id": "27061",
+    "sector": "Power",
+    "mcap_bucket": "LARGE",
+    "isin": "INE622W01025",
+    "company": "ACME Solar Holdings Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AIAENG": {
+    "security_id": "13086",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE212H01026",
+    "company": "AIA Engineering Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "APLAPOLLO": {
+    "security_id": "25780",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE702C01027",
+    "company": "APL Apollo Tubes Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AUBANK": {
+    "security_id": "21238",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE949L01017",
+    "company": "AU Small Finance Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AWL": {
+    "security_id": "8110",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE699H01024",
+    "company": "AWL Agri Business Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AADHARHFC": {
+    "security_id": "23729",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE883F01010",
+    "company": "Aadhar Housing Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AARTIIND": {
+    "security_id": "7",
+    "sector": "Chemicals",
+    "mcap_bucket": "LARGE",
+    "isin": "INE769A01020",
+    "company": "Aarti Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AAVAS": {
+    "security_id": "5385",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE216P01012",
+    "company": "Aavas Financiers Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ABBOTINDIA": {
+    "security_id": "17903",
+    "sector": "Healthcare",
+    "mcap_bucket": "LARGE",
+    "isin": "INE358A01014",
+    "company": "Abbott India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ACE": {
+    "security_id": "13587",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE731H01025",
+    "company": "Action Construction Equipment Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ACUTAAS": {
+    "security_id": "5578",
+    "sector": "Healthcare",
+    "mcap_bucket": "LARGE",
+    "isin": "INE00FF01025",
+    "company": "Acutaas Chemicals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ADANIENSOL": {
+    "security_id": "10217",
+    "sector": "Power",
+    "mcap_bucket": "LARGE",
+    "isin": "INE931S01010",
+    "company": "Adani Energy Solutions Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "ADANIENT": {
+    "security_id": "25",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "LARGE",
+    "isin": "INE423A01024",
+    "company": "Adani Enterprises Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ADANIGREEN": {
+    "security_id": "3563",
+    "sector": "Power",
+    "mcap_bucket": "LARGE",
+    "isin": "INE364U01010",
+    "company": "Adani Green Energy Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ADANIPORTS": {
+    "security_id": "15083",
+    "sector": "Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE742F01042",
+    "company": "Adani Ports and Special Economic Zone Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ADANIPOWER": {
+    "security_id": "17388",
+    "sector": "Power",
+    "mcap_bucket": "LARGE",
+    "isin": "INE814H01029",
+    "company": "Adani Power Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "ATGL": {
+    "security_id": "6066",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "LARGE",
+    "isin": "INE399L01023",
+    "company": "Adani Total Gas Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ABCAPITAL": {
+    "security_id": "21614",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE674K01013",
+    "company": "Aditya Birla Capital Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ABFRL": {
+    "security_id": "30108",
+    "sector": "Consumer Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE647O01011",
+    "company": "Aditya Birla Fashion and Retail Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ABLBL": {
+    "security_id": "756843",
+    "sector": "Consumer Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE14LE01019",
+    "company": "Aditya Birla Lifestyle Brands Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ABREL": {
+    "security_id": "625",
+    "sector": "Realty",
+    "mcap_bucket": "LARGE",
+    "isin": "INE055A01016",
+    "company": "Aditya Birla Real Estate Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ABSLAMC": {
+    "security_id": "6018",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE404A01024",
+    "company": "Aditya Birla Sun Life AMC Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CPPLUS": {
+    "security_id": "758858",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE819V01029",
+    "company": "Aditya Infotech Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AEGISLOG": {
+    "security_id": "40",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "LARGE",
+    "isin": "INE208C01025",
+    "company": "Aegis Logistics Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AEGISVOPAK": {
+    "security_id": "757336",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "LARGE",
+    "isin": "INE0INX01018",
+    "company": "Aegis Vopak Terminals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AFCONS": {
+    "security_id": "25977",
+    "sector": "Construction",
+    "mcap_bucket": "LARGE",
+    "isin": "INE101I01011",
+    "company": "Afcons Infrastructure Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AFFLE": {
+    "security_id": "11343",
+    "sector": "Information Technology",
+    "mcap_bucket": "LARGE",
+    "isin": "INE00WC01027",
+    "company": "Affle 3i Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AJANTPHARM": {
+    "security_id": "8124",
+    "sector": "Healthcare",
+    "mcap_bucket": "LARGE",
+    "isin": "INE031B01049",
+    "company": "Ajanta Pharmaceuticals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ALKEM": {
+    "security_id": "11703",
+    "sector": "Healthcare",
+    "mcap_bucket": "LARGE",
+    "isin": "INE540L01014",
+    "company": "Alkem Laboratories Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ABDL": {
+    "security_id": "24308",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE552Z01027",
+    "company": "Allied Blenders and Distillers Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ARE&M": {
+    "security_id": "100",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "LARGE",
+    "isin": "INE885A01032",
+    "company": "Amara Raja Energy & Mobility Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AMBER": {
+    "security_id": "1185",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "LARGE",
+    "isin": "INE371P01015",
+    "company": "Amber Enterprises India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AMBUJACEM": {
+    "security_id": "1270",
+    "sector": "Construction Materials",
+    "mcap_bucket": "LARGE",
+    "isin": "INE079A01024",
+    "company": "Ambuja Cements Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ANANDRATHI": {
+    "security_id": "7145",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE463V01026",
+    "company": "Anand Rathi Wealth Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ANANTRAJ": {
+    "security_id": "13620",
+    "sector": "Realty",
+    "mcap_bucket": "LARGE",
+    "isin": "INE242C01024",
+    "company": "Anant Raj Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ANGELONE": {
+    "security_id": "324",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE732I01021",
+    "company": "Angel One Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "ANTHEM": {
+    "security_id": "757885",
+    "sector": "Healthcare",
+    "mcap_bucket": "LARGE",
+    "isin": "INE0CZ201020",
+    "company": "Anthem Biosciences Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ANURAS": {
+    "security_id": "2829",
+    "sector": "Chemicals",
+    "mcap_bucket": "LARGE",
+    "isin": "INE930P01018",
+    "company": "Anupam Rasayan India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "APARINDS": {
+    "security_id": "11491",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE372A01015",
+    "company": "Apar Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "APOLLOHOSP": {
+    "security_id": "157",
+    "sector": "Healthcare",
+    "mcap_bucket": "LARGE",
+    "isin": "INE437A01024",
+    "company": "Apollo Hospitals Enterprise Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "APOLLOTYRE": {
+    "security_id": "163",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "LARGE",
+    "isin": "INE438A01022",
+    "company": "Apollo Tyres Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "APTUS": {
+    "security_id": "5435",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE852O01025",
+    "company": "Aptus Value Housing Finance India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ASAHIINDIA": {
+    "security_id": "5378",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "LARGE",
+    "isin": "INE439A01020",
+    "company": "Asahi India Glass Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ASHOKLEY": {
+    "security_id": "212",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE208A01029",
+    "company": "Ashok Leyland Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ASIANPAINT": {
+    "security_id": "236",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "LARGE",
+    "isin": "INE021A01026",
+    "company": "Asian Paints Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "ASTERDM": {
+    "security_id": "1508",
+    "sector": "Healthcare",
+    "mcap_bucket": "LARGE",
+    "isin": "INE914M01019",
+    "company": "Aster DM Healthcare Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ASTRAL": {
+    "security_id": "14418",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE006I01046",
+    "company": "Astral Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "ATHERENERG": {
+    "security_id": "757645",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "LARGE",
+    "isin": "INE0LEZ01016",
+    "company": "Ather Energy Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ATUL": {
+    "security_id": "263",
+    "sector": "Chemicals",
+    "mcap_bucket": "LARGE",
+    "isin": "INE100A01010",
+    "company": "Atul Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AUROPHARMA": {
+    "security_id": "275",
+    "sector": "Healthcare",
+    "mcap_bucket": "LARGE",
+    "isin": "INE406A01037",
+    "company": "Aurobindo Pharma Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AIIL": {
+    "security_id": "23553",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE206F01022",
+    "company": "Authum Investment & Infrastructure Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DMART": {
+    "security_id": "19913",
+    "sector": "Consumer Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE192R01011",
+    "company": "Avenue Supermarts Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "AXISBANK": {
+    "security_id": "5900",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE238A01034",
+    "company": "Axis Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BEML": {
+    "security_id": "395",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE258A01024",
+    "company": "BEML Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BLS": {
+    "security_id": "17279",
+    "sector": "Consumer Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE153T01027",
+    "company": "BLS International Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BSE": {
+    "security_id": "19585",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE118H01025",
+    "company": "BSE Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "BAJAJ-AUTO": {
+    "security_id": "16669",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "LARGE",
+    "isin": "INE917I01010",
+    "company": "Bajaj Auto Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "BAJFINANCE": {
+    "security_id": "317",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE296A01032",
+    "company": "Bajaj Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "BAJAJFINSV": {
+    "security_id": "16675",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE918I01026",
+    "company": "Bajaj Finserv Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "BAJAJHLDNG": {
+    "security_id": "305",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE118A01012",
+    "company": "Bajaj Holdings & Investment Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BAJAJHFL": {
+    "security_id": "25270",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE377Y01014",
+    "company": "Bajaj Housing Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BALKRISIND": {
+    "security_id": "335",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "LARGE",
+    "isin": "INE787D01026",
+    "company": "Balkrishna Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BALRAMCHIN": {
+    "security_id": "341",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE119A01028",
+    "company": "Balrampur Chini Mills Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BANDHANBNK": {
+    "security_id": "2263",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE545U01014",
+    "company": "Bandhan Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BANKBARODA": {
+    "security_id": "4668",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE028A01039",
+    "company": "Bank of Baroda",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BANKINDIA": {
+    "security_id": "4745",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE084A01016",
+    "company": "Bank of India",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MAHABANK": {
+    "security_id": "11377",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE457A01014",
+    "company": "Bank of Maharashtra",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BATAINDIA": {
+    "security_id": "371",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "LARGE",
+    "isin": "INE176A01028",
+    "company": "Bata India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BAYERCROP": {
+    "security_id": "17927",
+    "sector": "Chemicals",
+    "mcap_bucket": "LARGE",
+    "isin": "INE462A01022",
+    "company": "Bayer Cropscience Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BELRISE": {
+    "security_id": "757102",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "LARGE",
+    "isin": "INE894V01022",
+    "company": "Belrise Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BERGEPAINT": {
+    "security_id": "404",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "LARGE",
+    "isin": "INE463A01038",
+    "company": "Berger Paints India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BDL": {
+    "security_id": "2144",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE171Z01026",
+    "company": "Bharat Dynamics Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "BEL": {
+    "security_id": "383",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE263A01024",
+    "company": "Bharat Electronics Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "BHARATFORG": {
+    "security_id": "422",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "LARGE",
+    "isin": "INE465A01025",
+    "company": "Bharat Forge Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BHEL": {
+    "security_id": "438",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE257A01026",
+    "company": "Bharat Heavy Electricals Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "BPCL": {
+    "security_id": "526",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "LARGE",
+    "isin": "INE029A01011",
+    "company": "Bharat Petroleum Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "BHARTIARTL": {
+    "security_id": "10604",
+    "sector": "Telecommunication",
+    "mcap_bucket": "LARGE",
+    "isin": "INE397D01024",
+    "company": "Bharti Airtel Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BHARTIHEXA": {
+    "security_id": "23489",
+    "sector": "Telecommunication",
+    "mcap_bucket": "LARGE",
+    "isin": "INE343G01021",
+    "company": "Bharti Hexacom Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BIKAJI": {
+    "security_id": "11966",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE00E101023",
+    "company": "Bikaji Foods International Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GROWW": {
+    "security_id": "759806",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE0HOQ01053",
+    "company": "Billionbrains Garage Ventures Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BIOCON": {
+    "security_id": "11373",
+    "sector": "Healthcare",
+    "mcap_bucket": "LARGE",
+    "isin": "INE376G01013",
+    "company": "Biocon Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BSOFT": {
+    "security_id": "6994",
+    "sector": "Information Technology",
+    "mcap_bucket": "LARGE",
+    "isin": "INE836A01035",
+    "company": "Birlasoft Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BLUEDART": {
+    "security_id": "495",
+    "sector": "Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE233B01017",
+    "company": "Blue Dart Express Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BLUEJET": {
+    "security_id": "19686",
+    "sector": "Healthcare",
+    "mcap_bucket": "LARGE",
+    "isin": "INE0KBH01020",
+    "company": "Blue Jet Healthcare Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BLUESTARCO": {
+    "security_id": "8311",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "LARGE",
+    "isin": "INE472A01039",
+    "company": "Blue Star Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BBTC": {
+    "security_id": "380",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE050A01025",
+    "company": "Bombay Burmah Trading Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BOSCHLTD": {
+    "security_id": "2181",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "LARGE",
+    "isin": "INE323A01026",
+    "company": "Bosch Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "FIRSTCRY": {
+    "security_id": "24814",
+    "sector": "Consumer Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE02RE01045",
+    "company": "Brainbees Solutions Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BRIGADE": {
+    "security_id": "15184",
+    "sector": "Realty",
+    "mcap_bucket": "LARGE",
+    "isin": "INE791I01019",
+    "company": "Brigade Enterprises Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "BRITANNIA": {
+    "security_id": "547",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE216A01030",
+    "company": "Britannia Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MAPMYINDIA": {
+    "security_id": "7227",
+    "sector": "Information Technology",
+    "mcap_bucket": "LARGE",
+    "isin": "INE0BV301023",
+    "company": "C.E. Info Systems Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CCL": {
+    "security_id": "11452",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE421D01022",
+    "company": "CCL Products (I) Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CESC": {
+    "security_id": "628",
+    "sector": "Power",
+    "mcap_bucket": "LARGE",
+    "isin": "INE486A01021",
+    "company": "CESC Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CGPOWER": {
+    "security_id": "760",
+    "sector": "Capital Goods",
+    "mcap_bucket": "LARGE",
+    "isin": "INE067A01029",
+    "company": "CG Power and Industrial Solutions Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CIEINDIA": {
+    "security_id": "14937",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "LARGE",
+    "isin": "INE536H01010",
+    "company": "CIE Automotive India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CRISIL": {
+    "security_id": "757",
+    "sector": "Financial Services",
+    "mcap_bucket": "LARGE",
+    "isin": "INE007A01025",
+    "company": "CRISIL Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CANFINHOME": {
+    "security_id": "583",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE477A01020",
+    "company": "Can Fin Homes Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CANBK": {
+    "security_id": "10794",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE476A01022",
+    "company": "Canara Bank",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "CANHLIFE": {
+    "security_id": "759477",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE01TY01017",
+    "company": "Canara HSBC Life Insurance Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CAPLIPOINT": {
+    "security_id": "3906",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE475E01026",
+    "company": "Caplin Point Laboratories Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CGCL": {
+    "security_id": "20329",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE180C01042",
+    "company": "Capri Global Capital Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CARBORUNIV": {
+    "security_id": "595",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE120A01034",
+    "company": "Carborundum Universal Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CARTRADE": {
+    "security_id": "5407",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE290S01011",
+    "company": "Cartrade Tech Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CASTROLIND": {
+    "security_id": "1250",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "MID",
+    "isin": "INE172A01027",
+    "company": "Castrol India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CEATLTD": {
+    "security_id": "15254",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE482A01020",
+    "company": "Ceat Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CEMPRO": {
+    "security_id": "5622",
+    "sector": "Construction",
+    "mcap_bucket": "MID",
+    "isin": "INE686A01026",
+    "company": "Cemindia Projects Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CENTRALBK": {
+    "security_id": "14894",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE483A01010",
+    "company": "Central Bank of India",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CDSL": {
+    "security_id": "21174",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE736A01011",
+    "company": "Central Depository Services (India) Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CHALET": {
+    "security_id": "8546",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE427F01016",
+    "company": "Chalet Hotels Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CHAMBLFERT": {
+    "security_id": "637",
+    "sector": "Chemicals",
+    "mcap_bucket": "MID",
+    "isin": "INE085A01013",
+    "company": "Chambal Fertilizers & Chemicals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CHENNPETRO": {
+    "security_id": "2049",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "MID",
+    "isin": "INE178A01016",
+    "company": "Chennai Petroleum Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CHOICEIN": {
+    "security_id": "8866",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE102B01014",
+    "company": "Choice International Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CHOLAHLDNG": {
+    "security_id": "21740",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE149A01033",
+    "company": "Cholamandalam Financial Holdings Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CHOLAFIN": {
+    "security_id": "685",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE121A01024",
+    "company": "Cholamandalam Investment and Finance Company Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "CIPLA": {
+    "security_id": "694",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE059A01026",
+    "company": "Cipla Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CUB": {
+    "security_id": "5701",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE491A01021",
+    "company": "City Union Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CLEAN": {
+    "security_id": "5049",
+    "sector": "Chemicals",
+    "mcap_bucket": "MID",
+    "isin": "INE227W01023",
+    "company": "Clean Science and Technology Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "COALINDIA": {
+    "security_id": "20374",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "MID",
+    "isin": "INE522F01014",
+    "company": "Coal India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "COCHINSHIP": {
+    "security_id": "21508",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE704P01025",
+    "company": "Cochin Shipyard Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "COFORGE": {
+    "security_id": "11543",
+    "sector": "Information Technology",
+    "mcap_bucket": "MID",
+    "isin": "INE591G01025",
+    "company": "Coforge Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "COHANCE": {
+    "security_id": "17945",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE03QK01018",
+    "company": "Cohance Lifesciences Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "COLPAL": {
+    "security_id": "15141",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE259A01022",
+    "company": "Colgate Palmolive (India) Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CAMS": {
+    "security_id": "342",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE596I01020",
+    "company": "Computer Age Management Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CONCORDBIO": {
+    "security_id": "18060",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE338H01029",
+    "company": "Concord Biotech Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CONCOR": {
+    "security_id": "4749",
+    "sector": "Services",
+    "mcap_bucket": "MID",
+    "isin": "INE111A01025",
+    "company": "Container Corporation of India Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "COROMANDEL": {
+    "security_id": "739",
+    "sector": "Chemicals",
+    "mcap_bucket": "MID",
+    "isin": "INE169A01031",
+    "company": "Coromandel International Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CRAFTSMAN": {
+    "security_id": "2854",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE00LO01017",
+    "company": "Craftsman Automation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CREDITACC": {
+    "security_id": "4421",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE741K01010",
+    "company": "CreditAccess Grameen Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CROMPTON": {
+    "security_id": "17094",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "MID",
+    "isin": "INE299U01018",
+    "company": "Crompton Greaves Consumer Electricals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CUMMINSIND": {
+    "security_id": "1901",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE298A01020",
+    "company": "Cummins India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "CYIENT": {
+    "security_id": "5748",
+    "sector": "Information Technology",
+    "mcap_bucket": "MID",
+    "isin": "INE136B01020",
+    "company": "Cyient Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DCMSHRIRAM": {
+    "security_id": "811",
+    "sector": "Diversified",
+    "mcap_bucket": "MID",
+    "isin": "INE499A01024",
+    "company": "DCM Shriram Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DLF": {
+    "security_id": "14732",
+    "sector": "Realty",
+    "mcap_bucket": "MID",
+    "isin": "INE271C01023",
+    "company": "DLF Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DOMS": {
+    "security_id": "20551",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE321T01012",
+    "company": "DOMS Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DABUR": {
+    "security_id": "772",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE016A01026",
+    "company": "Dabur India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DALBHARAT": {
+    "security_id": "8075",
+    "sector": "Construction Materials",
+    "mcap_bucket": "MID",
+    "isin": "INE00R701025",
+    "company": "Dalmia Bharat Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DATAPATTNS": {
+    "security_id": "7358",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE0IX101010",
+    "company": "Data Patterns (India) Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DEEPAKFERT": {
+    "security_id": "827",
+    "sector": "Chemicals",
+    "mcap_bucket": "MID",
+    "isin": "INE501A01019",
+    "company": "Deepak Fertilisers & Petrochemicals Corp. Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DEEPAKNTR": {
+    "security_id": "19943",
+    "sector": "Chemicals",
+    "mcap_bucket": "MID",
+    "isin": "INE288B01029",
+    "company": "Deepak Nitrite Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DELHIVERY": {
+    "security_id": "9599",
+    "sector": "Services",
+    "mcap_bucket": "MID",
+    "isin": "INE148O01028",
+    "company": "Delhivery Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DEVYANI": {
+    "security_id": "5373",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE872J01023",
+    "company": "Devyani International Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DIVISLAB": {
+    "security_id": "10940",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE361B01024",
+    "company": "Divi's Laboratories Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DIXON": {
+    "security_id": "21690",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "MID",
+    "isin": "INE935N01020",
+    "company": "Dixon Technologies (India) Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LALPATHLAB": {
+    "security_id": "11654",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE600L01024",
+    "company": "Dr. Lal Path Labs Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DRREDDY": {
+    "security_id": "881",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE089A01031",
+    "company": "Dr. Reddy's Laboratories Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "DUMMYVEDL1": {
+    "security_id": null,
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "DU1205A01025",
+    "company": "Dummy Vedanta Ltd. 1",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DUMMYVEDL2": {
+    "security_id": null,
+    "sector": "Power",
+    "mcap_bucket": "MID",
+    "isin": "DU2205A01025",
+    "company": "Dummy Vedanta Ltd. 2",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DUMMYVEDL3": {
+    "security_id": null,
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "MID",
+    "isin": "DU3205A01025",
+    "company": "Dummy Vedanta Ltd. 3",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "DUMMYVEDL4": {
+    "security_id": null,
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "DU4205A01025",
+    "company": "Dummy Vedanta Ltd. 4",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "EIDPARRY": {
+    "security_id": "916",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE126A01031",
+    "company": "E.I.D. Parry (India) Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "EIHOTEL": {
+    "security_id": "919",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE230A01023",
+    "company": "EIH Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "EICHERMOT": {
+    "security_id": "910",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE066A01021",
+    "company": "Eicher Motors Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ELECON": {
+    "security_id": "13643",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE205B01031",
+    "company": "Elecon Engineering Co. Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ELGIEQUIP": {
+    "security_id": "937",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE285A01027",
+    "company": "Elgi Equipments Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "EMAMILTD": {
+    "security_id": "13517",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE548C01032",
+    "company": "Emami Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "EMCURE": {
+    "security_id": "24398",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE168P01015",
+    "company": "Emcure Pharmaceuticals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "EMMVEE": {
+    "security_id": "759728",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE1C6T01020",
+    "company": "Emmvee Photovoltaic Power Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ENDURANCE": {
+    "security_id": "18822",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE913H01037",
+    "company": "Endurance Technologies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ENGINERSIN": {
+    "security_id": "4907",
+    "sector": "Construction",
+    "mcap_bucket": "MID",
+    "isin": "INE510A01028",
+    "company": "Engineers India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ERIS": {
+    "security_id": "21154",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE406M01024",
+    "company": "Eris Lifesciences Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ESCORTS": {
+    "security_id": "958",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE042A01014",
+    "company": "Escorts Kubota Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ETERNAL": {
+    "security_id": "5097",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE758T01015",
+    "company": "Eternal Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "EXIDEIND": {
+    "security_id": "676",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE302A01020",
+    "company": "Exide Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NYKAA": {
+    "security_id": "6545",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE388Y01029",
+    "company": "FSN E-Commerce Ventures Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "FEDERALBNK": {
+    "security_id": "1023",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE171A01029",
+    "company": "Federal Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "FACT": {
+    "security_id": "1008",
+    "sector": "Chemicals",
+    "mcap_bucket": "MID",
+    "isin": "INE188A01015",
+    "company": "Fertilisers and Chemicals Travancore Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "FINCABLES": {
+    "security_id": "1038",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE235A01022",
+    "company": "Finolex Cables Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "FSL": {
+    "security_id": "14304",
+    "sector": "Services",
+    "mcap_bucket": "MID",
+    "isin": "INE684F01012",
+    "company": "Firstsource Solutions Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "FIVESTAR": {
+    "security_id": "12032",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE128S01021",
+    "company": "Five-Star Business Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "FORCEMOT": {
+    "security_id": "11573",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE451A01017",
+    "company": "Force Motors Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "FORTIS": {
+    "security_id": "14592",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE061F01013",
+    "company": "Fortis Healthcare Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GAIL": {
+    "security_id": "4717",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "MID",
+    "isin": "INE129A01019",
+    "company": "GAIL (India) Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "GVT&D": {
+    "security_id": "16783",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE200A01026",
+    "company": "GE Vernova T&D India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GMRAIRPORT": {
+    "security_id": "13528",
+    "sector": "Services",
+    "mcap_bucket": "MID",
+    "isin": "INE776C01039",
+    "company": "GMR Airports Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GABRIEL": {
+    "security_id": "1085",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE524A01029",
+    "company": "Gabriel India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GALLANTT": {
+    "security_id": "13337",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE297H01019",
+    "company": "Gallantt Ispat Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GRSE": {
+    "security_id": "5475",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE382Z01011",
+    "company": "Garden Reach Shipbuilders & Engineers Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GICRE": {
+    "security_id": "277",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE481Y01014",
+    "company": "General Insurance Corporation of India",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GILLETTE": {
+    "security_id": "1576",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE322A01010",
+    "company": "Gillette India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GLAND": {
+    "security_id": "1186",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE068V01023",
+    "company": "Gland Pharma Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GLAXO": {
+    "security_id": "1153",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE159A01016",
+    "company": "Glaxosmithkline Pharmaceuticals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GLENMARK": {
+    "security_id": "7406",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE935A01035",
+    "company": "Glenmark Pharmaceuticals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MEDANTA": {
+    "security_id": "11956",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE474Q01031",
+    "company": "Global Health Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GODIGIT": {
+    "security_id": "23799",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE03JT01014",
+    "company": "Go Digit General Insurance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GPIL": {
+    "security_id": "13409",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE177H01039",
+    "company": "Godawari Power & Ispat Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GODFRYPHLP": {
+    "security_id": "1181",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE260B01028",
+    "company": "Godfrey Phillips India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GODREJCP": {
+    "security_id": "10099",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE102D01028",
+    "company": "Godrej Consumer Products Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "GODREJIND": {
+    "security_id": "10925",
+    "sector": "Diversified",
+    "mcap_bucket": "MID",
+    "isin": "INE233A01035",
+    "company": "Godrej Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GODREJPROP": {
+    "security_id": "17875",
+    "sector": "Realty",
+    "mcap_bucket": "MID",
+    "isin": "INE484J01027",
+    "company": "Godrej Properties Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GRANULES": {
+    "security_id": "11872",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE101D01020",
+    "company": "Granules India Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "GRAPHITE": {
+    "security_id": "592",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE371A01025",
+    "company": "Graphite India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GRASIM": {
+    "security_id": "1232",
+    "sector": "Construction Materials",
+    "mcap_bucket": "MID",
+    "isin": "INE047A01021",
+    "company": "Grasim Industries Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "GRAVITA": {
+    "security_id": "20534",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "INE024L01027",
+    "company": "Gravita India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GESHIP": {
+    "security_id": "13776",
+    "sector": "Services",
+    "mcap_bucket": "MID",
+    "isin": "INE017A01032",
+    "company": "Great Eastern Shipping Co. Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "FLUOROCHEM": {
+    "security_id": "13750",
+    "sector": "Chemicals",
+    "mcap_bucket": "MID",
+    "isin": "INE09N301011",
+    "company": "Gujarat Fluorochemicals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "GMDCLTD": {
+    "security_id": "5204",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "INE131A01031",
+    "company": "Gujarat Mineral Development Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HEG": {
+    "security_id": "1336",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE545A01024",
+    "company": "H.E.G. Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HBLENGINE": {
+    "security_id": "13966",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE292B01021",
+    "company": "HBL Engineering Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HCLTECH": {
+    "security_id": "7229",
+    "sector": "Information Technology",
+    "mcap_bucket": "MID",
+    "isin": "INE860A01027",
+    "company": "HCL Technologies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HDBFS": {
+    "security_id": "757772",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE756I01012",
+    "company": "HDB Financial Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HDFCAMC": {
+    "security_id": "4244",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE127D01025",
+    "company": "HDFC Asset Management Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HDFCBANK": {
+    "security_id": "1333",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE040A01034",
+    "company": "HDFC Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HDFCLIFE": {
+    "security_id": "467",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE795G01014",
+    "company": "HDFC Life Insurance Company Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "HFCL": {
+    "security_id": "21951",
+    "sector": "Telecommunication",
+    "mcap_bucket": "MID",
+    "isin": "INE548A01028",
+    "company": "HFCL Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HAVELLS": {
+    "security_id": "9819",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "MID",
+    "isin": "INE176B01034",
+    "company": "Havells India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HEROMOTOCO": {
+    "security_id": "1348",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE158A01026",
+    "company": "Hero MotoCorp Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "HEXT": {
+    "security_id": "29666",
+    "sector": "Information Technology",
+    "mcap_bucket": "MID",
+    "isin": "INE093A01041",
+    "company": "Hexaware Technologies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HSCL": {
+    "security_id": "14334",
+    "sector": "Chemicals",
+    "mcap_bucket": "MID",
+    "isin": "INE019C01026",
+    "company": "Himadri Speciality Chemical Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HINDALCO": {
+    "security_id": "1363",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "INE038A01020",
+    "company": "Hindalco Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HAL": {
+    "security_id": "2303",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE066F01020",
+    "company": "Hindustan Aeronautics Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HINDCOPPER": {
+    "security_id": "17939",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "INE531E01026",
+    "company": "Hindustan Copper Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HINDPETRO": {
+    "security_id": "1406",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "MID",
+    "isin": "INE094A01015",
+    "company": "Hindustan Petroleum Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HINDUNILVR": {
+    "security_id": "1394",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE030A01027",
+    "company": "Hindustan Unilever Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "HINDZINC": {
+    "security_id": "1424",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "INE267A01025",
+    "company": "Hindustan Zinc Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "POWERINDIA": {
+    "security_id": "18457",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE07Y701011",
+    "company": "Hitachi Energy India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HOMEFIRST": {
+    "security_id": "2056",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE481N01025",
+    "company": "Home First Finance Company India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HONASA": {
+    "security_id": "19813",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE0J5401028",
+    "company": "Honasa Consumer Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HONAUT": {
+    "security_id": "3417",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE671A01010",
+    "company": "Honeywell Automation India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HUDCO": {
+    "security_id": "20825",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE031A01017",
+    "company": "Housing & Urban Development Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "HYUNDAI": {
+    "security_id": "25844",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE0V6F01027",
+    "company": "Hyundai Motor India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ICICIBANK": {
+    "security_id": "4963",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE090A01021",
+    "company": "ICICI Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ICICIGI": {
+    "security_id": "21770",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE765G01017",
+    "company": "ICICI Lombard General Insurance Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ICICIAMC": {
+    "security_id": "760407",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE346A01027",
+    "company": "ICICI Prudential Asset Management Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ICICIPRULI": {
+    "security_id": "18652",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE726G01019",
+    "company": "ICICI Prudential Life Insurance Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IDBI": {
+    "security_id": "1476",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE008A01015",
+    "company": "IDBI Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IDFCFIRSTB": {
+    "security_id": "11184",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE092T01019",
+    "company": "IDFC First Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IFCI": {
+    "security_id": "1491",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE039A01010",
+    "company": "IFCI Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IIFL": {
+    "security_id": "11809",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE530B01024",
+    "company": "IIFL Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IRB": {
+    "security_id": "15313",
+    "sector": "Construction",
+    "mcap_bucket": "MID",
+    "isin": "INE821I01022",
+    "company": "IRB Infrastructure Developers Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IRCON": {
+    "security_id": "4986",
+    "sector": "Construction",
+    "mcap_bucket": "MID",
+    "isin": "INE962Y01021",
+    "company": "IRCON International Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "ITCHOTELS": {
+    "security_id": "29251",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE379A01028",
+    "company": "ITC Hotels Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ITC": {
+    "security_id": "1660",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE154A01025",
+    "company": "ITC Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ITI": {
+    "security_id": "1675",
+    "sector": "Telecommunication",
+    "mcap_bucket": "MID",
+    "isin": "INE248A01017",
+    "company": "ITI Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "INDGN": {
+    "security_id": "23693",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE065X01017",
+    "company": "Indegene Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "INDIACEM": {
+    "security_id": "1515",
+    "sector": "Construction Materials",
+    "mcap_bucket": "MID",
+    "isin": "INE383A01012",
+    "company": "India Cements Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "INDIAMART": {
+    "security_id": "10726",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE933S01016",
+    "company": "Indiamart Intermesh Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "INDIANB": {
+    "security_id": "14309",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE562A01011",
+    "company": "Indian Bank",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IEX": {
+    "security_id": "220",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE022Q01020",
+    "company": "Indian Energy Exchange Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "INDHOTEL": {
+    "security_id": "1512",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE053A01029",
+    "company": "Indian Hotels Co. Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IOC": {
+    "security_id": "1624",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "MID",
+    "isin": "INE242A01010",
+    "company": "Indian Oil Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IOB": {
+    "security_id": "9348",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE565A01014",
+    "company": "Indian Overseas Bank",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IRCTC": {
+    "security_id": "13611",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE335Y01020",
+    "company": "Indian Railway Catering And Tourism Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IRFC": {
+    "security_id": "2029",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE053F01010",
+    "company": "Indian Railway Finance Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IREDA": {
+    "security_id": "20261",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE202E01016",
+    "company": "Indian Renewable Energy Development Agency Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "IGL": {
+    "security_id": "11262",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "MID",
+    "isin": "INE203G01027",
+    "company": "Indraprastha Gas Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "INDUSTOWER": {
+    "security_id": "29135",
+    "sector": "Telecommunication",
+    "mcap_bucket": "MID",
+    "isin": "INE121J01017",
+    "company": "Indus Towers Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "INDUSINDBK": {
+    "security_id": "5258",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE095A01012",
+    "company": "IndusInd Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NAUKRI": {
+    "security_id": "13751",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE663F01032",
+    "company": "Info Edge (India) Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "INFY": {
+    "security_id": "1594",
+    "sector": "Information Technology",
+    "mcap_bucket": "MID",
+    "isin": "INE009A01021",
+    "company": "Infosys Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "INOXWIND": {
+    "security_id": "7852",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE066P01011",
+    "company": "Inox Wind Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "INTELLECT": {
+    "security_id": "5926",
+    "sector": "Information Technology",
+    "mcap_bucket": "MID",
+    "isin": "INE306R01017",
+    "company": "Intellect Design Arena Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "INDIGO": {
+    "security_id": "11195",
+    "sector": "Services",
+    "mcap_bucket": "MID",
+    "isin": "INE646L01027",
+    "company": "InterGlobe Aviation Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "IGIL": {
+    "security_id": "28378",
+    "sector": "Services",
+    "mcap_bucket": "MID",
+    "isin": "INE0Q9301021",
+    "company": "International Gemological Institute Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IKS": {
+    "security_id": "28125",
+    "sector": "Information Technology",
+    "mcap_bucket": "MID",
+    "isin": "INE115Q01022",
+    "company": "Inventurus Knowledge Solutions Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IPCALAB": {
+    "security_id": "1633",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE571A01038",
+    "company": "Ipca Laboratories Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "JBCHEPHARM": {
+    "security_id": "1726",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE572A01036",
+    "company": "J.B. Chemicals & Pharmaceuticals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JKCEMENT": {
+    "security_id": "13270",
+    "sector": "Construction Materials",
+    "mcap_bucket": "MID",
+    "isin": "INE823G01014",
+    "company": "J.K. Cement Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JBMA": {
+    "security_id": "11655",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE927D01051",
+    "company": "JBM Auto Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JKTYRE": {
+    "security_id": "14435",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "MID",
+    "isin": "INE573A01042",
+    "company": "JK Tyre & Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JMFINANCIL": {
+    "security_id": "13637",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE780C01023",
+    "company": "JM Financial Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JSWCEMENT": {
+    "security_id": "758460",
+    "sector": "Construction Materials",
+    "mcap_bucket": "MID",
+    "isin": "INE718I01012",
+    "company": "JSW Cement Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JSWDULUX": {
+    "security_id": "1467",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "MID",
+    "isin": "INE133A01011",
+    "company": "JSW Dulux Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JSWENERGY": {
+    "security_id": "17869",
+    "sector": "Power",
+    "mcap_bucket": "MID",
+    "isin": "INE121E01018",
+    "company": "JSW Energy Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JSWINFRA": {
+    "security_id": "19020",
+    "sector": "Services",
+    "mcap_bucket": "MID",
+    "isin": "INE880J01026",
+    "company": "JSW Infrastructure Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JSWSTEEL": {
+    "security_id": "11723",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "INE019A01038",
+    "company": "JSW Steel Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "JAINREC": {
+    "security_id": "759244",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "INE0YD401026",
+    "company": "Jain Resource Recycling Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JPPOWER": {
+    "security_id": "11763",
+    "sector": "Power",
+    "mcap_bucket": "MID",
+    "isin": "INE351F01018",
+    "company": "Jaiprakash Power Ventures Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "J&KBANK": {
+    "security_id": "5633",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE168A01041",
+    "company": "Jammu & Kashmir Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JINDALSAW": {
+    "security_id": "3024",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE324A01032",
+    "company": "Jindal Saw Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JSL": {
+    "security_id": "11236",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "INE220G01021",
+    "company": "Jindal Stainless Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JINDALSTEL": {
+    "security_id": "6733",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "MID",
+    "isin": "INE749A01030",
+    "company": "Jindal Steel Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JIOFIN": {
+    "security_id": "18143",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE758E01017",
+    "company": "Jio Financial Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JUBLFOOD": {
+    "security_id": "18096",
+    "sector": "Consumer Services",
+    "mcap_bucket": "MID",
+    "isin": "INE797F01020",
+    "company": "Jubilant Foodworks Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JUBLINGREA": {
+    "security_id": "2783",
+    "sector": "Chemicals",
+    "mcap_bucket": "MID",
+    "isin": "INE0BY001018",
+    "company": "Jubilant Ingrevia Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JUBLPHARMA": {
+    "security_id": "3637",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE700A01033",
+    "company": "Jubilant Pharmova Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JWL": {
+    "security_id": "20224",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE209L01016",
+    "company": "Jupiter Wagons Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "JYOTICNC": {
+    "security_id": "21334",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE980O01024",
+    "company": "Jyoti CNC Automation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KPRMILL": {
+    "security_id": "14912",
+    "sector": "Textiles",
+    "mcap_bucket": "MID",
+    "isin": "INE930H01031",
+    "company": "K.P.R. Mill Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KEI": {
+    "security_id": "13310",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE878B01027",
+    "company": "KEI Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KPITTECH": {
+    "security_id": "9683",
+    "sector": "Information Technology",
+    "mcap_bucket": "MID",
+    "isin": "INE04I401011",
+    "company": "KPIT Technologies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KAJARIACER": {
+    "security_id": "1808",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "MID",
+    "isin": "INE217B01036",
+    "company": "Kajaria Ceramics Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KPIL": {
+    "security_id": "1814",
+    "sector": "Construction",
+    "mcap_bucket": "MID",
+    "isin": "INE220B01022",
+    "company": "Kalpataru Projects International Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KALYANKJIL": {
+    "security_id": "2955",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "MID",
+    "isin": "INE303R01014",
+    "company": "Kalyan Jewellers India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KARURVYSYA": {
+    "security_id": "1838",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE036D01028",
+    "company": "Karur Vysya Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KAYNES": {
+    "security_id": "12092",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE918Z01012",
+    "company": "Kaynes Technology India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KEC": {
+    "security_id": "13260",
+    "sector": "Construction",
+    "mcap_bucket": "MID",
+    "isin": "INE389H01022",
+    "company": "Kec International Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KFINTECH": {
+    "security_id": "13359",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE138Y01010",
+    "company": "Kfin Technologies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KIRLOSENG": {
+    "security_id": "20936",
+    "sector": "Capital Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE146L01010",
+    "company": "Kirloskar Oil Eng Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KOTAKBANK": {
+    "security_id": "1922",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE237A01036",
+    "company": "Kotak Mahindra Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "KIMS": {
+    "security_id": "4847",
+    "sector": "Healthcare",
+    "mcap_bucket": "MID",
+    "isin": "INE967H01025",
+    "company": "Krishna Institute of Medical Sciences Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LTF": {
+    "security_id": "24948",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE498L01015",
+    "company": "L&T Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LTTS": {
+    "security_id": "18564",
+    "sector": "Information Technology",
+    "mcap_bucket": "MID",
+    "isin": "INE010V01017",
+    "company": "L&T Technology Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LGEINDIA": {
+    "security_id": "760213",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "MID",
+    "isin": "INE324D01010",
+    "company": "LG Electronics India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LICHSGFIN": {
+    "security_id": "1997",
+    "sector": "Financial Services",
+    "mcap_bucket": "MID",
+    "isin": "INE115A01026",
+    "company": "LIC Housing Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LTFOODS": {
+    "security_id": "13816",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "MID",
+    "isin": "INE818H01020",
+    "company": "LT Foods Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LTM": {
+    "security_id": "17818",
+    "sector": "Information Technology",
+    "mcap_bucket": "MID",
+    "isin": "INE214T01019",
+    "company": "LTM Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LT": {
+    "security_id": "11483",
+    "sector": "Construction",
+    "mcap_bucket": "SMALL",
+    "isin": "INE018A01030",
+    "company": "Larsen & Toubro Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LATENTVIEW": {
+    "security_id": "6818",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0I7C01011",
+    "company": "Latent View Analytics Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LAURUSLABS": {
+    "security_id": "19234",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE947Q01028",
+    "company": "Laurus Labs Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "THELEELA": {
+    "security_id": "757014",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0AQ201015",
+    "company": "Leela Palaces Hotels & Resorts Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LEMONTREE": {
+    "security_id": "2606",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE970X01018",
+    "company": "Lemon Tree Hotels Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LENSKART": {
+    "security_id": "759605",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE956O01016",
+    "company": "Lenskart Solutions Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LICI": {
+    "security_id": "9480",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0J1Y01017",
+    "company": "Life Insurance Corporation of India",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "LINDEINDIA": {
+    "security_id": "1627",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE473A01011",
+    "company": "Linde India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LLOYDSME": {
+    "security_id": "17313",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "SMALL",
+    "isin": "INE281B01032",
+    "company": "Lloyds Metals And Energy Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LODHA": {
+    "security_id": "3220",
+    "sector": "Realty",
+    "mcap_bucket": "SMALL",
+    "isin": "INE670K01029",
+    "company": "Lodha Developers Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "LUPIN": {
+    "security_id": "10440",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE326A01037",
+    "company": "Lupin Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MMTC": {
+    "security_id": "17957",
+    "sector": "Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE123F01029",
+    "company": "MMTC Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MRF": {
+    "security_id": "2277",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE883A01011",
+    "company": "MRF Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "MGL": {
+    "security_id": "17534",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "SMALL",
+    "isin": "INE002S01010",
+    "company": "Mahanagar Gas Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "M&MFIN": {
+    "security_id": "20050",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE774D01024",
+    "company": "Mahindra & Mahindra Financial Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "M&M": {
+    "security_id": "2031",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE101A01026",
+    "company": "Mahindra & Mahindra Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MANAPPURAM": {
+    "security_id": "19061",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE522D01027",
+    "company": "Manappuram Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MRPL": {
+    "security_id": "2283",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "SMALL",
+    "isin": "INE103A01014",
+    "company": "Mangalore Refinery & Petrochemicals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MANKIND": {
+    "security_id": "15380",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE634S01028",
+    "company": "Mankind Pharma Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MARICO": {
+    "security_id": "4067",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE196A01026",
+    "company": "Marico Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MARUTI": {
+    "security_id": "10999",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE585B01010",
+    "company": "Maruti Suzuki India Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "MFSL": {
+    "security_id": "2142",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE180A01020",
+    "company": "Max Financial Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MAXHEALTH": {
+    "security_id": "22377",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE027H01010",
+    "company": "Max Healthcare Institute Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MAZDOCK": {
+    "security_id": "509",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE249Z01020",
+    "company": "Mazagoan Dock Shipbuilders Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "MEESHO": {
+    "security_id": "760229",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0VDM01015",
+    "company": "Meesho Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MINDACORP": {
+    "security_id": "25897",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE842C01021",
+    "company": "Minda Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MSUMI": {
+    "security_id": "8596",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0FS801015",
+    "company": "Motherson Sumi Wiring India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MOTILALOFS": {
+    "security_id": "14947",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE338I01027",
+    "company": "Motilal Oswal Financial Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MPHASIS": {
+    "security_id": "4503",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE356A01018",
+    "company": "MphasiS Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MCX": {
+    "security_id": "31181",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE745G01043",
+    "company": "Multi Commodity Exchange of India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MUTHOOTFIN": {
+    "security_id": "23650",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE414G01012",
+    "company": "Muthoot Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NATCOPHARM": {
+    "security_id": "3918",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE987B01026",
+    "company": "NATCO Pharma Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NBCC": {
+    "security_id": "31415",
+    "sector": "Construction",
+    "mcap_bucket": "SMALL",
+    "isin": "INE095N01031",
+    "company": "NBCC (India) Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NCC": {
+    "security_id": "2319",
+    "sector": "Construction",
+    "mcap_bucket": "SMALL",
+    "isin": "INE868B01028",
+    "company": "NCC Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NHPC": {
+    "security_id": "17400",
+    "sector": "Power",
+    "mcap_bucket": "SMALL",
+    "isin": "INE848E01016",
+    "company": "NHPC Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NLCINDIA": {
+    "security_id": "8585",
+    "sector": "Power",
+    "mcap_bucket": "SMALL",
+    "isin": "INE589A01014",
+    "company": "NLC India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NMDC": {
+    "security_id": "15332",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "SMALL",
+    "isin": "INE584A01023",
+    "company": "NMDC Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NSLNISP": {
+    "security_id": "14180",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0NNS01018",
+    "company": "NMDC Steel Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NTPCGREEN": {
+    "security_id": "27176",
+    "sector": "Power",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0ONG01011",
+    "company": "NTPC Green Energy Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NTPC": {
+    "security_id": "11630",
+    "sector": "Power",
+    "mcap_bucket": "SMALL",
+    "isin": "INE733E01010",
+    "company": "NTPC Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "NH": {
+    "security_id": "11840",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE410P01011",
+    "company": "Narayana Hrudayalaya Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NATIONALUM": {
+    "security_id": "6364",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "SMALL",
+    "isin": "INE139A01034",
+    "company": "National Aluminium Co. Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NAVA": {
+    "security_id": "4014",
+    "sector": "Power",
+    "mcap_bucket": "SMALL",
+    "isin": "INE725A01030",
+    "company": "Nava Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NAVINFLUOR": {
+    "security_id": "14672",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE048G01026",
+    "company": "Navin Fluorine International Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NESTLEIND": {
+    "security_id": "17963",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE239A01024",
+    "company": "Nestle India Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "NETWEB": {
+    "security_id": "17433",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0NT901020",
+    "company": "Netweb Technologies India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NEULANDLAB": {
+    "security_id": "2406",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE794A01010",
+    "company": "Neuland Laboratories Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NEWGEN": {
+    "security_id": "1164",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE619B01017",
+    "company": "Newgen Software Technologies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NAM-INDIA": {
+    "security_id": "357",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE298J01013",
+    "company": "Nippon Life India Asset Management Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NIVABUPA": {
+    "security_id": "27097",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE995S01015",
+    "company": "Niva Bupa Health Insurance Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NUVAMA": {
+    "security_id": "18721",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE531F01023",
+    "company": "Nuvama Wealth Management Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NUVOCO": {
+    "security_id": "5426",
+    "sector": "Construction Materials",
+    "mcap_bucket": "SMALL",
+    "isin": "INE118D01016",
+    "company": "Nuvoco Vistas Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "OBEROIRLTY": {
+    "security_id": "20242",
+    "sector": "Realty",
+    "mcap_bucket": "SMALL",
+    "isin": "INE093I01010",
+    "company": "Oberoi Realty Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ONGC": {
+    "security_id": "2475",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "SMALL",
+    "isin": "INE213A01029",
+    "company": "Oil & Natural Gas Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "OIL": {
+    "security_id": "17438",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "SMALL",
+    "isin": "INE274J01014",
+    "company": "Oil India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "OLAELEC": {
+    "security_id": "24777",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0LXG01040",
+    "company": "Ola Electric Mobility Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "OLECTRA": {
+    "security_id": "10637",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE260D01016",
+    "company": "Olectra Greentech Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PAYTM": {
+    "security_id": "6705",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE982J01020",
+    "company": "One 97 Communications Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ONESOURCE": {
+    "security_id": "29224",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE013P01021",
+    "company": "Onesource Specialty Pharma Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "OFSS": {
+    "security_id": "10738",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE881D01027",
+    "company": "Oracle Financial Services Software Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "POLICYBZR": {
+    "security_id": "6656",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE417T01026",
+    "company": "PB Fintech Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PCBL": {
+    "security_id": "2649",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE602A01031",
+    "company": "PCBL Chemical Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PGEL": {
+    "security_id": "25358",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "SMALL",
+    "isin": "INE457L01029",
+    "company": "PG Electroplast Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PIIND": {
+    "security_id": "24184",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE603J01030",
+    "company": "PI Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "PNBHOUSING": {
+    "security_id": "18908",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE572E01012",
+    "company": "PNB Housing Finance Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "PTCIL": {
+    "security_id": "16682",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE596F01018",
+    "company": "PTC Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PVRINOX": {
+    "security_id": "13147",
+    "sector": "Media Entertainment & Publication",
+    "mcap_bucket": "SMALL",
+    "isin": "INE191H01014",
+    "company": "PVR INOX Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "PAGEIND": {
+    "security_id": "14413",
+    "sector": "Textiles",
+    "mcap_bucket": "SMALL",
+    "isin": "INE761H01022",
+    "company": "Page Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PARADEEP": {
+    "security_id": "9741",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE088F01024",
+    "company": "Paradeep Phosphates Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PATANJALI": {
+    "security_id": "17029",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE619A01035",
+    "company": "Patanjali Foods Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PERSISTENT": {
+    "security_id": "18365",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE262H01021",
+    "company": "Persistent Systems Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PETRONET": {
+    "security_id": "11351",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "SMALL",
+    "isin": "INE347G01014",
+    "company": "Petronet LNG Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PFIZER": {
+    "security_id": "2643",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE182A01018",
+    "company": "Pfizer Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PHOENIXLTD": {
+    "security_id": "14552",
+    "sector": "Realty",
+    "mcap_bucket": "SMALL",
+    "isin": "INE211B01039",
+    "company": "Phoenix Mills Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PWL": {
+    "security_id": "759723",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0LP301011",
+    "company": "Physicswallah Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PIDILITIND": {
+    "security_id": "2664",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE318A01026",
+    "company": "Pidilite Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PINELABS": {
+    "security_id": "759820",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE15B701018",
+    "company": "Pine Labs Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PIRAMALFIN": {
+    "security_id": "759551",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE202B01038",
+    "company": "Piramal Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PPLPHARMA": {
+    "security_id": "11571",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0DK501011",
+    "company": "Piramal Pharma Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "POLYMED": {
+    "security_id": "25718",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE205C01021",
+    "company": "Poly Medicure Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "POLYCAB": {
+    "security_id": "9590",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE455K01017",
+    "company": "Polycab India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "POONAWALLA": {
+    "security_id": "11403",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE511C01022",
+    "company": "Poonawalla Fincorp Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PFC": {
+    "security_id": "14299",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE134E01011",
+    "company": "Power Finance Corporation Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "POWERGRID": {
+    "security_id": "14977",
+    "sector": "Power",
+    "mcap_bucket": "SMALL",
+    "isin": "INE752E01010",
+    "company": "Power Grid Corporation of India Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "PREMIERENE": {
+    "security_id": "25049",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0BS701011",
+    "company": "Premier Energies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "PRESTIGE": {
+    "security_id": "20302",
+    "sector": "Realty",
+    "mcap_bucket": "SMALL",
+    "isin": "INE811K01011",
+    "company": "Prestige Estates Projects Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "PNB": {
+    "security_id": "10666",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE160A01022",
+    "company": "Punjab National Bank",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RRKABEL": {
+    "security_id": "18566",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE777K01022",
+    "company": "R R Kabel Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RBLBANK": {
+    "security_id": "18391",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE976G01028",
+    "company": "RBL Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RECLTD": {
+    "security_id": "15355",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE020B01018",
+    "company": "REC Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RHIM": {
+    "security_id": "31163",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE743M01012",
+    "company": "RHI MAGNESITA INDIA LTD.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RITES": {
+    "security_id": "3761",
+    "sector": "Construction",
+    "mcap_bucket": "SMALL",
+    "isin": "INE320J01015",
+    "company": "RITES Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RADICO": {
+    "security_id": "10990",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE944F01028",
+    "company": "Radico Khaitan Ltd",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RVNL": {
+    "security_id": "9552",
+    "sector": "Construction",
+    "mcap_bucket": "SMALL",
+    "isin": "INE415G01027",
+    "company": "Rail Vikas Nigam Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RAILTEL": {
+    "security_id": "2431",
+    "sector": "Telecommunication",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0DD101019",
+    "company": "Railtel Corporation Of India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RAINBOW": {
+    "security_id": "9408",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE961O01016",
+    "company": "Rainbow Childrens Medicare Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RKFORGE": {
+    "security_id": "11411",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE399G01023",
+    "company": "Ramkrishna Forgings Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "REDINGTON": {
+    "security_id": "14255",
+    "sector": "Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE891D01026",
+    "company": "Redington Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RELIANCE": {
+    "security_id": "2885",
+    "sector": "Oil Gas & Consumable Fuels",
+    "mcap_bucket": "SMALL",
+    "isin": "INE002A01018",
+    "company": "Reliance Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RPOWER": {
+    "security_id": "15259",
+    "sector": "Power",
+    "mcap_bucket": "SMALL",
+    "isin": "INE614G01033",
+    "company": "Reliance Power Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SBFC": {
+    "security_id": "18026",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE423Y01016",
+    "company": "SBFC Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SBICARD": {
+    "security_id": "17971",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE018E01016",
+    "company": "SBI Cards and Payment Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SBILIFE": {
+    "security_id": "21808",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE123W01016",
+    "company": "SBI Life Insurance Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SJVN": {
+    "security_id": "18883",
+    "sector": "Power",
+    "mcap_bucket": "SMALL",
+    "isin": "INE002L01015",
+    "company": "SJVN Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SRF": {
+    "security_id": "3273",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE647A01010",
+    "company": "SRF Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SAGILITY": {
+    "security_id": "27052",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0W2G01015",
+    "company": "Sagility Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SAILIFE": {
+    "security_id": "27839",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE570L01029",
+    "company": "Sai Life Sciences Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SAMMAANCAP": {
+    "security_id": "30125",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE148I01020",
+    "company": "Sammaan Capital Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "MOTHERSON": {
+    "security_id": "4204",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE775A01035",
+    "company": "Samvardhana Motherson International Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "SAPPHIRE": {
+    "security_id": "6718",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE806T01020",
+    "company": "Sapphire Foods India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SARDAEN": {
+    "security_id": "17758",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "SMALL",
+    "isin": "INE385C01021",
+    "company": "Sarda Energy and Minerals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SAREGAMA": {
+    "security_id": "4892",
+    "sector": "Media Entertainment & Publication",
+    "mcap_bucket": "SMALL",
+    "isin": "INE979A01025",
+    "company": "Saregama India Ltd",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SCHAEFFLER": {
+    "security_id": "1011",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE513A01022",
+    "company": "Schaeffler India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SCHNEIDER": {
+    "security_id": "31238",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE839M01018",
+    "company": "Schneider Electric Infrastructure Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SCI": {
+    "security_id": "3048",
+    "sector": "Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE109A01011",
+    "company": "Shipping Corporation of India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SHREECEM": {
+    "security_id": "3103",
+    "sector": "Construction Materials",
+    "mcap_bucket": "SMALL",
+    "isin": "INE070A01015",
+    "company": "Shree Cement Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SHRIRAMFIN": {
+    "security_id": "4306",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE721A01047",
+    "company": "Shriram Finance Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "SHYAMMETL": {
+    "security_id": "4693",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE810G01011",
+    "company": "Shyam Metalics and Energy Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ENRIN": {
+    "security_id": "756871",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE1NPP01017",
+    "company": "Siemens Energy India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SIEMENS": {
+    "security_id": "3150",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE003A01024",
+    "company": "Siemens Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SIGNATURE": {
+    "security_id": "18743",
+    "sector": "Realty",
+    "mcap_bucket": "SMALL",
+    "isin": "INE903U01023",
+    "company": "Signatureglobal (India) Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SOBHA": {
+    "security_id": "13826",
+    "sector": "Realty",
+    "mcap_bucket": "SMALL",
+    "isin": "INE671H01015",
+    "company": "Sobha Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SOLARINDS": {
+    "security_id": "13332",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE343H01029",
+    "company": "Solar Industries India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SONACOMS": {
+    "security_id": "4684",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE073K01018",
+    "company": "Sona BLW Precision Forgings Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "SONATSOFTW": {
+    "security_id": "6596",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE269A01021",
+    "company": "Sonata Software Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "STARHEALTH": {
+    "security_id": "7083",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE575P01011",
+    "company": "Star Health and Allied Insurance Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SBIN": {
+    "security_id": "3045",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE062A01020",
+    "company": "State Bank of India",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SAIL": {
+    "security_id": "2963",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "SMALL",
+    "isin": "INE114A01011",
+    "company": "Steel Authority of India Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "SUMICHEM": {
+    "security_id": "17105",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE258G01013",
+    "company": "Sumitomo Chemical India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SUNPHARMA": {
+    "security_id": "3351",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE044A01036",
+    "company": "Sun Pharmaceutical Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SUNTV": {
+    "security_id": "13404",
+    "sector": "Media Entertainment & Publication",
+    "mcap_bucket": "SMALL",
+    "isin": "INE424H01027",
+    "company": "Sun TV Network Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SUNDARMFIN": {
+    "security_id": "3339",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE660A01013",
+    "company": "Sundaram Finance Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SUPREMEIND": {
+    "security_id": "3363",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE195A01028",
+    "company": "Supreme Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SPLPETRO": {
+    "security_id": "9617",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE663A01033",
+    "company": "Supreme Petrochem Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SUZLON": {
+    "security_id": "12018",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE040H01021",
+    "company": "Suzlon Energy Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SWANCORP": {
+    "security_id": "27095",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE665A01038",
+    "company": "Swan Corp Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SWIGGY": {
+    "security_id": "27066",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE00H001014",
+    "company": "Swiggy Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SYNGENE": {
+    "security_id": "10243",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE398R01022",
+    "company": "Syngene International Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "SYRMA": {
+    "security_id": "10793",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0DYJ01015",
+    "company": "Syrma SGS Technology Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TBOTEK": {
+    "security_id": "23740",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE673O01025",
+    "company": "TBO Tek Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TVSMOTOR": {
+    "security_id": "8479",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE494B01023",
+    "company": "TVS Motor Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TATACAP": {
+    "security_id": "759265",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE976I01016",
+    "company": "Tata Capital Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TATACHEM": {
+    "security_id": "3405",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE092A01019",
+    "company": "Tata Chemicals Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "TATACOMM": {
+    "security_id": "3721",
+    "sector": "Telecommunication",
+    "mcap_bucket": "SMALL",
+    "isin": "INE151A01013",
+    "company": "Tata Communications Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TCS": {
+    "security_id": "11536",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE467B01029",
+    "company": "Tata Consultancy Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TATACONSUM": {
+    "security_id": "3432",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE192A01025",
+    "company": "Tata Consumer Products Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "TATAELXSI": {
+    "security_id": "3411",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE670A01012",
+    "company": "Tata Elxsi Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TATAINVEST": {
+    "security_id": "1621",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE672A01026",
+    "company": "Tata Investment Corporation Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TMCV": {
+    "security_id": "759782",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE1TAE01010",
+    "company": "Tata Motors Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TMPV": {
+    "security_id": "3456",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE155A01022",
+    "company": "Tata Motors Passenger Vehicles Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TATAPOWER": {
+    "security_id": "3426",
+    "sector": "Power",
+    "mcap_bucket": "SMALL",
+    "isin": "INE245A01021",
+    "company": "Tata Power Co. Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TATASTEEL": {
+    "security_id": "3499",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "SMALL",
+    "isin": "INE081A01020",
+    "company": "Tata Steel Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "TATATECH": {
+    "security_id": "20293",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE142M01025",
+    "company": "Tata Technologies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TTML": {
+    "security_id": "8954",
+    "sector": "Telecommunication",
+    "mcap_bucket": "SMALL",
+    "isin": "INE517B01013",
+    "company": "Tata Teleservices (Maharashtra) Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TECHM": {
+    "security_id": "13538",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE669C01036",
+    "company": "Tech Mahindra Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TECHNOE": {
+    "security_id": "6445",
+    "sector": "Construction",
+    "mcap_bucket": "SMALL",
+    "isin": "INE285K01026",
+    "company": "Techno Electric & Engineering Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TEGA": {
+    "security_id": "7105",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE011K01018",
+    "company": "Tega Industries Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TEJASNET": {
+    "security_id": "21131",
+    "sector": "Telecommunication",
+    "mcap_bucket": "SMALL",
+    "isin": "INE010J01012",
+    "company": "Tejas Networks Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TENNIND": {
+    "security_id": "759880",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE19RI01016",
+    "company": "Tenneco Clean Air India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "NIACL": {
+    "security_id": "399",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE470Y01017",
+    "company": "The New India Assurance Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "RAMCOCEM": {
+    "security_id": "2043",
+    "sector": "Construction Materials",
+    "mcap_bucket": "SMALL",
+    "isin": "INE331A01037",
+    "company": "The Ramco Cements Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "THERMAX": {
+    "security_id": "3475",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE152A01029",
+    "company": "Thermax Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TIMKEN": {
+    "security_id": "14198",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE325A01013",
+    "company": "Timken India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TITAGARH": {
+    "security_id": "15414",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE615H01020",
+    "company": "Titagarh Rail Systems Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TITAN": {
+    "security_id": "3506",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "SMALL",
+    "isin": "INE280A01028",
+    "company": "Titan Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TORNTPHARM": {
+    "security_id": "3518",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE685A01028",
+    "company": "Torrent Pharmaceuticals Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TORNTPOWER": {
+    "security_id": "13786",
+    "sector": "Power",
+    "mcap_bucket": "SMALL",
+    "isin": "INE813H01021",
+    "company": "Torrent Power Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TARIL": {
+    "security_id": "15174",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE763I01026",
+    "company": "Transformers And Rectifiers (India) Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TRAVELFOOD": {
+    "security_id": "757545",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE103V01028",
+    "company": "Travel Food Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TRENT": {
+    "security_id": "1964",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE849A01020",
+    "company": "Trent Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TRIDENT": {
+    "security_id": "9685",
+    "sector": "Textiles",
+    "mcap_bucket": "SMALL",
+    "isin": "INE064C01022",
+    "company": "Trident Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TRITURBINE": {
+    "security_id": "25584",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE152M01016",
+    "company": "Triveni Turbine Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "TIINDIA": {
+    "security_id": "312",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE974X01010",
+    "company": "Tube Investments of India Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "UCOBANK": {
+    "security_id": "11223",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE691A01018",
+    "company": "UCO Bank",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "UNOMINDA": {
+    "security_id": "14154",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE405E01023",
+    "company": "UNO Minda Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "UPL": {
+    "security_id": "11287",
+    "sector": "Chemicals",
+    "mcap_bucket": "SMALL",
+    "isin": "INE628A01036",
+    "company": "UPL Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "UTIAMC": {
+    "security_id": "527",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE094J01016",
+    "company": "UTI Asset Management Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ULTRACEMCO": {
+    "security_id": "11532",
+    "sector": "Construction Materials",
+    "mcap_bucket": "SMALL",
+    "isin": "INE481G01011",
+    "company": "UltraTech Cement Ltd.",
+    "is_priority": true,
+    "is_suspended": false
+  },
+  "UNIONBANK": {
+    "security_id": "10753",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE692A01016",
+    "company": "Union Bank of India",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "UBL": {
+    "security_id": "16713",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE686F01025",
+    "company": "United Breweries Ltd.",
+    "is_priority": false,
+    "is_suspended": true
+  },
+  "UNITDSPR": {
+    "security_id": "10447",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE854D01024",
+    "company": "United Spirits Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "URBANCO": {
+    "security_id": "759084",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE0CAZ01013",
+    "company": "Urban Company Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "USHAMART": {
+    "security_id": "8840",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE228A01035",
+    "company": "Usha Martin Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "VTL": {
+    "security_id": "2073",
+    "sector": "Textiles",
+    "mcap_bucket": "SMALL",
+    "isin": "INE825A01020",
+    "company": "Vardhman Textiles Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "VBL": {
+    "security_id": "18921",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE200M01039",
+    "company": "Varun Beverages Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "VEDL": {
+    "security_id": "3063",
+    "sector": "Metals & Mining",
+    "mcap_bucket": "SMALL",
+    "isin": "INE205A01025",
+    "company": "Vedanta Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "VIJAYA": {
+    "security_id": "5585",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE043W01024",
+    "company": "Vijaya Diagnostic Centre Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "VMM": {
+    "security_id": "27969",
+    "sector": "Consumer Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE01EA01019",
+    "company": "Vishal Mega Mart Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "IDEA": {
+    "security_id": "14366",
+    "sector": "Telecommunication",
+    "mcap_bucket": "SMALL",
+    "isin": "INE669E01016",
+    "company": "Vodafone Idea Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "VOLTAS": {
+    "security_id": "3718",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "SMALL",
+    "isin": "INE226A01021",
+    "company": "Voltas Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "WAAREEENER": {
+    "security_id": "25907",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE377N01017",
+    "company": "Waaree Energies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "WELCORP": {
+    "security_id": "11821",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE191B01025",
+    "company": "Welspun Corp Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "WELSPUNLIV": {
+    "security_id": "11253",
+    "sector": "Textiles",
+    "mcap_bucket": "SMALL",
+    "isin": "INE192B01031",
+    "company": "Welspun Living Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "WHIRLPOOL": {
+    "security_id": "18011",
+    "sector": "Consumer Durables",
+    "mcap_bucket": "SMALL",
+    "isin": "INE716A01013",
+    "company": "Whirlpool of India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "WIPRO": {
+    "security_id": "3787",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE075A01022",
+    "company": "Wipro Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "WOCKPHARMA": {
+    "security_id": "7506",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE049B01025",
+    "company": "Wockhardt Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "YESBANK": {
+    "security_id": "11915",
+    "sector": "Financial Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE528G01035",
+    "company": "Yes Bank Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ZFCVINDIA": {
+    "security_id": "16915",
+    "sector": "Automobile and Auto Components",
+    "mcap_bucket": "SMALL",
+    "isin": "INE342J01019",
+    "company": "ZF Commercial Vehicle Control Systems India Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ZEEL": {
+    "security_id": "3812",
+    "sector": "Media Entertainment & Publication",
+    "mcap_bucket": "SMALL",
+    "isin": "INE256A01028",
+    "company": "Zee Entertainment Enterprises Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ZENTEC": {
+    "security_id": "7508",
+    "sector": "Capital Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE251B01027",
+    "company": "Zen Technologies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ZENSARTECH": {
+    "security_id": "1076",
+    "sector": "Information Technology",
+    "mcap_bucket": "SMALL",
+    "isin": "INE520A01027",
+    "company": "Zensar Technolgies Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ZYDUSLIFE": {
+    "security_id": "7929",
+    "sector": "Healthcare",
+    "mcap_bucket": "SMALL",
+    "isin": "INE010B01027",
+    "company": "Zydus Lifesciences Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ZYDUSWELL": {
+    "security_id": "17635",
+    "sector": "Fast Moving Consumer Goods",
+    "mcap_bucket": "SMALL",
+    "isin": "INE768C01028",
+    "company": "Zydus Wellness Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  },
+  "ECLERX": {
+    "security_id": "15179",
+    "sector": "Services",
+    "mcap_bucket": "SMALL",
+    "isin": "INE738I01010",
+    "company": "eClerx Services Ltd.",
+    "is_priority": false,
+    "is_suspended": false
+  }
+}
