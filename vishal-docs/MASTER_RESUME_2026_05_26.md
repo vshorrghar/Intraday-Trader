@@ -297,7 +297,9 @@ This entire document (MASTER_RESUME) at session start. For V3 build specifically
 
 ### Key files added May 26:
 - `vishal-docs/V3_REDESIGN_PROMPT.md` — Full V3 architecture spec with root cause analysis
+- `vishal-docs/V3_CONTEXT_RESPONSE.md` — Complete answers to Opus Part 1 (A-E) questions, paste back to continue V3 build
 - `dashboard/v2/app.html` — New executive dashboard (deployed to CloudFront)
+- `scripts/compute_daily_pnl.py` — patched to include vishal-live-v2 profile
 
 ### What NOT to touch:
 - V1 selector.py (legacy, still used by paper profiles)

@@ -57,10 +57,13 @@ class FnO_Reporter:
         strategies = self.db.get_fno_strategies_for_date(today)
         trades = self.db.get_fno_trades_for_date(today)
 
-        # Compute metrics
-        total_pnl = sum(float(s.get("realized_pnl", 0) or 0) for s in strategies)
-        winning = [s for s in strategies if (s.get("realized_pnl") or 0) > 0]
-        losing = [s for s in strategies if (s.get("realized_pnl") or 0) < 0]
+        # Compute metrics — prefer corrected_pnl over realized_pnl (Bug f77de67 fix)
+        def _get_pnl(s):
+            return float(s.get("corrected_pnl") or s.get("realized_pnl") or 0)
+
+        total_pnl = sum(_get_pnl(s) for s in strategies)
+        winning = [s for s in strategies if _get_pnl(s) > 0]
+        losing = [s for s in strategies if _get_pnl(s) < 0]
         total_count = len(strategies)
         win_count = len(winning)
         loss_count = len(losing)

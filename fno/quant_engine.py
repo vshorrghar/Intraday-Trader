@@ -574,13 +574,14 @@ class Quant_Edge_Engine:
             return weights
 
         # Query strategy-specific win rate from fno_strategies table
+        # Prefer corrected_pnl over realized_pnl (Bug f77de67 data correction)
         try:
             cursor = self.db.conn.cursor()
             cursor.execute(
                 "SELECT COUNT(*) as total, "
-                "SUM(CASE WHEN realized_pnl > 0 THEN 1 ELSE 0 END) as wins "
+                "SUM(CASE WHEN COALESCE(corrected_pnl, realized_pnl) > 0 THEN 1 ELSE 0 END) as wins "
                 "FROM fno_strategies WHERE strategy_type = ? "
-                "AND realized_pnl IS NOT NULL",
+                "AND COALESCE(corrected_pnl, realized_pnl) IS NOT NULL",
                 (strategy_type,),
             )
             row = cursor.fetchone()

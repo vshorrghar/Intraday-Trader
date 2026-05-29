@@ -131,10 +131,10 @@ def _build_fno_history(db: Any) -> dict:
         cursor = db.conn.cursor()
         cursor.execute(
             """SELECT trade_date,
-                      SUM(COALESCE(realized_pnl, 0)) as daily_pnl,
+                      SUM(COALESCE(corrected_pnl, realized_pnl, 0)) as daily_pnl,
                       COUNT(*) as num_strategies,
-                      SUM(CASE WHEN COALESCE(realized_pnl, 0) > 0 THEN 1 ELSE 0 END) as winners,
-                      SUM(CASE WHEN COALESCE(realized_pnl, 0) < 0 THEN 1 ELSE 0 END) as losers
+                      SUM(CASE WHEN COALESCE(corrected_pnl, realized_pnl, 0) > 0 THEN 1 ELSE 0 END) as winners,
+                      SUM(CASE WHEN COALESCE(corrected_pnl, realized_pnl, 0) < 0 THEN 1 ELSE 0 END) as losers
                FROM fno_strategies
                WHERE status IN ('CLOSED', 'FORCE_EXITED', 'STOPPED_OUT', 'EXPIRED', 'PARTIAL_BOOKED')
                GROUP BY trade_date
@@ -177,11 +177,11 @@ def _build_fno_history(db: Any) -> dict:
         cursor.execute(
             """SELECT strategy_type,
                       COUNT(*) as count,
-                      SUM(CASE WHEN COALESCE(realized_pnl, 0) > 0 THEN 1 ELSE 0 END) as wins,
-                      SUM(COALESCE(realized_pnl, 0)) as total_pnl
+                      SUM(CASE WHEN COALESCE(corrected_pnl, realized_pnl, 0) > 0 THEN 1 ELSE 0 END) as wins,
+                      SUM(COALESCE(corrected_pnl, realized_pnl, 0)) as total_pnl
                FROM fno_strategies
                WHERE status IN ('CLOSED', 'FORCE_EXITED', 'STOPPED_OUT', 'EXPIRED', 'PARTIAL_BOOKED')
-                 AND ABS(COALESCE(realized_pnl, 0)) < 50000
+                 AND ABS(COALESCE(corrected_pnl, realized_pnl, 0)) < 50000
                GROUP BY strategy_type"""
         )
         for row in cursor.fetchall():

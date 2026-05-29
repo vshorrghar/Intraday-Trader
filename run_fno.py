@@ -308,40 +308,64 @@ def main() -> None:
         db.close()
         sys.exit(1)
 
-    # ── Phase 9: Strategy selection (V2 rules or V1 LLM) ──
-    # V2: deterministic rule table (no LLM, no Bedrock)
-    # V1: LLM-based selection (original behaviour — unchanged)
-    _fno_selector = getattr(config, "selector", "v1")
-    phase_log(f"Strategy Selection [{_fno_selector.upper()}]", "START")
+    # ── Phase 9: LLM strategy selection ──
+    phase_log("Strategy Selection", "START")
     try:
-        if _fno_selector == "v2":
+        # Check config flag: use rules engine (default) or LLM
+        use_rules = raw_config.get("fno", {}).get("use_rules_engine", True)
+
+        if use_rules:
             from fno.rules_strategy_engine import FnO_Rules_Strategy_Engine
-            strategy_engine = FnO_Rules_Strategy_Engine(config, db, greeks_calc)
-            logger.info("F&O using V2 rules-based strategy engine")
+
+            logger.info("Using RULES-BASED strategy engine (no LLM)")
+            rules_engine = FnO_Rules_Strategy_Engine(config, greeks_calc)
+
+            # Fetch real VIX
+            try:
+                from fetchers.nse_market_movers import fetch_sector_indices
+                sectors = fetch_sector_indices()
+                vix = 15.0
+                for s in sectors:
+                    if "VIX" in s.name.upper():
+                        vix = float(s.last_price)
+                        break
+                logger.info("FnO VIX fetched: %.2f", vix)
+            except Exception as vix_err:
+                vix = 15.0
+                logger.warning("VIX fetch failed, using default 15.0: %s", vix_err)
+
+            strategies = rules_engine.select_strategies(
+                chains=chains,
+                quant_signals=quant_signals,
+                vix=vix,
+                current_time=ist_now(),
+            )
         else:
             from fno.strategy_engine import FnO_Strategy_Engine
-            strategy_engine = FnO_Strategy_Engine(config, db, greeks_calc)
-            logger.info("F&O using V1 LLM strategy engine")
-        # Fetch real VIX from NSE sector indices
-        try:
-            from fetchers.nse_market_movers import fetch_sector_indices
-            sectors = fetch_sector_indices()
-            vix = 15.0
-            for s in sectors:
-                if "VIX" in s.name.upper():
-                    vix = float(s.last_price)
-                    break
-            logger.info("FnO VIX fetched: %.2f", vix)
-        except Exception as vix_err:
-            vix = 15.0
-            logger.warning("VIX fetch failed, using default 15.0: %s", vix_err)
 
-        strategies = strategy_engine.select_strategies(
-            chains=chains,
-            quant_signals=quant_signals,
-            vix=vix,
-            current_time=ist_now(),
-        )
+            logger.info("Using LLM-BASED strategy engine (Bedrock)")
+            strategy_engine = FnO_Strategy_Engine(config, db, greeks_calc)
+
+            # Fetch real VIX from NSE sector indices
+            try:
+                from fetchers.nse_market_movers import fetch_sector_indices
+                sectors = fetch_sector_indices()
+                vix = 15.0
+                for s in sectors:
+                    if "VIX" in s.name.upper():
+                        vix = float(s.last_price)
+                        break
+                logger.info("FnO VIX fetched: %.2f", vix)
+            except Exception as vix_err:
+                vix = 15.0
+                logger.warning("VIX fetch failed, using default 15.0: %s", vix_err)
+
+            strategies = strategy_engine.select_strategies(
+                chains=chains,
+                quant_signals=quant_signals,
+                vix=vix,
+                current_time=ist_now(),
+            )
 
         if not strategies:
             logger.warning("No strategies selected — session ends")

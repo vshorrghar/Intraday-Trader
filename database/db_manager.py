@@ -233,6 +233,17 @@ class DBManager:
                 close_price REAL NOT NULL,
                 log_return REAL NOT NULL DEFAULT 0
             )""",
+            # --- F&O Adjustments table (Phase 4) ---
+            """CREATE TABLE IF NOT EXISTS fno_adjustments (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                strategy_id INTEGER,
+                adjustment_time TEXT,
+                trigger_reason TEXT,
+                legs_closed TEXT,
+                legs_opened TEXT,
+                net_pnl_impact REAL,
+                FOREIGN KEY(strategy_id) REFERENCES fno_strategies(id)
+            )""",
             # --- Swing trading tables ---
             """CREATE TABLE IF NOT EXISTS swing_trades (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
