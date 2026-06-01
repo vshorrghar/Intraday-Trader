@@ -15,66 +15,25 @@ from swing.sector_map import SECTOR_MAP
 logger = logging.getLogger(__name__)
 
 
-def compute_position_size(
-    trade: SwingTradeSetup,
-    capital_limit: float,
-    per_trade_max: float = 0.0,
-) -> int:
+def compute_position_size(trade: SwingTradeSetup, capital_limit: float, per_trade_max: float = 0) -> int:
+    """Flat 1% risk position sizing with per-trade capital cap.
+
+    Args:
+        trade: SwingTradeSetup with entry_price and stop_loss_price
+        capital_limit: Total swing capital (risk = 1% of this)
+        per_trade_max: Max capital per single trade. If 0, defaults to 20% of capital_limit.
     """
-    1% risk position sizing capped by per_trade_max.
-
-    Algorithm:
-      1. risk_amount = capital_limit × 0.01  (1% rule)
-      2. qty = floor(risk_amount / risk_per_share)
-      3. Cap qty so that (qty × entry_price) <= per_trade_max
-         This prevents a single position from exceeding the
-         per-trade capital limit set in config.
-      4. Always return at least 1.
-
-    Why per_trade_max instead of 10% of capital_limit:
-      The old code used int(capital_limit × 0.1 / entry_price) as a cap.
-      For a Rs.2,800 stock with Rs.1L capital:
-        Old cap = int(10000 / 2800) = 3  (too restrictive)
-        1% risk qty = int(1000 / 120) = 8  (correct by risk rule)
-      The 10% cap silently overrode the risk rule for high-priced stocks.
-      per_trade_max uses the explicit config value (e.g. Rs.10,000)
-      which is the correct constraint: don't deploy more than
-      swing_per_trade_max rupees in any single swing position.
-
-    Parameters
-    ----------
-    trade : SwingTradeSetup
-        The trade being sized. Uses entry_price and stop_loss_price.
-    capital_limit : float
-        Total swing capital. 1% of this is the risk budget per trade.
-    per_trade_max : float
-        Maximum rupees to deploy in a single position.
-        If 0 or not provided, defaults to 20% of capital_limit
-        (a safe fallback that does not punish high-priced stocks).
-
-    Returns
-    -------
-    int
-        Number of shares to buy. Always >= 1.
-    """
+    risk_amount = capital_limit * 0.01  # 1% rule
     risk_per_share = trade.entry_price - trade.stop_loss_price
     if risk_per_share <= 0:
-        logger.warning(
-            "Invalid risk_per_share for %s: entry=%.2f sl=%.2f",
-            trade.nse_symbol, trade.entry_price, trade.stop_loss_price,
-        )
+        logger.warning("Invalid risk_per_share for %s: entry=%.2f sl=%.2f",
+                       trade.nse_symbol, trade.entry_price, trade.stop_loss_price)
         return 0
-
-    # Step 1: 1% risk rule
-    risk_amount = capital_limit * 0.01
-    qty_by_risk = int(risk_amount / risk_per_share)
-
-    # Step 2: Cap by per_trade_max
-    # Use per_trade_max if provided, else 20% of capital as safe fallback
-    effective_max = per_trade_max if per_trade_max > 0 else capital_limit * 0.20
-    max_qty_by_capital = int(effective_max / trade.entry_price)
-
-    quantity = min(qty_by_risk, max_qty_by_capital)
+    quantity = int(risk_amount / risk_per_share)
+    # Cap by per-trade max capital
+    effective_max = per_trade_max if per_trade_max > 0 else capital_limit * 0.2
+    max_qty_by_capital = int(effective_max / trade.entry_price) if trade.entry_price > 0 else 0
+    quantity = min(quantity, max_qty_by_capital) if max_qty_by_capital > 0 else quantity
     return max(1, quantity)
 
 
@@ -114,12 +73,7 @@ def check_weekly_loss(week_pnl: float, capital_limit: float, max_pct: float = 5.
     return True, None
 
 
-def check_regime(
-    vix: float,
-    nifty_close: float = 0,
-    nifty_50dma: float = 0,
-    nifty_200dma: float = 0,
-) -> tuple:
+def check_regime(vix: float, nifty_close: float = 0, nifty_50dma: float = 0, nifty_200dma: float = 0) -> tuple:
     """
     3-signal regime check. Returns (status, reason).
     status: True (proceed), False (skip), "REDUCE" (halve size)
@@ -151,83 +105,62 @@ class SwingRiskManager:
         """Load open positions and P&L from DB."""
         if not self.db:
             return
+        # Load open swing positions
         try:
             self._open_positions = self.db.get_open_swing_trades() or []
         except Exception:
             self._open_positions = []
+        # Load today's closed P&L
         try:
             self._today_pnl = self.db.get_swing_today_pnl() or 0.0
         except Exception:
             self._today_pnl = 0.0
+        # Load week P&L
         try:
             self._week_pnl = self.db.get_swing_week_pnl() or 0.0
         except Exception:
             self._week_pnl = 0.0
 
-    def can_enter_trade(
-        self,
-        trade: SwingTradeSetup,
-        vix: float = 15.0,
-        nifty_close: float = 0,
-        nifty_50dma: float = 0,
-        nifty_200dma: float = 0,
-    ) -> tuple:
+    def can_enter_trade(self, trade: SwingTradeSetup, vix: float = 15.0,
+                        nifty_close: float = 0, nifty_50dma: float = 0,
+                        nifty_200dma: float = 0) -> tuple:
         """Run all pre-trade gates. Returns (allowed: bool, reason: str|None)."""
         # Gate 1: Regime
-        regime_ok, regime_reason = check_regime(
-            vix, nifty_close, nifty_50dma, nifty_200dma
-        )
+        regime_ok, regime_reason = check_regime(vix, nifty_close, nifty_50dma, nifty_200dma)
         if regime_ok is False:
             return False, regime_reason
 
         # Gate 2: Max positions
-        ok, reason = check_max_positions(
-            self._open_positions, self.config.swing_max_open_positions
-        )
+        ok, reason = check_max_positions(self._open_positions, self.config.swing_max_open_positions)
         if not ok:
             return False, reason
 
         # Gate 3: Sector cap
-        ok, reason = check_sector_cap(
-            trade.nse_symbol, self._open_positions,
-            self.config.sector_concentration_max,
-        )
+        ok, reason = check_sector_cap(trade.nse_symbol, self._open_positions,
+                                      self.config.sector_concentration_max)
         if not ok:
             return False, reason
 
         # Gate 4: Daily loss
-        ok, reason = check_daily_loss(
-            self._today_pnl, self.config.swing_daily_loss_limit
-        )
+        ok, reason = check_daily_loss(self._today_pnl, self.config.swing_daily_loss_limit)
         if not ok:
             return False, reason
 
         # Gate 5: Weekly loss
-        ok, reason = check_weekly_loss(
-            self._week_pnl, self.config.swing_capital_limit,
-            self.config.swing_weekly_loss_limit_pct,
-        )
+        ok, reason = check_weekly_loss(self._week_pnl, self.config.swing_capital_limit,
+                                       self.config.swing_weekly_loss_limit_pct)
         if not ok:
             return False, reason
 
-        # Regime REDUCE: halve position size (caller handles)
+        # If regime says REDUCE, halve position size (caller handles)
         if regime_ok == "REDUCE":
             return "REDUCE", regime_reason
 
         return True, None
 
     def size_position(self, trade: SwingTradeSetup, reduce: bool = False) -> int:
-        """
-        Compute position size using config values.
-        Passes swing_per_trade_max so the 1% risk rule is not
-        silently overridden by a hardcoded percentage cap.
-        Halves quantity if reduce=True (called on REDUCE regime signal).
-        """
-        qty = compute_position_size(
-            trade,
-            capital_limit=self.config.swing_capital_limit,
-            per_trade_max=self.config.swing_per_trade_max,
-        )
+        """Compute position size. Halve if reduce=True."""
+        qty = compute_position_size(trade, self.config.swing_capital_limit)
         if reduce:
             qty = max(1, qty // 2)
         return qty

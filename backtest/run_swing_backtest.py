@@ -1,17 +1,15 @@
 """
-Swing backtest — tests 20-DMA pullback strategy on 6 months of daily data.
+Swing strategy historical backtest.
 
-Uses:
-- swing/scanner.py score_swing_candidate() for signal generation
-- swing/rules_selector.py select_swing_trades() for deterministic selection
-- Daily OHLC from cache/swing_daily/ (fetched via Dhan Data API)
-
-Per Rule 26: Backtest BEFORE deploy. Data from Dhan. Proof first.
+Replays the swing scanner + rules_selector over cached daily OHLC data.
+Strict no-future-leak: each scan day only sees candles up to that date.
+Entry: at latest_close on scan day (same-day entry, matching rules_selector).
+Exit: walk forward day-by-day checking SL, target, time stops.
+Charges: 0.1% per side (delivery brokerage estimate).
 
 Usage:
-    python -m backtest.run_swing_backtest
-    python -m backtest.run_swing_backtest --months 3
-    python -m backtest.run_swing_backtest --output backtest/results/swing_backtest.json
+    .venv/bin/python backtest/run_swing_backtest.py
+    .venv/bin/python backtest/run_swing_backtest.py --lookback 90
 """
 
 from __future__ import annotations
@@ -19,428 +17,474 @@ from __future__ import annotations
 import json
 import logging
 import sys
+from dataclasses import dataclass, asdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from swing.scanner import score_swing_candidate
+from swing.scanner import scan_universe, score_swing_candidate
 from swing.rules_selector import select_swing_trades
 from swing.models import SwingConfig
+from swing.sector_map import SECTOR_MAP
+from swing.data_loader import CACHE_DIR
 
 logger = logging.getLogger(__name__)
 
 IST = timezone(timedelta(hours=5, minutes=30))
-CACHE_DIR = Path(__file__).parent.parent / "cache" / "swing_daily"
 RESULTS_DIR = Path(__file__).parent / "results"
+CHARGE_PER_SIDE = 0.001  # 0.1% per side
 
 
-def _compute_charges(buy_value: float, sell_value: float) -> float:
-    """Compute CNC delivery charges for swing trade.
+@dataclass
+class BacktestTrade:
+    symbol: str
+    entry_date: str
+    entry_price: float
+    sl_price: float
+    target_price: float
+    exit_date: str = ""
+    exit_price: float = 0.0
+    exit_reason: str = ""
+    days_held: int = 0
+    pnl_gross: float = 0.0
+    pnl_after_charges: float = 0.0
+    score: int = 0
+    quantity: int = 1
 
-    Breakdown:
-    - Brokerage: Rs.20 per leg x 2 = Rs.40
-    - STT: 0.1% on sell value
-    - Exchange: 0.003% on both sides
-    - GST: 18% of brokerage
-    - Stamp: 0.015% on buy value
-    """
-    brokerage = 40.0
-    stt = sell_value * 0.001
-    exchange = (buy_value + sell_value) * 0.00003
-    gst = brokerage * 0.18
-    stamp = buy_value * 0.00015
-    return round(brokerage + stt + exchange + gst + stamp, 2)
 
-
-def _load_cached_data() -> dict[str, dict]:
-    """Load all cached daily OHLC data from disk."""
-    data = {}
+def load_all_cached_data() -> dict[str, list[dict]]:
+    """Load all cached daily candles. Returns {symbol: [candle_dicts]}."""
+    all_data = {}
     if not CACHE_DIR.exists():
-        return data
-    for f in CACHE_DIR.glob("*_daily.json"):
-        symbol = f.stem.replace("_daily", "")
+        return all_data
+
+    for f in CACHE_DIR.glob("*.json"):
+        symbol = f.stem
         try:
             with open(f) as fh:
-                ohlc = json.load(fh)
-            if len(ohlc.get("close", [])) >= 200:
-                data[symbol] = ohlc
-        except (json.JSONDecodeError, KeyError):
+                data = json.load(fh)
+            candles = data.get("candles", [])
+            if len(candles) >= 200:
+                all_data[symbol] = candles
+        except (json.JSONDecodeError, OSError):
             continue
-    return data
+
+    return all_data
 
 
-def run(
-    months: int = 6,
-    config: SwingConfig | None = None,
-    output_file: str | None = None,
-) -> dict:
-    """Run swing backtest on cached daily data.
+def get_trading_dates(all_data: dict[str, list[dict]], lookback_days: int = 125) -> list[str]:
+    """Extract sorted list of unique trading dates from cached data.
 
-    Simulates the 20-DMA pullback strategy over the specified period.
+    Returns the last `lookback_days` trading dates available.
+    """
+    dates = set()
+    for candles in all_data.values():
+        for c in candles:
+            d = c.get("date", "")
+            if d:
+                dates.add(d)
+
+    sorted_dates = sorted(dates)
+    # Return last N trading dates
+    if len(sorted_dates) > lookback_days:
+        return sorted_dates[-lookback_days:]
+    return sorted_dates
+
+
+def build_universe_as_of_date(
+    all_data: dict[str, list[dict]],
+    scan_date: str,
+) -> dict[str, dict]:
+    """Build scanner-format universe using only data up to (and including) scan_date.
+
+    Returns {symbol: {open: [...], high: [...], low: [...], close: [...], volume: [...]}}
+    Only includes data points with date <= scan_date. Strict no-future-leak.
+    """
+    universe = {}
+    for symbol, candles in all_data.items():
+        # Filter to candles on or before scan_date
+        filtered = [c for c in candles if c.get("date", "") <= scan_date]
+        if len(filtered) < 200:
+            continue
+
+        universe[symbol] = {
+            "open": [c["open"] for c in filtered],
+            "high": [c["high"] for c in filtered],
+            "low": [c["low"] for c in filtered],
+            "close": [c["close"] for c in filtered],
+            "volume": [c["volume"] for c in filtered],
+        }
+
+    return universe
+
+
+def get_candles_after_date(candles: list[dict], entry_date: str) -> list[dict]:
+    """Get candles strictly after entry_date for forward simulation."""
+    return [c for c in candles if c.get("date", "") > entry_date]
+
+
+def simulate_exit(
+    forward_candles: list[dict],
+    entry_price: float,
+    sl_price: float,
+    target_price: float,
+    entry_date: str,
+) -> tuple[str, float, str, int]:
+    """Walk forward day-by-day to find exit.
+
+    Returns: (exit_date, exit_price, exit_reason, days_held)
+    """
+    for i, candle in enumerate(forward_candles):
+        days_held = i + 1
+        low = candle["low"]
+        high = candle["high"]
+        close = candle["close"]
+        date = candle.get("date", "")
+
+        # Check SL hit (conservative: check SL before target on same day)
+        if low <= sl_price:
+            return (date, sl_price, "STOPPED_OUT", days_held)
+
+        # Check target hit
+        if high >= target_price:
+            return (date, target_price, "TARGET_HIT", days_held)
+
+        # Time stops (using close price for P&L calculation)
+        pnl_pct = ((close - entry_price) / entry_price) * 100
+
+        if days_held >= 30:
+            return (date, close, "TIME_STOP_30D", days_held)
+        if days_held >= 21 and pnl_pct < 3:
+            return (date, close, "TIME_STOP_21D_LOW_PROGRESS", days_held)
+        if days_held >= 15 and pnl_pct < 0:
+            return (date, close, "TIME_STOP_15D_LOSING", days_held)
+        if days_held >= 10 and -1 <= pnl_pct <= 1:
+            return (date, close, "TIME_STOP_10D_FLAT", days_held)
+        if days_held >= 7 and pnl_pct <= -3:
+            return (date, close, "TIME_STOP_7D_DRAWDOWN", days_held)
+
+    # Ran out of data — exit at last available close
+    if forward_candles:
+        last = forward_candles[-1]
+        return (last.get("date", ""), last["close"], "DATA_END", len(forward_candles))
+
+    return (entry_date, entry_price, "NO_DATA", 0)
+
+
+def compute_charges(entry_price: float, exit_price: float, quantity: int) -> float:
+    """Compute round-trip charges at 0.1% per side."""
+    buy_charges = entry_price * quantity * CHARGE_PER_SIDE
+    sell_charges = exit_price * quantity * CHARGE_PER_SIDE
+    return buy_charges + sell_charges
+
+
+def run_backtest(lookback_days: int = 125, max_positions: int = 8) -> dict:
+    """Run the full swing backtest.
 
     Args:
-        months: number of months to backtest (default 6)
-        config: SwingConfig (uses defaults if None)
-        output_file: path to save results JSON
+        lookback_days: Number of trading days to backtest over.
+        max_positions: Max concurrent positions (matches SwingConfig default).
 
     Returns:
-        dict with backtest results and statistics
+        Full results dict with metrics and trade details.
     """
-    if config is None:
-        config = SwingConfig(
-            swing_capital_limit=100000,
-            swing_per_trade_max=10000,
-            swing_max_open_positions=5,
-            swing_min_score=8,
-            swing_min_confidence=6,
-            swing_min_rr=2.0,
-            swing_max_holding_days=15,
-        )
+    print("Loading cached daily data...")
+    all_data = load_all_cached_data()
+    print(f"  Loaded {len(all_data)} stocks with >= 200 candles")
 
-    # Load data
-    universe_data = _load_cached_data()
-    if not universe_data:
-        print("ERROR: No cached swing data found. Run fetch_swing_data.py first.")
-        return {"error": "no_data"}
+    if len(all_data) < 100:
+        print("ERROR: Insufficient data. Need at least 100 stocks.")
+        sys.exit(1)
 
-    print(f"Loaded {len(universe_data)} stocks from cache")
+    trading_dates = get_trading_dates(all_data, lookback_days)
+    print(f"  Trading dates: {len(trading_dates)} ({trading_dates[0]} to {trading_dates[-1]})")
 
-    # Determine backtest period
-    # Use the shortest data series to find common date range
-    min_candles = min(len(d["close"]) for d in universe_data.values())
-    backtest_days = min(months * 22, min_candles - 200)  # Need 200 for lookback (scanner uses 200-DMA)
+    config = SwingConfig()
+    trades: list[BacktestTrade] = []
+    open_positions: list[BacktestTrade] = []
+    entries_per_day: dict[str, int] = {}
 
-    if backtest_days <= 0:
-        print("ERROR: Insufficient data for backtest. Need > 250 + backtest_days candles.")
-        return {"error": "insufficient_data"}
+    # Track equity curve for drawdown
+    cumulative_pnl = 0.0
+    peak_pnl = 0.0
+    max_drawdown = 0.0
 
-    print(f"Backtest period: {backtest_days} trading days (~{backtest_days // 22} months)")
-    print(f"Lookback: 250 days for indicators")
+    print(f"\nRunning backtest over {len(trading_dates)} trading days...")
+    print(f"  Config: min_score={config.swing_min_score}, max_positions={max_positions}")
     print()
 
-    # Simulate
-    all_trades = []
-    open_positions = []  # Track concurrent positions
-
-    for day_offset in range(backtest_days):
-        # Current day index (counting from end of data)
-        day_idx = -(backtest_days - day_offset)
-
-        # Score all stocks using data up to this day
-        candidates = []
-        for symbol, ohlc in universe_data.items():
-            # Slice data up to current day
-            end_idx = len(ohlc["close"]) + day_idx
-            if end_idx < 200:
-                continue
-
-            daily_slice = {
-                "open": ohlc["open"][:end_idx],
-                "high": ohlc["high"][:end_idx],
-                "low": ohlc["low"][:end_idx],
-                "close": ohlc["close"][:end_idx],
-                "volume": ohlc["volume"][:end_idx],
-            }
-
-            result = score_swing_candidate(symbol, daily_slice)
-            if result and result["score"] >= config.swing_min_score:
-                candidates.append(result)
-
-        # Check open positions for exit
+    for day_idx, scan_date in enumerate(trading_dates):
+        # First, check exits for open positions
         positions_to_close = []
         for pos in open_positions:
-            pos_symbol = pos["symbol"]
-            if pos_symbol not in universe_data:
-                continue
-            ohlc = universe_data[pos_symbol]
-            end_idx = len(ohlc["close"]) + day_idx
-            if end_idx >= len(ohlc["close"]):
+            symbol_candles = all_data.get(pos.symbol, [])
+            # Get candle for today
+            today_candles = [c for c in symbol_candles if c.get("date", "") == scan_date]
+            if not today_candles:
                 continue
 
-            today_high = ohlc["high"][end_idx]
-            today_low = ohlc["low"][end_idx]
-            today_close = ohlc["close"][end_idx]
-            pos["days_held"] += 1
+            today = today_candles[0]
+            days_held = pos.days_held + 1
+            pos.days_held = days_held
 
-            # Check target hit
-            if today_high >= pos["target_price"]:
-                pos["exit_price"] = pos["target_price"]
-                pos["exit_reason"] = "TARGET_HIT"
+            low = today["low"]
+            high = today["high"]
+            close = today["close"]
+
+            # Check SL (conservative: SL before target)
+            if low <= pos.sl_price:
+                pos.exit_date = scan_date
+                pos.exit_price = pos.sl_price
+                pos.exit_reason = "STOPPED_OUT"
                 positions_to_close.append(pos)
-            # Check stop loss hit
-            elif today_low <= pos["stop_loss_price"]:
-                pos["exit_price"] = pos["stop_loss_price"]
-                pos["exit_reason"] = "STOPPED_OUT"
+                continue
+
+            # Check target
+            if high >= pos.target_price:
+                pos.exit_date = scan_date
+                pos.exit_price = pos.target_price
+                pos.exit_reason = "TARGET_HIT"
                 positions_to_close.append(pos)
-            # Check time stop
-            elif pos["days_held"] >= config.swing_max_holding_days:
-                pos["exit_price"] = today_close
-                pos["exit_reason"] = "TIME_EXIT"
+                continue
+
+            # Time stops
+            pnl_pct = ((close - pos.entry_price) / pos.entry_price) * 100
+
+            if days_held >= 30:
+                pos.exit_date = scan_date
+                pos.exit_price = close
+                pos.exit_reason = "TIME_STOP_30D"
+                positions_to_close.append(pos)
+            elif days_held >= 21 and pnl_pct < 3:
+                pos.exit_date = scan_date
+                pos.exit_price = close
+                pos.exit_reason = "TIME_STOP_21D_LOW_PROGRESS"
+                positions_to_close.append(pos)
+            elif days_held >= 15 and pnl_pct < 0:
+                pos.exit_date = scan_date
+                pos.exit_price = close
+                pos.exit_reason = "TIME_STOP_15D_LOSING"
+                positions_to_close.append(pos)
+            elif days_held >= 10 and -1 <= pnl_pct <= 1:
+                pos.exit_date = scan_date
+                pos.exit_price = close
+                pos.exit_reason = "TIME_STOP_10D_FLAT"
+                positions_to_close.append(pos)
+            elif days_held >= 7 and pnl_pct <= -3:
+                pos.exit_date = scan_date
+                pos.exit_price = close
+                pos.exit_reason = "TIME_STOP_7D_DRAWDOWN"
                 positions_to_close.append(pos)
 
-        # Close positions
+        # Close positions and compute P&L
         for pos in positions_to_close:
+            pnl_gross = (pos.exit_price - pos.entry_price) * pos.quantity
+            charges = compute_charges(pos.entry_price, pos.exit_price, pos.quantity)
+            pos.pnl_gross = round(pnl_gross, 2)
+            pos.pnl_after_charges = round(pnl_gross - charges, 2)
+            trades.append(pos)
             open_positions.remove(pos)
-            buy_value = pos["entry_price"] * pos["quantity"]
-            sell_value = pos["exit_price"] * pos["quantity"]
-            gross_pnl = (pos["exit_price"] - pos["entry_price"]) * pos["quantity"]
-            charges = _compute_charges(buy_value, sell_value)
-            net_pnl = gross_pnl - charges
 
-            all_trades.append({
-                "symbol": pos["symbol"],
-                "entry_price": pos["entry_price"],
-                "exit_price": pos["exit_price"],
-                "quantity": pos["quantity"],
-                "days_held": pos["days_held"],
-                "gross_pnl": round(gross_pnl, 2),
-                "charges": round(charges, 2),
-                "net_pnl": round(net_pnl, 2),
-                "exit_reason": pos["exit_reason"],
-                "score": pos["score"],
-                "rr": pos["rr"],
-                "strategy_type": pos["strategy_type"],
-            })
+            # Update equity curve
+            cumulative_pnl += pos.pnl_after_charges
+            peak_pnl = max(peak_pnl, cumulative_pnl)
+            drawdown = peak_pnl - cumulative_pnl
+            max_drawdown = max(max_drawdown, drawdown)
 
-        # Select new trades (only if we have capacity)
-        available_slots = config.swing_max_open_positions - len(open_positions)
-        if available_slots > 0 and candidates:
-            # Temporarily reduce max_positions to available slots
-            temp_config = SwingConfig(
-                swing_capital_limit=config.swing_capital_limit,
-                swing_per_trade_max=config.swing_per_trade_max,
-                swing_max_open_positions=available_slots,
-                swing_min_score=config.swing_min_score,
-                swing_min_confidence=config.swing_min_confidence,
-                swing_min_rr=config.swing_min_rr,
-                swing_max_holding_days=config.swing_max_holding_days,
-            )
-            selected = select_swing_trades(candidates, temp_config)
+        # Now scan for new entries (only if we have capacity)
+        if len(open_positions) >= max_positions:
+            continue
 
-            for trade in selected:
-                # Check not already in position for this symbol
-                if any(p["symbol"] == trade.nse_symbol for p in open_positions):
-                    continue
+        # Build universe as of this date (no future leak)
+        universe = build_universe_as_of_date(all_data, scan_date)
 
-                # Entry at next day's open (simulate real execution)
-                sym_ohlc = universe_data.get(trade.nse_symbol)
-                if sym_ohlc is None:
-                    continue
-                next_day_idx = len(sym_ohlc["close"]) + day_idx + 1
-                if next_day_idx >= len(sym_ohlc["open"]):
-                    continue
+        # Run scanner
+        candidates = scan_universe(universe, min_score=config.swing_min_score)
 
-                entry_price = sym_ohlc["open"][next_day_idx]
-                if entry_price <= 0:
-                    continue
+        # Run rules_selector
+        available_slots = max_positions - len(open_positions)
+        if candidates and available_slots > 0:
+            picks = select_swing_trades(candidates, config, live_mode=False)
+            picks = picks[:available_slots]
 
-                # Recalculate SL/target based on actual entry (not close)
-                sl_distance = trade.entry_price - trade.stop_loss_price
-                sl_pct = sl_distance / trade.entry_price
-                stop_loss = entry_price * (1 - sl_pct)
-                target = entry_price * (1 + sl_pct * 2.5)
+            # Filter out symbols already in open positions
+            open_symbols = {p.symbol for p in open_positions}
+            picks = [p for p in picks if p.nse_symbol not in open_symbols]
 
-                open_positions.append({
-                    "symbol": trade.nse_symbol,
-                    "entry_price": round(entry_price, 2),
-                    "target_price": round(target, 2),
-                    "stop_loss_price": round(stop_loss, 2),
-                    "quantity": trade.quantity,
-                    "days_held": 0,
-                    "score": candidates[0]["score"] if candidates else 0,
-                    "rr": round((target - entry_price) / (entry_price - stop_loss), 2) if entry_price > stop_loss else 0,
-                    "strategy_type": trade.strategy_type,
-                })
+            day_entries = 0
+            for pick in picks:
+                # Entry at latest_close (same-day entry)
+                new_trade = BacktestTrade(
+                    symbol=pick.nse_symbol,
+                    entry_date=scan_date,
+                    entry_price=pick.entry_price,
+                    sl_price=pick.stop_loss_price,
+                    target_price=pick.target_price,
+                    score=pick.confidence_score,
+                    quantity=pick.quantity,
+                    days_held=0,
+                )
+                open_positions.append(new_trade)
+                day_entries += 1
 
-    # Force close any remaining open positions at last available price
+            if day_entries > 0:
+                entries_per_day[scan_date] = entries_per_day.get(scan_date, 0) + day_entries
+
+        # Progress every 25 days
+        if (day_idx + 1) % 25 == 0:
+            print(f"  Day {day_idx + 1}/{len(trading_dates)}: "
+                  f"{len(trades)} closed, {len(open_positions)} open, "
+                  f"cumPnL=₹{cumulative_pnl:.0f}")
+
+    # Force-close any remaining open positions at last available price
     for pos in open_positions:
-        ohlc = universe_data.get(pos["symbol"])
-        if ohlc:
-            exit_price = ohlc["close"][-1]
-            buy_value = pos["entry_price"] * pos["quantity"]
-            sell_value = exit_price * pos["quantity"]
-            gross_pnl = (exit_price - pos["entry_price"]) * pos["quantity"]
-            charges = _compute_charges(buy_value, sell_value)
-            all_trades.append({
-                "symbol": pos["symbol"],
-                "entry_price": pos["entry_price"],
-                "exit_price": round(exit_price, 2),
-                "quantity": pos["quantity"],
-                "days_held": pos["days_held"],
-                "gross_pnl": round(gross_pnl, 2),
-                "charges": round(charges, 2),
-                "net_pnl": round(gross_pnl - charges, 2),
-                "exit_reason": "BACKTEST_END",
-                "score": pos["score"],
-                "rr": pos["rr"],
-                "strategy_type": pos["strategy_type"],
-            })
+        symbol_candles = all_data.get(pos.symbol, [])
+        if symbol_candles:
+            last_candle = symbol_candles[-1]
+            pos.exit_date = last_candle.get("date", trading_dates[-1])
+            pos.exit_price = last_candle["close"]
+        else:
+            pos.exit_date = trading_dates[-1]
+            pos.exit_price = pos.entry_price
+        pos.exit_reason = "DATA_END"
+        pnl_gross = (pos.exit_price - pos.entry_price) * pos.quantity
+        charges = compute_charges(pos.entry_price, pos.exit_price, pos.quantity)
+        pos.pnl_gross = round(pnl_gross, 2)
+        pos.pnl_after_charges = round(pnl_gross - charges, 2)
+        trades.append(pos)
+        cumulative_pnl += pos.pnl_after_charges
+        peak_pnl = max(peak_pnl, cumulative_pnl)
+        drawdown = peak_pnl - cumulative_pnl
+        max_drawdown = max(max_drawdown, drawdown)
 
-    # Compute statistics
-    stats = _compute_stats(all_trades, config)
+    # Compute metrics
+    wins = [t for t in trades if t.pnl_after_charges > 0]
+    losses = [t for t in trades if t.pnl_after_charges <= 0]
+    gross_wins = sum(t.pnl_after_charges for t in wins)
+    gross_losses = abs(sum(t.pnl_after_charges for t in losses))
+    profit_factor = gross_wins / gross_losses if gross_losses > 0 else float("inf")
 
-    # Save results
-    if output_file:
-        out_path = Path(output_file)
-    else:
-        RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-        ts = datetime.now(IST).strftime("%Y%m%d_%H%M%S")
-        out_path = RESULTS_DIR / f"swing_backtest_{ts}.json"
+    avg_holding = sum(t.days_held for t in trades) / len(trades) if trades else 0
+    max_holding = max((t.days_held for t in trades), default=0)
 
-    results = {
-        "generated_at": datetime.now(IST).isoformat(),
-        "config": {
-            "months": months,
-            "capital": config.swing_capital_limit,
-            "per_trade_max": config.swing_per_trade_max,
-            "max_positions": config.swing_max_open_positions,
-            "min_score": config.swing_min_score,
-            "min_rr": config.swing_min_rr,
-            "max_holding_days": config.swing_max_holding_days,
-        },
-        "stats": stats,
-        "trades": all_trades,
+    entries_values = list(entries_per_day.values()) if entries_per_day else [0]
+    max_entries_single_day = max(entries_values)
+    total_entry_days = len(entries_per_day)
+    entries_per_day_avg = sum(entries_values) / total_entry_days if total_entry_days > 0 else 0
+
+    # Exit reason distribution
+    exit_reasons = {}
+    for t in trades:
+        exit_reasons[t.exit_reason] = exit_reasons.get(t.exit_reason, 0) + 1
+
+    metrics = {
+        "trades": len(trades),
+        "wins": len(wins),
+        "losses": len(losses),
+        "win_rate": round(len(wins) / len(trades), 3) if trades else 0,
+        "profit_factor": round(profit_factor, 2),
+        "cumulative_pnl": round(cumulative_pnl, 2),
+        "max_drawdown": round(max_drawdown, 2),
+        "avg_holding_days": round(avg_holding, 1),
+        "max_holding_days": max_holding,
+        "entries_per_day_avg": round(entries_per_day_avg, 2),
+        "max_entries_single_day": max_entries_single_day,
     }
 
-    with open(out_path, "w") as f:
-        json.dump(results, f, indent=2, default=str)
-
-    # Print report
-    _print_report(stats, all_trades)
+    results = {
+        "period": f"{trading_dates[0]} to {trading_dates[-1]}",
+        "data_source": str(CACHE_DIR),
+        "universe_size": len(all_data),
+        "metrics": metrics,
+        "exit_reasons": exit_reasons,
+        "trades_detail": [asdict(t) for t in trades],
+    }
 
     return results
 
 
-def _compute_stats(trades: list[dict], config: SwingConfig) -> dict:
-    """Compute backtest statistics."""
-    if not trades:
-        return {"total_trades": 0, "verdict": "NO_DATA", "win_rate_pct": 0,
-                "profit_factor": 0, "total_net_pnl": 0, "total_gross_pnl": 0,
-                "total_charges": 0, "avg_win": 0, "avg_loss": 0, "avg_days_held": 0,
-                "winners": 0, "losers": 0, "by_exit_reason": {},
-                "top_10_stocks": [], "bottom_5_stocks": []}
-
-    total = len(trades)
-    winners = [t for t in trades if t["net_pnl"] > 0]
-    losers = [t for t in trades if t["net_pnl"] <= 0]
-    win_rate = len(winners) / total * 100 if total > 0 else 0
-
-    total_gross = sum(t["gross_pnl"] for t in trades)
-    total_charges = sum(t["charges"] for t in trades)
-    total_net = sum(t["net_pnl"] for t in trades)
-
-    avg_win = sum(t["net_pnl"] for t in winners) / len(winners) if winners else 0
-    avg_loss = sum(t["net_pnl"] for t in losers) / len(losers) if losers else 0
-    avg_days = sum(t["days_held"] for t in trades) / total if total > 0 else 0
-
-    gross_wins = sum(t["net_pnl"] for t in winners)
-    gross_losses = abs(sum(t["net_pnl"] for t in losers))
-    profit_factor = gross_wins / gross_losses if gross_losses > 0 else float("inf")
-
-    # Verdict
-    if win_rate >= 45 and profit_factor >= 1.3:
-        verdict = "DEPLOY"
-    elif win_rate >= 40 and profit_factor >= 1.1:
-        verdict = "PAPER_ONLY"
-    else:
-        verdict = "DO_NOT_DEPLOY"
-
-    # By exit reason
-    by_exit = {}
-    for t in trades:
-        reason = t["exit_reason"]
-        if reason not in by_exit:
-            by_exit[reason] = {"count": 0, "net_pnl": 0}
-        by_exit[reason]["count"] += 1
-        by_exit[reason]["net_pnl"] += t["net_pnl"]
-
-    # Top/bottom stocks
-    stock_pnl = {}
-    for t in trades:
-        sym = t["symbol"]
-        stock_pnl[sym] = stock_pnl.get(sym, 0) + t["net_pnl"]
-    sorted_stocks = sorted(stock_pnl.items(), key=lambda x: x[1], reverse=True)
-    top_10 = sorted_stocks[:10]
-    bottom_5 = sorted_stocks[-5:]
-
-    return {
-        "total_trades": total,
-        "winners": len(winners),
-        "losers": len(losers),
-        "win_rate_pct": round(win_rate, 1),
-        "profit_factor": round(profit_factor, 2),
-        "total_gross_pnl": round(total_gross, 2),
-        "total_charges": round(total_charges, 2),
-        "total_net_pnl": round(total_net, 2),
-        "avg_win": round(avg_win, 2),
-        "avg_loss": round(avg_loss, 2),
-        "avg_days_held": round(avg_days, 1),
-        "by_exit_reason": {k: {"count": v["count"], "net_pnl": round(v["net_pnl"], 2)} for k, v in by_exit.items()},
-        "top_10_stocks": [{"symbol": s, "net_pnl": round(p, 2)} for s, p in top_10],
-        "bottom_5_stocks": [{"symbol": s, "net_pnl": round(p, 2)} for s, p in bottom_5],
-        "verdict": verdict,
-    }
-
-
-def _print_report(stats: dict, trades: list[dict]):
-    """Print human-readable backtest report."""
-    if stats.get("total_trades", 0) == 0:
-        print("\n  NO TRADES generated. Strategy too selective for this period.")
-        print("  Try: lower min_score, widen delta filter, or longer period.")
-        return
-    print("\n" + "=" * 60)
-    print("SWING BACKTEST REPORT — 20-DMA Pullback Strategy")
-    print("=" * 60)
-    print(f"\n  Total trades:     {stats['total_trades']}")
-    print(f"  Win rate:         {stats['win_rate_pct']}%")
-    print(f"  Profit factor:    {stats['profit_factor']}")
-    print(f"  Avg days held:    {stats['avg_days_held']}")
-    print(f"\n  Total gross P&L:  Rs.{stats['total_gross_pnl']:,.2f}")
-    print(f"  Total charges:    Rs.{stats['total_charges']:,.2f}")
-    print(f"  Total net P&L:    Rs.{stats['total_net_pnl']:,.2f}")
-    print(f"\n  Avg winner:       Rs.{stats['avg_win']:,.2f}")
-    print(f"  Avg loser:        Rs.{stats['avg_loss']:,.2f}")
-
-    print(f"\n  Exit reasons:")
-    for reason, data in stats.get("by_exit_reason", {}).items():
-        print(f"    {reason}: {data['count']} trades, Rs.{data['net_pnl']:,.2f}")
-
-    print(f"\n  Top 5 stocks:")
-    for item in stats.get("top_10_stocks", [])[:5]:
-        print(f"    {item['symbol']}: Rs.{item['net_pnl']:,.2f}")
-
-    print(f"\n  Bottom 5 stocks:")
-    for item in stats.get("bottom_5_stocks", []):
-        print(f"    {item['symbol']}: Rs.{item['net_pnl']:,.2f}")
-
-    print(f"\n  {'=' * 40}")
-    print(f"  VERDICT: {stats['verdict']}")
-    print(f"  {'=' * 40}")
-    if stats["verdict"] == "DEPLOY":
-        print("  Strategy shows edge. Ready for paper trading.")
-    elif stats["verdict"] == "PAPER_ONLY":
-        print("  Marginal edge. Paper trade for 1 month before live.")
-    else:
-        print("  No edge detected. Do NOT deploy. Investigate parameters.")
-
-
 def main():
-    """CLI entry point."""
     import argparse
 
-    parser = argparse.ArgumentParser(description="Run swing backtest")
-    parser.add_argument("--months", type=int, default=6, help="Months to backtest")
-    parser.add_argument("--output", help="Output JSON file path")
+    parser = argparse.ArgumentParser(description="Swing strategy backtest")
+    parser.add_argument("--lookback", type=int, default=125, help="Trading days to backtest")
+    parser.add_argument("--max-positions", type=int, default=8, help="Max concurrent positions")
     args = parser.parse_args()
 
-    logging.basicConfig(level=logging.WARNING)  # Suppress scanner debug logs
+    logging.basicConfig(
+        level=logging.WARNING,  # Suppress scanner/selector INFO spam
+        format="%(asctime)s [%(levelname)s] %(message)s",
+    )
 
-    print("Swing Backtest — 20-DMA Pullback Strategy")
-    print(f"Period: {args.months} months")
+    print("=" * 60)
+    print("SWING STRATEGY BACKTEST")
+    print("=" * 60)
     print()
 
-    run(months=args.months, output_file=args.output)
+    results = run_backtest(lookback_days=args.lookback, max_positions=args.max_positions)
+
+    # Save results
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now(IST).strftime("%Y%m%d_%H%M%S")
+    output_file = RESULTS_DIR / f"swing_backtest_{timestamp}.json"
+    with open(output_file, "w") as f:
+        json.dump(results, f, indent=2)
+
+    print(f"\nResults saved to: {output_file}")
+
+    # Print summary
+    m = results["metrics"]
+    print()
+    print("=" * 60)
+    print("BACKTEST RESULTS")
+    print("=" * 60)
+    print(f"  Period: {results['period']}")
+    print(f"  Universe: {results['universe_size']} stocks")
+    print(f"  Trades: {m['trades']}")
+    print(f"  Wins: {m['wins']} | Losses: {m['losses']}")
+    print(f"  Win rate: {m['win_rate']*100:.1f}%")
+    print(f"  Profit factor: {m['profit_factor']}")
+    print(f"  Cumulative P&L: ₹{m['cumulative_pnl']:.0f}")
+    print(f"  Max drawdown: ₹{m['max_drawdown']:.0f}")
+    print(f"  Avg holding: {m['avg_holding_days']} days")
+    print(f"  Max entries/day: {m['max_entries_single_day']}")
+    print()
+    print("  Exit reasons:")
+    for reason, count in sorted(results["exit_reasons"].items(), key=lambda x: -x[1]):
+        print(f"    {reason}: {count}")
+    print()
+
+    # Pass/fail criteria
+    print("=" * 60)
+    print("PASS CRITERIA CHECK")
+    print("=" * 60)
+    criteria = [
+        ("Trades >= 30", m["trades"] >= 30),
+        ("Win rate >= 45%", m["win_rate"] >= 0.45),
+        ("Profit factor >= 1.3", m["profit_factor"] >= 1.3),
+        ("Max drawdown <= ₹3,000", m["max_drawdown"] <= 3000),
+        ("Max entries/day <= 5", m["max_entries_single_day"] <= 5),
+    ]
+    passed = 0
+    for name, result in criteria:
+        status = "✅ PASS" if result else "❌ FAIL"
+        print(f"  {status} — {name}")
+        if result:
+            passed += 1
+
+    print(f"\n  Result: {passed}/5 criteria met")
+
+    if passed == 5:
+        print("  DECISION: SHIP")
+    elif passed == 4:
+        print("  DECISION: SHIP-WITH-NOTES")
+    elif passed == 3:
+        print("  DECISION: SHIP-LIMITED")
+    else:
+        print("  DECISION: KILL")
+
+    print("=" * 60)
 
 
 if __name__ == "__main__":

@@ -156,11 +156,14 @@ def score_swing_candidate(symbol: str, daily_data: dict, sector: str = "") -> di
     if latest_close < 50 or latest_close > 5000:
         return None
 
-    # 20-day avg turnover >= Rs.5 Cr
+    # 20-day avg turnover >= Rs.3 Cr
+    # RELAXED 2026-05-28 — matches rules_selector turnover threshold.
+    # Original 5 Cr was a silent gatekeeper that defeated the rules_selector
+    # relaxation in Phase 3.5. Now consistent across scanner + selector.
     if len(volumes) >= 20:
         avg_volume_20 = sum(volumes[-20:]) / 20
         avg_turnover = avg_volume_20 * latest_close
-        if avg_turnover < 5_00_00_000:  # Rs.5 Cr
+        if avg_turnover < 3_00_00_000:  # Rs.3 Cr
             return None
     else:
         return None

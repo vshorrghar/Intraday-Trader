@@ -873,20 +873,39 @@ class DBManager:
     # Swing Trading
     # ------------------------------------------------------------------
 
-    def insert_swing_trade(self, pos) -> int | None:
-        """Insert a swing trade position."""
+    def insert_swing_trade(self, pos=None, **kwargs) -> int | None:
+        """Insert a swing trade position. Accepts object or keyword args."""
         try:
+            if pos is not None:
+                # Object-style call (legacy)
+                symbol = getattr(pos, "nse_symbol", getattr(pos, "symbol", ""))
+                entry_price = pos.entry_price
+                entry_date = getattr(pos, "entry_date", self._ist_now()[:10])
+                target_price = pos.target_price
+                stop_loss_price = pos.stop_loss_price
+                quantity = pos.quantity
+                status = getattr(pos, "status", "OPEN")
+                strategy_type = getattr(pos, "strategy_type", "")
+                confidence_score = getattr(pos, "confidence_score", 0)
+            else:
+                # Keyword-style call (executor uses this)
+                symbol = kwargs.get("nse_symbol", kwargs.get("symbol", ""))
+                entry_price = kwargs.get("entry_price", 0)
+                entry_date = kwargs.get("entry_date", self._ist_now()[:10])
+                target_price = kwargs.get("target_price", 0)
+                stop_loss_price = kwargs.get("stop_loss_price", 0)
+                quantity = kwargs.get("quantity", 0)
+                status = kwargs.get("status", "OPEN")
+                strategy_type = kwargs.get("strategy_type", "")
+                confidence_score = kwargs.get("confidence_score", 0)
+
             cursor = self.conn.execute(
                 """INSERT INTO swing_trades
                    (symbol, entry_price, entry_date, target_price, stop_loss_price,
                     quantity, status, strategy_type, confidence_score, created_at)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                (
-                    pos.nse_symbol, pos.entry_price, pos.entry_date,
-                    pos.target_price, pos.stop_loss_price, pos.quantity,
-                    pos.status, pos.strategy_type, pos.confidence_score,
-                    self._ist_now(),
-                ),
+                (symbol, entry_price, entry_date, target_price, stop_loss_price,
+                 quantity, status, strategy_type, confidence_score, self._ist_now()),
             )
             self.conn.commit()
             return cursor.lastrowid
@@ -894,9 +913,12 @@ class DBManager:
             logger.error("Failed to insert swing trade", exc_info=True)
             return None
 
+    def get_open_swing_trades(self) -> list:
+        """Get open swing trades as list of dicts. Used by monitor."""
+        return self.get_swing_positions(status="OPEN")
+
     def get_swing_positions(self, status: str | None = None) -> list:
-        """Get swing positions, optionally filtered by status."""
-        from swing.models import SwingPosition
+        """Get swing positions, optionally filtered by status. Returns list of dicts."""
         try:
             if status:
                 rows = self.conn.execute(
@@ -907,26 +929,7 @@ class DBManager:
                     "SELECT * FROM swing_trades ORDER BY entry_date DESC"
                 ).fetchall()
 
-            positions = []
-            for row in rows:
-                r = dict(row)
-                positions.append(SwingPosition(
-                    id=r.get("id", 0),
-                    nse_symbol=r.get("symbol", ""),
-                    entry_price=float(r.get("entry_price", 0)),
-                    entry_date=r.get("entry_date", ""),
-                    target_price=float(r.get("target_price", 0)),
-                    stop_loss_price=float(r.get("stop_loss_price", 0)),
-                    current_price=float(r.get("current_price", 0)),
-                    quantity=int(r.get("quantity", 0)),
-                    status=r.get("status", "OPEN"),
-                    pnl=float(r.get("pnl", 0)),
-                    exit_price=float(r.get("exit_price", 0)),
-                    exit_date=r.get("exit_date", ""),
-                    strategy_type=r.get("strategy_type", ""),
-                    confidence_score=int(r.get("confidence_score", 0)),
-                ))
-            return positions
+            return [dict(row) for row in rows]
         except Exception:
             logger.error("Failed to get swing positions", exc_info=True)
             return []

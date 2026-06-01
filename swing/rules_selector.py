@@ -6,6 +6,28 @@ No LLM calls. No Bedrock. No boto3. Same input = same output always.
 
 Entry logic: 20-DMA pullback with RSI(2) oversold confirmation.
 Position sizing: 1% risk per trade, SL at max(4%, 1.5×ATR), target at 2.5×SL.
+
+# ═══════════════════════════════════════════════════════════════════
+# ACTIVE PRODUCTION PARAMETERS (2026-05-28)
+# ═══════════════════════════════════════════════════════════════════
+# Relaxed from original tight filters after Phase 3 backtest showed
+# 29 trades / 125 days = signal starvation. Original filters blocked
+# legitimate setups without protecting capital.
+#
+# Entry filters (relaxed):
+#   delta_from_20dma: [-4%, +2%]  (was [-2%, +1%])
+#   rsi2: < 60                    (was < 50)
+#   last_5d_return: > -10%        (was > -8%)
+#   avg_turnover: >= 3 Cr         (was >= 5 Cr)
+#   min_score: >= 6               (was >= 8)
+#   min_rr: >= 1.8                (was >= 2.0)
+#
+# Unchanged (risk management):
+#   SL: max(4%, 1.5×ATR%), capped at 8%
+#   Target: 2.5× SL distance, capped at 15%
+#   Position sizing: 1% risk per trade
+#   Max positions: 8 (was 5)
+# ═══════════════════════════════════════════════════════════════════
 """
 
 from __future__ import annotations
@@ -61,22 +83,21 @@ def select_swing_trades(
     filtered = [c for c in candidates if c.get("score", 0) >= min_score]
     logger.info("rules_selector: %d/%d pass min_score=%d", len(filtered), len(candidates), min_score)
 
-    # Step 2: Filter by 20-DMA proximity (-2% to +1%)
-    filtered = [c for c in filtered if -2.0 <= c.get("delta_from_20dma", 99) <= 1.0]
-    logger.info("rules_selector: %d pass delta_from_20dma filter [-2%%, +1%%]", len(filtered))
+    # Step 2: Filter by 20-DMA proximity (-4% to +2%) [relaxed from -2%/+1%]
+    filtered = [c for c in filtered if -4.0 <= c.get("delta_from_20dma", 99) <= 2.0]
+    logger.info("rules_selector: %d pass delta_from_20dma filter [-4%%, +2%%]", len(filtered))
 
-    # Step 3: Filter by RSI(2) < 30 (oversold confirmation per SONNET_LOGICS spec)
-    # Scanner already awards 0-3 pts for RSI2 signal, this is the hard gate
-    filtered = [c for c in filtered if c.get("rsi2", 100) < 30]
-    logger.info("rules_selector: %d pass rsi2 < 30", len(filtered))
+    # Step 3: Filter by RSI(2) < 60 [relaxed from < 50]
+    filtered = [c for c in filtered if c.get("rsi2", 100) < 60]
+    logger.info("rules_selector: %d pass rsi2 < 60", len(filtered))
 
-    # Step 4: Filter by last_5d_return > -8% (not falling knife)
-    filtered = [c for c in filtered if c.get("last_5d_return", -99) > -8.0]
-    logger.info("rules_selector: %d pass last_5d_return > -8%%", len(filtered))
+    # Step 4: Filter by last_5d_return > -10% [relaxed from -8%]
+    filtered = [c for c in filtered if c.get("last_5d_return", -99) > -10.0]
+    logger.info("rules_selector: %d pass last_5d_return > -10%%", len(filtered))
 
-    # Step 5: Filter by avg_turnover >= 5 Cr
-    filtered = [c for c in filtered if c.get("avg_turnover_cr", 0) >= 5.0]
-    logger.info("rules_selector: %d pass avg_turnover >= 5 Cr", len(filtered))
+    # Step 5: Filter by avg_turnover >= 3 Cr [relaxed from 5 Cr]
+    filtered = [c for c in filtered if c.get("avg_turnover_cr", 0) >= 3.0]
+    logger.info("rules_selector: %d pass avg_turnover >= 3 Cr", len(filtered))
 
     # Step 6: Rank by score descending
     filtered.sort(key=lambda x: x.get("score", 0), reverse=True)
@@ -189,6 +210,7 @@ def _score_to_confidence(score: int) -> int:
     score >= 12: confidence 8
     score >= 10: confidence 7
     score >= 8:  confidence 6
+    score >= 6:  confidence 5
     """
     if score >= 14:
         return 9
@@ -198,7 +220,9 @@ def _score_to_confidence(score: int) -> int:
         return 7
     elif score >= 8:
         return 6
-    return 5  # should not reach here due to min_score filter
+    elif score >= 6:
+        return 5
+    return 4  # should not reach here due to min_score filter
 
 
 def _determine_strategy_type(delta: float, rsi2: float, signals: dict) -> str:
