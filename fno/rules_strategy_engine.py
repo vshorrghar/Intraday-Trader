@@ -80,7 +80,7 @@ def select_strategy_type(
     # 2026-05-28: Regime expanded — SIDEWAYS + HIGH_VOLATILITY (VIX 20-25 still allows IC)
     # RANGING and UNCLEAR map to SIDEWAYS in classifier. HIGH_VOLATILITY added because
     # IC works in any low-movement regime — VIX 20-25 just needs wider strikes (handled by sigma).
-    if regime in (MarketRegime.SIDEWAYS, MarketRegime.HIGH_VOLATILITY) and ivp >= 40 and vrp >= 0.5 and 3 <= dte <= 12:
+    if regime in (MarketRegime.SIDEWAYS, MarketRegime.HIGH_VOLATILITY) and ivp >= 40 and 3 <= dte <= 12:
         logger.info(
             "RULES: IRON_CONDOR — regime=%s, IVP=%.1f, VRP=%.1f, DTE=%d",
             regime.value, ivp, vrp, dte,

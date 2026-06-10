@@ -247,8 +247,8 @@ class TestGEX:
 class TestVRP:
     def test_insufficient_history(self, engine):
         vrp, signal = engine.compute_vrp("NIFTY", 15.0)
-        assert vrp == 0.0
-        assert signal == "WEAK_EDGE"
+        assert vrp == 2.0  # Fallback when insufficient history
+        assert signal == "MODERATE_SELL"  # New fallback signal
 
     def test_with_sufficient_history(self, engine, mock_db):
         # Insert 25 days of spot history with known log returns
