@@ -1,0 +1,42 @@
+nohup: ignoring input
+Loading 90-day data...
+Stocks: 227 | Trading days: 58
+Range: 2026-02-25 to 2026-05-25
+
+==============================================================================================================
+CLEAN 90-DAY BACKTEST — BLACKLIST APPLIED — 1 TRADE/DAY
+Stocks: 227 | Days: 58 | Blacklist: 53 stocks removed
+==============================================================================================================
+Variant      Strategy        Capital  Days  Trades    WR%    PF    Net P&L    Monthly Status
+--------------------------------------------------------------------------------------------------------------
+T1_SL05      COMBINED         30,000    53      53   13.2  0.18     -7,540     -2,513 ❌
+T1_SL05      COMBINED        100,000    53      53   13.2  0.18    -25,791     -8,597 ❌
+T15_SL07     COMBINED         30,000    53      53   13.2  0.18     -9,372     -3,124 ❌
+T15_SL07     COMBINED        100,000    53      53   13.2  0.18    -31,888    -10,629 ❌
+T2_SL1       COMBINED         30,000    53      53   28.3  0.58     -5,173     -1,724 ❌
+T2_SL1       COMBINED        100,000    53      53   28.3  0.57    -17,700     -5,900 ❌
+T25_SL12     COMBINED         30,000    53      53   35.8  0.95       -562       -187 ❌
+T25_SL12     COMBINED        100,000    53      53   35.8  0.95     -2,030       -677 ❌
+T3_SL15      COMBINED         30,000    53      53   35.8  0.88     -1,615       -538 ❌
+T3_SL15      COMBINED        100,000    53      53   35.8  0.89     -5,051     -1,684 ❌
+
+==============================================================================================================
+No configs hit WR>=52% and PF>=1.2
+Best by monthly P&L:
+  T25_SL12 VWAP_RCL Rs.200,000: 49t/49days 44.9%WR PF1.09 Net Rs.4,772 Monthly Rs.1,591
+  T25_SL12 VWAP_RCL Rs.150,000: 49t/49days 44.9%WR PF1.09 Net Rs.3,563 Monthly Rs.1,188
+  T25_SL12 VWAP_RCL Rs.100,000: 49t/49days 44.9%WR PF1.09 Net Rs.2,301 Monthly Rs.767
+  T25_SL12 VWAP_RCL Rs.30,000: 49t/49days 44.9%WR PF1.08 Net Rs.652 Monthly Rs.217
+  T3_SL15 VWAP_RCL Rs.30,000: 49t/49days 44.9%WR PF0.96 Net Rs.-320 Monthly Rs.-107
+  T25_SL12 V6_ORB Rs.30,000: 42t/42days 38.1%WR PF0.95 Net Rs.-443 Monthly Rs.-148
+  T25_SL12 COMBINED Rs.30,000: 53t/53days 35.8%WR PF0.95 Net Rs.-562 Monthly Rs.-187
+  T2_SL1 VWAP_RCL Rs.30,000: 49t/49days 42.9%WR PF0.93 Net Rs.-572 Monthly Rs.-191
+  T15_SL07 VWAP_RCL Rs.30,000: 49t/49days 38.8%WR PF0.89 Net Rs.-798 Monthly Rs.-266
+  T3_SL15 V6_ORB Rs.30,000: 42t/42days 38.1%WR PF0.92 Net Rs.-859 Monthly Rs.-286
+  T3_SL15 VWAP_RCL Rs.100,000: 49t/49days 44.9%WR PF0.97 Net Rs.-985 Monthly Rs.-328
+  T3_SL15 VWAP_RCL Rs.150,000: 49t/49days 44.9%WR PF0.97 Net Rs.-1,330 Monthly Rs.-443
+  T3_SL15 COMBINED Rs.30,000: 53t/53days 35.8%WR PF0.88 Net Rs.-1,615 Monthly Rs.-538
+  T25_SL12 V6_ORB Rs.100,000: 42t/42days 38.1%WR PF0.95 Net Rs.-1,667 Monthly Rs.-556
+  T3_SL15 VWAP_RCL Rs.200,000: 49t/49days 44.9%WR PF0.97 Net Rs.-1,752 Monthly Rs.-584
+
+Saved: backtest/results/clean_90d.json

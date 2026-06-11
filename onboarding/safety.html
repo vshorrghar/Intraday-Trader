@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safety — AutoTrader</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="bg-image"></div>
+<div class="bg-overlay"></div>
+<nav class="navbar"><a href="index.html" class="nav-logo gradient-text"><span class="bolt">⚡</span>AutoTrader</a><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="how-it-works.html">कैसे काम करता है</a></li><li><a href="safety.html" class="active">Safety</a></li><li><a href="setup-guide.html">Setup</a></li><li><a href="costs.html">Costs</a></li><li><a href="dashboard-guide.html">Dashboard</a></li><li><a href="contact.html">Contact</a></li></ul><button class="hamburger" aria-label="Menu">☰</button></nav>
+<div class="mobile-menu"><a href="index.html">Home</a><a href="how-it-works.html">कैसे काम करता है</a><a href="safety.html">Safety</a><a href="setup-guide.html">Setup</a><a href="costs.html">Costs</a><a href="dashboard-guide.html">Dashboard</a><a href="contact.html">Contact</a></div>
+
+<section class="section" style="padding-top:120px;">
+  <div class="section-header">
+    <h2 class="gradient-text">आपकी Safety</h2>
+    <p>हर rule hardcoded है। कोई override नहीं।</p>
+  </div>
+
+  <div class="card mb-40" style="border:2px solid var(--accent-red);box-shadow:var(--glow-red);text-align:center;padding:40px;">
+    <p class="text-muted" style="font-size:14px;text-transform:uppercase;letter-spacing:1px;">Maximum Daily Loss Limit</p>
+    <p class="mono" style="font-size:64px;font-weight:700;color:var(--accent-red);margin:16px 0;">₹600</p>
+    <p>यह system में hardcode है। कोई इंसान इसे change नहीं कर सकता।<br>अगर trade में ₹600 loss हो — system automatically exit करता है। उस दिन के लिए बंद।</p>
+    <p class="mt-20 text-muted">₹10,000 account पर = maximum 6% daily loss<br>99% दिन यह trigger नहीं होता।</p>
+  </div>
+
+  <div class="card mb-40">
+    <h3>Stop Loss कैसे काम करता है</h3>
+    <div class="terminal mt-20">
+<span class="cyan">Stop Loss एक automatic emergency brake है।</span>
+
+Example:
+System ने Stock X <span class="highlight">₹200</span> पर खरीदा।
+Stop Loss automatically <span class="text-red">₹196</span> पर set हुई।
+(2% नीचे — VIX के हिसाब से)
+
+अगर stock ₹196 पर आया →
+Dhan automatically sell करता है।
+Loss = ₹4 × shares = <span class="amber">protected।</span>
+
+<span class="cyan">यह order Dhan के server पर है।</span>
+Internet बंद हो। हमारा server बंद हो।
+Stop Loss काम करेगी। <span class="highlight">हमेशा।</span>
+    </div>
+  </div>
+
+  <div class="card card-static-green mb-40">
+    <h3 class="text-green">आपका पैसा हमेशा आपके Dhan account में</h3>
+    <ul style="list-style:none;margin-top:12px;">
+      <li style="padding:6px 0;">✓ हम आपका पैसा hold नहीं करते</li>
+      <li style="padding:6px 0;">✓ हम transfer नहीं कर सकते</li>
+      <li style="padding:6px 0;">✓ हम withdraw नहीं कर सकते</li>
+      <li style="padding:6px 0;">✓ System सिर्फ BUY/SELL orders place करता है</li>
+      <li style="padding:6px 0;">✓ आप कभी भी अपना पैसा निकाल सकते हो</li>
+      <li style="padding:6px 0;">✓ Dhan SEBI registered broker है</li>
+    </ul>
+  </div>
+
+  <h3 class="text-center mb-20">What Can Go Wrong</h3>
+  <div class="cards-grid mb-40">
+    <div class="card card-glow-amber"><h3 class="text-amber">⚠️ Gap Down Opening</h3><p>Stock अचानक बहुत नीचे open हो सकता है। Rare case में loss ₹600 से ज़्यादा हो सकता है। यह market का risk है।</p></div>
+    <div class="card card-glow-amber"><h3 class="text-amber">⚠️ Server Downtime</h3><p>हमारा server बंद हो तो new trade नहीं होगा। लेकिन existing Stop Loss Dhan पर safe है।</p></div>
+    <div class="card card-glow-amber"><h3 class="text-amber">⚠️ High VIX Days</h3><p>VIX > 18 पर system extra cautious होता है। कभी कभी पूरा दिन skip करता है। यह protection है।</p></div>
+    <div class="card card-glow-amber"><h3 class="text-amber">⚠️ AI Errors</h3><p>AI कभी कभी गलत stock चुन सकती है। इसके लिए Stop Loss है। Maximum loss हमेशा limited रहता है।</p></div>
+  </div>
+
+  <div class="card mb-40">
+    <h3>The System's Philosophy</h3>
+    <p class="mt-20"><strong>Cricket analogy:</strong><br>हर ball पर shot नहीं मारते। सही ball का इंतज़ार करते हैं। फिर मारते हैं।</p>
+    <p class="mt-20">यह system वैसे ही काम करता है। Bad day पर trade skip। Good setup पर precise entry।<br><strong class="text-blue">Always: Capital first। Profit second।</strong></p>
+  </div>
+
+  <div class="card card-static-red" style="font-size:12px;">
+    <h3 class="text-red">⚠️ DISCLAIMER — पढ़ना ज़रूरी है</h3>
+    <p class="mt-20">AutoTrader एक experimental algorithmic trading system है।</p>
+    <p>यह SEBI registered investment advisor नहीं है। यह financial advice नहीं है।</p>
+    <p>Stock market में investment में substantial risk of loss है। Past performance future results guarantee नहीं करती।</p>
+    <p>यह system loss कर सकता है। Technology fail हो सकती है। Market unpredictable है।</p>
+    <p>सभी trading decisions automated हैं। Pre-defined algorithmic rules पर based हैं।</p>
+    <p>Users अपने trading outcomes के लिए पूरी तरह खुद responsible हैं।</p>
+    <p>AutoTrader, इसके operators और developers किसी भी financial loss के लिए liable नहीं हैं।</p>
+    <p><strong>केवल वही पैसा invest करें जिसका पूरा loss afford कर सकते हों।</strong></p>
+  </div>
+</section>
+
+<footer class="footer"><div class="footer-inner"><div><div class="footer-brand gradient-text">⚡ AutoTrader</div><div class="footer-tagline">Algorithmic. Automatic. Defensive.</div></div><div class="footer-links"><a href="index.html">Home</a><a href="how-it-works.html">कैसे काम करता है</a><a href="safety.html">Safety</a><a href="setup-guide.html">Setup</a><a href="costs.html">Costs</a><a href="dashboard-guide.html">Dashboard</a><a href="contact.html">Contact</a></div><div class="footer-powered">Powered by Claude AI<br>on AWS Bedrock</div></div><div class="disclaimer">⚠️ Disclaimer: AutoTrader एक experimental algorithmic trading system है। यह SEBI registered investment advisor नहीं है। Stock market trading में substantial risk of loss है। Past performance future results guarantee नहीं करती। सभी trading decisions automated algorithmic rules पर based हैं। Users अपने outcomes के लिए पूरी तरह स्वयं responsible हैं। AutoTrader और इसके developers किसी भी financial loss के लिए liable नहीं हैं। केवल वही capital invest करें जिसका पूरा loss afford कर सकें।</div></footer>
+<script src="assets/main.js"></script>
+</body>
+</html>

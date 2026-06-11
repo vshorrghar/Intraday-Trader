@@ -1,0 +1,70 @@
+{
+  "profile": "vishal",
+  "date": "2026-05-29",
+  "generated_at": "2026-06-11T15:45:02.440876+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 192414.6,
+  "capital_deployed_pct": 64.1,
+  "daily_gross_pnl": 91.7,
+  "daily_charges": 296.21,
+  "daily_net_pnl": -204.51,
+  "daily_return_pct": -0.068,
+  "charge_ratio_pct": 323.0,
+  "trade_count": 4,
+  "wins": 0,
+  "losses": 4,
+  "trades": [
+    {
+      "trade_id": 127,
+      "symbol": "INFY",
+      "direction": "LONG",
+      "qty": 41,
+      "entry_price": 1195.3,
+      "exit_price": 1195.3,
+      "capital_used": 49007.3,
+      "gross_pnl": 22.41,
+      "charges": 74.5,
+      "net_pnl": -52.09,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 128,
+      "symbol": "CIPLA",
+      "direction": "LONG",
+      "qty": 33,
+      "entry_price": 1424.9,
+      "exit_price": 1424.9,
+      "capital_used": 47021.7,
+      "gross_pnl": 23.53,
+      "charges": 73.51,
+      "net_pnl": -49.98,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 129,
+      "symbol": "COALINDIA",
+      "direction": "LONG",
+      "qty": 102,
+      "entry_price": 467.2,
+      "exit_price": 467.2,
+      "capital_used": 47654.4,
+      "gross_pnl": 23.18,
+      "charges": 73.83,
+      "net_pnl": -50.65,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 130,
+      "symbol": "ICICIBANK",
+      "direction": "LONG",
+      "qty": 38,
+      "entry_price": 1282.4,
+      "exit_price": 1282.4,
+      "capital_used": 48731.2,
+      "gross_pnl": 22.58,
+      "charges": 74.37,
+      "net_pnl": -51.79,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

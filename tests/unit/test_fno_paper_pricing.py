@@ -257,10 +257,10 @@ class TestImprovedExitRules:
 
         monitor = FnO_Position_Monitor(config, db, MagicMock())
 
-        # Strategy expiring tomorrow
+        # Strategy expiring tomorrow, check at noon (before force_exit_time)
         tomorrow = (datetime.now(IST) + timedelta(days=1)).strftime("%Y-%m-%d")
         strat = _make_strategy(net_premium=500, max_profit=500, expiry_date=tomorrow)
-        now = datetime.now(IST)
+        now = datetime.now(IST).replace(hour=12, minute=0, second=0)
 
         result = monitor._evaluate_exit_conditions(strat, 400, 500, now)
         assert result == "EXPIRED"  # DTE = 1, time_exit_dte = 1 for IC
@@ -272,13 +272,13 @@ class TestImprovedExitRules:
 
         monitor = FnO_Position_Monitor(config, db, MagicMock())
 
-        # Strategy expiring in 2 days
+        # Strategy expiring in 2 days, check at noon (before force_exit_time)
         in_2_days = (datetime.now(IST) + timedelta(days=2)).strftime("%Y-%m-%d")
         strat = _make_strategy(
             strategy_type="BULL_PUT_SPREAD",
             net_premium=400, max_profit=400, expiry_date=in_2_days,
         )
-        now = datetime.now(IST)
+        now = datetime.now(IST).replace(hour=12, minute=0, second=0)
 
         result = monitor._evaluate_exit_conditions(strat, 300, 400, now)
         assert result == "EXPIRED"  # DTE = 2, time_exit_dte = 2 for spreads
@@ -290,10 +290,10 @@ class TestImprovedExitRules:
 
         monitor = FnO_Position_Monitor(config, db, MagicMock())
 
-        # Strategy expiring in 7 days
+        # Strategy expiring in 7 days, check at noon (before force_exit_time)
         in_7_days = (datetime.now(IST) + timedelta(days=7)).strftime("%Y-%m-%d")
         strat = _make_strategy(net_premium=500, max_profit=500, expiry_date=in_7_days)
-        now = datetime.now(IST)
+        now = datetime.now(IST).replace(hour=12, minute=0, second=0)
 
         # Premium unchanged — no exit trigger
         result = monitor._evaluate_exit_conditions(strat, 480, 500, now)

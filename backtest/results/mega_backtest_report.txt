@@ -1,0 +1,318 @@
+================================================================================
+MEGA BACKTEST REPORT
+================================================================================
+
+============================================================
+STRATEGY: V6_ORB
+============================================================
+
+  Capital: Rs.30,000
+  Trades: 23 | WR: 34.8% | PF: 0.91 | Net P&L: Rs.-206 ❌ NO EDGE
+  Avg Win: Rs.257 | Avg Loss: Rs.-151 | Charges: Rs.1,355
+  Monthly Projection: Rs.-83
+  Exit: {'FORCE_EXIT': 23}
+  Top Stocks: BHARTIARTL(Rs.885), ADANIENT(Rs.369), ADANIPORTS(Rs.330), INDUSINDBK(Rs.8), BPCL(Rs.-55)
+  Worst Stocks: HDFCBANK(Rs.-1,282), WIPRO(Rs.-206), HCLTECH(Rs.-149)
+  By Day: Fri:4t/1w | Mon:4t/3w | Thu:3t/2w | Tue:4t/0w | Wed:8t/2w
+
+  Capital: Rs.100,000
+  Trades: 69 | WR: 46.4% | PF: 0.81 | Net P&L: Rs.-2,068 ⚠️ WEAK
+  Avg Win: Rs.270 | Avg Loss: Rs.-289 | Charges: Rs.4,497
+  Monthly Projection: Rs.-827
+  Exit: {'FORCE_EXIT': 67, 'TARGET_HIT': 1, 'STOP_LOSS': 1}
+  Top Stocks: BHARTIARTL(Rs.995), BAJFINANCE(Rs.810), NTPCGREEN(Rs.470), ADANIENT(Rs.424), CESC(Rs.367)
+  Worst Stocks: WIPRO(Rs.-1,490), MPHASIS(Rs.-989), HDFCBANK(Rs.-962)
+  By Day: Fri:12t/5w | Mon:12t/9w | Thu:9t/5w | Tue:12t/4w | Wed:24t/9w
+
+  Capital: Rs.150,000
+  Trades: 92 | WR: 39.1% | PF: 0.62 | Net P&L: Rs.-7,724 ❌ NO EDGE
+  Avg Win: Rs.357 | Avg Loss: Rs.-367 | Charges: Rs.6,759
+  Monthly Projection: Rs.-3,090
+  Exit: {'FORCE_EXIT': 87, 'TARGET_HIT': 1, 'STOP_LOSS': 4}
+  Top Stocks: HINDZINC(Rs.1,291), BHARTIARTL(Rs.1,106), BAJFINANCE(Rs.909), BPCL(Rs.607), ADANIENT(Rs.478)
+  Worst Stocks: WIPRO(Rs.-2,179), HDFCBANK(Rs.-1,502), FEDERALBNK(Rs.-1,408)
+  By Day: Fri:16t/5w | Mon:16t/10w | Thu:12t/5w | Tue:16t/5w | Wed:32t/11w
+
+  Capital: Rs.200,000
+  Trades: 115 | WR: 39.1% | PF: 0.61 | Net P&L: Rs.-11,412 ❌ NO EDGE
+  Avg Win: Rs.392 | Avg Loss: Rs.-415 | Charges: Rs.8,969
+  Monthly Projection: Rs.-4,565
+  Exit: {'FORCE_EXIT': 106, 'TARGET_HIT': 1, 'STOP_LOSS': 8}
+  Top Stocks: ANGELONE(Rs.2,124), HINDZINC(Rs.1,376), BHARTIARTL(Rs.1,161), BAJFINANCE(Rs.824), BPCL(Rs.648)
+  Worst Stocks: WIPRO(Rs.-2,325), RALLIS(Rs.-1,911), POLICYBZR(Rs.-1,627)
+  By Day: Fri:20t/7w | Mon:20t/10w | Thu:15t/7w | Tue:20t/7w | Wed:40t/14w
+
+============================================================
+STRATEGY: V6_RS
+============================================================
+
+  Capital: Rs.30,000
+  Trades: 19 | WR: 31.6% | PF: 1.33 | Net P&L: Rs.649 ❌ NO EDGE
+  Avg Win: Rs.436 | Avg Loss: Rs.-151 | Charges: Rs.1,121
+  Monthly Projection: Rs.260
+  Exit: {'FORCE_EXIT': 19}
+  Top Stocks: RAILTEL(Rs.1,065), BHARTIARTL(Rs.885), ADANIENT(Rs.369), ADANIPOWER(Rs.164), ADANIPORTS(Rs.-15)
+  Worst Stocks: HDFCBANK(Rs.-686), GODREJPROP(Rs.-443), VEDL(Rs.-401)
+  By Day: Fri:3t/0w | Mon:2t/1w | Thu:3t/2w | Tue:4t/0w | Wed:7t/3w
+
+  Capital: Rs.100,000
+  Trades: 50 | WR: 42.0% | PF: 1.17 | Net P&L: Rs.1,446 ❌ NO EDGE
+  Avg Win: Rs.482 | Avg Loss: Rs.-299 | Charges: Rs.3,270
+  Monthly Projection: Rs.579
+  Exit: {'FORCE_EXIT': 46, 'TARGET_HIT': 2, 'STOP_LOSS': 2}
+  Top Stocks: ANGELONE(Rs.1,781), RAILTEL(Rs.1,190), BHARTIARTL(Rs.995), VEDL(Rs.872), BAJFINANCE(Rs.810)
+  Worst Stocks: RALLIS(Rs.-1,594), MPHASIS(Rs.-989), PAYTM(Rs.-790)
+  By Day: Fri:6t/2w | Mon:4t/2w | Thu:9t/5w | Tue:11t/4w | Wed:20t/8w
+
+  Capital: Rs.150,000
+  Trades: 64 | WR: 35.9% | PF: 0.83 | Net P&L: Rs.-2,489 ❌ NO EDGE
+  Avg Win: Rs.524 | Avg Loss: Rs.-355 | Charges: Rs.4,732
+  Monthly Projection: Rs.-996
+  Exit: {'FORCE_EXIT': 59, 'TARGET_HIT': 2, 'STOP_LOSS': 3}
+  Top Stocks: ANGELONE(Rs.1,994), RAILTEL(Rs.1,339), BHARTIARTL(Rs.1,106), VEDL(Rs.965), BAJFINANCE(Rs.771)
+  Worst Stocks: RALLIS(Rs.-1,792), WIPRO(Rs.-1,190), MPHASIS(Rs.-1,130)
+  By Day: Fri:7t/2w | Mon:5t/2w | Thu:12t/5w | Tue:14t/5w | Wed:26t/9w
+
+  Capital: Rs.200,000
+  Trades: 78 | WR: 37.2% | PF: 0.84 | Net P&L: Rs.-2,843 ❌ NO EDGE
+  Avg Win: Rs.525 | Avg Loss: Rs.-369 | Charges: Rs.6,085
+  Monthly Projection: Rs.-1,137
+  Exit: {'FORCE_EXIT': 72, 'TARGET_HIT': 2, 'STOP_LOSS': 4}
+  Top Stocks: ANGELONE(Rs.2,124), RAILTEL(Rs.1,419), VEDL(Rs.1,388), BHARTIARTL(Rs.1,161), BAJFINANCE(Rs.824)
+  Worst Stocks: RALLIS(Rs.-1,911), WIPRO(Rs.-1,272), MPHASIS(Rs.-1,200)
+  By Day: Fri:8t/2w | Mon:6t/2w | Thu:15t/7w | Tue:17t/7w | Wed:32t/11w
+
+============================================================
+STRATEGY: GAP_HOLD
+============================================================
+
+  Capital: Rs.30,000
+  Trades: 14 | WR: 28.6% | PF: 0.56 | Net P&L: Rs.-1,700 ❌ NO EDGE
+  Avg Win: Rs.536 | Avg Loss: Rs.-385 | Charges: Rs.817
+  Monthly Projection: Rs.-1,020
+  Exit: {'FORCE_EXIT': 13, 'STOP_LOSS': 1}
+  Top Stocks: ADANIPOWER(Rs.709), INDUSINDBK(Rs.638), ADANIPORTS(Rs.509), RVNL(Rs.-458), MPHASIS(Rs.-563)
+  Worst Stocks: ADANIENT(Rs.-1,148), GRSE(Rs.-735), VEDL(Rs.-653)
+  By Day: Fri:3t/1w | Mon:3t/3w | Thu:1t/0w | Tue:1t/0w | Wed:6t/0w
+
+  Capital: Rs.100,000
+  Trades: 33 | WR: 42.4% | PF: 0.84 | Net P&L: Rs.-1,471 ❌ NO EDGE
+  Avg Win: Rs.541 | Avg Loss: Rs.-476 | Charges: Rs.2,157
+  Monthly Projection: Rs.-882
+  Exit: {'FORCE_EXIT': 31, 'STOP_LOSS': 1, 'TARGET_HIT': 1}
+  Top Stocks: ANGELONE(Rs.2,360), ADANIPOWER(Rs.788), INDUSINDBK(Rs.694), HFCL(Rs.675), HINDZINC(Rs.659)
+  Worst Stocks: RALLIS(Rs.-1,427), ADANIENT(Rs.-1,295), GRSE(Rs.-816)
+  By Day: Fri:7t/3w | Mon:8t/6w | Thu:2t/0w | Tue:2t/0w | Wed:14t/5w
+
+  Capital: Rs.150,000
+  Trades: 38 | WR: 44.7% | PF: 0.83 | Net P&L: Rs.-1,918 ❌ NO EDGE
+  Avg Win: Rs.570 | Avg Loss: Rs.-553 | Charges: Rs.2,789
+  Monthly Projection: Rs.-1,151
+  Exit: {'FORCE_EXIT': 36, 'STOP_LOSS': 1, 'TARGET_HIT': 1}
+  Top Stocks: ANGELONE(Rs.2,661), ADANIPOWER(Rs.888), INDUSINDBK(Rs.788), HFCL(Rs.760), HINDZINC(Rs.732)
+  Worst Stocks: RALLIS(Rs.-1,602), ADANIENT(Rs.-1,478), CEATLTD(Rs.-1,075)
+  By Day: Fri:7t/3w | Mon:9t/7w | Thu:2t/0w | Tue:2t/0w | Wed:18t/7w
+
+  Capital: Rs.200,000
+  Trades: 42 | WR: 42.9% | PF: 0.79 | Net P&L: Rs.-2,923 ❌ NO EDGE
+  Avg Win: Rs.609 | Avg Loss: Rs.-579 | Charges: Rs.3,279
+  Monthly Projection: Rs.-1,754
+  Exit: {'FORCE_EXIT': 40, 'STOP_LOSS': 1, 'TARGET_HIT': 1}
+  Top Stocks: ANGELONE(Rs.2,854), ADANIPOWER(Rs.945), INDUSINDBK(Rs.844), HFCL(Rs.810), HINDZINC(Rs.781)
+  Worst Stocks: RALLIS(Rs.-1,707), ADANIENT(Rs.-1,561), BAJAJ-AUTO(Rs.-1,279)
+  By Day: Fri:7t/3w | Mon:10t/8w | Thu:2t/0w | Tue:2t/0w | Wed:21t/7w
+
+============================================================
+STRATEGY: VWAP_RECLAIM
+============================================================
+
+  Capital: Rs.30,000
+  Trades: 23 | WR: 30.4% | PF: 0.58 | Net P&L: Rs.-1,230 ❌ NO EDGE
+  Avg Win: Rs.246 | Avg Loss: Rs.-185 | Charges: Rs.1,353
+  Monthly Projection: Rs.-492
+  Exit: {'FORCE_EXIT': 21, 'STOP_LOSS': 2}
+  Top Stocks: WIPRO(Rs.-23), BAJFINANCE(Rs.-85), HDFCBANK(Rs.-103), ADANIPORTS(Rs.-108), ADANIENT(Rs.-158)
+  Worst Stocks: VEDL(Rs.-286), BEL(Rs.-274), ASIANPAINT(Rs.-193)
+  By Day: Fri:4t/0w | Mon:4t/2w | Thu:3t/2w | Tue:4t/1w | Wed:8t/2w
+
+  Capital: Rs.100,000
+  Trades: 69 | WR: 40.6% | PF: 0.69 | Net P&L: Rs.-2,861 ❌ NO EDGE
+  Avg Win: Rs.225 | Avg Loss: Rs.-223 | Charges: Rs.4,473
+  Monthly Projection: Rs.-1,144
+  Exit: {'FORCE_EXIT': 64, 'STOP_LOSS': 5}
+  Top Stocks: HINDZINC(Rs.625), ADANIPORTS(Rs.601), ADANIPOWER(Rs.467), RADICO(Rs.446), AXISBANK(Rs.298)
+  Worst Stocks: HDFCBANK(Rs.-592), MPHASIS(Rs.-543), MARUTI(Rs.-479)
+  By Day: Fri:12t/1w | Mon:12t/4w | Thu:9t/5w | Tue:12t/7w | Wed:24t/11w
+
+  Capital: Rs.150,000
+  Trades: 92 | WR: 42.4% | PF: 0.75 | Net P&L: Rs.-3,702 ❌ NO EDGE
+  Avg Win: Rs.281 | Avg Loss: Rs.-276 | Charges: Rs.6,741
+  Monthly Projection: Rs.-1,481
+  Exit: {'FORCE_EXIT': 83, 'STOP_LOSS': 9}
+  Top Stocks: INDUSINDBK(Rs.767), HINDZINC(Rs.703), AXISBANK(Rs.691), ADANIPORTS(Rs.678), BHARTIARTL(Rs.587)
+  Worst Stocks: WIPRO(Rs.-744), GODREJCP(Rs.-666), HDFCBANK(Rs.-662)
+  By Day: Fri:16t/3w | Mon:16t/6w | Thu:12t/7w | Tue:16t/10w | Wed:32t/13w
+
+  Capital: Rs.200,000
+  Trades: 115 | WR: 43.5% | PF: 0.94 | Net P&L: Rs.-1,214 ❌ NO EDGE
+  Avg Win: Rs.372 | Avg Loss: Rs.-305 | Charges: Rs.8,947
+  Monthly Projection: Rs.-486
+  Exit: {'FORCE_EXIT': 103, 'TARGET_HIT': 1, 'STOP_LOSS': 11}
+  Top Stocks: ANGELONE(Rs.2,680), NTPCGREEN(Rs.1,020), INDUSINDBK(Rs.822), HINDZINC(Rs.747), AXISBANK(Rs.738)
+  Worst Stocks: BAJFINANCE(Rs.-1,392), HDFCBANK(Rs.-1,323), WIPRO(Rs.-794)
+  By Day: Fri:20t/5w | Mon:20t/9w | Thu:15t/10w | Tue:20t/10w | Wed:40t/16w
+
+============================================================
+STRATEGY: TREND_CONT
+============================================================
+
+  Capital: Rs.30,000
+  Trades: 16 | WR: 31.2% | PF: 0.44 | Net P&L: Rs.-1,221 ❌ NO EDGE
+  Avg Win: Rs.188 | Avg Loss: Rs.-197 | Charges: Rs.940
+  Monthly Projection: Rs.-539
+  Exit: {'FORCE_EXIT': 14, 'STOP_LOSS': 2}
+  Top Stocks: INDUSINDBK(Rs.314), AXISBANK(Rs.239), COCHINSHIP(Rs.83), ADANIPORTS(Rs.-0), HDFCBANK(Rs.-70)
+  Worst Stocks: ITC(Rs.-505), ADANIENT(Rs.-488), WIPRO(Rs.-441)
+  By Day: Fri:4t/0w | Mon:3t/3w | Thu:1t/0w | Tue:1t/0w | Wed:7t/2w
+
+  Capital: Rs.100,000
+  Trades: 48 | WR: 35.4% | PF: 0.46 | Net P&L: Rs.-4,343 ❌ NO EDGE
+  Avg Win: Rs.219 | Avg Loss: Rs.-260 | Charges: Rs.3,140
+  Monthly Projection: Rs.-1,916
+  Exit: {'FORCE_EXIT': 43, 'STOP_LOSS': 5}
+  Top Stocks: VEDL(Rs.578), BPCL(Rs.554), INDUSINDBK(Rs.352), PAYTM(Rs.316), AXISBANK(Rs.271)
+  Worst Stocks: WIPRO(Rs.-1,114), BANDHANBNK(Rs.-931), MPHASIS(Rs.-741)
+  By Day: Fri:12t/3w | Mon:9t/8w | Thu:3t/0w | Tue:3t/1w | Wed:21t/5w
+
+  Capital: Rs.150,000
+  Trades: 64 | WR: 34.4% | PF: 0.48 | Net P&L: Rs.-6,102 ❌ NO EDGE
+  Avg Win: Rs.260 | Avg Loss: Rs.-282 | Charges: Rs.4,735
+  Monthly Projection: Rs.-2,692
+  Exit: {'FORCE_EXIT': 57, 'STOP_LOSS': 6, 'TARGET_HIT': 1}
+  Top Stocks: VEDL(Rs.1,201), BPCL(Rs.753), INDUSINDBK(Rs.399), ANGELONE(Rs.382), ASHOKA(Rs.265)
+  Worst Stocks: WIPRO(Rs.-1,253), BANDHANBNK(Rs.-1,051), MPHASIS(Rs.-846)
+  By Day: Fri:16t/5w | Mon:12t/8w | Thu:4t/0w | Tue:4t/1w | Wed:28t/8w
+
+  Capital: Rs.200,000
+  Trades: 80 | WR: 35.0% | PF: 0.47 | Net P&L: Rs.-8,585 ❌ NO EDGE
+  Avg Win: Rs.267 | Avg Loss: Rs.-309 | Charges: Rs.6,242
+  Monthly Projection: Rs.-3,788
+  Exit: {'FORCE_EXIT': 70, 'STOP_LOSS': 9, 'TARGET_HIT': 1}
+  Top Stocks: VEDL(Rs.1,284), BPCL(Rs.807), ICICIPRULI(Rs.445), AIAENG(Rs.441), INDUSINDBK(Rs.418)
+  Worst Stocks: WIPRO(Rs.-1,336), POLICYBZR(Rs.-1,191), BANDHANBNK(Rs.-1,119)
+  By Day: Fri:20t/6w | Mon:15t/10w | Thu:5t/0w | Tue:5t/1w | Wed:35t/11w
+
+============================================================
+STRATEGY: SWING_CRABEL
+============================================================
+
+  Capital: Rs.30,000
+  Trades: 41 | WR: 41.5% | PF: 0.93 | Net P&L: Rs.-1,105 ❌ NO EDGE
+  Avg Win: Rs.927 | Avg Loss: Rs.-703 | Charges: Rs.2,395
+  Monthly Projection: Rs.-518
+  Exit: {'STOP_LOSS': 19, 'TARGET_HIT': 4, 'FORCE_EXIT': 18}
+  Top Stocks: ONGC(Rs.2,600), NTPC(Rs.1,658), MRPL(Rs.1,551), DMART(Rs.1,504), HINDALCO(Rs.971)
+  Worst Stocks: SBIN(Rs.-2,673), RELIANCE(Rs.-2,059), INDIANB(Rs.-1,354)
+  By Day: Fri:8t/4w | Mon:9t/5w | Thu:8t/1w | Tue:7t/3w | Wed:9t/4w
+
+  Capital: Rs.100,000
+  Trades: 115 | WR: 38.3% | PF: 1.00 | Net P&L: Rs.-233 ❌ NO EDGE
+  Avg Win: Rs.1,202 | Avg Loss: Rs.-748 | Charges: Rs.7,508
+  Monthly Projection: Rs.-109
+  Exit: {'STOP_LOSS': 49, 'TARGET_HIT': 14, 'FORCE_EXIT': 52}
+  Top Stocks: CHENNPETRO(Rs.5,971), HINDALCO(Rs.5,851), MRPL(Rs.4,196), AARTIIND(Rs.2,747), GRANULES(Rs.2,248)
+  Worst Stocks: INDIANB(Rs.-4,423), BEL(Rs.-3,963), SBIN(Rs.-3,893)
+  By Day: Fri:21t/8w | Mon:25t/9w | Thu:21t/5w | Tue:21t/7w | Wed:27t/15w
+
+  Capital: Rs.150,000
+  Trades: 149 | WR: 36.9% | PF: 0.88 | Net P&L: Rs.-9,507 ❌ NO EDGE
+  Avg Win: Rs.1,313 | Avg Loss: Rs.-870 | Charges: Rs.10,929
+  Monthly Projection: Rs.-4,456
+  Exit: {'STOP_LOSS': 64, 'TARGET_HIT': 16, 'FORCE_EXIT': 69}
+  Top Stocks: CHENNPETRO(Rs.6,660), HINDALCO(Rs.5,974), AARTIIND(Rs.5,569), MRPL(Rs.4,714), ONGC(Rs.2,955)
+  Worst Stocks: INDIANB(Rs.-6,289), BEL(Rs.-5,546), SBIN(Rs.-4,397)
+  By Day: Fri:27t/11w | Mon:32t/11w | Thu:27t/9w | Tue:28t/8w | Wed:35t/16w
+
+  Capital: Rs.200,000
+  Trades: 182 | WR: 39.0% | PF: 1.00 | Net P&L: Rs.405 ❌ NO EDGE
+  Avg Win: Rs.1,487 | Avg Loss: Rs.-947 | Charges: Rs.14,315
+  Monthly Projection: Rs.190
+  Exit: {'STOP_LOSS': 75, 'TARGET_HIT': 25, 'FORCE_EXIT': 82}
+  Top Stocks: CHENNPETRO(Rs.7,177), HINDALCO(Rs.6,816), AARTIIND(Rs.5,930), MRPL(Rs.5,039), NATIONALUM(Rs.4,517)
+  Worst Stocks: INDIANB(Rs.-8,401), BEL(Rs.-5,884), SBIN(Rs.-4,737)
+  By Day: Fri:32t/12w | Mon:39t/15w | Thu:33t/11w | Tue:35t/15w | Wed:43t/18w
+
+============================================================
+STRATEGY: COMBINED_INTRADAY
+============================================================
+
+  Capital: Rs.30,000
+  Trades: 23 | WR: 43.5% | PF: 2.29 | Net P&L: Rs.2,472 ❌ NO EDGE
+  Avg Win: Rs.439 | Avg Loss: Rs.-148 | Charges: Rs.1,354
+  Monthly Projection: Rs.989
+  Exit: {'FORCE_EXIT': 23}
+  Top Stocks: RAILTEL(Rs.1,065), BHARTIARTL(Rs.885), ADANIPOWER(Rs.709), INDUSINDBK(Rs.638), ADANIPORTS(Rs.494)
+  Worst Stocks: HDFCBANK(Rs.-574), MPHASIS(Rs.-563), VEDL(Rs.-263)
+  By Day: Fri:4t/1w | Mon:4t/3w | Thu:3t/1w | Tue:4t/1w | Wed:8t/4w
+
+  Capital: Rs.100,000
+  Trades: 69 | WR: 43.5% | PF: 1.00 | Net P&L: Rs.44 ❌ NO EDGE
+  Avg Win: Rs.450 | Avg Loss: Rs.-345 | Charges: Rs.4,510
+  Monthly Projection: Rs.18
+  Exit: {'TARGET_HIT': 2, 'FORCE_EXIT': 65, 'STOP_LOSS': 2}
+  Top Stocks: NTPCGREEN(Rs.2,664), BHARTIARTL(Rs.1,991), RAILTEL(Rs.1,190), ADANIPOWER(Rs.949), INDUSINDBK(Rs.694)
+  Worst Stocks: WIPRO(Rs.-1,887), RALLIS(Rs.-1,594), MPHASIS(Rs.-1,195)
+  By Day: Fri:12t/3w | Mon:12t/8w | Thu:9t/5w | Tue:12t/6w | Wed:24t/8w
+
+  Capital: Rs.150,000
+  Trades: 92 | WR: 40.2% | PF: 0.90 | Net P&L: Rs.-2,323 ❌ NO EDGE
+  Avg Win: Rs.547 | Avg Loss: Rs.-410 | Charges: Rs.6,760
+  Monthly Projection: Rs.-929
+  Exit: {'TARGET_HIT': 2, 'FORCE_EXIT': 86, 'STOP_LOSS': 4}
+  Top Stocks: BHARTIARTL(Rs.2,212), NTPCGREEN(Rs.2,091), RAILTEL(Rs.1,339), HINDZINC(Rs.1,291), HFCL(Rs.1,126)
+  Worst Stocks: WIPRO(Rs.-2,247), RALLIS(Rs.-1,792), MPHASIS(Rs.-1,366)
+  By Day: Fri:16t/4w | Mon:16t/9w | Thu:12t/7w | Tue:16t/8w | Wed:32t/9w
+
+  Capital: Rs.200,000
+  Trades: 115 | WR: 40.9% | PF: 0.82 | Net P&L: Rs.-5,618 ❌ NO EDGE
+  Avg Win: Rs.544 | Avg Loss: Rs.-459 | Charges: Rs.8,979
+  Monthly Projection: Rs.-2,247
+  Exit: {'TARGET_HIT': 2, 'FORCE_EXIT': 106, 'STOP_LOSS': 7}
+  Top Stocks: BHARTIARTL(Rs.2,322), NTPCGREEN(Rs.2,311), ADANIENT(Rs.1,811), RAILTEL(Rs.1,419), HINDZINC(Rs.1,376)
+  Worst Stocks: RALLIS(Rs.-3,821), WIPRO(Rs.-2,292), MPHASIS(Rs.-1,454)
+  By Day: Fri:20t/6w | Mon:20t/9w | Thu:15t/8w | Tue:20t/12w | Wed:40t/12w
+
+
+================================================================================
+SUMMARY TABLE
+================================================================================
+Strategy                Capital  Trades    WR%    PF      Net P&L      Monthly Verdict
+------------------------------------------------------------------------------------------
+V6_ORB                   30,000      23   34.8  0.91         -206          -83 ❌ NO EDGE
+V6_ORB                  100,000      69   46.4  0.81       -2,068         -827 ⚠️ WEAK
+V6_ORB                  150,000      92   39.1  0.62       -7,724       -3,090 ❌ NO EDGE
+V6_ORB                  200,000     115   39.1  0.61      -11,412       -4,565 ❌ NO EDGE
+V6_RS                    30,000      19   31.6  1.33          649          260 ❌ NO EDGE
+V6_RS                   100,000      50   42.0  1.17        1,446          579 ❌ NO EDGE
+V6_RS                   150,000      64   35.9  0.83       -2,489         -996 ❌ NO EDGE
+V6_RS                   200,000      78   37.2  0.84       -2,843       -1,137 ❌ NO EDGE
+GAP_HOLD                 30,000      14   28.6  0.56       -1,700       -1,020 ❌ NO EDGE
+GAP_HOLD                100,000      33   42.4  0.84       -1,471         -882 ❌ NO EDGE
+GAP_HOLD                150,000      38   44.7  0.83       -1,918       -1,151 ❌ NO EDGE
+GAP_HOLD                200,000      42   42.9  0.79       -2,923       -1,754 ❌ NO EDGE
+VWAP_RECLAIM             30,000      23   30.4  0.58       -1,230         -492 ❌ NO EDGE
+VWAP_RECLAIM            100,000      69   40.6  0.69       -2,861       -1,144 ❌ NO EDGE
+VWAP_RECLAIM            150,000      92   42.4  0.75       -3,702       -1,481 ❌ NO EDGE
+VWAP_RECLAIM            200,000     115   43.5  0.94       -1,214         -486 ❌ NO EDGE
+TREND_CONT               30,000      16   31.2  0.44       -1,221         -539 ❌ NO EDGE
+TREND_CONT              100,000      48   35.4  0.46       -4,343       -1,916 ❌ NO EDGE
+TREND_CONT              150,000      64   34.4  0.48       -6,102       -2,692 ❌ NO EDGE
+TREND_CONT              200,000      80   35.0  0.47       -8,585       -3,788 ❌ NO EDGE
+SWING_CRABEL             30,000      41   41.5  0.93       -1,105         -518 ❌ NO EDGE
+SWING_CRABEL            100,000     115   38.3  1.00         -233         -109 ❌ NO EDGE
+SWING_CRABEL            150,000     149   36.9  0.88       -9,507       -4,456 ❌ NO EDGE
+SWING_CRABEL            200,000     182   39.0  1.00          405          190 ❌ NO EDGE
+COMBINED_INTRADAY        30,000      23   43.5  2.29        2,472          989 ❌ NO EDGE
+COMBINED_INTRADAY       100,000      69   43.5  1.00           44           18 ❌ NO EDGE
+COMBINED_INTRADAY       150,000      92   40.2  0.90       -2,323         -929 ❌ NO EDGE
+COMBINED_INTRADAY       200,000     115   40.9  0.82       -5,618       -2,247 ❌ NO EDGE

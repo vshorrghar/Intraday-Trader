@@ -5,7 +5,6 @@
 # vishal-live --live RE-ENABLED 2026-05-21 (Bug A patched commit 5131cd6)
 # PAUSED 2026-05-24 — V2 rules replacing V1 LLM
 # */15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal-live --live >> logs/cron_vishal_live.log 2>&1
-*/15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal-live-v2 --live >> logs/cron_vishal_live_v2.log 2>&1
 */15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile vishal >> logs/cron_vishal.log 2>&1
 */15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_daily.sh --profile neha >> logs/cron_neha.log 2>&1
 
@@ -24,3 +23,16 @@
 # === Daily crontab auto-backup at 4:00 AM IST = 22:30 UTC prev day, also at 11:30 UTC = 5 PM IST EOD ===
 30 22 * * * /home/ec2-user/dev-sandbox/scripts/backup_crontab.sh >> /home/ec2-user/dev-sandbox/logs/crontab_backup.log 2>&1
 30 11 * * 1-5 /home/ec2-user/dev-sandbox/scripts/backup_crontab.sh >> /home/ec2-user/dev-sandbox/logs/crontab_backup.log 2>&1
+15 10 * * 1-5 cd /home/ec2-user/dev-sandbox && export AWS_PROFILE=vishal-admin && .venv/bin/python3 scripts/compute_daily_pnl.py --all >> logs/compute_daily_pnl.log 2>&1 && .venv/bin/python3 scripts/compute_daily_pnl_dhan.py >> logs/compute_daily_pnl_dhan.log 2>&1
+
+# --- Swing paper trading (added 2026-05-28) ---
+30 10 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_swing_paper.sh --profile vishal --mode refresh
+0 11 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_swing_paper.sh --profile vishal --mode scan
+5 4 * * 1-5 cd /home/ec2-user/dev-sandbox && bash run_swing_paper.sh --profile vishal --mode monitor
+30 2 * * 1-5 cd /home/ec2-user/dev-sandbox && .venv/bin/python scripts/swing_paper_status.py --profile vishal > /tmp/swing_status_today.txt 2>&1
+# Dhan funds sync every 30 min during market hours (9:30 AM - 4:00 PM IST)
+*/30 4-10 * * 1-5 cd /home/ec2-user/dev-sandbox && export AWS_PROFILE=vishal-admin && .venv/bin/python3 scripts/sync_dhan_funds.py >> logs/sync_dhan_funds.log 2>&1
+*/15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && .venv/bin/python -c "from intraday.v3.orchestrator import run_v3_cycle; print(run_v3_cycle(\"vishal-s3\", dry_run=False))" >> logs/cron_s3_paper.log 2>&1
+
+# === Pre-auth: generate shared Dhan tokens BEFORE any trading cron (9:25 AM IST = 03:55 UTC) ===
+55 3 * * 1-5 cd /home/ec2-user/dev-sandbox && .venv/bin/python scripts/pre_auth_dhan.py >> logs/pre_auth.log 2>&1

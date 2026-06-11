@@ -1,0 +1,70 @@
+{
+  "profile": "neha",
+  "date": "2026-06-10",
+  "generated_at": "2026-06-11T15:45:02.447836+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 191515.8,
+  "capital_deployed_pct": 63.8,
+  "daily_gross_pnl": 92.22,
+  "daily_charges": 295.76,
+  "daily_net_pnl": -203.54,
+  "daily_return_pct": -0.068,
+  "charge_ratio_pct": 320.7,
+  "trade_count": 4,
+  "wins": 0,
+  "losses": 4,
+  "trades": [
+    {
+      "trade_id": 125,
+      "symbol": "HINDUNILVR",
+      "direction": "LONG",
+      "qty": 22,
+      "entry_price": 2189.0,
+      "exit_price": 2189.0,
+      "capital_used": 48158.0,
+      "gross_pnl": 22.9,
+      "charges": 74.08,
+      "net_pnl": -51.18,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 126,
+      "symbol": "AXISBANK",
+      "direction": "LONG",
+      "qty": 37,
+      "entry_price": 1321.2,
+      "exit_price": 1321.2,
+      "capital_used": 48884.4,
+      "gross_pnl": 22.49,
+      "charges": 74.44,
+      "net_pnl": -51.95,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 127,
+      "symbol": "MAXHEALTH",
+      "direction": "LONG",
+      "qty": 44,
+      "entry_price": 1020.25,
+      "exit_price": 1020.25,
+      "capital_used": 44891.0,
+      "gross_pnl": 24.74,
+      "charges": 72.45,
+      "net_pnl": -47.71,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 128,
+      "symbol": "ICICIBANK",
+      "direction": "LONG",
+      "qty": 38,
+      "entry_price": 1304.8,
+      "exit_price": 1304.8,
+      "capital_used": 49582.4,
+      "gross_pnl": 22.09,
+      "charges": 74.79,
+      "net_pnl": -52.7,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

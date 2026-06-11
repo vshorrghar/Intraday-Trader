@@ -94,7 +94,7 @@ class SwingMonitor:
         fallback_price = trade.get("current_price", trade["entry_price"])
         try:
             result = self.broker.place_order(
-                symbol=trade["tradingsymbol"],
+                symbol=trade.get("tradingsymbol", trade.get("symbol", "")),
                 exchange="NSE",
                 transaction_type="SELL",
                 order_type="MARKET",
@@ -103,7 +103,7 @@ class SwingMonitor:
             )
             order_id = result.get("broker_order_id", "") if isinstance(result, dict) else ""
             logger.info("Swing exit order placed: %s (%s) order_id=%s reason=%s",
-                        trade["tradingsymbol"], "SELL", order_id, reason)
+                        trade.get("tradingsymbol", trade.get("symbol", "")), "SELL", order_id, reason)
 
             if not order_id or not hasattr(self.broker, "get_order_list"):
                 return fallback_price, "no_poll"
@@ -124,7 +124,7 @@ class SwingMonitor:
                     break
             return fallback_price, "timeout"
         except Exception as e:
-            logger.error("Swing exit order FAILED: %s — %s", trade["tradingsymbol"], e)
+            logger.error("Swing exit order FAILED: %s — %s", trade.get("tradingsymbol", trade.get("symbol", "")), e)
             return fallback_price, "order_failed"
 
     def _calculate_charges(self, buy_price: float, sell_price: float, qty: int) -> float:
@@ -192,7 +192,7 @@ class SwingMonitor:
 
     def _check_position(self, trade: dict):
         """Check single position for exit triggers."""
-        symbol = trade["tradingsymbol"]
+        symbol = trade.get("tradingsymbol", trade.get("symbol", ""))
         entry = trade["entry_price"]
         sl = trade["stop_loss_price"]
         target = trade["target_price"]

@@ -33,7 +33,8 @@ TRENDING_UP_THRESHOLD = 0.25
 TRENDING_DOWN_THRESHOLD = -0.25
 RANGING_THRESHOLD = 0.4
 VOLATILE_VIX_THRESHOLD = 25
-VOLATILE_RANGE_THRESHOLD = 1.2
+# VOLATILE_RANGE_THRESHOLD removed 2026-05-30 — was using stock-level ranges (1.9% avg)
+# which triggered VOLATILE on 98% of days. Now VIX-only (Option C fix).
 
 
 def _get_regime_file(date: str) -> Path:
@@ -89,9 +90,9 @@ def classify_regime(
     }
 
     # Decision tree (RELAXED thresholds)
-    if vix > VOLATILE_VIX_THRESHOLD or nifty_30min_range_pct > VOLATILE_RANGE_THRESHOLD:
+    if vix > VOLATILE_VIX_THRESHOLD:
         regime = VOLATILE
-        reasoning = f"VIX={vix:.1f} (>{VOLATILE_VIX_THRESHOLD}) or 30min range={nifty_30min_range_pct:.2f}% (>{VOLATILE_RANGE_THRESHOLD}%)"
+        reasoning = f"VIX={vix:.1f} (>{VOLATILE_VIX_THRESHOLD})"
     elif nifty_change_pct > TRENDING_UP_THRESHOLD and breadth_pct > 60:
         regime = TRENDING_UP
         reasoning = f"Nifty +{nifty_change_pct:.2f}% (>{TRENDING_UP_THRESHOLD}) and breadth {breadth_pct:.0f}% (>60)"

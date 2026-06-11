@@ -128,7 +128,7 @@ def render_eod(date):
                        COALESCE(SUM(pnl), 0)
                 FROM intraday_trades
                 WHERE trade_date BETWEEN ? AND ?
-                  AND action IN ('BUY', 'SELL')
+                  AND action = 'BUY'
             """, (start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")))
             row = cur.fetchone()
             wtd_trades += row[0] or 0

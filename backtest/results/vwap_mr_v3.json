@@ -1,0 +1,46 @@
+{
+  "strategy": "VWAP_MEAN_REVERSION",
+  "period": "2026-02-25 to 2026-05-25",
+  "data_source": "intraday cache (15-min candles, 90 days)",
+  "ranging_days_count": 18,
+  "total_trading_days": 58,
+  "metrics": {
+    "trades": 2,
+    "wins": 1,
+    "losses": 1,
+    "win_rate": 50.0,
+    "profit_factor": 0.51,
+    "cumulative_pnl": -74.74,
+    "max_drawdown": 153.57,
+    "avg_holding_minutes": 15.0
+  },
+  "decision": "INSUFFICIENT_DATA",
+  "reasoning": "2 trades over 18 RANGING days. WR=50.0%, PF=0.51, Cumulative=-75, MaxDD=154",
+  "next_action": "Insufficient backtest data. Ship to paper anyway with small size.",
+  "trades_detail": [
+    {
+      "symbol": "CHOLAFIN",
+      "entry_price": 1703.05,
+      "exit_price": 1684.34,
+      "qty": 5,
+      "gross_pnl": -93.57,
+      "net_pnl": -153.57,
+      "exit_reason": "STOPPED_OUT",
+      "holding_candles": 1,
+      "holding_minutes": 15,
+      "date": "2026-02-26"
+    },
+    {
+      "symbol": "PAKKA",
+      "entry_price": 81.52,
+      "exit_price": 82.66,
+      "qty": 122,
+      "gross_pnl": 138.83,
+      "net_pnl": 78.83,
+      "exit_reason": "TARGET_HIT",
+      "holding_candles": 1,
+      "holding_minutes": 15,
+      "date": "2026-03-11"
+    }
+  ]
+}

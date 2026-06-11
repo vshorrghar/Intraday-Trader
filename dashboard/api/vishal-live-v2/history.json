@@ -1,0 +1,14 @@
+{
+  "days": [
+    {
+      "date": "2026-05-29",
+      "pnl": -25.58,
+      "trades": 1,
+      "winners": 0,
+      "losers": 1
+    }
+  ],
+  "cumulative_pnl": -25.58,
+  "win_rate": 0.0,
+  "total_days": 1
+}

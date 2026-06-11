@@ -44,7 +44,7 @@ Output this exact JSON structure (no markdown, no code fences):
 
 COST_LOG = Path(__file__).parent.parent / "logs" / "bedrock_costs.log"
 BEDROCK_REGION = "us-east-1"
-MODEL_ID = "us.anthropic.claude-sonnet-4-6"
+MODEL_ID = "us.anthropic.claude-sonnet-4-6-20250514"
 
 
 def audit_dir(profile):
@@ -109,7 +109,7 @@ def call_bedrock(user_prompt):
 
     body = json.dumps({
         "anthropic_version": "bedrock-2023-05-31",
-        "max_tokens": 2048,
+        "max_tokens": 1024,
         "system": SYSTEM_PROMPT,
         "messages": [{"role": "user", "content": user_prompt}],
     })
@@ -206,13 +206,7 @@ def process_one(profile, date, dry_run=False):
     text, input_tokens, output_tokens = call_bedrock(user_prompt)
 
     # Parse response
-    try:
-        narrative = parse_narrative(text)
-    except (json.JSONDecodeError, ValueError) as e:
-        print(f"  WARN: JSON parse failed for {profile}/{date}: {e}")
-        print(f"  Raw response (first 500 chars): {text[:500]}")
-        log_cost(date, profile, input_tokens, output_tokens)
-        return False
+    narrative = parse_narrative(text)
 
     # Validate structure
     required_keys = {"what_went_right", "what_went_wrong", "patterns_observed",

@@ -1,0 +1,1 @@
+{"strikes": [{"strike_price": 24200, "option_type": "CE", "ltp": 40.0}, {"strike_price": 24400, "option_type": "CE", "ltp": 25.0}, {"strike_price": 23800, "option_type": "PE", "ltp": 35.0}, {"strike_price": 23600, "option_type": "PE", "ltp": 20.0}]}

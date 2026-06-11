@@ -19,13 +19,15 @@ class TestClassifyRegime:
         )
         assert result["regime"] == VOLATILE
 
-    def test_volatile_when_range_high(self):
-        # Range > 1.2%
+    def test_volatile_when_range_high_no_longer_triggers(self):
+        # Range check REMOVED (Option C fix 2026-05-30)
+        # High range alone does NOT trigger VOLATILE anymore — only VIX > 25 does
         result = classify_regime(
             nifty_change_pct=0.2, nifty_30min_range_pct=1.5,
             breadth_pct=50, vix=16
         )
-        assert result["regime"] == VOLATILE
+        # With VIX=16 and change=0.2, breadth=50 → RANGING (not VOLATILE)
+        assert result["regime"] == RANGING
 
     def test_trending_up_clear_signal(self):
         # nifty > +0.25% (relaxed from +0.4%) AND breadth > 60%

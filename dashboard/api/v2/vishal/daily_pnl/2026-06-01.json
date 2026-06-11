@@ -1,0 +1,83 @@
+{
+  "profile": "vishal",
+  "date": "2026-06-01",
+  "generated_at": "2026-06-11T15:45:02.439893+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 241273.3,
+  "capital_deployed_pct": 80.4,
+  "daily_gross_pnl": 114.22,
+  "daily_charges": 370.64,
+  "daily_net_pnl": -256.42,
+  "daily_return_pct": -0.085,
+  "charge_ratio_pct": 324.5,
+  "trade_count": 5,
+  "wins": 0,
+  "losses": 5,
+  "trades": [
+    {
+      "trade_id": 131,
+      "symbol": "INFY",
+      "direction": "LONG",
+      "qty": 41,
+      "entry_price": 1195.2,
+      "exit_price": 1195.2,
+      "capital_used": 49003.2,
+      "gross_pnl": 22.42,
+      "charges": 74.5,
+      "net_pnl": -52.08,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 132,
+      "symbol": "TECHM",
+      "direction": "LONG",
+      "qty": 32,
+      "entry_price": 1542.6,
+      "exit_price": 1542.6,
+      "capital_used": 49363.2,
+      "gross_pnl": 22.22,
+      "charges": 74.68,
+      "net_pnl": -52.46,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 133,
+      "symbol": "ASIANPAINT",
+      "direction": "LONG",
+      "qty": 17,
+      "entry_price": 2729.3,
+      "exit_price": 2729.3,
+      "capital_used": 46398.1,
+      "gross_pnl": 23.89,
+      "charges": 73.2,
+      "net_pnl": -49.31,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 134,
+      "symbol": "COALINDIA",
+      "direction": "LONG",
+      "qty": 101,
+      "entry_price": 472.2,
+      "exit_price": 472.2,
+      "capital_used": 47692.2,
+      "gross_pnl": 23.16,
+      "charges": 73.85,
+      "net_pnl": -50.69,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 135,
+      "symbol": "TCS",
+      "direction": "LONG",
+      "qty": 21,
+      "entry_price": 2324.6,
+      "exit_price": 2324.6,
+      "capital_used": 48816.6,
+      "gross_pnl": 22.53,
+      "charges": 74.41,
+      "net_pnl": -51.88,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

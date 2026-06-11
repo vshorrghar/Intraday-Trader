@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setup Guide — AutoTrader</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="bg-image"></div>
+<div class="bg-overlay"></div>
+<nav class="navbar"><a href="index.html" class="nav-logo gradient-text"><span class="bolt">⚡</span>AutoTrader</a><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="how-it-works.html">कैसे काम करता है</a></li><li><a href="safety.html">Safety</a></li><li><a href="setup-guide.html" class="active">Setup</a></li><li><a href="costs.html">Costs</a></li><li><a href="dashboard-guide.html">Dashboard</a></li><li><a href="contact.html">Contact</a></li></ul><button class="hamburger" aria-label="Menu">☰</button></nav>
+<div class="mobile-menu"><a href="index.html">Home</a><a href="how-it-works.html">कैसे काम करता है</a><a href="safety.html">Safety</a><a href="setup-guide.html">Setup</a><a href="costs.html">Costs</a><a href="dashboard-guide.html">Dashboard</a><a href="contact.html">Contact</a></div>
+
+<section class="section" style="padding-top:120px;">
+  <div class="section-header">
+    <h2 class="gradient-text">Setup Guide</h2>
+    <p>30 मिनट। एक बार। फिर automatic।</p>
+  </div>
+
+  <div class="progress-steps mb-40">
+    <div class="progress-step active"><div class="progress-dot">1</div><div class="progress-label">Dhan Account</div></div>
+    <div class="progress-step"><div class="progress-dot">2</div><div class="progress-label">Add Money</div></div>
+    <div class="progress-step"><div class="progress-dot">3</div><div class="progress-label">API Enable</div></div>
+    <div class="progress-step"><div class="progress-dot">4</div><div class="progress-label">Details Share</div></div>
+    <div class="progress-step"><div class="progress-dot">5</div><div class="progress-label">Live!</div></div>
+  </div>
+
+  <h3 class="mb-20">Part A: Dhan Account (Day 1)</h3>
+
+  <div class="step-card"><div class="step-number">01</div><h3>Dhan App Download करो</h3><p>Play Store या App Store खोलो। Search करो: <strong>Dhan</strong><br>Official app: Raise Financial Services। Free download।</p></div>
+
+  <div class="step-card"><div class="step-number">02</div><h3>Register करो</h3><p>App खोलो → 'Open Free Account'<br>Mobile number डालो। OTP enter करो।<br>(OTP = वही 6 digit code जो SMS पर आता है)</p></div>
+
+  <div class="step-card"><div class="step-number">03</div><h3>KYC Complete करो</h3><p>KYC = Know Your Customer (सभी brokers के लिए mandatory है)<br><br>चाहिए:<br>📄 Aadhar card<br>📄 PAN card<br>🏦 Bank account details<br>📸 Selfie (app automatically लेगा)<br><br>Time: 10-15 minutes<br>Approval: 1-2 working days</p></div>
+
+  <div class="step-card"><div class="step-number">04</div><h3>₹10,000 Add करो</h3><p>App में: Funds → Add Funds<br>UPI से transfer करो। (UPI = GPay, PhonePe, Paytm — same है)<br>Instant transfer होता है।<br><br><strong class="text-blue">Minimum: ₹10,000</strong><br>यह आपका trading capital है।</p></div>
+
+  <h3 class="mt-40 mb-20">Part B: API Setup (Day 2)</h3>
+
+  <div class="step-card"><div class="step-number">05</div><h3>API Access Enable करो</h3><p>Dhan app में:<br>Bottom menu → More → API Access<br>'Subscribe' पर click करो।<br><br>Note: Dhan ₹499/year charge करता है। यह Dhan को जाता है, हमें नहीं।</p></div>
+
+  <div class="step-card"><div class="step-number">06</div><h3>Credentials Copy करो</h3><p>API enable होने के बाद आपको मिलेगा:<br><br><strong>Client ID:</strong> एक number जैसे 1234567890<br><strong>Access Token:</strong> letters और numbers की लंबी string<br><br>दोनों screenshot करो। Safe रखो — ATM PIN जैसा treat करो।</p></div>
+
+  <div class="step-card highlighted"><div class="step-number">07</div><h3>TOTP Setup करो 🔐</h3><p><strong>TOTP क्या है? Easy explanation:</strong><br><br>जब आप Dhan app में login करते हो — वो 6 digit OTP जो आता है — वैसा ही है TOTP।<br><br>फर्क सिर्फ यह है: हमारा system automatically generate करता है। आपको कुछ manually enter नहीं करना।<br><br><strong>Setup:</strong><br>Dhan app → Settings → Security → Enable TOTP<br><br>एक QR code और एक Secret Key दिखेगी।<br>Secret Key ऐसी दिखती है:<br><code class="mono text-blue">JBSWY3DPEHPK3PXP</code><br><br>Secret Key screenshot करो। यह हमें share करनी है।<br><br><span class="text-amber">⚠️ यह key खोई तो Dhan में reset करना होगा। Backup रखो।</span></p></div>
+
+  <h3 class="mt-40 mb-20">Part C: Share Details</h3>
+
+  <div class="step-card"><div class="step-number">08</div><h3>हमें Details भेजो</h3><p>WhatsApp पर यह भेजो:<br><br>1️⃣ Client ID<br>2️⃣ Access Token<br>3️⃣ TOTP Secret Key<br>4️⃣ Dhan login PIN (4 digit PIN जो आपने set किया था)<br><br>हम 24 घंटे में आपका profile system में add कर देंगे। Confirm होने पर WhatsApp करेंगे।</p></div>
+
+  <div class="step-card" style="border:1px solid var(--accent-green);border-radius:12px;padding:20px 20px 20px 60px;box-shadow:var(--glow-green);"><div class="step-number" style="border-color:var(--accent-green);color:var(--accent-green);">09</div><h3 class="text-green">Live हो जाओ! 🚀</h3><p>अगले trading day:<br><br>9:28 AM पर अपना Dhan app खोलो। देखो — एक order automatically आएगा।<br><br><strong>यही है confirmation। आप live हो गए।</strong><br><br>अब आपका dashboard link WhatsApp पर आएगा। वहाँ सब track करो।</p></div>
+</section>
+
+<footer class="footer"><div class="footer-inner"><div><div class="footer-brand gradient-text">⚡ AutoTrader</div><div class="footer-tagline">Algorithmic. Automatic. Defensive.</div></div><div class="footer-links"><a href="index.html">Home</a><a href="how-it-works.html">कैसे काम करता है</a><a href="safety.html">Safety</a><a href="setup-guide.html">Setup</a><a href="costs.html">Costs</a><a href="dashboard-guide.html">Dashboard</a><a href="contact.html">Contact</a></div><div class="footer-powered">Powered by Claude AI<br>on AWS Bedrock</div></div><div class="disclaimer">⚠️ Disclaimer: AutoTrader एक experimental algorithmic trading system है। यह SEBI registered investment advisor नहीं है। Stock market trading में substantial risk of loss है। Past performance future results guarantee नहीं करती। सभी trading decisions automated algorithmic rules पर based हैं। Users अपने outcomes के लिए पूरी तरह स्वयं responsible हैं। AutoTrader और इसके developers किसी भी financial loss के लिए liable नहीं हैं। केवल वही capital invest करें जिसका पूरा loss afford कर सकें।</div></footer>
+<script src="assets/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "funds": {
+    "available_cash": 0.65,
+    "used_margin": 0.0
+  },
+  "summary": {
+    "available_balance": 0.65,
+    "utilized_amount": 0.0,
+    "total_capital": 0.65,
+    "sod_limit": 0.65
+  },
+  "timestamp": "2026-06-11T16:00:03.466776+05:30",
+  "profile": "vishal-live-v2"
+}

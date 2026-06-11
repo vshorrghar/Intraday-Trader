@@ -1,0 +1,80 @@
+
+
+### Rule 26: Dhan Data API Is The Primary Data Source (GOLDEN RULE)
+
+We pay Rs.499/month for Dhan Data API subscription (client_id 1110941563).
+This is NOT optional infrastructure — it is the foundation of all strategy work.
+
+#### MANDATORY: Use Dhan Data API for ALL of these:
+
+**Intraday:**
+- Real-time LTP via market quotes (replace flaky NSE scraping)
+- 5-min candles for ORB computation (opening range high/low)
+- 1-min candles for precise entry timing
+- Intraday VWAP computation from tick-level data
+- Historical intraday candles for backtesting entry signals
+
+**Swing:**
+- Daily OHLC candles (endpoint: /v2/charts/historical) for 20-DMA, 50-DMA, 200-DMA
+- 250 days of daily data per stock for swing scanner scoring
+- Volume history for relative volume computation
+- ATR calculation from daily high/low/close
+
+**F&O:**
+- Real-time option chain (strikes, premiums, OI, Greeks)
+- Historical option chain for IV percentile computation (252-day lookback)
+- Spot price history for regime classification
+- OI velocity tracking (intraday OI changes)
+
+**Backtesting (CRITICAL — this is where edge is proven or disproven):**
+- 6-12 months of 5-min candles for intraday strategy validation
+- 1-2 years of daily candles for swing strategy validation
+- Historical option premiums for F&O strategy validation
+- Walk-forward testing on rolling windows
+
+#### Dhan API Endpoints Available:
+
+| Endpoint | Use Case | Interval |
+|----------|----------|----------|
+| POST /v2/charts/intraday | Intraday candles | 1, 5, 15, 25, 60 min |
+| POST /v2/charts/historical | Daily/weekly candles | D (daily) |
+| GET /v2/optionchain | Live option chain | Real-time |
+| GET /v2/marketfeed/ltp | Real-time LTP | Real-time |
+| GET /v2/positions | Current positions | Real-time |
+| GET /v2/orders | Order history | Real-time |
+
+#### Rules for AI Assistants:
+
+1. NEVER use NSE scraping when Dhan API can provide the same data
+2. NEVER skip backtesting because "we don't have data" — we DO have data via Dhan
+3. ALWAYS cache Dhan responses (rate limit: 1 req/sec, cache TTL per data type)
+4. ALWAYS suggest backtesting ideas when building new strategies
+5. Before ANY strategy goes live: minimum 6 months backtest on Dhan historical data
+6. Cost is FIXED (Rs.499/month) regardless of usage — maximize API calls
+
+#### Backtesting Ideas to Continuously Sharpen Edge:
+
+1. Walk-forward optimization: Test strategy on 6 months, validate on next 1 month, repeat
+2. Regime-specific backtests: Run separately for bull/bear/sideways markets
+3. Time-of-day analysis: Which hour produces best entries? (use 5-min candles)
+4. Sector rotation backtest: Does entering sector leaders outperform random?
+5. Volume spike detection: Backtest relative volume > 2x as entry filter
+6. Stop loss optimization: Test 1.5%, 2%, 2.5%, 3% SL on same signals
+7. Target optimization: Test 1:2, 1:2.5, 1:3 R:R on same signals
+8. Day-of-week effect: Are Mondays/Fridays different from mid-week?
+9. VIX regime backtest: Compare strategy performance at VIX 12-15 vs 15-18 vs 18-22
+10. Earnings season backtest: Do pullback entries work better around results?
+11. Gap fill probability: What % of gaps fill within the day? (use daily + intraday)
+12. Iron Condor premium decay: Track actual theta decay vs theoretical on Nifty weekly
+13. Correlation analysis: Which stocks move together? (for position concentration risk)
+14. Drawdown analysis: Max consecutive losses per strategy — is it survivable?
+15. Charge impact at different capitals: At what capital does charge ratio drop below 20%?
+
+#### What This Means Practically:
+
+- Every new strategy idea: FIRST build backtest using Dhan data, THEN decide if worth coding
+- Every parameter change: backtest before and after, prove improvement with data
+- Every bug fix: re-run backtest to verify no regression
+- Monthly: re-run all backtests on latest data to check if edge is degrading
+
+This is how institutional traders work. Data first. Proof first. Then deploy.

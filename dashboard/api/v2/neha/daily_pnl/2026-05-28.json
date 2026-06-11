@@ -1,0 +1,83 @@
+{
+  "profile": "neha",
+  "date": "2026-05-28",
+  "generated_at": "2026-06-11T15:45:02.456754+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 188596.71,
+  "capital_deployed_pct": 62.9,
+  "daily_gross_pnl": 143.87,
+  "daily_charges": 344.3,
+  "daily_net_pnl": -200.43,
+  "daily_return_pct": -0.067,
+  "charge_ratio_pct": 239.3,
+  "trade_count": 5,
+  "wins": 0,
+  "losses": 5,
+  "trades": [
+    {
+      "trade_id": 84,
+      "symbol": "HINDALCO",
+      "direction": "LONG",
+      "qty": 34,
+      "entry_price": 1150.5,
+      "exit_price": 1150.5,
+      "capital_used": 39117.0,
+      "gross_pnl": 27.99,
+      "charges": 69.56,
+      "net_pnl": -41.57,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 85,
+      "symbol": "POWERGRID",
+      "direction": "LONG",
+      "qty": 133,
+      "entry_price": 300.55,
+      "exit_price": 300.55,
+      "capital_used": 39973.15,
+      "gross_pnl": 27.51,
+      "charges": 69.99,
+      "net_pnl": -42.48,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 86,
+      "symbol": "ETERNAL",
+      "direction": "LONG",
+      "qty": 136,
+      "entry_price": 255.71,
+      "exit_price": 255.71,
+      "capital_used": 34776.56,
+      "gross_pnl": 30.43,
+      "charges": 67.39,
+      "net_pnl": -36.96,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 87,
+      "symbol": "TATACONSUM",
+      "direction": "LONG",
+      "qty": 29,
+      "entry_price": 1205.0,
+      "exit_price": 1205.0,
+      "capital_used": 34945.0,
+      "gross_pnl": 30.33,
+      "charges": 67.47,
+      "net_pnl": -37.14,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 88,
+      "symbol": "NTPC",
+      "direction": "LONG",
+      "qty": 100,
+      "entry_price": 397.85,
+      "exit_price": 397.85,
+      "capital_used": 39785.0,
+      "gross_pnl": 27.61,
+      "charges": 69.89,
+      "net_pnl": -42.28,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

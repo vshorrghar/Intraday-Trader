@@ -92,7 +92,7 @@ def get_our_trades_today(db_path, date_str):
     try:
         conn = sqlite3.connect(db_path)
         conn.row_factory = sqlite3.Row
-        rows = conn.execute('SELECT tradingsymbol FROM intraday_trades WHERE trade_date=? AND action IN (?, ?)', (date_str, 'BUY', 'SELL')).fetchall()
+        rows = conn.execute('SELECT tradingsymbol FROM intraday_trades WHERE trade_date=? AND action=?', (date_str, 'BUY')).fetchall()
         conn.close()
         return [r['tradingsymbol'] for r in rows]
     except Exception:

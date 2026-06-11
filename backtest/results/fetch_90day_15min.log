@@ -1,0 +1,18 @@
+Fetching 15-min data: 2026-02-25 to 2026-05-26
+Auth done. Universe: 281 stocks
+  Done: 20, Skipped: 0, Failed: 0
+  Done: 40, Skipped: 0, Failed: 0
+  Done: 60, Skipped: 0, Failed: 0
+  Done: 80, Skipped: 0, Failed: 0
+  Done: 100, Skipped: 0, Failed: 0
+  Done: 120, Skipped: 0, Failed: 0
+  Done: 140, Skipped: 0, Failed: 0
+  Done: 160, Skipped: 0, Failed: 0
+  Done: 180, Skipped: 0, Failed: 0
+  Done: 200, Skipped: 0, Failed: 0
+  Done: 220, Skipped: 0, Failed: 1
+  Done: 240, Skipped: 0, Failed: 1
+  Done: 260, Skipped: 0, Failed: 1
+  Done: 280, Skipped: 0, Failed: 1
+DONE. Fetched: 280, Skipped: 0, Failed: 1
+Cache: cache/historical_90d

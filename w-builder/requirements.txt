@@ -1,0 +1,12 @@
+openpyxl
+boto3
+jinja2
+pyyaml
+requests
+feedparser
+beautifulsoup4
+lxml
+pytest
+hypothesis
+flask
+flask-cors

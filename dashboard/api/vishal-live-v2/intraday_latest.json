@@ -1,0 +1,43 @@
+{
+  "updated_at": "2026-05-29T15:15:29.638062+05:30",
+  "mode": "LIVE",
+  "broker": "dhan",
+  "session_active": false,
+  "today": {
+    "trades": [
+      {
+        "tradingsymbol": "INFY",
+        "entry_price": 1203.3,
+        "current_price": 1203.3,
+        "exit_price": 1203.3,
+        "target_price": 1251.43,
+        "stop_loss_price": 1181.64,
+        "quantity": 20,
+        "pnl": -25.58,
+        "gross_pnl": 0.0,
+        "charges": 25.58,
+        "status": "FORCE_EXITED",
+        "strategy_type": "MOMENTUM",
+        "confidence_score": 7
+      }
+    ],
+    "total_pnl": -25.58,
+    "realized_loss": 25.58,
+    "daily_loss_cap": 1500,
+    "loss_cap_pct": 1.7
+  },
+  "history": {
+    "days": [
+      {
+        "date": "2026-05-29",
+        "pnl": -25.58,
+        "trades": 1,
+        "winners": 0,
+        "losers": 1
+      }
+    ],
+    "cumulative_pnl": -25.58,
+    "win_rate": 0.0,
+    "total_days": 1
+  }
+}

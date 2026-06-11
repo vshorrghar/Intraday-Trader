@@ -85,6 +85,12 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
             funnel.write_daily_json()
             return {"error": "auth_failed", "detail": str(exc)}
 
+    # ── Step 2.1: PAPER MODE WRAPPER (physical order block) ──
+    if not dry_run and broker and cfg.get("profile", {}).get("paper", False):
+        from intraday.v3.paper_broker_wrapper import wrap_broker_for_paper
+        broker = wrap_broker_for_paper(broker)
+        logger.info("V3: PAPER MODE — broker wrapped, real orders physically blocked")
+
     # ── Step 2.5: HARD LOSS CAP CHECK (Dhan truth) ──
     if not dry_run and broker:
         from intraday.v3.safety import check_hard_loss_cap, emergency_square_off_all

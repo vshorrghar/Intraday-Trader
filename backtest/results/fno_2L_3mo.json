@@ -1,0 +1,581 @@
+{
+  "generated": "2026-05-29T20:13:50.229387+05:30",
+  "caveat": "REPLAY of recorded trades, NOT fresh simulation",
+  "scaling": {
+    "from": 50000,
+    "to": 200000,
+    "lots_multiplier": 4
+  },
+  "overall": {
+    "total_trades": 64,
+    "winners": 54,
+    "losers": 10,
+    "win_rate": 84.4,
+    "profit_factor": 6.6,
+    "cumulative_pnl": 66866.46,
+    "avg_pnl": 1044.79,
+    "best_trade": 30968.0,
+    "worst_trade": -11747.4,
+    "max_drawdown": 11747.4
+  },
+  "by_regime": {
+    "UP": {
+      "trades": 22,
+      "wr": 95.5,
+      "pnl": 8324.56,
+      "avg": 378.39
+    },
+    "DOWN": {
+      "trades": 10,
+      "wr": 70.0,
+      "pnl": 255.64,
+      "avg": 25.56
+    },
+    "SIDEWAYS": {
+      "trades": 14,
+      "wr": 78.6,
+      "pnl": 1045.14,
+      "avg": 74.65
+    },
+    "UNKNOWN": {
+      "trades": 18,
+      "wr": 83.3,
+      "pnl": 57241.12,
+      "avg": 3180.06
+    }
+  },
+  "by_strategy_type": {
+    "IRON_CONDOR": {
+      "trades": 59,
+      "wr": 83.1,
+      "pnl": 59918.9,
+      "avg": 1015.57
+    },
+    "BULL_PUT_SPREAD": {
+      "trades": 4,
+      "wr": 100.0,
+      "pnl": 1989.56,
+      "avg": 497.39
+    },
+    "SHORT_STRANGLE": {
+      "trades": 1,
+      "wr": 100.0,
+      "pnl": 4958.0,
+      "avg": 4958.0
+    }
+  },
+  "trades": [
+    {
+      "date": "2026-04-23",
+      "type": "SHORT_STRANGLE",
+      "index": "NIFTY",
+      "pnl_1lot": 2479.0,
+      "pnl_2L": 4958.0,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-04-23",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 1468.2,
+      "pnl_2L": 2936.4,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-04-23",
+      "type": "BULL_PUT_SPREAD",
+      "index": "FINNIFTY",
+      "pnl_1lot": 778.5,
+      "pnl_2L": 1557.0,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-04-28",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 259.5,
+      "pnl_2L": 346.0,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-04-28",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 23226.0,
+      "pnl_2L": 30968.0,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-04-30",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": -10.77,
+      "pnl_2L": -14.36,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-04-30",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 31.53,
+      "pnl_2L": 42.04,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-01",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 521.25,
+      "pnl_2L": 695.0,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-01",
+      "type": "BULL_PUT_SPREAD",
+      "index": "NIFTY",
+      "pnl_1lot": 167.5,
+      "pnl_2L": 335.0,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-01",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 726.3,
+      "pnl_2L": 968.4,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-01",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": -5.31,
+      "pnl_2L": -7.08,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-01",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 58.92,
+      "pnl_2L": 78.56,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-01",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": -18.72,
+      "pnl_2L": -24.96,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-01",
+      "type": "BULL_PUT_SPREAD",
+      "index": "FINNIFTY",
+      "pnl_1lot": 1.56,
+      "pnl_2L": 3.12,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-04",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 1000.0,
+      "pnl_2L": 4000.0,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-04",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 1000.0,
+      "pnl_2L": 4000.0,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-04",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 600.0,
+      "pnl_2L": 2400.0,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-05",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 1000.0,
+      "pnl_2L": 4000.0,
+      "regime": "UNKNOWN"
+    },
+    {
+      "date": "2026-05-13",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": -0.4,
+      "pnl_2L": -1.6,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-13",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 0.12,
+      "pnl_2L": 0.48,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-13",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": -0.76,
+      "pnl_2L": -3.04,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-13",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": -0.07,
+      "pnl_2L": -0.28,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-14",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 78.6,
+      "pnl_2L": 314.4,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-14",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 63.75,
+      "pnl_2L": 255.0,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-14",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 1000.0,
+      "pnl_2L": 4000.0,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-14",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 600.0,
+      "pnl_2L": 2400.0,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-14",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 1000.0,
+      "pnl_2L": 4000.0,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-15",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 317.0,
+      "pnl_2L": 1268.0,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-15",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 342.45,
+      "pnl_2L": 1369.8,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-15",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 183.75,
+      "pnl_2L": 735.0,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-18",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 26.48,
+      "pnl_2L": 105.92,
+      "regime": "DOWN"
+    },
+    {
+      "date": "2026-05-18",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": -32.88,
+      "pnl_2L": -131.52,
+      "regime": "DOWN"
+    },
+    {
+      "date": "2026-05-19",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 413.75,
+      "pnl_2L": 1655.0,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-19",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 216.15,
+      "pnl_2L": 864.6,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-19",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 10.05,
+      "pnl_2L": 40.2,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-20",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 1.0,
+      "pnl_2L": 4.0,
+      "regime": "DOWN"
+    },
+    {
+      "date": "2026-05-20",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": -2.14,
+      "pnl_2L": -8.56,
+      "regime": "DOWN"
+    },
+    {
+      "date": "2026-05-21",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 24.25,
+      "pnl_2L": 48.5,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-21",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 23.32,
+      "pnl_2L": 46.64,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-21",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 8.94,
+      "pnl_2L": 35.76,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-22",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 25.38,
+      "pnl_2L": 50.76,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-22",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 41.42,
+      "pnl_2L": 82.84,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-25",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 289.5,
+      "pnl_2L": 579.0,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-25",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 67.06,
+      "pnl_2L": 134.12,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-25",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 27.61,
+      "pnl_2L": 55.22,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-26",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 87.46,
+      "pnl_2L": 174.92,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-26",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 52.99,
+      "pnl_2L": 105.98,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-26",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 27.8,
+      "pnl_2L": 55.6,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-27",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 155.54,
+      "pnl_2L": 311.08,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-27",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 13.1,
+      "pnl_2L": 52.4,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-28",
+      "type": "BULL_PUT_SPREAD",
+      "index": "NIFTY",
+      "pnl_1lot": 23.61,
+      "pnl_2L": 94.44,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-28",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 16.3,
+      "pnl_2L": 65.2,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-28",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 14.09,
+      "pnl_2L": 56.36,
+      "regime": "SIDEWAYS"
+    },
+    {
+      "date": "2026-05-15",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 292.5,
+      "pnl_2L": 1170.0,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-15",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 245.4,
+      "pnl_2L": 981.6,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-18",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 12.36,
+      "pnl_2L": 49.44,
+      "regime": "DOWN"
+    },
+    {
+      "date": "2026-05-18",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": 14.82,
+      "pnl_2L": 59.28,
+      "regime": "DOWN"
+    },
+    {
+      "date": "2026-05-18",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 12.67,
+      "pnl_2L": 50.68,
+      "regime": "DOWN"
+    },
+    {
+      "date": "2026-05-19",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 16.82,
+      "pnl_2L": 67.28,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-19",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": -2936.85,
+      "pnl_2L": -11747.4,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-19",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 12.96,
+      "pnl_2L": 51.84,
+      "regime": "UP"
+    },
+    {
+      "date": "2026-05-20",
+      "type": "IRON_CONDOR",
+      "index": "NIFTY",
+      "pnl_1lot": 22.87,
+      "pnl_2L": 91.48,
+      "regime": "DOWN"
+    },
+    {
+      "date": "2026-05-20",
+      "type": "IRON_CONDOR",
+      "index": "BANKNIFTY",
+      "pnl_1lot": -2.62,
+      "pnl_2L": -10.48,
+      "regime": "DOWN"
+    },
+    {
+      "date": "2026-05-20",
+      "type": "IRON_CONDOR",
+      "index": "FINNIFTY",
+      "pnl_1lot": 11.35,
+      "pnl_2L": 45.4,
+      "regime": "DOWN"
+    }
+  ]
+}

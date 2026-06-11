@@ -1,0 +1,32 @@
+{
+  "profile": "vishal-live-v2",
+  "date": "2026-05-29",
+  "generated_at": "2026-05-29T20:19:13.296144+05:30",
+  "capital_configured": 30000,
+  "capital_deployed_peak": 24138.0,
+  "capital_deployed_pct": 80.5,
+  "daily_gross_pnl": -1012.0,
+  "daily_charges": 52.0,
+  "daily_net_pnl": -1064.0,
+  "daily_return_pct": -3.547,
+  "charge_ratio_pct": 5.1,
+  "trade_count": 1,
+  "wins": 0,
+  "losses": 1,
+  "source": "dhan_api_reconciled",
+  "trades": [
+    {
+      "trade_id": "dhan_2026-05-29_INFY",
+      "symbol": "INFY",
+      "direction": "LONG",
+      "qty": 20,
+      "entry_price": 1206.9,
+      "exit_price": 1156.3,
+      "capital_used": 24138.0,
+      "gross_pnl": -1012.0,
+      "charges": 52.0,
+      "net_pnl": -1064.0,
+      "status": "STOPPED_OUT"
+    }
+  ]
+}

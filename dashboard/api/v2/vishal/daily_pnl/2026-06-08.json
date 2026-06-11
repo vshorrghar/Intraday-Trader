@@ -1,0 +1,44 @@
+{
+  "profile": "vishal",
+  "date": "2026-06-08",
+  "generated_at": "2026-06-11T15:45:02.434524+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 99050.0,
+  "capital_deployed_pct": 33.0,
+  "daily_gross_pnl": 44.25,
+  "daily_charges": 149.52,
+  "daily_net_pnl": -105.27,
+  "daily_return_pct": -0.035,
+  "charge_ratio_pct": 337.9,
+  "trade_count": 2,
+  "wins": 0,
+  "losses": 2,
+  "trades": [
+    {
+      "trade_id": 154,
+      "symbol": "SBIN",
+      "direction": "LONG",
+      "qty": 50,
+      "entry_price": 984.0,
+      "exit_price": 984.0,
+      "capital_used": 49200.0,
+      "gross_pnl": 22.31,
+      "charges": 74.6,
+      "net_pnl": -52.29,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 155,
+      "symbol": "MAXHEALTH",
+      "direction": "LONG",
+      "qty": 50,
+      "entry_price": 997.0,
+      "exit_price": 997.0,
+      "capital_used": 49850.0,
+      "gross_pnl": 21.94,
+      "charges": 74.92,
+      "net_pnl": -52.98,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

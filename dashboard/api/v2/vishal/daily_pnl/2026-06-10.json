@@ -1,0 +1,70 @@
+{
+  "profile": "vishal",
+  "date": "2026-06-10",
+  "generated_at": "2026-06-11T15:45:02.432060+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 196543.7,
+  "capital_deployed_pct": 65.5,
+  "daily_gross_pnl": 89.4,
+  "daily_charges": 298.28,
+  "daily_net_pnl": -208.88,
+  "daily_return_pct": -0.07,
+  "charge_ratio_pct": 333.6,
+  "trade_count": 4,
+  "wins": 0,
+  "losses": 4,
+  "trades": [
+    {
+      "trade_id": 165,
+      "symbol": "RELIANCE",
+      "direction": "LONG",
+      "qty": 38,
+      "entry_price": 1293.5,
+      "exit_price": 1293.5,
+      "capital_used": 49153.0,
+      "gross_pnl": 22.34,
+      "charges": 74.58,
+      "net_pnl": -52.24,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 166,
+      "symbol": "KOTAKBANK",
+      "direction": "LONG",
+      "qty": 129,
+      "entry_price": 387.3,
+      "exit_price": 387.3,
+      "capital_used": 49961.7,
+      "gross_pnl": 21.88,
+      "charges": 74.98,
+      "net_pnl": -53.1,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 167,
+      "symbol": "TCS",
+      "direction": "LONG",
+      "qty": 22,
+      "entry_price": 2174.5,
+      "exit_price": 2174.5,
+      "capital_used": 47839.0,
+      "gross_pnl": 23.08,
+      "charges": 73.92,
+      "net_pnl": -50.84,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 168,
+      "symbol": "ICICIBANK",
+      "direction": "LONG",
+      "qty": 38,
+      "entry_price": 1305.0,
+      "exit_price": 1305.0,
+      "capital_used": 49590.0,
+      "gross_pnl": 22.1,
+      "charges": 74.8,
+      "net_pnl": -52.7,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

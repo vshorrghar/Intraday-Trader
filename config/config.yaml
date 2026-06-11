@@ -5,7 +5,7 @@ aws:
   s3_bucket: dev-sandbox-dashboard-176767908884
   ses_sender: "vshorrghar@gmail.com"
   ses_recipient: "vshorrghar@gmail.com"
-  bedrock_model_id: "us.anthropic.claude-sonnet-4-6"
+  bedrock_model_id: "us.anthropic.claude-opus-4-7"
   bedrock_region: us-east-1
 
 investor:

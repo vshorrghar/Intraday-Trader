@@ -1,0 +1,53 @@
+nohup: ignoring input
+Loading data...
+  15-min: 265 stocks (blacklist applied)
+  Daily:  188 stocks
+  Trading days: 49 (2026-03-11 to 2026-05-25)
+
+====================================================================================================
+MEGA BACKTEST V2 — FIXED % TARGETS
+Blacklist applied: 15 stocks removed
+====================================================================================================
+Variant      Strategy        Capital  Trades    WR%    PF    Net P&L    Monthly   Charges Status
+----------------------------------------------------------------------------------------------------
+T1_SL05      COMBINED        100,000      69   23.2  0.36     -7,476     -2,991     4,428 ❌
+T15_SL07     VWAP_RCL         30,000      23   52.2  1.04        106         42     1,336 ⚠️ WATCH
+T15_SL07     COMBINED        100,000      69   33.3  0.74     -3,281     -1,313     4,433 ❌
+T2_SL1       VWAP_RCL         30,000      23   56.5  1.05        148         59     1,336 ⚠️ WATCH
+T2_SL1       COMBINED        100,000      69   42.0  0.99       -197        -79     4,436 ❌
+T25_SL12     ORB             200,000     115   45.2  1.04      1,097        439     8,923 ⚠️ WATCH
+T25_SL12     VWAP_RCL         30,000      23   56.5  1.16        430        172     1,336 ⚠️ WATCH
+T25_SL12     COMBINED        100,000      69   44.9  0.98       -232        -93     4,436 ❌
+T25_SL12     COMBINED        200,000     115   45.2  1.04      1,097        439     8,923 ⚠️ WATCH
+T3_SL15      ORB             100,000      69   46.4  1.04        546        218     4,436 ⚠️ WATCH
+T3_SL15      ORB             200,000     115   46.1  1.12      3,602      1,441     8,925 ⚠️ WATCH
+T3_SL15      VWAP_RCL         30,000      23   56.5  1.19        530        212     1,336 ⚠️ WATCH
+T3_SL15      COMBINED        100,000      69   46.4  1.04        546        218     4,436 ⚠️ WATCH
+T3_SL15      COMBINED        200,000     115   46.1  1.12      3,602      1,441     8,925 ⚠️ WATCH
+
+====================================================================================================
+TOP CONFIGS WITH EDGE:
+====================================================================================================
+  No configs met WR>=50% and PF>=1.2 threshold
+  Best configs by monthly P&L (WR>=45%):
+  T3_SL15 ORB Rs.200,000: 115t 46.1%WR PF1.12 Monthly Rs.1,441
+  T3_SL15 COMBINED Rs.200,000: 115t 46.1%WR PF1.12 Monthly Rs.1,441
+  T25_SL12 ORB Rs.200,000: 115t 45.2%WR PF1.04 Monthly Rs.439
+  T25_SL12 COMBINED Rs.200,000: 115t 45.2%WR PF1.04 Monthly Rs.439
+  T3_SL15 ORB Rs.100,000: 69t 46.4%WR PF1.04 Monthly Rs.218
+  T3_SL15 COMBINED Rs.100,000: 69t 46.4%WR PF1.04 Monthly Rs.218
+  T3_SL15 VWAP_RCL Rs.30,000: 23t 56.5%WR PF1.19 Monthly Rs.212
+  T25_SL12 VWAP_RCL Rs.30,000: 23t 56.5%WR PF1.16 Monthly Rs.172
+  T2_SL1 VWAP_RCL Rs.30,000: 23t 56.5%WR PF1.05 Monthly Rs.59
+  T15_SL07 VWAP_RCL Rs.30,000: 23t 52.2%WR PF1.04 Monthly Rs.42
+  T2_SL1 ORB Rs.100,000: 69t 42.0%WR PF0.99 Monthly Rs.-79
+  T2_SL1 COMBINED Rs.100,000: 69t 42.0%WR PF0.99 Monthly Rs.-79
+  T25_SL12 ORB Rs.100,000: 69t 44.9%WR PF0.98 Monthly Rs.-93
+  T25_SL12 COMBINED Rs.100,000: 69t 44.9%WR PF0.98 Monthly Rs.-93
+  T1_SL05 VWAP_RCL Rs.30,000: 23t 47.8%WR PF0.90 Monthly Rs.-96
+  T3_SL15 ORB Rs.150,000: 92t 44.6%WR PF0.99 Monthly Rs.-111
+  T3_SL15 COMBINED Rs.150,000: 92t 44.6%WR PF0.99 Monthly Rs.-111
+  T25_SL12 ORB Rs.150,000: 92t 43.5%WR PF0.93 Monthly Rs.-577
+  T25_SL12 COMBINED Rs.150,000: 92t 43.5%WR PF0.93 Monthly Rs.-577
+
+Saved: backtest/results/mega_v2.json

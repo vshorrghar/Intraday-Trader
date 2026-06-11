@@ -1,0 +1,44 @@
+{
+  "profile": "neha",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-11T15:45:02.453829+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 98540.0,
+  "capital_deployed_pct": 32.8,
+  "daily_gross_pnl": 44.54,
+  "daily_charges": 149.27,
+  "daily_net_pnl": -104.73,
+  "daily_return_pct": -0.035,
+  "charge_ratio_pct": 335.1,
+  "trade_count": 2,
+  "wins": 0,
+  "losses": 2,
+  "trades": [
+    {
+      "trade_id": 96,
+      "symbol": "INFY",
+      "direction": "LONG",
+      "qty": 40,
+      "entry_price": 1245.0,
+      "exit_price": 1245.0,
+      "capital_used": 49800.0,
+      "gross_pnl": 21.97,
+      "charges": 74.9,
+      "net_pnl": -52.93,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 97,
+      "symbol": "TCS",
+      "direction": "LONG",
+      "qty": 20,
+      "entry_price": 2437.0,
+      "exit_price": 2437.0,
+      "capital_used": 48740.0,
+      "gross_pnl": 22.57,
+      "charges": 74.37,
+      "net_pnl": -51.8,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

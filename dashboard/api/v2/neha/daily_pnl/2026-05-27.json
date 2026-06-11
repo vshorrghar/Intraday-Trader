@@ -1,0 +1,17 @@
+{
+  "profile": "neha",
+  "date": "2026-05-27",
+  "generated_at": "2026-05-28T16:09:51.972318+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 0,
+  "capital_deployed_pct": 0.0,
+  "daily_gross_pnl": 0.0,
+  "daily_charges": 0.0,
+  "daily_net_pnl": 0.0,
+  "daily_return_pct": 0.0,
+  "charge_ratio_pct": "n/a",
+  "trade_count": 0,
+  "wins": 0,
+  "losses": 0,
+  "trades": []
+}

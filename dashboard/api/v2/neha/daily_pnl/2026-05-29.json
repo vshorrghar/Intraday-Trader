@@ -1,0 +1,83 @@
+{
+  "profile": "neha",
+  "date": "2026-05-29",
+  "generated_at": "2026-06-11T15:45:02.455767+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 242025.0,
+  "capital_deployed_pct": 80.7,
+  "daily_gross_pnl": 113.78,
+  "daily_charges": 371.02,
+  "daily_net_pnl": -257.24,
+  "daily_return_pct": -0.086,
+  "charge_ratio_pct": 326.1,
+  "trade_count": 5,
+  "wins": 0,
+  "losses": 5,
+  "trades": [
+    {
+      "trade_id": 89,
+      "symbol": "INFY",
+      "direction": "LONG",
+      "qty": 41,
+      "entry_price": 1195.3,
+      "exit_price": 1195.3,
+      "capital_used": 49007.3,
+      "gross_pnl": 22.41,
+      "charges": 74.5,
+      "net_pnl": -52.09,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 90,
+      "symbol": "CIPLA",
+      "direction": "LONG",
+      "qty": 33,
+      "entry_price": 1424.9,
+      "exit_price": 1424.9,
+      "capital_used": 47021.7,
+      "gross_pnl": 23.53,
+      "charges": 73.51,
+      "net_pnl": -49.98,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 91,
+      "symbol": "COALINDIA",
+      "direction": "LONG",
+      "qty": 102,
+      "entry_price": 467.2,
+      "exit_price": 467.2,
+      "capital_used": 47654.4,
+      "gross_pnl": 23.18,
+      "charges": 73.83,
+      "net_pnl": -50.65,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 92,
+      "symbol": "ICICIBANK",
+      "direction": "LONG",
+      "qty": 38,
+      "entry_price": 1282.4,
+      "exit_price": 1282.4,
+      "capital_used": 48731.2,
+      "gross_pnl": 22.58,
+      "charges": 74.37,
+      "net_pnl": -51.79,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 93,
+      "symbol": "HCLTECH",
+      "direction": "LONG",
+      "qty": 42,
+      "entry_price": 1181.2,
+      "exit_price": 1181.2,
+      "capital_used": 49610.4,
+      "gross_pnl": 22.08,
+      "charges": 74.81,
+      "net_pnl": -52.73,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

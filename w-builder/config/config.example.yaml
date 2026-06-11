@@ -1,0 +1,46 @@
+# Wealth Builder Pro — Example Configuration
+# Copy this file to config.yaml and fill in your values.
+
+aws:
+  region: ap-south-1
+  s3_bucket: wealth-builder-pro-reports
+  ses_sender: "[email]"
+  ses_recipient: "[email]"
+  bedrock_model_id: "anthropic.claude-3-sonnet-20240229-v1:0"
+  bedrock_region: ap-south-1
+
+portfolio:
+  stocks_xlsx: /opt/wealth-builder-pro/data/stocks.xlsx
+  mf_xlsx: /opt/wealth-builder-pro/data/mf.xlsx
+  pnl_xlsx: /opt/wealth-builder-pro/data/pnl.xlsx
+  invit_isins:
+    - INE0XXXXX000
+
+investor:
+  name: "[investor_name]"
+
+schedule:
+  morning_brief: "03:15"     # UTC for 8:45 AM IST
+  midday_snapshot: "07:00"   # UTC for 12:30 PM IST
+  eod_report: "10:45"        # UTC for 4:15 PM IST
+  midday_threshold_pct: 2.0
+
+database:
+  path: /opt/wealth-builder-pro/data/portfolio.db
+
+cache:
+  dir: /opt/wealth-builder-pro/cache
+
+dashboard:
+  output_dir: /var/www/wealth-builder-pro
+
+# Optional — defaults are used when omitted
+alerts:
+  pnl_drop_pct: 5.0
+  pnl_spike_pct: 10.0
+  volume_spike_multiplier: 3.0
+
+analysis:
+  max_intraday_setups: 5
+  tax_harvest_short_term_months_stocks: 12
+  tax_harvest_short_term_months_debt_mf: 36

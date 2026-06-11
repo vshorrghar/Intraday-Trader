@@ -1,0 +1,57 @@
+{
+  "profile": "neha",
+  "date": "2026-06-11",
+  "generated_at": "2026-06-11T15:45:02.446876+05:30",
+  "capital_configured": 300000,
+  "capital_deployed_peak": 147348.1,
+  "capital_deployed_pct": 49.1,
+  "daily_gross_pnl": 67.07,
+  "daily_charges": 223.68,
+  "daily_net_pnl": -156.61,
+  "daily_return_pct": -0.052,
+  "charge_ratio_pct": 333.5,
+  "trade_count": 3,
+  "wins": 0,
+  "losses": 3,
+  "trades": [
+    {
+      "trade_id": 129,
+      "symbol": "DRREDDY",
+      "direction": "LONG",
+      "qty": 39,
+      "entry_price": 1280.0,
+      "exit_price": 1280.0,
+      "capital_used": 49920.0,
+      "gross_pnl": 21.9,
+      "charges": 74.96,
+      "net_pnl": -53.06,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 130,
+      "symbol": "ICICIBANK",
+      "direction": "LONG",
+      "qty": 37,
+      "entry_price": 1318.8,
+      "exit_price": 1318.8,
+      "capital_used": 48795.6,
+      "gross_pnl": 22.54,
+      "charges": 74.4,
+      "net_pnl": -51.86,
+      "status": "FORCE_EXITED"
+    },
+    {
+      "trade_id": 131,
+      "symbol": "CIPLA",
+      "direction": "LONG",
+      "qty": 35,
+      "entry_price": 1389.5,
+      "exit_price": 1389.5,
+      "capital_used": 48632.5,
+      "gross_pnl": 22.63,
+      "charges": 74.32,
+      "net_pnl": -51.69,
+      "status": "FORCE_EXITED"
+    }
+  ]
+}

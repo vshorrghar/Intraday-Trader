@@ -1,0 +1,8 @@
+# Groww Trading API credentials
+# Copy to groww_api.yaml and fill in your values
+# Get keys from: https://groww.in/trade-api (API Keys page)
+# NEVER commit groww_api.yaml to git!
+
+groww:
+  api_key: "your_api_key_here"
+  api_secret: "your_api_secret_here"

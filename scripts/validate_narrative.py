@@ -289,16 +289,15 @@ def verify_claims(claims, trades, summary, phase_status):
                 else:
                     skipped.append({**c, "reason": "cannot_compute_zero_gross"})
             elif "win" in subject:
-                # A1 fix: check phase_status.win_rate FIRST (narrative cites cumulative)
-                ps_rate = (phase_status or {}).get("win_rate", None)
-                day_rate = round(sum(1 for t in trades if t.get("won") is True) / total_trades * 100, 1) if total_trades > 0 else 0
-                if ps_rate is not None and abs(pct - ps_rate) < 3:
-                    verified.append(c)
-                elif total_trades > 0 and abs(pct - day_rate) < 3:
-                    verified.append(c)
+                if total_trades > 0:
+                    actual_pct = round(sum(1 for t in trades if t.get("won") is True) / total_trades * 100, 1)
+                    if abs(pct - actual_pct) < max(actual_pct * 0.05, 3):
+                        verified.append(c)
+                    else:
+                        failed.append({**c, "reason": "wrong_pct",
+                                       "expected": str(actual_pct), "got": str(pct)})
                 else:
-                    failed.append({**c, "reason": "wrong_pct",
-                                   "expected": f"phase={ps_rate} or day={day_rate}", "got": str(pct)})
+                    skipped.append({**c, "reason": "no_trades"})
             elif "return" in subject:
                 skipped.append({**c, "reason": "return_pct_needs_capital_context"})
             else:
@@ -323,18 +322,10 @@ def verify_claims(claims, trades, summary, phase_status):
             denom = c["denom"]
             num = c["num"]
             subject = c["subject"]
-            # Verify denominator = total trades OR phase_status fields
+            # Verify denominator = total trades
             if denom != total_trades and denom not in (total_trades - 1, total_trades + 1):
-                # A4 fix: check if denominator matches phase_status fields
-                ps = phase_status or {}
-                phase_vals = [ps.get("trades_needed_next"), ps.get("trades_this_phase"), ps.get("trades_remaining")]
-                if denom in [v for v in phase_vals if v is not None]:
-                    if num == ps.get("trades_this_phase", -1) or num == ps.get("win_count", -1):
-                        verified.append(c)
-                    else:
-                        skipped.append({**c, "reason": "phase_numerator_unmatched"})
-                    continue
-                skipped.append({**c, "reason": "denominator_mismatch_unknown_source"})
+                # Denominator doesn't match total — might be subset
+                skipped.append({**c, "reason": "denominator_mismatch_possible_subset"})
                 continue
             # Compute actual count
             if "stop" in subject:
@@ -349,8 +340,6 @@ def verify_claims(claims, trades, summary, phase_status):
                 actual = sum(1 for t in trades if t.get("direction") == "LONG")
             elif "short" in subject:
                 actual = sum(1 for t in trades if t.get("direction") == "SHORT")
-            elif "trade" in subject:
-                actual = total_trades
             else:
                 skipped.append({**c, "reason": "unknown_count_subject"})
                 continue
@@ -401,18 +390,17 @@ def verify_claims(claims, trades, summary, phase_status):
 
         elif ctype == "drift_value":
             val = c["value"]
-            # A2 fix: check summary drift, per-trade pnl diff, qty_drift, and raw pnl values
-            summary_drift = summary.get("drift_amount_rs", 0)
-            trade_drifts = [abs(t.get("pnl_dhan", 0) - t.get("pnl_db", 0)) for t in trades]
-            qty_drifts = [abs(t.get("qty_drift", 0)) for t in trades]
-            trade_pnls = [abs(t.get("pnl_dhan", 0)) for t in trades] + [abs(t.get("pnl_db", 0)) for t in trades]
-            all_candidates = [summary_drift] + trade_drifts + qty_drifts + trade_pnls
-            if any(abs(val - d) < max(abs(d) * 0.05, 2) for d in all_candidates if d != 0):
-                verified.append(c)
-            elif val == 0 and summary_drift == 0:
+            actual = summary.get("drift_amount_rs", 0)
+            if abs(val - actual) < max(actual * 0.02, 2):
                 verified.append(c)
             else:
-                skipped.append({**c, "reason": "drift_value_unmatched_but_plausible"})
+                # Could be per-trade drift
+                trade_drifts = [abs(t.get("pnl_dhan", 0) - t.get("pnl_db", 0)) for t in trades]
+                if any(abs(val - d) < 2 for d in trade_drifts):
+                    verified.append(c)
+                else:
+                    failed.append({**c, "reason": "wrong_drift",
+                                   "expected": str(actual), "got": str(val)})
 
         elif ctype == "confidence_value":
             conf = c["value"]
