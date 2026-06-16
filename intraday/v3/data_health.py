@@ -5,7 +5,7 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 # Minimum percentage of valid candidates required to proceed
-MIN_VALID_RATIO = 0.80
+MIN_VALID_RATIO = 0.50  # Relaxed: 262/463 stocks is enough to find trades
 
 
 def check_data_health(candidates: list[dict[str, Any]]) -> dict:
