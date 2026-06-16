@@ -39,9 +39,9 @@ def fetch_bulk_ltp(broker, security_ids: list[str]) -> dict:
 
     for batch_idx, batch in enumerate(batches):
         try:
-            payload = {"NSE_EQ": batch}
+            payload = {"NSE_EQ": [int(sid) for sid in batch]}
             resp = requests.post(
-                f"{DHAN_BASE}/v2/marketfeed/ltp",
+                f"{DHAN_BASE}/v2/marketfeed/ohlc",
                 json=payload,
                 headers=headers,
                 timeout=10,
@@ -54,14 +54,16 @@ def fetch_bulk_ltp(broker, security_ids: list[str]) -> dict:
                 if isinstance(nse_data, dict):
                     for sec_id, quote in nse_data.items():
                         if isinstance(quote, dict):
+                            ohlc = quote.get("ohlc", {})
+                            ltp = float(quote.get("last_price", 0) or 0)
                             results[str(sec_id)] = {
-                                "ltp": float(quote.get("last_price", 0) or quote.get("ltp", 0) or 0),
-                                "open": float(quote.get("open", 0) or 0),
-                                "high": float(quote.get("high", 0) or 0),
-                                "low": float(quote.get("low", 0) or 0),
-                                "close": float(quote.get("close", 0) or 0),
-                                "volume": int(quote.get("volume", 0) or 0),
-                                "prev_close": float(quote.get("prev_close", 0) or quote.get("previous_close", 0) or 0),
+                                "ltp": ltp,
+                                "open": float(ohlc.get("open", 0) or 0),
+                                "high": float(ohlc.get("high", 0) or 0),
+                                "low": float(ohlc.get("low", 0) or 0),
+                                "close": float(ohlc.get("close", 0) or 0),
+                                "volume": 1 if ltp > 0 else 0,
+                                "prev_close": float(ohlc.get("close", 0) or 0),
                             }
                 else:
                     logger.warning("Batch %d: unexpected response format: %s", batch_idx, type(nse_data))
