@@ -209,34 +209,41 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
         from_date = (now_ist - timedelta(days=6)).strftime("%Y-%m-%d")
         to_date = today
         fetched = 0
+        import time as _time  # V3 throttle: respect Dhan charts rate limit
+
+        def _fetch_ohlc(_sid, _seg, _inst):
+            for _attempt in range(2):
+                try:
+                    _r = broker.get_historical_ohlc(
+                        security_id=str(_sid), exchange_segment=_seg, instrument=_inst,
+                        interval="5", from_date=from_date, to_date=to_date,
+                    )
+                    if _r and isinstance(_r, dict) and _r.get("timestamp"):
+                        return _r
+                except Exception as _e:
+                    logger.warning("V3: candle fetch error %s: %s", _sid, _e)
+                _time.sleep(1.0)  # backoff on empty/429
+            return None
+
         for _c in movers:
             _sym = _c["symbol"]
             _sid = _c.get("security_id")
             if not _sid:
                 continue
-            try:
-                _ohlc = broker.get_historical_ohlc(
-                    security_id=str(_sid), exchange_segment="NSE_EQ", instrument="EQUITY",
-                    interval="5", from_date=from_date, to_date=to_date,
-                )
-                if _ohlc and isinstance(_ohlc, dict) and _ohlc.get("timestamp"):
-                    historical_data[_sym] = _ohlc
-                    fetched += 1
-            except Exception as _exc:
-                logger.warning("V3: candle fetch failed for %s: %s", _sym, _exc)
+            _ohlc = _fetch_ohlc(_sid, "NSE_EQ", "EQUITY")
+            if _ohlc:
+                historical_data[_sym] = _ohlc
+                fetched += 1
+            _time.sleep(0.4)  # throttle between calls
         logger.info("V3: fetched candles for %d/%d movers", fetched, len(movers))
-        try:
-            _nd = broker.get_historical_ohlc(
-                security_id="13", exchange_segment="IDX_I", instrument="INDEX",
-                interval="5", from_date=from_date, to_date=to_date,
-            )
-            if _nd and isinstance(_nd, dict) and _nd.get("timestamp"):
-                nifty_data = _nd
-                logger.info("V3: Nifty candles fetched (%d)", len(_nd.get("open", [])))
-            else:
-                logger.warning("V3: Nifty candle fetch returned no data")
-        except Exception as _exc:
-            logger.warning("V3: Nifty candle fetch failed: %s", _exc)
+
+        _time.sleep(0.4)
+        _nd = _fetch_ohlc("13", "IDX_I", "INDEX")
+        if _nd:
+            nifty_data = _nd
+            logger.info("V3: Nifty candles fetched (%d)", len(_nd.get("open", [])))
+        else:
+            logger.warning("V3: Nifty candle fetch returned no data")
 
     if regime == TRENDING_UP:
         v6_signals = detect_v6_signals(historical_data, universe_ids, strategy_config, today, nifty_data=nifty_data)
