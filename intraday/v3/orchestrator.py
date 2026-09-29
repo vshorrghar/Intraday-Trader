@@ -194,18 +194,58 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
     intra_cfg = cfg.get("intraday", {})
     strategy_config = {"per_trade_max_capital": intra_cfg.get("per_trade_max_capital", 10000)}
 
-    # Build historical data dict for strategies (empty in dry_run)
-    historical_data = {}  # Strategies need candle data — populated from fetch_intraday_candles in live
+    # Build historical + nifty data for strategies (populated in live, empty in dry_run)
+    historical_data = {}
+    nifty_data = None
     universe_ids = {sym: info["security_id"] for sym, info in tradeable.items() if info.get("security_id")}
 
+    if not dry_run and broker:
+        # Rate-limit guard: fetch candles ONLY for top movers, not all 260+.
+        def _abs_change(c):
+            prev = c.get("prev_close", 0) or 0
+            ltp = c.get("ltp", 0) or 0
+            return abs((ltp - prev) / prev) if prev > 0 and ltp > 0 else 0.0
+        movers = sorted(candidates_with_data, key=_abs_change, reverse=True)[:25]
+        from_date = (now_ist - timedelta(days=6)).strftime("%Y-%m-%d")
+        to_date = today
+        fetched = 0
+        for _c in movers:
+            _sym = _c["symbol"]
+            _sid = _c.get("security_id")
+            if not _sid:
+                continue
+            try:
+                _ohlc = broker.get_historical_ohlc(
+                    security_id=str(_sid), exchange_segment="NSE_EQ", instrument="EQUITY",
+                    interval="5", from_date=from_date, to_date=to_date,
+                )
+                if _ohlc and isinstance(_ohlc, dict) and _ohlc.get("timestamp"):
+                    historical_data[_sym] = _ohlc
+                    fetched += 1
+            except Exception as _exc:
+                logger.warning("V3: candle fetch failed for %s: %s", _sym, _exc)
+        logger.info("V3: fetched candles for %d/%d movers", fetched, len(movers))
+        try:
+            _nd = broker.get_historical_ohlc(
+                security_id="13", exchange_segment="IDX_I", instrument="INDEX",
+                interval="5", from_date=from_date, to_date=to_date,
+            )
+            if _nd and isinstance(_nd, dict) and _nd.get("timestamp"):
+                nifty_data = _nd
+                logger.info("V3: Nifty candles fetched (%d)", len(_nd.get("open", [])))
+            else:
+                logger.warning("V3: Nifty candle fetch returned no data")
+        except Exception as _exc:
+            logger.warning("V3: Nifty candle fetch failed: %s", _exc)
+
     if regime == TRENDING_UP:
-        v6_signals = detect_v6_signals(historical_data, universe_ids, strategy_config, today, nifty_data=None)
-        v4_signals = detect_v4_signals(historical_data, universe_ids, strategy_config, today, nifty_data=None)
+        v6_signals = detect_v6_signals(historical_data, universe_ids, strategy_config, today, nifty_data=nifty_data)
+        v4_signals = detect_v4_signals(historical_data, universe_ids, strategy_config, today, nifty_data=nifty_data)
         signals = v6_signals + v4_signals
         logger.info("V3: TRENDING_UP — V6=%d, V4=%d signals", len(v6_signals), len(v4_signals))
     elif regime == RANGING:
         vwap_signals = detect_vwap_mr_signals(historical_data, universe_ids, strategy_config, today, regime=RANGING)
-        v4_signals = detect_v4_signals(historical_data, universe_ids, strategy_config, today, nifty_data=None)
+        v4_signals = detect_v4_signals(historical_data, universe_ids, strategy_config, today, nifty_data=nifty_data)
         signals = vwap_signals + v4_signals
         logger.info("V3: RANGING — VWAP_MR=%d, V4=%d signals", len(vwap_signals), len(v4_signals))
     else:
