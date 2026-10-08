@@ -89,22 +89,20 @@ def classify_regime(
         "vix": vix,
     }
 
-    # Decision tree (RELAXED thresholds)
+    # Decision tree (PAPER-LOOSENED 2026-10-08: trade more, learn more)
+    # Dropped compound breadth/VIX AND-gates that dumped most days into UNCLEAR.
     if vix > VOLATILE_VIX_THRESHOLD:
         regime = VOLATILE
         reasoning = f"VIX={vix:.1f} (>{VOLATILE_VIX_THRESHOLD})"
-    elif nifty_change_pct > TRENDING_UP_THRESHOLD and breadth_pct > 60:
+    elif nifty_change_pct > 0.15:
         regime = TRENDING_UP
-        reasoning = f"Nifty +{nifty_change_pct:.2f}% (>{TRENDING_UP_THRESHOLD}) and breadth {breadth_pct:.0f}% (>60)"
-    elif nifty_change_pct < TRENDING_DOWN_THRESHOLD and breadth_pct < 40:
+        reasoning = f"Nifty +{nifty_change_pct:.2f}% (>0.15) [loosened]"
+    elif nifty_change_pct < -0.15:
         regime = TRENDING_DOWN
-        reasoning = f"Nifty {nifty_change_pct:.2f}% (<{TRENDING_DOWN_THRESHOLD}) and breadth {breadth_pct:.0f}% (<40)"
-    elif abs(nifty_change_pct) < RANGING_THRESHOLD and 40 <= breadth_pct <= 60 and vix < 18:
-        regime = RANGING
-        reasoning = f"Nifty {nifty_change_pct:+.2f}% (flat), breadth {breadth_pct:.0f}% (balanced), VIX {vix:.1f} (<18)"
+        reasoning = f"Nifty {nifty_change_pct:.2f}% (<-0.15) [loosened]"
     else:
-        regime = UNCLEAR
-        reasoning = f"Mixed signals: Nifty {nifty_change_pct:+.2f}%, breadth {breadth_pct:.0f}%, VIX {vix:.1f}"
+        regime = RANGING
+        reasoning = f"Nifty {nifty_change_pct:+.2f}% (flat) -> RANGING [loosened, was UNCLEAR]"
 
     return {"regime": regime, "reasoning": reasoning, "inputs": inputs}
 

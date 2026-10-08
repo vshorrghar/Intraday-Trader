@@ -287,8 +287,9 @@ def generate_orb_signals(
     if strategy_variant in ("V4", "V6"):
         if market["direction"] == "BEAR":
             allowed_directions = ["SHORT"]
-        elif market["direction"] == "FLAT":
-            return []  # Skip flat/sideways days
+        # PAPER-LOOSENED 2026-10-08: FLAT no longer blocks V4/V6.
+        # Stock-level ORB breakout + volume is the signal; index direction need not confirm.
+        # (was: elif FLAT -> return [])
 
     per_trade_cap = config.get("per_trade_max_capital", 15000)
     min_rel_volume = 1.5  # Minimum relative volume
@@ -300,7 +301,7 @@ def generate_orb_signals(
             continue
 
         candles = get_candles_for_date(ohlc, target_date)
-        if len(candles) < 20:
+        if len(candles) < 6:  # relaxed from 20: live intraday only has candles up to now
             continue
 
         prev_close = get_prev_close(ohlc, target_date)
@@ -340,8 +341,8 @@ def generate_orb_signals(
         for i, c in enumerate(candles):
             if c["time"].hour == 9 and c["time"].minute < 31:
                 continue  # Still in opening range window
-            if c["time"].hour >= 11:
-                break  # Only look for ORB breakout in first 90 min
+            if c["time"].hour >= 14:
+                break  # widened from 11: allow ORB breakout detection through 2 PM
 
             # Check LONG breakout
             if "LONG" in allowed_directions:

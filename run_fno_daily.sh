@@ -40,6 +40,6 @@ export AWS_DEFAULT_REGION="us-east-1"
 cd "${APP_DIR}"
 echo "=== Dev Sandbox FnO [${LOCK_SUFFIX}] — ${DATE} ===" >> "${LOG_FILE}"
 echo "Started at: $(date), PID: $$, User: $(whoami)" >> "${LOG_FILE}"
-${PYTHON} run_fno.py --force ${PROFILE_FLAG} >> "${LOG_FILE}" 2>&1 || true
+timeout 300 ${PYTHON} run_fno.py --force ${PROFILE_FLAG} >> "${LOG_FILE}" 2>&1 || echo "$(date): F&O exited/timed-out (rc=$?)" >> "${LOG_FILE}"
 echo "Finished at: $(date)" >> "${LOG_FILE}"
 echo "=== END ===" >> "${LOG_FILE}"
