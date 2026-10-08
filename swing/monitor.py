@@ -71,20 +71,61 @@ class SwingMonitor:
             logger.error("Failed to load swing positions: %s", e)
             self._active_trades = []
 
+    def _load_security_ids(self):
+        """Lazy-load the symbol -> Dhan security_id map (cached)."""
+        if getattr(self, "_sec_id_map", None) is not None:
+            return self._sec_id_map
+        self._sec_id_map = {}
+        try:
+            p = Path("config/nse_security_ids.json")
+            if p.exists():
+                self._sec_id_map = json.loads(p.read_text())
+        except Exception as e:
+            logger.warning("Could not load nse_security_ids.json: %s", e)
+        return self._sec_id_map
+
     def _get_current_price(self, symbol: str) -> float:
-        """Get current price from broker positions or LTP."""
+        """Get current price. Tries broker positions, then live LTP (Bug GG-swing fix).
+
+        In paper mode broker.get_positions() is empty, so the LTP fallback via
+        fetch_bulk_ltp (Dhan /v2/marketfeed) is what actually prices positions.
+        """
         if not self.broker:
             return 0.0
+        # 1) broker positions (works only if a real position exists)
         try:
             if hasattr(self.broker, "get_positions"):
-                positions = self.broker.get_positions()
-                for pos in positions:
+                for pos in (self.broker.get_positions() or []):
                     if pos.get("tradingsymbol", "").upper() == symbol.upper():
-                        # Use buy_avg as proxy if no LTP available
-                        return float(pos.get("pnl", 0)) / max(int(pos.get("quantity", 1)), 1) + float(pos.get("buy_avg", 0))
+                        buy_avg = float(pos.get("buy_avg", 0) or 0)
+                        if buy_avg > 0:
+                            return buy_avg + float(pos.get("pnl", 0) or 0) / max(int(pos.get("quantity", 1)), 1)
         except Exception as e:
             logger.warning("get_positions failed for %s: %s", symbol, e)
-        return 0.0
+        # 2) live LTP fallback via Dhan marketfeed (works in paper too — read-only)
+        try:
+            sec_id = self._load_security_ids().get(symbol.upper())
+            if not sec_id:
+                logger.warning("No security_id for %s — cannot fetch LTP", symbol)
+                return 0.0
+            from intraday.v3.dhan_data import fetch_bulk_ltp
+            ltp = 0.0
+            for attempt in range(2):  # retry once: transient 429 can return empty
+                quotes = fetch_bulk_ltp(self.broker, [str(sec_id)])
+                q = quotes.get(str(sec_id), {})
+                ltp = float(q.get("ltp", 0) or 0)
+                if ltp <= 0:
+                    ltp = float(q.get("close", 0) or 0)  # prev close off-hours
+                if ltp > 0:
+                    break
+                if attempt == 0:
+                    time.sleep(1.5)  # back off past Dhan rate-limit window
+            if ltp <= 0:
+                logger.warning("LTP still 0 for %s after retry — skipping", symbol)
+            return ltp
+        except Exception as e:
+            logger.warning("LTP fetch failed for %s: %s", symbol, e)
+            return 0.0
 
     def _place_exit_order(self, trade: dict, reason: str) -> tuple:
         """Place MARKET SELL order for CNC exit. Returns (fill_price, fill_status)."""
