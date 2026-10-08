@@ -35,7 +35,12 @@ class PaperBrokerWrapper:
         return self._real_broker.get_positions()
 
     def get_order_list(self) -> list:
-        return self._real_broker.get_order_list()
+        # PAPER-SIM: include simulated paper orders so _poll_fill_status sees fills
+        try:
+            real = self._real_broker.get_order_list() or []
+        except Exception:
+            real = []
+        return list(real) + list(getattr(self, "_simulated_orders", []))
 
     def get_margins(self) -> dict:
         return self._real_broker.get_margins()
@@ -46,21 +51,35 @@ class PaperBrokerWrapper:
     # === ORDER METHODS — PHYSICALLY BLOCKED ===
 
     def place_order(self, **kwargs) -> dict:
-        """BLOCKED. Raises PaperModeError. Real orders are physically impossible."""
-        raise PaperModeError(
-            f"PAPER MODE: place_order BLOCKED. "
-            f"Attempted: {kwargs.get('transaction_type','')} {kwargs.get('symbol','')} "
-            f"x{kwargs.get('quantity',0)} @ {kwargs.get('price',0)}. "
-            f"This is a paper profile — real orders are physically impossible."
-        )
+        """PAPER-SIM 2026-10-08: simulate a FILLED order instead of raising.
+        No real order is sent (self._real_broker is never called here), so real
+        money stays impossible — but the trade is recorded as a paper fill."""
+        import time as _t
+        self._sim_counter = getattr(self, "_sim_counter", 0) + 1
+        oid = f"PAPER{int(_t.time())}{self._sim_counter:03d}"
+        qty = kwargs.get("quantity", 0)
+        price = kwargs.get("price", 0)
+        rec = {
+            "orderId": oid, "order_id": oid, "broker_order_id": oid,
+            "orderStatus": "TRADED", "status": "FILLED", "order_status": "TRADED",
+            "filledQty": qty, "tradedQuantity": qty, "filled_qty": qty, "quantity": qty,
+            "price": price, "average_price": price, "averagePrice": price,
+            "transaction_type": kwargs.get("transaction_type", ""),
+            "symbol": kwargs.get("symbol", ""), "paper": True,
+        }
+        self._simulated_orders.append(rec)
+        logger.info("PAPER-SIM: %s %s x%s @ %s -> %s (simulated FILLED)",
+                    kwargs.get("transaction_type", ""), kwargs.get("symbol", ""),
+                    qty, price, oid)
+        return rec
 
     def cancel_order(self, order_id: str) -> dict:
-        """BLOCKED in paper mode."""
-        raise PaperModeError(f"PAPER MODE: cancel_order BLOCKED for {order_id}")
+        logger.info("PAPER-SIM: cancel %s (simulated)", order_id)
+        return {"order_id": order_id, "orderId": order_id, "status": "CANCELLED", "paper": True}
 
     def modify_order(self, **kwargs) -> dict:
-        """BLOCKED in paper mode."""
-        raise PaperModeError(f"PAPER MODE: modify_order BLOCKED")
+        logger.info("PAPER-SIM: modify %s (simulated)", kwargs.get("order_id", "?"))
+        return {"order_id": kwargs.get("order_id", ""), "status": "MODIFIED", "paper": True}
 
 
 class PaperModeError(RuntimeError):
