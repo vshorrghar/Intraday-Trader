@@ -256,6 +256,16 @@ class SwingMonitor:
 
         pnl_pct = (current - entry) / entry * 100
 
+        # Persist mark-to-market for HELD positions (not just on exit).
+        # Without this, open positions show current_price=0/pnl=0 in the DB
+        # even though the monitor priced them in memory.
+        try:
+            unrealized = round((current - entry) * qty, 2)
+            if self.db:
+                self.db.update_swing_trade(trade["id"], current_price=current, pnl=unrealized)
+        except Exception as e:
+            logger.warning("MTM persist failed for %s: %s", symbol, e)
+
         # --- Priority 1: SL hit ---
         if current <= sl:
             exit_price, fill_status = self._place_exit_order(trade, "SL_HIT")

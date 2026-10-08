@@ -162,7 +162,25 @@ def run_monitor(profile_name: str, profile_data: dict, config: SwingConfig, brok
     logger.info("=== SWING MONITOR — %s — %s ===", profile_name, now.strftime("%Y-%m-%d %H:%M IST"))
 
     db = DBManager(f"database/{profile_name}.db")
-    monitor = SwingMonitor(config, broker=broker, db=db)
+
+    # Paper mode has a DryRun broker with no token → cannot price positions.
+    # Mirror F&O T-2 fix: auth a REAL broker for read-only market data only.
+    price_broker = broker
+    if not live:
+        try:
+            from intraday.auth_server import authenticate_broker
+            dhan_cfg = profile_data.get("dhan", {})
+            if dhan_cfg.get("client_id"):
+                price_broker = authenticate_broker("dhan", dhan_cfg, dry_run=False, profile=profile_name)
+                logger.info("Paper mode: authenticated real broker for price fetch (data only)")
+            else:
+                logger.warning("Paper mode: no dhan client_id — positions cannot be priced")
+                price_broker = broker
+        except Exception as exc:
+            logger.warning("Paper mode: price-broker auth failed (%s) — positions stay unpriced", exc)
+            price_broker = broker
+
+    monitor = SwingMonitor(config, broker=price_broker, db=db)
 
     # Load open positions
     monitor.load_open_positions()
