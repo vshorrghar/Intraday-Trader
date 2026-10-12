@@ -271,6 +271,25 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
 
     funnel.log_stage("strategy_signals", len(signals))
 
+    # ── Step 7b: DUP-GUARD 2026-10-12 — never re-enter a symbol already OPEN today ──
+    # (Found live: DMART+LENSKART entered twice in consecutive cycles, doubling exposure.)
+    try:
+        _conn_dup = sqlite3.connect(db_path)
+        _open_syms = {row[0] for row in _conn_dup.execute(
+            "SELECT DISTINCT symbol FROM intraday_trades WHERE trade_date=? AND status='OPEN'",
+            (today,),
+        ).fetchall()}
+        _conn_dup.close()
+    except Exception as _exc:
+        logger.warning("V3: dup-guard DB check failed (%s) — proceeding without filter", _exc)
+        _open_syms = set()
+    if _open_syms:
+        _before = len(signals)
+        signals = [s for s in signals if s.get("symbol") not in _open_syms]
+        if _before != len(signals):
+            logger.info("V3: dup-guard dropped %d signal(s) already OPEN today: %s",
+                        _before - len(signals), _open_syms & {s.get("symbol") for s in signals} or _open_syms)
+
     # ── Step 8: DIVERSIFICATION ──
     from intraday.v3.diversifier import apply_diversification
 
