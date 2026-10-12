@@ -333,6 +333,13 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
                     continue
                 _sym = _d.get("symbol", "?")
                 _setup = next((s for s in top_3 if s.get("symbol") == _sym), {})
+                # KEY-FIX 2026-10-12: signal dicts use target_price/stop_loss_price/
+                # confidence_score/strategy_type, NOT target/stop_loss/confidence/strategy.
+                # Previous version silently wrote 0.0 for target+SL on every trade.
+                _target = _setup.get("target_price", _d.get("target", 0))
+                _sl = _setup.get("stop_loss_price", _d.get("stop_loss", 0))
+                _conf = _setup.get("confidence_score", _setup.get("confidence", 0))
+                _strat = _setup.get("strategy_type", _setup.get("strategy", regime))
                 _conn.execute(
                     "INSERT INTO intraday_trades "
                     "(trade_date, timestamp, symbol, tradingsymbol, action, order_type, "
@@ -345,8 +352,8 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
                         _setup.get("direction", "LONG"), "LIMIT", "INTRADAY",
                         _d.get("filled_qty", 0), _d.get("entry_price", 0),
                         _d.get("entry_order_id", ""), "dhan", "OPEN",
-                        _d.get("entry_price", 0), _d.get("target", 0), _d.get("stop_loss", 0),
-                        _setup.get("confidence", 0), _setup.get("strategy", regime),
+                        _d.get("entry_price", 0), _target, _sl,
+                        _conf, _strat,
                         _setup.get("rationale", ""), "PAPER" if cfg.get("profile", {}).get("paper") else "LIVE",
                     ),
                 )
