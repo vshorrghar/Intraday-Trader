@@ -322,6 +322,40 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
 
     funnel.log_stage("orders_placed", orders_placed)
 
+    # ── Step 11b: RECORD PLACED TRADES TO DB (was MISSING — trades_placed logged
+    #     but never persisted; dashboard/DB always showed 0 despite real signals) ──
+    if orders_placed > 0:
+        _now_str = datetime.now(IST).strftime("%Y-%m-%d %H:%M:%S")
+        try:
+            _conn = sqlite3.connect(db_path)
+            for _d in exec_result.get("details", []):
+                if _d.get("status") != "PLACED":
+                    continue
+                _sym = _d.get("symbol", "?")
+                _setup = next((s for s in top_3 if s.get("symbol") == _sym), {})
+                _conn.execute(
+                    "INSERT INTO intraday_trades "
+                    "(trade_date, timestamp, symbol, tradingsymbol, action, order_type, "
+                    " product_type, quantity, price, broker_order_id, broker_name, status, "
+                    " entry_price, target_price, stop_loss_price, confidence_score, "
+                    " strategy_type, rationale, mode) "
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    (
+                        today, _now_str, _sym, _sym,
+                        _setup.get("direction", "LONG"), "LIMIT", "INTRADAY",
+                        _d.get("filled_qty", 0), _d.get("entry_price", 0),
+                        _d.get("entry_order_id", ""), "dhan", "OPEN",
+                        _d.get("entry_price", 0), _d.get("target", 0), _d.get("stop_loss", 0),
+                        _setup.get("confidence", 0), _setup.get("strategy", regime),
+                        _setup.get("rationale", ""), "PAPER" if cfg.get("profile", {}).get("paper") else "LIVE",
+                    ),
+                )
+            _conn.commit()
+            _conn.close()
+            logger.info("V3: recorded %d PLACED trade(s) to DB", orders_placed)
+        except Exception as _exc:
+            logger.error("V3: FAILED to record trades to DB: %s", _exc)
+
     # ── Step 12: WRITE FUNNEL JSON ──
     funnel.write_daily_json()
     logger.info("V3 cycle COMPLETE — regime=%s, signals=%d, placed=%d, fallback=%s",
