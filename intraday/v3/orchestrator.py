@@ -163,7 +163,7 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
                 "valid_data": health["valid_count"], "trades_placed": 0}
 
     # ── Step 6: REGIME DETECTION ──
-    from intraday.v3.regime import detect_regime, TRENDING_UP, RANGING
+    from intraday.v3.regime import detect_regime, TRENDING_UP, RANGING, TRENDING_DOWN
 
     if dry_run:
         regime = TRENDING_UP
@@ -255,6 +255,13 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
         v4_signals = detect_v4_signals(historical_data, universe_ids, strategy_config, today, nifty_data=nifty_data)
         signals = vwap_signals + v4_signals
         logger.info("V3: RANGING — VWAP_MR=%d, V4=%d signals", len(vwap_signals), len(v4_signals))
+    elif regime == TRENDING_DOWN:
+        # LOOSENED 2026-10-08: TRENDING_DOWN now trades too (mirrors RANGING) —
+        # was STAY_FLAT, leaving down days completely idle. V4 allows SHORT on BEAR.
+        vwap_signals = detect_vwap_mr_signals(historical_data, universe_ids, strategy_config, today, regime=TRENDING_DOWN)
+        v4_signals = detect_v4_signals(historical_data, universe_ids, strategy_config, today, nifty_data=nifty_data)
+        signals = vwap_signals + v4_signals
+        logger.info("V3: TRENDING_DOWN — VWAP_MR=%d, V4=%d signals", len(vwap_signals), len(v4_signals))
     else:
         logger.info("V3: STAY_FLAT — regime=%s, no strategies active", regime)
         funnel.log_stage("strategies_skipped", 0, drop_reasons={"regime_no_trade": 1})
