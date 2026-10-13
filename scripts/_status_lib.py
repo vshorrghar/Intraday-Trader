@@ -9,11 +9,13 @@ OPEN_STATES = {"OPEN", "PARTIAL_BOOKED"}
 
 PROFILES_LIVE = [
     {"name": "vishal-live", "label": "Real Rs.15K", "capital": 15000, "max_trades": 3, "loss_limit": 900},
+    {"name": "vishal-live-v2", "label": "Real Rs.15K V2", "capital": 15000, "max_trades": 3, "loss_limit": 900},
     {"name": "neha-live", "label": "Real Rs.10K", "capital": 10000, "max_trades": 3, "loss_limit": 900},
 ]
 PROFILES_PAPER = [
     {"name": "vishal", "label": "Paper Rs.3L", "capital": 300000, "max_trades": 6, "loss_limit": 9000},
     {"name": "neha", "label": "Paper Rs.3L", "capital": 300000, "max_trades": 6, "loss_limit": 9000},
+    {"name": "vishal-s3", "label": "Paper V3", "capital": 300000, "max_trades": 6, "loss_limit": 9000},
 ]
 ALL_PROFILES = PROFILES_LIVE + PROFILES_PAPER
 
