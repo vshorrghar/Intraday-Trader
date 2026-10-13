@@ -935,16 +935,32 @@ class DBManager:
             return []
 
     def update_swing_trade(self, trade_id: int, **kwargs) -> None:
-        """Update a swing trade."""
+        """Update a swing trade.
+
+        Whitelists kwargs against the actual swing_trades columns so an
+        unknown key (e.g. days_held) can never make SQLite reject the whole
+        UPDATE and silently lose status/pnl (Bug K / Bug 3 family).
+        """
         if not kwargs:
             return
-        sets = ", ".join(f"{k} = ?" for k in kwargs)
-        vals = list(kwargs.values()) + [trade_id]
+        valid_cols = {row[1] for row in
+                      self.conn.execute("PRAGMA table_info(swing_trades)").fetchall()}
+        safe = {k: v for k, v in kwargs.items() if k in valid_cols}
+        dropped = [k for k in kwargs if k not in valid_cols]
+        if dropped:
+            logger.warning("update_swing_trade %d: dropping unknown column(s) %s "
+                           "(not in swing_trades schema)", trade_id, dropped)
+        if not safe:
+            logger.error("update_swing_trade %d: no valid columns to update "
+                         "(all keys unknown: %s)", trade_id, list(kwargs))
+            return
+        sets = ", ".join(f"{k} = ?" for k in safe)
+        vals = list(safe.values()) + [trade_id]
         try:
             self.conn.execute(f"UPDATE swing_trades SET {sets} WHERE id = ?", vals)
             self.conn.commit()
-        except Exception:
-            logger.error("Failed to update swing trade %d", trade_id, exc_info=True)
+        except Exception as e:
+            logger.error("Failed to update swing trade %d: %s", trade_id, e, exc_info=True)
 
     # ------------------------------------------------------------------
     # Positional Trading
