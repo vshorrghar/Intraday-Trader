@@ -45,3 +45,9 @@ config/profiles/*.yaml
 dashboard/api/*.json
 dashboard/._*
 config/telegram.yaml
+
+# --- cleanup 2026-10-13: untrack generated runtime + token files ---
+config/.dhan_token_*.json
+dashboard/api/**/daily_pnl/*.json
+dashboard/api/**/dhan_live.json
+backtest/results/
