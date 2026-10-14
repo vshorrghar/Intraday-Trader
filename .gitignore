@@ -51,3 +51,4 @@ config/.dhan_token_*.json
 dashboard/api/**/daily_pnl/*.json
 dashboard/api/**/dhan_live.json
 backtest/results/
+cache/swing_daily/
