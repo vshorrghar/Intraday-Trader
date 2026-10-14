@@ -60,7 +60,7 @@ def run_v3_monitor(profile, dry_run=False):
     force = (now.hour, now.minute) >= FORCE_EXIT_HHMM
 
     try:
-        price_broker = authenticate_broker("dhan", cfg.get("dhan", {}),
+        price_broker = authenticate_broker("dhan", cfg.get("dhan", {}), allow_fresh_auth=False,
                                            dry_run=False, profile=profile)
     except Exception as e:
         logger.error("price broker auth failed for %s: %s", profile, e)

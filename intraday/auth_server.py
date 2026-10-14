@@ -457,6 +457,7 @@ def authenticate_broker(
     broker_config: dict,
     dry_run: bool = True,
     profile: Optional[str] = None,
+    allow_fresh_auth: bool = True,
 ) -> BrokerClient:
     """Authenticate with the selected broker and return a ready ``BrokerClient``.
 
@@ -521,6 +522,16 @@ def authenticate_broker(
         return client
 
     # --- Fresh authentication ---
+    # SINGLE-AUTH GUARD 2026-10-14: only pre_auth_dhan.py (calls _dhan_totp_auth
+    # directly) may mint. Cron consumers pass allow_fresh_auth=False -> if shared
+    # token missing/stale, FAIL LOUD instead of fresh-TOTP (840 auths/day ->
+    # Invalid-TOTP rate-limit + session steal).
+    if not allow_fresh_auth:
+        raise RuntimeError(
+            f"SINGLE-AUTH: no valid shared token for client_id "
+            f"{broker_config.get('client_id','')} and allow_fresh_auth=False. "
+            f"Refusing fresh TOTP. Run pre_auth_dhan.py (one auth/day)."
+        )
     access_token: Optional[str] = None
 
     if name == "dhan":

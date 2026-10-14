@@ -77,7 +77,7 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
         try:
             from intraday.auth_server import authenticate_broker
             dhan_cfg = cfg.get("dhan", {})
-            broker = authenticate_broker("dhan", dhan_cfg, dry_run=False, profile=profile)
+            broker = authenticate_broker("dhan", dhan_cfg, dry_run=False, profile=profile, allow_fresh_auth=False)
             logger.info("V3: Authenticated broker for %s", profile)
         except Exception as exc:
             logger.error("V3: Auth failed: %s", exc)
