@@ -1,0 +1,7 @@
+# vishal-live-v2 LIVE trading crons — INSTALL ONLY AFTER Friday watched dry-run passes.
+# Entry: every 15 min, 9:30 AM-1:00 PM IST (4:00-7:30 UTC). REAL MONEY.
+*/15 4-7 * * 1-5 cd /home/ec2-user/dev-sandbox && .venv/bin/python -c "from intraday.v3.orchestrator import run_v3_cycle; print(run_v3_cycle('vishal-live-v2', dry_run=False))" >> logs/cron_live_v2.log 2>&1
+# Exit monitor: offset :08/:23/:38/:53, 9:30 AM-3:00 PM IST. REAL MONEY.
+8,23,38,53 4-9 * * 1-5 cd /home/ec2-user/dev-sandbox && .venv/bin/python -c "from intraday.v3.monitor import run_v3_monitor; print(run_v3_monitor('vishal-live-v2', dry_run=False))" >> logs/cron_live_v2_monitor.log 2>&1
+# Force-exit 15:15 IST (09:45 UTC). REAL MONEY.
+45 9 * * 1-5 cd /home/ec2-user/dev-sandbox && .venv/bin/python -c "from intraday.v3.monitor import run_v3_monitor; print(run_v3_monitor('vishal-live-v2', dry_run=False))" >> logs/cron_live_v2_monitor.log 2>&1
