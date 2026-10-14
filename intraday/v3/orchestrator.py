@@ -336,7 +336,16 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
 
     # ── Step 11: PLACE ORDERS (V3 atomic executor) ──
     from intraday.v3.executor import place_v3_orders
-    exec_result = place_v3_orders(broker, top_3, dry_run=dry_run)
+    _v3_db = None
+    if not dry_run:
+        try:
+            from database.db_manager import DBManager
+            _v3_db = DBManager(db_path)
+        except Exception as _dbexc:
+            logger.error("V3: could not open DB for trade recording: %s", _dbexc)
+    _v3_mode = "PAPER" if cfg.get("profile", {}).get("paper", False) else "LIVE"
+    exec_result = place_v3_orders(broker, top_3, dry_run=dry_run,
+                                  db=_v3_db, profile=profile, mode=_v3_mode)
     orders_placed = exec_result["placed"]
 
     funnel.log_stage("orders_placed", orders_placed)

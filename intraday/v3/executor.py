@@ -24,7 +24,8 @@ def _tick_align(price: float) -> float:
     return round(round(price / NSE_TICK_SIZE) * NSE_TICK_SIZE, 2)
 
 
-def place_v3_orders(broker, trade_setups: list, dry_run: bool = False) -> dict:
+def place_v3_orders(broker, trade_setups: list, dry_run: bool = False,
+                    db=None, profile: str = None, mode: str = "PAPER") -> dict:
     """Place orders with atomic entry+SL guarantee.
 
     For each trade:
@@ -43,6 +44,21 @@ def place_v3_orders(broker, trade_setups: list, dry_run: bool = False) -> dict:
     """
     result = {"placed": 0, "failed": 0, "naked_exits": 0, "details": []}
 
+    # Dedup guard: symbols already OPEN/pending today must not be re-entered
+    # (fixes consecutive-cycle duplication e.g. DMART/LENSKART x2).
+    from datetime import datetime, timezone, timedelta
+    _IST = timezone(timedelta(hours=5, minutes=30))
+    _today = datetime.now(_IST).strftime("%Y-%m-%d")
+    _NONTERMINAL = {"OPEN", "PARTIAL_BOOKED", "PENDING"}
+    open_symbols = set()
+    if db is not None:
+        try:
+            for _r in (db.get_trades_for_date(_today) or []):
+                if (_r.get("status") or "").upper() in _NONTERMINAL:
+                    open_symbols.add((_r.get("symbol") or "").upper())
+        except Exception as _exc:
+            logger.warning("V3 Executor: dedup pre-check failed (%s) - proceeding without it", _exc)
+
     for setup in trade_setups:
         symbol = setup.get("symbol", "?")
         direction = setup.get("direction", "LONG")
@@ -50,6 +66,11 @@ def place_v3_orders(broker, trade_setups: list, dry_run: bool = False) -> dict:
         stop_loss = setup.get("stop_loss", 0)
         target = setup.get("target", 0)
         qty = setup.get("qty", 0)
+
+        if symbol.upper() in open_symbols:
+            logger.info("V3 Executor: %s already OPEN today - skipping duplicate entry", symbol)
+            result["details"].append({"symbol": symbol, "status": "SKIPPED_DUPLICATE"})
+            continue
 
         if dry_run:
             logger.info("[DRY] Would place: %s %s × %d @ ₹%.2f (SL=₹%.2f, T=₹%.2f)",
@@ -69,6 +90,30 @@ def place_v3_orders(broker, trade_setups: list, dry_run: bool = False) -> dict:
                                              confidence=setup.get("confidence", 7))
         if trade_result["status"] == "PLACED":
             result["placed"] += 1
+            open_symbols.add(symbol.upper())  # prevent same-run duplicate
+            if db is not None:
+                try:
+                    db.insert_intraday_trade(
+                        trade_date=_today,
+                        symbol=symbol, tradingsymbol=symbol,
+                        action=("BUY" if direction == "LONG" else "SELL"),
+                        order_type="LIMIT", product_type="INTRADAY",
+                        quantity=trade_result.get("filled_qty", qty),
+                        price=trade_result.get("entry_price", entry_price),
+                        trigger_price=trade_result.get("stop_loss", stop_loss),
+                        broker_order_id=trade_result.get("entry_order_id", ""),
+                        broker_name="dhan", status="OPEN",
+                        entry_price=trade_result.get("entry_price", entry_price),
+                        target_price=trade_result.get("target", target),
+                        stop_loss_price=trade_result.get("stop_loss", stop_loss),
+                        confidence_score=setup.get("confidence", 7),
+                        strategy_type=setup.get("strategy", "V3"),
+                        rationale=setup.get("rationale", ""),
+                        mode=mode,
+                    )
+                    logger.info("V3 Executor: recorded %s to DB (%s)", symbol, mode)
+                except Exception as _exc:
+                    logger.error("V3 Executor: DB record FAILED for %s: %s", symbol, _exc)
         elif trade_result["status"] == "NAKED_EXIT":
             result["naked_exits"] += 1
             result["failed"] += 1
