@@ -7,7 +7,7 @@ REGION="ap-south-1"
 PROFILE="vishal-admin"
 
 echo "Getting current IP..."
-MY_IP=$(curl -s ifconfig.me)
+MY_IP=$(curl -4 -s https://checkip.amazonaws.com)
 echo "Your IP: $MY_IP"
 
 echo "Adding $MY_IP to security group $SG_ID..."
@@ -17,13 +17,12 @@ aws ec2 authorize-security-group-ingress \
   --port 22 \
   --cidr ${MY_IP}/32 \
   --region $REGION \
-  --profile $PROFILE 2>&1
-
-# Ignore duplicate rule error — means IP already added
-if [ $? -eq 0 ]; then
+  --profile $PROFILE
+RC=$?
+if [ $RC -eq 0 ]; then
   echo "✅ IP added successfully"
 else
-  echo "✅ IP already in security group (that is fine)"
+  echo "⚠️  authorize returned $RC — likely duplicate (fine) OR a real error (check message above)"
 fi
 
 echo ""
