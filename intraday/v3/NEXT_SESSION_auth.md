@@ -27,3 +27,15 @@ FIX NEXT SESSION (shared-core, verify carefully, money-adjacent):
    verify it isn't invalidated earlier by Dhan server policy.
 
 STATUS: re-minted 2026-10-14 07:11 UTC, HTTP 200. Hold the line - no re-auth.
+
+## HARD RULE (live-trading constraint, effective 2026-10-14)
+Until single-auth enforcement ships, treat as inviolable on BOTH tabs:
+- NOBODY re-auths 1110941563 mid-session. No manual pre_auth, no fresh-TOTP
+  authenticate_broker. If both tabs re-mint, the session ping-pongs = flapping.
+- All consumers READ config/.dhan_token_1110941563.json. Detector read-only
+  (b841267) is the correct pattern — every other consumer must match it.
+- KNOWN LATENT RISK: intraday V3 crons (orchestrator */15, monitor :07/:22/:37/:52)
+  call authenticate_broker, which reuses the shared token ONLY if file date==today.
+  If the file is stale/missing, they FALL THROUGH to fresh TOTP = session steal.
+  So the V3 crons are NOT yet guaranteed single-auth. Fixing that (read shared
+  file, fail loud if dead, never fresh-TOTP) is the intraday half of this fix.
