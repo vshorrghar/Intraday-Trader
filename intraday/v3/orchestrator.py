@@ -290,6 +290,39 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
             logger.info("V3: dup-guard dropped %d signal(s) already OPEN today: %s",
                         _before - len(signals), _open_syms & {s.get("symbol") for s in signals} or _open_syms)
 
+    # ── Step 7c: DAILY CAPS 2026-10-14 — enforce max_trades_per_day + daily_capital_limit ──
+    # (Bug 5 class: V3 had NO trade-count/capital enforcement. Real-money safety.)
+    _intra = cfg.get("intraday", {})
+    _max_trades = int(_intra.get("max_trades_per_day", 3))
+    _daily_cap = float(_intra.get("daily_capital_limit", 0) or 0)
+    try:
+        _c = sqlite3.connect(db_path)
+        _rows = _c.execute(
+            "SELECT entry_price, quantity FROM intraday_trades "
+            "WHERE trade_date=? AND status NOT IN ('REJECTED','CANCELLED','REJECTED_BAD_DATA','REJECTED_DUPLICATE','FAILED','ABANDONED')",
+            (today,),
+        ).fetchall()
+        _c.close()
+    except Exception as _exc:
+        logger.error("V3: daily-cap DB read failed (%s) — HALTING for safety", _exc)
+        funnel.write_daily_json()
+        return {"halted": True, "reason": "cap_check_db_fail", "regime": regime, "trades_placed": 0}
+
+    _trades_today = len(_rows)
+    _deployed = sum((float(r[0] or 0) * int(r[1] or 0)) for r in _rows)
+    _slots_left = max(0, _max_trades - _trades_today)
+    _cap_left = (_daily_cap - _deployed) if _daily_cap > 0 else float("inf")
+    logger.info("V3 caps: trades %d/%d, deployed Rs.%.0f/%.0f, slots_left=%d",
+                _trades_today, _max_trades, _deployed, _daily_cap, _slots_left)
+    if _slots_left <= 0:
+        logger.info("V3: max_trades_per_day (%d) reached — no new entries", _max_trades)
+        funnel.write_daily_json()
+        return {"halted": False, "reason": "max_trades_reached", "regime": regime, "trades_placed": 0}
+    if _cap_left <= 0:
+        logger.info("V3: daily_capital_limit (Rs.%.0f) reached — no new entries", _daily_cap)
+        funnel.write_daily_json()
+        return {"halted": False, "reason": "capital_limit_reached", "regime": regime, "trades_placed": 0}
+
     # ── Step 8: DIVERSIFICATION ──
     from intraday.v3.diversifier import apply_diversification
 
@@ -344,6 +377,10 @@ def run_v3_cycle(profile: str, dry_run: bool = False) -> dict:
         except Exception as _dbexc:
             logger.error("V3: could not open DB for trade recording: %s", _dbexc)
     _v3_mode = "PAPER" if cfg.get("profile", {}).get("paper", False) else "LIVE"
+    # Enforce remaining-slot cap: never place more than slots_left this cycle
+    if len(top_3) > _slots_left:
+        logger.info("V3: capping entries %d -> %d (slots_left)", len(top_3), _slots_left)
+        top_3 = top_3[:_slots_left]
     exec_result = place_v3_orders(broker, top_3, dry_run=dry_run,
                                   db=_v3_db, profile=profile, mode=_v3_mode)
     orders_placed = exec_result["placed"]
