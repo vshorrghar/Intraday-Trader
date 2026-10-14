@@ -180,7 +180,8 @@ def run_monitor(profile_name: str, profile_data: dict, config: SwingConfig, brok
             logger.warning("Paper mode: price-broker auth failed (%s) — positions stay unpriced", exc)
             price_broker = broker
 
-    monitor = SwingMonitor(config, broker=price_broker, db=db)
+    # Execution broker = the real/paper 'broker' (DryRun in paper). Pricing = price_broker (real data).
+    monitor = SwingMonitor(config, broker=broker, db=db, price_broker=price_broker)
 
     # Load open positions
     monitor.load_open_positions()

@@ -51,9 +51,10 @@ def needs_review(days_held: int, pnl_pct: float) -> tuple:
 class SwingMonitor:
     """Monitor open swing positions. Run 2x daily."""
 
-    def __init__(self, config: SwingConfig, broker=None, db=None, telegram=None):
+    def __init__(self, config: SwingConfig, broker=None, db=None, telegram=None, price_broker=None):
         self.config = config
-        self.broker = broker
+        self.broker = broker            # EXECUTION broker (DryRun in paper, real in live)
+        self.price_broker = price_broker or broker  # DATA broker for pricing (real, read-only)
         self.db = db
         self.telegram = telegram
         self._active_trades = []
@@ -85,17 +86,17 @@ class SwingMonitor:
         return self._sec_id_map
 
     def _get_current_price(self, symbol: str) -> float:
-        """Get current price. Tries broker positions, then live LTP (Bug GG-swing fix).
-
-        In paper mode broker.get_positions() is empty, so the LTP fallback via
-        fetch_bulk_ltp (Dhan /v2/marketfeed) is what actually prices positions.
+        """Get current price via the DATA broker (price_broker), never the
+        execution broker. In paper the execution broker is DryRun (no token);
+        pricing uses the real read-only data broker.
         """
-        if not self.broker:
+        pb = self.price_broker
+        if not pb:
             return 0.0
         # 1) broker positions (works only if a real position exists)
         try:
-            if hasattr(self.broker, "get_positions"):
-                for pos in (self.broker.get_positions() or []):
+            if hasattr(pb, "get_positions"):
+                for pos in (pb.get_positions() or []):
                     if pos.get("tradingsymbol", "").upper() == symbol.upper():
                         buy_avg = float(pos.get("buy_avg", 0) or 0)
                         if buy_avg > 0:
@@ -111,7 +112,7 @@ class SwingMonitor:
             from intraday.v3.dhan_data import fetch_bulk_ltp
             ltp = 0.0
             for attempt in range(2):  # retry once: transient 429 can return empty
-                quotes = fetch_bulk_ltp(self.broker, [str(sec_id)])
+                quotes = fetch_bulk_ltp(pb, [str(sec_id)])
                 q = quotes.get(str(sec_id), {})
                 ltp = float(q.get("ltp", 0) or 0)
                 if ltp <= 0:

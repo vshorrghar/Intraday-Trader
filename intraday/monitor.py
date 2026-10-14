@@ -560,6 +560,21 @@ class Position_Monitor:
             if self.db:
                 self._audit("SL_ADJUST", {"symbol": trade["tradingsymbol"], "old_sl": sl, "new_sl": new_sl})
 
+    def _load_security_ids(self):
+        """Lazy-load symbol -> Dhan security_id map (cached). Mirrors swing/monitor.py."""
+        if getattr(self, "_sec_id_map", None) is not None:
+            return self._sec_id_map
+        self._sec_id_map = {}
+        try:
+            from pathlib import Path as _Path
+            import json as _json
+            p = _Path("config/nse_security_ids.json")
+            if p.exists():
+                self._sec_id_map = _json.loads(p.read_text())
+        except Exception as e:
+            logger.warning("Could not load nse_security_ids.json: %s", e)
+        return self._sec_id_map
+
     def _place_exit_and_get_fill_price(self, trade: dict, exit_side: str, fallback_price: float) -> tuple[float, str]:
         """Place exit MARKET order and poll for actual fill price.
 
@@ -621,7 +636,28 @@ class Position_Monitor:
                     logger.info('Bug B: SL cancelled before force exit: %s sl_order_id=%s', trade['tradingsymbol'], sl_order_id)
                 except Exception as e:
                     logger.warning('Bug B: SL cancel failed before force exit: %s - proceeding anyway', e)
+            # Bug J-paper fix: in paper mode get_positions() always returns [],
+            # so current_price never refreshes and silently defaults to entry_price
+            # (identical root cause to swing Bug GG-swing). Before locking in P&L,
+            # try a real live-LTP fetch as a safety net. Falls back to the old
+            # behavior unchanged if anything here fails.
             cached_price = trade.get("current_price", trade["entry_price"])
+            try:
+                sym = trade.get("tradingsymbol", trade.get("symbol", ""))
+                sec_id = self._load_security_ids().get(sym.upper()) if sym else None
+                if sec_id and self.broker:
+                    from intraday.v3.dhan_data import fetch_bulk_ltp
+                    quotes = fetch_bulk_ltp(self.broker, [str(sec_id)])
+                    q = quotes.get(str(sec_id), {})
+                    live_ltp = float(q.get("ltp", 0) or 0)
+                    if live_ltp > 0:
+                        cached_price = live_ltp
+                        trade["current_price"] = live_ltp
+                    else:
+                        logger.warning("Force-exit live LTP fetch returned 0 for %s — using stale cached_price", sym)
+            except Exception as e:
+                logger.warning("Force-exit live LTP fetch failed for %s: %s — using stale cached_price",
+                                trade.get("tradingsymbol", ""), e)
             actual_exit_price, fill_status = self._place_exit_and_get_fill_price(trade, exit_side, cached_price)
             if fill_status in ("order_failed", "no_broker"):
                 logger.error(

@@ -124,37 +124,18 @@ class SwingRiskManager:
     def can_enter_trade(self, trade: SwingTradeSetup, vix: float = 15.0,
                         nifty_close: float = 0, nifty_50dma: float = 0,
                         nifty_200dma: float = 0) -> tuple:
-        """Run all pre-trade gates. Returns (allowed: bool, reason: str|None)."""
-        # Gate 1: Regime
-        regime_ok, regime_reason = check_regime(vix, nifty_close, nifty_50dma, nifty_200dma)
-        if regime_ok is False:
-            return False, regime_reason
-
-        # Gate 2: Max positions
+        """Pre-trade gates. SIMPLE: only max positions + daily loss.
+        Direction Change 2026-06-09: removed regime, sector cap, weekly loss.
+        """
+        # Gate 1: Max positions
         ok, reason = check_max_positions(self._open_positions, self.config.swing_max_open_positions)
         if not ok:
             return False, reason
 
-        # Gate 3: Sector cap
-        ok, reason = check_sector_cap(trade.nse_symbol, self._open_positions,
-                                      self.config.sector_concentration_max)
-        if not ok:
-            return False, reason
-
-        # Gate 4: Daily loss
+        # Gate 2: Daily loss limit
         ok, reason = check_daily_loss(self._today_pnl, self.config.swing_daily_loss_limit)
         if not ok:
             return False, reason
-
-        # Gate 5: Weekly loss
-        ok, reason = check_weekly_loss(self._week_pnl, self.config.swing_capital_limit,
-                                       self.config.swing_weekly_loss_limit_pct)
-        if not ok:
-            return False, reason
-
-        # If regime says REDUCE, halve position size (caller handles)
-        if regime_ok == "REDUCE":
-            return "REDUCE", regime_reason
 
         return True, None
 
