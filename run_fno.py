@@ -178,6 +178,7 @@ def main() -> None:
             broker_name=config.broker,
             broker_config=broker_config,
             dry_run=is_paper,  # Paper mode → DryRunBrokerClient, Live → real TOTP auth
+            allow_fresh_auth=False,
         )
         phase_log("Broker Authentication", "DONE")
         logger.info(
@@ -200,6 +201,7 @@ def main() -> None:
                 broker_name=config.broker,
                 broker_config=broker_config,
                 dry_run=False,  # Real auth for option chain reads
+                allow_fresh_auth=False,
             )
             logger.info("Paper mode: authenticated real broker for option chain fetch")
         except Exception as exc:

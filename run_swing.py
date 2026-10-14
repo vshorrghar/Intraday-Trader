@@ -69,7 +69,7 @@ def select_broker(profile_data: dict, profile_name: str, live: bool):
         if not dhan_cfg.get("client_id"):
             logger.error("No Dhan client_id for %s — cannot go live", profile_name)
             sys.exit(1)
-        broker = authenticate_broker("dhan", dhan_cfg, dry_run=False, profile=profile_name)
+        broker = authenticate_broker("dhan", dhan_cfg, dry_run=False, profile=profile_name, allow_fresh_auth=False)
         return broker
     else:
         return DryRunBrokerClient()
@@ -171,7 +171,7 @@ def run_monitor(profile_name: str, profile_data: dict, config: SwingConfig, brok
             from intraday.auth_server import authenticate_broker
             dhan_cfg = profile_data.get("dhan", {})
             if dhan_cfg.get("client_id"):
-                price_broker = authenticate_broker("dhan", dhan_cfg, dry_run=False, profile=profile_name)
+                price_broker = authenticate_broker("dhan", dhan_cfg, dry_run=False, profile=profile_name, allow_fresh_auth=False)
                 logger.info("Paper mode: authenticated real broker for price fetch (data only)")
             else:
                 logger.warning("Paper mode: no dhan client_id — positions cannot be priced")
