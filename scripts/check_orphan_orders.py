@@ -36,7 +36,13 @@ BASE_URL = "https://api.dhan.co/v2"
 
 
 def _fail(msg: dict) -> None:
+    # FAIL LOUD: never let a failed check look like a clean all-clear.
+    # JSON to stdout (machine-readable), plus an ERROR line to stderr so it
+    # stands out in cron logs and trips any stderr-based alerting. Exit 1 so
+    # callers/cron can distinguish "could not verify" from "no orphans".
     print(json.dumps(msg))
+    print(f"ERROR orphan-check could NOT verify account: {msg.get('status')} "
+          f"{msg.get('http', '')} {msg.get('error', '')}".rstrip(), file=sys.stderr)
     sys.exit(1)
 
 
@@ -53,7 +59,7 @@ def main() -> None:
     token_file = Path("config") / f".dhan_token_{client_id}.json"
     if not token_file.exists():
         _fail({"status": "DATA_FAIL", "error": f"shared token file missing: {token_file} "
-                "(pre_auth_dhan.py must run first)"})
+               "(pre_auth_dhan.py must run first)"})
     try:
         tok = json.loads(token_file.read_text())
     except Exception as exc:  # noqa: BLE001
