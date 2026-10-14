@@ -7,7 +7,7 @@ flags that condition.
 
 Read-only. Prints JSON. Exit codes:
   0 = checked successfully, no orphans
-  1 = auth or data fetch failed (CANNOT verify — treat as alert, NOT all-clear)
+  1 = auth or data fetch failed (CANNOT verify -- treat as alert, NOT all-clear)
   2 = orphans found
 
 Usage: python3 scripts/check_orphan_orders.py [PROFILE]   (default vishal-live-v2)
@@ -20,11 +20,14 @@ sys.path.insert(0, "/home/ec2-user/dev-sandbox")
 import json
 from collections import defaultdict
 
+import requests
 import yaml
+
 from intraday.auth_server import authenticate_broker
 
 DEFAULT_PROFILE = "vishal-live-v2"
 PENDING_STATUSES = {"PENDING", "TRANSIT", "TRIGGER_PENDING", "PART_TRADED", "MODIFIED"}
+
 
 def main() -> None:
     profile = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_PROFILE
@@ -38,10 +41,10 @@ def main() -> None:
         print(json.dumps({"status": "AUTH_FAIL", "error": str(exc)}))
         sys.exit(1)
 
-    # Verify the broker calls actually SUCCEEDED. get_order_list/get_positions
-    # return [] on HTTP error, so a bare empty list is ambiguous. Use a raw
-    # orders call to confirm the token works before trusting an empty result.
-    import requests
+    # Confirm the token actually works before trusting any empty result.
+    # broker.get_order_list()/get_positions() return [] on HTTP error, so a
+    # bare empty list is ambiguous -- a raw call lets us distinguish
+    # "genuinely no orders" from "could not read account".
     try:
         r = requests.get(
             "https://api.dhan.co/v2/orders",
@@ -56,7 +59,7 @@ def main() -> None:
 
     if r.status_code != 200:
         print(json.dumps({"status": "DATA_FAIL", "http": r.status_code, "body": r.text[:300]}))
-        sys.exit(1)  # cannot verify — explicitly NOT all-clear
+        sys.exit(1)  # cannot verify -- explicitly NOT all-clear
 
     orders = r.json()
     if isinstance(orders, dict):
@@ -98,6 +101,7 @@ def main() -> None:
     }
     print(json.dumps(result, indent=2))
     sys.exit(2 if orphans else 0)
+
 
 if __name__ == "__main__":
     main()
